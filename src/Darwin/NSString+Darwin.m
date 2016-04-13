@@ -44,7 +44,7 @@
                   length:(NSUInteger) len
 {
    return( [[[self alloc] initWithCString:s
-                                                length:len] autorelease]);
+                                   length:len] autorelease]);
 }
 
 
@@ -71,6 +71,12 @@
       if( [[NSFileManager defaultManager] fileExistsAtPath:self])
          return( [self substringFromIndex:8]);
    return( self);
+}
+
+
+- (char *) cString
+{
+   return( [self UTF8String]);
 }
 
 @end
