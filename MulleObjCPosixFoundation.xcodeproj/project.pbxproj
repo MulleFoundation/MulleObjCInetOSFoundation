@@ -216,10 +216,6 @@
 		41F96D011CB28E7F009499A9 /* StaticLibraryOSX.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = StaticLibraryOSX.xcconfig; sourceTree = "<group>"; };
 		41F96D021CB28E7F009499A9 /* ToolOSX.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ToolOSX.xcconfig; sourceTree = "<group>"; };
 		41F96D031CB28E7F009499A9 /* _Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = _Common.xcconfig; sourceTree = "<group>"; };
-		41F96D041CB28E7F009499A9 /* generate-dot.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "generate-dot.sh"; sourceTree = "<group>"; };
-		41F96D051CB28E7F009499A9 /* update-all-configurations.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "update-all-configurations.sh"; sourceTree = "<group>"; };
-		41F96D061CB29015009499A9 /* Framework.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Framework.xcconfig; sourceTree = "<group>"; };
-		41F96D071CB29015009499A9 /* FrameworkOSX.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = FrameworkOSX.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -419,23 +415,19 @@
 			isa = PBXGroup;
 			children = (
 				41F96CFD1CB28E7F009499A9 /* README.md */,
-				41F96D061CB29015009499A9 /* Framework.xcconfig */,
-				41F96D071CB29015009499A9 /* FrameworkOSX.xcconfig */,
+				41F96D031CB28E7F009499A9 /* _Common.xcconfig */,
+				41F96CFC1CB28E7F009499A9 /* OSX.xcconfig */,
 				41F96CF61CB28E7F009499A9 /* Common.xcconfig */,
 				41F96CF71CB28E7F009499A9 /* Debug.xcconfig */,
 				41F96CF81CB28E7F009499A9 /* DynamicLibrary.xcconfig */,
 				41F96CF91CB28E7F009499A9 /* DynamicLibraryOSX.xcconfig */,
 				41F96CFA1CB28E7F009499A9 /* IOS.xcconfig */,
 				41F96CFB1CB28E7F009499A9 /* Library.xcconfig */,
-				41F96CFC1CB28E7F009499A9 /* OSX.xcconfig */,
 				41F96CFE1CB28E7F009499A9 /* Release.xcconfig */,
 				41F96CFF1CB28E7F009499A9 /* StaticLibrary.xcconfig */,
 				41F96D001CB28E7F009499A9 /* StaticLibraryIOS.xcconfig */,
 				41F96D011CB28E7F009499A9 /* StaticLibraryOSX.xcconfig */,
 				41F96D021CB28E7F009499A9 /* ToolOSX.xcconfig */,
-				41F96D031CB28E7F009499A9 /* _Common.xcconfig */,
-				41F96D041CB28E7F009499A9 /* generate-dot.sh */,
-				41F96D051CB28E7F009499A9 /* update-all-configurations.sh */,
 			);
 			path = "mulle-configuration";
 			sourceTree = "<group>";
@@ -746,6 +738,7 @@
 				4141AFB51CB546A500B0306A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		415A01381CB03665003C4ACF /* Build configuration list for PBXProject "MulleObjCPosixFoundation" */ = {
 			isa = XCConfigurationList;
