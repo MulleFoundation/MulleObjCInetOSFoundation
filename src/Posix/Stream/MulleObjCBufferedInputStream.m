@@ -58,8 +58,8 @@ static void   MulleObjCBufferedInputStreamFillBuffer( MulleObjCBufferedInputStre
 
 - (NSData *) readDataOfLength:(NSUInteger) size
 {
-   id       data;
-   size_t   available;
+   id           data;
+   NSUInteger   available;
    
    available = MulleObjCBufferedInputStreamBytesAvailable( self);
    
@@ -142,7 +142,7 @@ struct MulleObjCMemoryRegion   MulleObjCBufferedInputStreamBookmarkedRegion( Mul
       region.bytes  = self->bookmark_;
       region.length = (long) (self->current_ - self->bookmark_);
    }
-   self->bookmark_ = nil;
+   self->bookmark_ = NULL;
    return( region);
 }
 

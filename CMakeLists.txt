@@ -23,7 +23,7 @@ src/Posix/Timezone
 )
 
 
-set(HEADERS
+set( HEADERS
 src/Posix/Categories/NSData+Posix.h
 src/Posix/Categories/NSString+Posix.h
 src/Posix/Categories/NSString+PosixPathHandling.h
@@ -57,7 +57,7 @@ src/Posix/Timezone/NSTimeZone.h
 )
 
 
-add_library(MulleObjCPosixFoundation STATIC
+add_library( MulleObjCPosixFoundation STATIC
 src/Posix/Categories/NSArray+Posix_Private.m
 src/Posix/Categories/NSData+Posix.m
 src/Posix/Categories/NSDictionary+Posix_Private.m
@@ -89,16 +89,31 @@ src/Posix/Timezone/NSTimeZone.m
 src/Posix/Timezone/localtime.c
 )
 
+INSTALL( TARGETS MulleObjCPosixFoundation DESTINATION "lib")
+INSTALL( FILES ${HEADERS} DESTINATION "include/MulleObjCPosixFoundation")
 
-add_library(MulleObjCDarwinFoundation STATIC
+
+if( CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+   add_library( MulleObjCDarwinFoundation STATIC
 src/Darwin/NSBundle+Darwin.m
 src/Darwin/NSPathUtilities+Darwin.m
 src/Darwin/NSProcessInfo+Darwin.m
 src/Darwin/NSString+Darwin.m
 src/Darwin/NSTask+Darwin.m
 )
+INSTALL( TARGETS MulleObjCDarwinFoundation DESTINATION "lib")
+endif()
 
-target_link_libraries( MulleObjCDarwinFoundation MulleObjCPosixFoundation )
 
-INSTALL(TARGETS MulleObjCPosixFoundation MulleObjCDarwinFoundation DESTINATION "lib")
-INSTALL(FILES ${HEADERS} DESTINATION "include/MulleObjCPosixFoundation")
+if( CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
+   add_library( MulleObjCFreeBSDFoundation STATIC
+src/FreeBSD/NSBundle+FreeBSD.m
+src/FreeBSD/NSPathUtilities+FreeBSD.m
+src/FreeBSD/NSProcessInfo+FreeBSD.m
+src/FreeBSD/NSString+FreeBSD.m
+src/FreeBSD/NSTask+FreeBSD.m
+)
+INSTALL( TARGETS MulleObjCFreeBSDFoundation DESTINATION "lib")
+endif()
+
+

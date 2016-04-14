@@ -193,6 +193,13 @@
 		419658001CB53D4F00B29FB9 /* README-DARWIN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "README-DARWIN.md"; sourceTree = "<group>"; };
 		41A5ADED1CB40DB300FD7930 /* MulleObjCPosixFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MulleObjCPosixFoundation.h; sourceTree = "<group>"; };
 		41A5AE121CB417C500FD7930 /* libMulleObjCFoundation.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMulleObjCFoundation.a; path = dependencies/lib/Debug/libMulleObjCFoundation.a; sourceTree = "<group>"; };
+		41EC16631CBFD91500676349 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		41EC16641CBFD93E00676349 /* README-FreeBSD.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "README-FreeBSD.md"; sourceTree = "<group>"; };
+		41EC16651CBFD98A00676349 /* NSBundle+FreeBSD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+FreeBSD.m"; sourceTree = "<group>"; };
+		41EC16661CBFD98A00676349 /* NSPathUtilities+FreeBSD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSPathUtilities+FreeBSD.m"; sourceTree = "<group>"; };
+		41EC16671CBFD98A00676349 /* NSProcessInfo+FreeBSD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSProcessInfo+FreeBSD.m"; sourceTree = "<group>"; };
+		41EC16681CBFD98A00676349 /* NSString+FreeBSD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+FreeBSD.m"; sourceTree = "<group>"; };
+		41EC16691CBFD98A00676349 /* NSTask+FreeBSD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSTask+FreeBSD.m"; sourceTree = "<group>"; };
 		41F96CE11CB28832009499A9 /* libmulle_aba.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmulle_aba.a; path = dependencies/lib/Debug/libmulle_aba.a; sourceTree = "<group>"; };
 		41F96CE21CB28832009499A9 /* libmulle_allocator.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmulle_allocator.a; path = dependencies/lib/Debug/libmulle_allocator.a; sourceTree = "<group>"; };
 		41F96CE31CB28833009499A9 /* libmulle_concurrent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmulle_concurrent.a; path = dependencies/lib/Debug/libmulle_concurrent.a; sourceTree = "<group>"; };
@@ -268,6 +275,7 @@
 		415A01341CB03665003C4ACF = {
 			isa = PBXGroup;
 			children = (
+				41EC16631CBFD91500676349 /* CMakeLists.txt */,
 				41F96CF51CB28E7F009499A9 /* mulle-configuration */,
 				415A01651CB036FB003C4ACF /* src */,
 				419657FD1CB538AF00B29FB9 /* Libraries */,
@@ -290,6 +298,7 @@
 			children = (
 				415A01671CB0371C003C4ACF /* Posix */,
 				4141AFB61CB546C000B0306A /* Linux */,
+				41EC16621CBFD8EA00676349 /* FreeBSD */,
 				415A01661CB0371C003C4ACF /* Darwin */,
 			);
 			path = src;
@@ -409,6 +418,19 @@
 				41F96CE91CB28833009499A9 /* libMulleObjC.a */,
 			);
 			name = Libraries;
+			sourceTree = "<group>";
+		};
+		41EC16621CBFD8EA00676349 /* FreeBSD */ = {
+			isa = PBXGroup;
+			children = (
+				41EC16641CBFD93E00676349 /* README-FreeBSD.md */,
+				41EC16651CBFD98A00676349 /* NSBundle+FreeBSD.m */,
+				41EC16661CBFD98A00676349 /* NSPathUtilities+FreeBSD.m */,
+				41EC16671CBFD98A00676349 /* NSProcessInfo+FreeBSD.m */,
+				41EC16681CBFD98A00676349 /* NSString+FreeBSD.m */,
+				41EC16691CBFD98A00676349 /* NSTask+FreeBSD.m */,
+			);
+			path = FreeBSD;
 			sourceTree = "<group>";
 		};
 		41F96CF51CB28E7F009499A9 /* mulle-configuration */ = {
