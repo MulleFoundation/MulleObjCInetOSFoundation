@@ -13,13 +13,28 @@
  */
 #import "NSData+Posix.h"
 
+// other files in this library
+#import "NSString+Posix.h"
+#import "NSString+PosixPathHandling.h"
+#import "NSLog.h"
+
+// other libraries of MulleObjCPosixFoundation
+
+// std-c and dependencies
 #include <fcntl.h>
 #include <sys/stat.h>
 
 
 @implementation NSData( _Posix)
 
-+ (id) dataWithContentsOfFile:(NSString *) path
++ (instancetype) dataWithContentsOfFile:(NSString *) path
+{
+   return( [[[NSData alloc] initWithContentsOfFile:path] autorelease]);
+}
+
+
+
++ (instancetype) dataWithContentsOfMappedFile:(NSString *) path
 {
    return( [[[NSData alloc] initWithContentsOfFile:path] autorelease]);
 }
@@ -33,6 +48,7 @@
    ssize_t       len;
    ssize_t       actual_len;
    char          *buf;
+   struct mulle_allocator  *allocator;
    
    filename = [path fileSystemRepresentation];
    fd = open( filename, O_RDONLY);
@@ -54,7 +70,9 @@
             len = (size_t) info.st_size;
             if( (off_t) len == info.st_size)
             {
-               buf = MulleObjCAllocateNonZeroedMemory( len);
+               allocator = MulleObjCObjectGetAllocator( self);
+               
+               buf = mulle_allocator_malloc( allocator, len);
                if( buf)
                {
                   // The system guarantees to read the number of bytes requested 
@@ -65,7 +83,7 @@
                   if( actual_len != -1)
                   {
                      if( actual_len != len)
-                        buf = MulleObjCReallocateNonZeroedMemory( buf, actual_len);
+                        buf = mulle_allocator_realloc( allocator, buf, actual_len);
                   }
                }
             }
@@ -77,10 +95,9 @@
       
       if( buf)
       {
-         // use "hidden" _init, since we are not using malloc
-         return( [self _initWithBytesNoCopy:buf
-                                     length:actual_len
-                               freeWhenDone:YES]);
+         return( [self initWithBytesNoCopy:buf
+                                    length:actual_len
+                                 allocator:allocator]);
       }
    }      
    [self autorelease];
@@ -139,6 +156,50 @@
       return( NO);
    }
    return( YES);
+}
+
+
+#pragma mark -
+#pragma mark URL
+
+
++ (id) dataWithContentsOfURL:(NSURL *) url
+{
+   if( [url isFileURL])
+   {
+      return( [self dataWithContentsOfFile:[url path]]);
+   }
+   return( nil);
+}
+
+
+- (id) initWithContentsOfURL:(NSURL *) url
+{
+   if( [url isFileURL])
+      return( [self initWithContentsOfFile:[url path]]);
+   return( nil);
+}
+
+
+- (BOOL) writeToURL:(NSURL *) url
+         atomically:(BOOL) flag
+{
+   if( [url isFileURL])
+   {
+      return( [self writeToFile:[url path]
+                     atomically:flag]);
+   }
+   return( NO);
+}
+
+
++ (instancetype) dataWithContentsOfURL:(NSURL *) url
+                               options:(NSUInteger) options
+                                 error:(NSError **) error
+{
+   if( error)
+      *error = nil;
+   return( [self dataWithContentsOfURL:url]);
 }
 
 @end

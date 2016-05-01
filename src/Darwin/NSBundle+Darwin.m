@@ -18,8 +18,6 @@
 
 // other files in this library
 
-// other libraries of MulleObjCPosixFoundation
-
 // std-c and dependencies
 #include <dlfcn.h>
 #include <mach-o/dyld.h>
@@ -87,19 +85,17 @@
    char       dummy;
    uint32_t   len;
 
-   
    len = 0;
    buf = &dummy;
+   
    _NSGetExecutablePath( buf, &len);
    
-   buf = malloc( len * sizeof( char));
-   if( ! buf)
-      MulleObjCThrowAllocationException( len * sizeof( char));
-      
+   buf = [[NSMutableData dataWithLength:len] mutableBytes];
+   
    _NSGetExecutablePath( buf, &len);
-    s = NSAutoreleaseObject([[NSString alloc] initWithCStringNoCopy:buf
-                                                                       length:strlen( buf)
-                                                                 freeWhenDone:YES]);
+
+   s = [[NSFileManager sharedInstance] stringWithFileSystemRepresentation:buf
+                                                                  length:len];
    return( s);
 }
 

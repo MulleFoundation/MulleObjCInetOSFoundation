@@ -13,6 +13,10 @@
  */
 #import "NSString+Posix.h"
 
+// other files in this library
+
+// std-c and dependencies
+
 
 @implementation NSString( _Posix)
 

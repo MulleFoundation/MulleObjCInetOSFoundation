@@ -13,6 +13,14 @@
  */
 #import "NSPipe.h"
 
+// other files in this library
+#import "NSFileHandle.h"
+
+// other libraries of MulleObjCPosixFoundation
+
+// std-c and dependencies
+
+
 
 @implementation NSPipe
 
@@ -21,7 +29,7 @@ static id    NSInitPipe( NSPipe *self)
    int   fds[ 2];
    
    if( pipe( fds))
-      MulleObjCThrowErrnoException( "pipe creation");
+      MulleObjCThrowErrnoException( @"pipe creation");
       
    self->_read  = [[NSFileHandle alloc] initWithFileDescriptor:fds[ 0]
                                                              closeOnDealloc:YES];
@@ -40,16 +48,16 @@ static id    NSInitPipe( NSPipe *self)
 
 - (void) dealloc
 {
-   NSAutoreleaseObject( _read);
-   NSAutoreleaseObject( _write);
+   [_read release];
+   [_write release];
    
-   NSDeallocateObject( self);
+   [super dealloc];
 }
 
 
 + (id) pipe
 {
-   return( NSAutoreleaseObject( NSInitPipe( NSAllocateObject( self, 0, NULL))));
+   return( [[[self alloc] init] autorelease]);
 }
 
 

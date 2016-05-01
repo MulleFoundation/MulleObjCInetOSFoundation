@@ -13,8 +13,10 @@
  */
 #import "MulleObjCBufferedInputStream.h"
 
+// other files in this library
 #import "MulleObjCBufferedInputStream+InlineAccessors.h"
 
+// std-c and dependencies
 
 
 static void   MulleObjCBufferedInputStreamFillBuffer( MulleObjCBufferedInputStream *self);
@@ -25,10 +27,10 @@ static void   MulleObjCBufferedInputStreamFillBuffer( MulleObjCBufferedInputStre
 
 - (id) initWithInputStream:(id <MulleObjCInputStream>) stream
 {
-   stream_ = [stream retain];
-   MulleObjCBufferedInputStreamFillBuffer( self);  // need to have a notion of "current_" immediately
+   _stream = [stream retain];
+   MulleObjCBufferedInputStreamFillBuffer( self);  // need to have a notion of "_current" immediately
    
-   if( self->current_ == self->sentinel_)           // we can't have nothing
+   if( self->_current == self->_sentinel)           // we can't have nothing
    {
       [self autorelease];
       return( nil);
@@ -49,8 +51,8 @@ static void   MulleObjCBufferedInputStreamFillBuffer( MulleObjCBufferedInputStre
 
 - (void) dealloc
 {
-   [stream_ release];
-   [data_ release];
+   [_stream release];
+   [_data release];
 
    [super dealloc];
 }
@@ -65,24 +67,24 @@ static void   MulleObjCBufferedInputStreamFillBuffer( MulleObjCBufferedInputStre
    
    if( size >= available)
    {
-      data = [NSData dataWithBytes:current_
+      data = [NSData dataWithBytes:_current
                             length:size];
-      current_ += size;
+      _current += size;
       return( data);
    }
    
    if( ! available && size >= MulleObjCBufferedInputStreamDefaultBufferSize / 2)
-      return( [stream_ readDataOfLength:size]);
+      return( [_stream readDataOfLength:size]);
       
    data = [NSMutableData dataWithCapacity:size];
-   [data appendBytes:current_
+   [data appendBytes:_current
               length:available];
-   current_ += available;
+   _current += available;
 
    // 
    if( size >= MulleObjCBufferedInputStreamDefaultBufferSize)
    {
-      [data appendData:[stream_ readDataOfLength:size]];
+      [data appendData:[_stream readDataOfLength:size]];
       return( data);
    }
    
@@ -92,16 +94,16 @@ static void   MulleObjCBufferedInputStreamFillBuffer( MulleObjCBufferedInputStre
    if( size >= available)
       size = available;
       
-   [data appendBytes:current_
+   [data appendBytes:_current
               length:size];
-   current_ += size;
+   _current += size;
    return( data);
 }
 
 
 - (void) bookmark
 {
-   NSParameterAssert( self->current_);
+   NSParameterAssert( self->_current);
    
    MulleObjCBufferedInputStreamBookmark( self);
 }
@@ -116,20 +118,20 @@ struct MulleObjCMemoryRegion   MulleObjCBufferedInputStreamBookmarkedRegion( Mul
    
    NSCParameterAssert( [self isKindOfClass:[MulleObjCBufferedInputStream class]]);
 
-   if( ! self->bookmark_)
+   if( ! self->_bookmark)
    {
       region.bytes  = NULL;
       region.length = 0;
       return( region);
    }
       
-   if( self->bookmarkData_)
+   if( self->_bookmarkData)
    {
-      bookmarkData        = [self->bookmarkData_ autorelease];
-      self->bookmarkData_ = nil;
+      bookmarkData        = [self->_bookmarkData autorelease];
+      self->_bookmarkData = nil;
    
-      start  = (unsigned char *) [self->data_ bytes];
-      length = (long) (self->current_ - start);
+      start  = (unsigned char *) [self->_data bytes];
+      length = (long) (self->_current - start);
       if( length)
          [bookmarkData appendBytes:start
                             length:length];
@@ -139,10 +141,10 @@ struct MulleObjCMemoryRegion   MulleObjCBufferedInputStreamBookmarkedRegion( Mul
    }
    else
    {
-      region.bytes  = self->bookmark_;
-      region.length = (long) (self->current_ - self->bookmark_);
+      region.bytes  = self->_bookmark;
+      region.length = (long) (self->_current - self->_bookmark);
    }
-   self->bookmark_ = NULL;
+   self->_bookmark = NULL;
    return( region);
 }
 
@@ -159,28 +161,28 @@ struct MulleObjCMemoryRegion   MulleObjCBufferedInputStreamBookmarkedRegion( Mul
    unsigned char   *start;
    long            length;
    
-   if( ! bookmark_)
+   if( ! _bookmark)
       return( nil);
       
-   if( bookmarkData_)
+   if( _bookmarkData)
    {
-      data = [bookmarkData_ autorelease];
-      bookmarkData_ = nil;
-      bookmark_     = NULL;
+      data = [_bookmarkData autorelease];
+      _bookmarkData = nil;
+      _bookmark     = NULL;
    
-      start  = (unsigned char *) [data_ bytes];
-      length = (long) (self->current_ - start);
+      start  = (unsigned char *) [_data bytes];
+      length = (long) (self->_current - start);
       if( length)
          [data appendBytes:start
                   length:length];
       return( data);
    }
 
-   length    = (long) (self->current_ - self->bookmark_);
-   bookmark_ = NULL;
+   length    = (long) (self->_current - self->_bookmark);
+   _bookmark = NULL;
    
    if( length)
-      return( [[[NSData alloc] initWithBytes:self->bookmark_
+      return( [[[NSData alloc] initWithBytes:self->_bookmark
                                      length:length] autorelease]);
    return( nil);
 }
@@ -191,34 +193,34 @@ int   MulleObjCBufferedInputStreamFillBufferAndNextCharacter( MulleObjCBufferedI
    NSCParameterAssert( [self isKindOfClass:[MulleObjCBufferedInputStream class]]);
 
    MulleObjCBufferedInputStreamFillBuffer( self);
-   if( self->current_ == self->sentinel_)
+   if( self->_current == self->_sentinel)
       return( -1);
-   return( *self->current_);
+   return( *self->_current);
 }
 
 
 static void   MulleObjCBufferedInputStreamFillBuffer( MulleObjCBufferedInputStream *self)
 {
    NSCParameterAssert( [self isKindOfClass:[MulleObjCBufferedInputStream class]]);
-   NSCParameterAssert( self->current_ == self->sentinel_);
+   NSCParameterAssert( self->_current == self->_sentinel);
    
    //
    // we need to preserve Bookmark data, when we change the buffer
    //
-   if( self->bookmark_)
+   if( self->_bookmark)
    {
-      if( ! self->bookmarkData_)
-         self->bookmarkData_ = [[NSMutableData alloc] initWithBytes:self->bookmark_
-                                                             length:self->sentinel_ - self->bookmark_];
+      if( ! self->_bookmarkData)
+         self->_bookmarkData = [[NSMutableData alloc] initWithBytes:self->_bookmark
+                                                             length:self->_sentinel - self->_bookmark];
       else
-         [self->bookmarkData_  appendData:self->data_];
+         [self->_bookmarkData  appendData:self->_data];
    }
    
-   [self->data_ release];
+   [self->_data release];
   
-   self->data_     = [[self->stream_ readDataOfLength:MulleObjCBufferedInputStreamDefaultBufferSize] retain];
-   self->current_  = (void *) [self->data_ bytes];
-   self->sentinel_ = &self->current_[ [self->data_ length]];
+   self->_data     = [[self->_stream readDataOfLength:MulleObjCBufferedInputStreamDefaultBufferSize] retain];
+   self->_current  = (void *) [self->_data bytes];
+   self->_sentinel = &self->_current[ [self->_data length]];
 }
 
 @end

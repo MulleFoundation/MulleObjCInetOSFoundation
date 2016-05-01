@@ -14,7 +14,13 @@
 #import <MulleObjCFoundation/MulleObjCFoundation.h>
 
 
-@interface NSUserDefaults : NSObject
+//
+// this is a Darwin concept
+// on Linux, its .config
+// on Windows its the registry
+//
+@interface NSUserDefaults : NSObject < MulleObjCSingleton>
+
 {
    NSMutableArray        *_searchList;
    NSMutableDictionary   *_domains;

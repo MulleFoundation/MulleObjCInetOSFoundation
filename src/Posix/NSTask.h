@@ -48,14 +48,6 @@ typedef NSInteger   NSTaskTerminationReason;
 
 + (NSTask *) launchedTaskWithLaunchPath:(NSString *) path 
                               arguments:(NSArray *) arguments;
-- (BOOL) isRunning;
-
-- (void) interrupt;
-- (void) launch;
-- (BOOL) resume;
-- (BOOL) suspend;
-- (void) terminate;
-- (void) waitUntilExit;
 
 - (void) setArguments:(NSArray *) arguments;
 - (void) setCurrentDirectoryPath:(NSString *) path;
@@ -67,7 +59,6 @@ typedef NSInteger   NSTaskTerminationReason;
 
 - (int) processIdentifier;
 - (int) terminationStatus;
-- (NSTaskTerminationReason) terminationReason;
 
 - (id) standardError;
 - (id) standardInput;
@@ -79,4 +70,23 @@ typedef NSInteger   NSTaskTerminationReason;
 - (NSDictionary *) environment;
 
 @end
+
+
+@interface NSTask ( Future)
+
++ (char **) _environment;
+
+- (BOOL) isRunning;
+
+- (void) interrupt;
+- (void) launch;
+- (BOOL) resume;
+- (BOOL) suspend;
+- (void) terminate;
+- (void) waitUntilExit;
+- (NSTaskTerminationReason) terminationReason;
+
+@end
+
+
 

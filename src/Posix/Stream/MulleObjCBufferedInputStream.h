@@ -32,14 +32,14 @@ struct MulleObjCMemoryRegion
 #ifdef _NS_BUFFERED_DATA_INPUT_STREAM_IVAR_VISIBILITY
 _NS_BUFFERED_DATA_INPUT_STREAM_IVAR_VISIBILITY      // allow public access for internal use
 #endif
-   id <MulleObjCInputStream >  stream_;
+   id <MulleObjCInputStream >  _stream;
    
-   NSData          *data_;   
-   unsigned char   *current_;
-   unsigned char   *sentinel_; 
+   NSData          *_data;   
+   unsigned char   *_current;
+   unsigned char   *_sentinel; 
    
-   unsigned char   *bookmark_; 
-   NSMutableData   *bookmarkData_;
+   unsigned char   *_bookmark; 
+   NSMutableData   *_bookmarkData;
 }
 
 - (id) initWithData:(NSData *) data;

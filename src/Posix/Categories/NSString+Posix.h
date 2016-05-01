@@ -14,7 +14,8 @@
 #import <MulleObjCFoundation/MulleObjCFoundation.h>
 
 
-@interface NSString( _Posix)
+
+@interface NSString( Posix)
 
 + (id) stringWithContentsOfFile:(NSString *) path;
 - (id) initWithContentsOfFile:(NSString *) path;

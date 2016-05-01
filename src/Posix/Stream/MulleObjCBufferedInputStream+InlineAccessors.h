@@ -26,9 +26,9 @@ static inline int  MulleObjCBufferedInputStreamCurrentCharacter( MulleObjCBuffer
 {
    struct { @defs( MulleObjCBufferedInputStream); }  *self = (void *) _self;
    
-   if( ! self->current_)
+   if( ! self->_current)
       return( -1);
-   return( *self->current_);
+   return( *self->_current);
 }
 
 
@@ -36,12 +36,12 @@ static inline int   MulleObjCBufferedInputStreamNextCharacter( MulleObjCBuffered
 {
    struct { @defs( MulleObjCBufferedInputStream); }  *self = (void *) _self;
    
-   assert( self->current_);
+   assert( self->_current);
 
-   if( ++self->current_ == self->sentinel_)
+   if( ++self->_current == self->_sentinel)
       return( MulleObjCBufferedInputStreamFillBufferAndNextCharacter( _self));
 
-   return( *self->current_);
+   return( *self->_current);
 }
 
 
@@ -51,9 +51,9 @@ static inline int   MulleObjCBufferedInputStreamConsumeCurrentCharacter( MulleOb
    int     c;
 
    // end reached ?
-   if( ! self->current_)
+   if( ! self->_current)
       return( -1);
-   c = *self->current_;
+   c = *self->_current;
    
    MulleObjCBufferedInputStreamNextCharacter( _self);
    return( c);
@@ -64,7 +64,7 @@ static inline size_t  MulleObjCBufferedInputStreamBytesAvailable( MulleObjCBuffe
 {
    struct { @defs( MulleObjCBufferedInputStream); }  *self = (void *) _self;
    
-   return( self->sentinel_ - self->current_);
+   return( self->_sentinel - self->_current);
 }
 
 
@@ -72,11 +72,11 @@ static inline void  MulleObjCBufferedInputStreamBookmark( MulleObjCBufferedInput
 {
    struct { @defs( MulleObjCBufferedInputStream); }  *self = (void *) _self;
    
-   if( self->bookmarkData_)
+   if( self->_bookmarkData)
    {
-      [self->bookmarkData_ release];
-      self->bookmarkData_ = nil;
+      [self->_bookmarkData release];
+      self->_bookmarkData = nil;
    }
-   self->bookmark_ = self->current_;
+   self->_bookmark = self->_current;
 }
 

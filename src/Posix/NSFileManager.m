@@ -16,12 +16,20 @@
 // other files in this library
 #import "NSFileManager+Private.h"
 #import "NSDirectoryEnumerator.h"
+#import "NSData+Posix.h"
+#import "NSError+Posix.h"
+#import "NSString+CString.h"
+#import "NSString+Posix.h"
+#import "NSString+PosixPathHandling.h"
 
 // other libraries of MulleObjCPosixFoundation
 
 // std-c and dependencies
 #include <sys/stat.h>
+#include <sys/time.h>
 #include <dirent.h>
+#include <float.h>
+#include <unistd.h>
 
 
 NSString   *NSFileAppendOnly            = @"NSFileAppendOnly";
@@ -76,34 +84,47 @@ NSString   *NSFileTypeUnknown          = @"NSFileTypeUnknown";
 //
 + (NSFileManager *) defaultManager
 {
-   static id   defaultManager;
+   return( [NSFileManager sharedInstance]);
+}
+
+
+- (BOOL) changeCurrentDirectoryPath:(NSString *) path
+{
+   char   *c_string;
    
-   if( ! defaultManager)
-      defaultManager = [NSFileManager new];
-   return( defaultManager);
+   c_string = [path fileSystemRepresentation];
+   if( ! c_string)
+      return( NO);
+
+   if( chdir( c_string))
+   {
+      MulleObjCSetCurrentErrnoError( NULL);
+      return( NO);
+   }
+
+   return( YES);
 }
 
 
 - (NSString *) currentDirectoryPath
 {
    char      *c_string;
-   NSString  *s;
 
    c_string = getwd( NULL);
    if( ! c_string)
+   {
+      MulleObjCSetCurrentErrnoError( NULL);
       return( nil);
-      
-   s = [[NSString alloc] initWithCStringNoCopy:c_string
-                                                               length:strlen(c_string)
-                                                         freeWhenDone:YES];
-   return( NSAutoreleaseObject( s));
+   }
+   
+   return( [self stringWithFileSystemRepresentation:c_string
+                                             length:strlen(c_string)]);
 }
 
 
 - (NSDirectoryEnumerator *) enumeratorAtPath:(NSString *) path
 {
    return( [[[NSDirectoryEnumerator alloc] initWithFileManager:self
-             
                                                      directory:path] autorelease]);
 }
 
@@ -111,9 +132,16 @@ NSString   *NSFileTypeUnknown          = @"NSFileTypeUnknown";
 static int    stat_at_path( NSString *path, struct stat *c_info)
 {   
    char   *c_path;
+   int    rval;
    
    c_path = [path fileSystemRepresentation];
-   return( stat( c_path, c_info));
+   if( ! c_path)
+      return( -1);
+   
+   rval = stat( c_path, c_info);
+   if( rval)
+      MulleObjCSetCurrentErrnoError( NULL);
+   return( rval);
 }
 
 
@@ -197,19 +225,6 @@ static unsigned int    permissons_for_current_uid_gid( struct stat *c_info)
 }
 
 
-- (char *) fileSystemRepresentationWithPath:(NSString *) path
-{
-   return( NULL);
-}
-
-
-- (NSString *) stringWithFileSystemRepresentation:(char *) s 
-                                           length:(NSUInteger) len
-{
-   return( [NSString stringWithCString:s
-                                length:len]);
-}
-
 
 // useless fluff routines
 - (BOOL) createFileAtPath:(NSString *) path 
@@ -218,6 +233,170 @@ static unsigned int    permissons_for_current_uid_gid( struct stat *c_info)
 {
    return( [contents writeToFile:path
                       atomically:NO]);
+}
+
+          
+          
+- (BOOL) setAttributes:(NSDictionary *) attributes
+          ofItemAtPath:(NSString *) path
+                 error:(NSError **) error
+{
+   
+   mode_t     mode;
+   char       *s;
+   NSNumber   *nr;
+   NSDate     *date;
+   int        owner;
+   int        group;
+   
+   s  = [self fileSystemRepresentationWithPath:path];
+   
+   owner = -1;
+   group = -1;
+
+   // do in order of most consequences
+  
+   nr = [attributes objectForKey:NSFileOwnerAccountID];
+   if( nr)
+      owner = (int) [nr intValue];
+
+   nr = [attributes objectForKey:NSFileGroupOwnerAccountID];
+   if( nr)
+      group = (int) [nr intValue];
+   
+   if( owner != -1 && group != -1)
+   {
+      if( chown( s, owner, group))
+      {
+         MulleObjCSetCurrentErrnoError( error);
+         return( NO);
+      }
+   }
+
+   nr = [attributes objectForKey:NSFilePosixPermissions];
+   if( nr)
+   {
+      mode = (mode_t) [nr unsignedIntValue];
+      if( chmod( s, mode))
+      {
+         MulleObjCSetCurrentErrnoError( error);
+         return( NO);
+      }
+   }
+
+   date = [attributes objectForKey:NSFileModificationDate];
+   if( date)
+   {
+      struct timeval   timeval;
+      NSTimeInterval   ticks;
+      
+      ticks = [date timeIntervalSince1970];
+      timeval.tv_sec  = (int) ticks;
+      timeval.tv_usec = (int) ((ticks - timeval.tv_sec) * 1000000 + 0.5);
+
+      if( utimes( s, &timeval))
+      {
+         MulleObjCSetCurrentErrnoError( error);
+         return( NO);
+      }
+   }
+   
+   return( YES);
+}
+
+
+static int  createDirectoryAtPath( NSFileManager *self, NSString *path, mode_t mode)
+{
+   char   *s;
+   
+   s = [self fileSystemRepresentationWithPath:path];
+   if( ! mkdir( s, mode))
+      return( 0);
+   
+   switch( errno)
+   {
+   case EEXIST :
+   case ENOENT :
+      return( errno);
+         
+   default :
+      return( -1);
+   }
+}
+
+
+- (BOOL) createDirectoryAtPath:(NSString *) path
+   withIntermediateDirectories:(BOOL) createIntermediates
+                    attributes:(NSDictionary *) attributes
+                         error:(NSError **) error
+{
+   NSArray          *components;
+   NSMutableArray   *subComponents;
+   NSString         *subpath;
+   NSUInteger       i, n;
+   mode_t           mode;
+   
+   // respect:
+   // NSFileOwnerAccountID;
+   // NSFileGroupOwnerAccountID;
+   // NSFileModificationDate
+   // NSFilePosixPermissions
+   
+   if( ! attributes)
+      mode = umask( 3777);
+   else
+      mode = (mode_t) [[attributes objectForKey:NSFilePosixPermissions] unsignedIntValue];
+   
+   // first try simple case
+   switch( createDirectoryAtPath( self, path, mode))
+   {
+   case 0 :
+      if( ! attributes)
+         return( YES);
+      
+   case EEXIST :
+      if( attributes)
+         return( [self setAttributes:attributes
+                        ofItemAtPath:path
+                               error:error]);
+      return( YES);
+
+   case ENOENT:
+      if( ! createIntermediates)
+      {
+         MulleObjCSetCurrentErrnoError( error);
+         return( NO);
+      }
+      break;
+      
+   case -1 :
+      MulleObjCSetCurrentErrnoError( error);
+      return( NO);
+   }
+   
+   // does not exist, create it
+   
+   subComponents = [NSMutableArray array];
+
+   components = [path pathComponents];
+   n          = [components count];
+   for( i = 0; i < n; i++)
+   {
+      [subComponents addObject:[components objectAtIndex:i]];
+      subpath = [subComponents pathWithComponents:subComponents];
+      
+      if( ! [self createDirectoryAtPath:subpath
+            withIntermediateDirectories:NO
+                             attributes:attributes
+                                  error:error])
+         return( NO);
+   }
+   
+   if( attributes)
+      return( [self setAttributes:attributes
+                     ofItemAtPath:path
+                            error:error]);
+   return( YES);
 }
 
 

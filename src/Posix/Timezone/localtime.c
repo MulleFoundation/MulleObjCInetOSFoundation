@@ -180,7 +180,7 @@ struct tz_context
 };
 
 
-void  init_tz_context( self)
+static void  init_tz_context( self)
 struct tz_context *self;
 {
    memset( self, 0, sizeof( *self));

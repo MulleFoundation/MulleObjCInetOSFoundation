@@ -25,9 +25,9 @@ static inline void  MulleObjCBufferedOutputStreamNextCharacter( MulleObjCBuffere
 {
    struct { @defs( MulleObjCBufferedOutputStream) }  *self = (void *) _self;
    
-   if( self->current_ == self->sentinel_)
+   if( self->_current == self->_sentinel)
       MulleObjCBufferedOutputStreamExtendBuffer( _self);
-   *self->current_++ = c;
+   *self->_current++ = c;
 }
 
 
@@ -36,6 +36,6 @@ static inline size_t  MulleObjCBufferedOutputStreamBytesWritten( MulleObjCBuffer
 {
    struct { @defs( MulleObjCBufferedOutputStream) }  *self = (void *) _self;
    
-   return( self->current_ - self->_start);
+   return( self->_current - self->_start);
 }
 

@@ -22,14 +22,9 @@ static NSString   *NSApplicationDomain  = @"NSApplicationDomain";
 
 @implementation NSUserDefaults
 
-static NSUserDefaults  *standard;
-
 + (NSUserDefaults *)  standardUserDefaults
 {
-   
-   if( ! standard)
-      standard = [NSUserDefaults new];
-   return( standard);
+   return( [NSUserDefaults sharedInstance]);
 }
 
 
@@ -44,8 +39,6 @@ static NSUserDefaults  *standard;
 
 - (void) dealloc
 {
-   NSParameterAssert( self != standard);
-   
    [_domains release];
    [_searchList release];
    [super dealloc];

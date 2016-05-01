@@ -14,9 +14,13 @@
 #import "MulleObjCPosixFoundation.h"
 
 // other files in this library
+#import "NSPathUtilities+Private.h"
+#import "NSString+CString.h"
+#import "NSString+Posix.h"
+#import "NSString+PosixPathHandling.h"
+#import "NSTask+System.h"
 
 // other libraries of MulleObjCPosixFoundation
-#import "NSPathUtilities+Private.h"
 
 // std-c and dependencies
 

@@ -14,6 +14,11 @@
 
 #import "MulleObjCBufferedOutputStream.h"
 
+// other files in this library
+#import "MulleObjCBufferedOutputStream+InlineAccessors.h"
+
+// std-c and dependencies
+
 
 @implementation MulleObjCBufferedOutputStream
 
@@ -22,12 +27,12 @@
 
 - (id) initWithOutputStream:(id <MulleObjCOutputStream>) stream
 {
-   stream_ = [stream retain];
-   data_   = [[NSMutableData alloc] initWithLength:Buffersize];
+   _stream = [stream retain];
+   _data   = [[NSMutableData alloc] initWithLength:Buffersize];
    
-   self->_start    = (unsigned char *) [data_ bytes];
-   self->current_  = self->_start;
-   self->sentinel_ = &self->current_[ Buffersize]; 
+   self->_start    = (unsigned char *) [_data bytes];
+   self->_current  = self->_start;
+   self->_sentinel = &self->_current[ Buffersize]; 
 
    return( self);
 }
@@ -35,7 +40,7 @@
 
 - (id) initWithMutableData:(NSMutableData *) data
 {
-   stream_ = [data retain];
+   _stream = [data retain];
 
    return( self);
 }
@@ -45,16 +50,16 @@
 {
    NSData   *data;
    
-   if( data_)
+   if( _data)
    {
       data = [[NSData alloc] initWithBytesNoCopy:self->_start
-                                          length:self->current_ - self->_start
+                                          length:self->_current - self->_start
                                     freeWhenDone:NO];
-      [stream_ writeData:data];
+      [_stream writeData:data];
       [data release];
    }
    
-   self->current_ = self->_start;
+   self->_current = self->_start;
 }
 
 
@@ -62,8 +67,8 @@
 {
    [self flush];
 
-   [stream_ release];
-   [data_ release];
+   [_stream release];
+   [_data release];
 
    [super dealloc];
 }
@@ -74,23 +79,23 @@
    size_t   len;
    
    len = [data length];
-   if( data_ && len < MaxToBuffer)
+   if( _data && len < MaxToBuffer)
    {
-      if( &self->current_[ len] >= self->sentinel_)
+      if( &self->_current[ len] >= self->_sentinel)
          [self flush];
          
-      memcpy( self->current_, [data bytes], len);
-      self->current_ += len;
+      memcpy( self->_current, [data bytes], len);
+      self->_current += len;
       return;
    }
-   [stream_ writeData:data];
+   [_stream writeData:data];
 }
 
 
 
 void   MulleObjCBufferedOutputStreamExtendBuffer( MulleObjCBufferedOutputStream *self)
 {
-   NSCParameterAssert( self->current_ == self->sentinel_);
+   NSCParameterAssert( self->_current == self->_sentinel);
 
    [self flush];
 }

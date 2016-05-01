@@ -15,8 +15,6 @@
 
 // other files in this library
 
-// other libraries of MulleObjCPosixFoundation
-
 // std-c and dependencies
 #import <pthread.h>
 
@@ -59,6 +57,7 @@
 }
 
 
+
 #pragma mark -
 #pragma mark NSLocking
 
@@ -79,6 +78,21 @@
 {
    return( pthread_mutex_trylock( &self->_lock) ? NO : YES);
 }
+
+
+- (BOOL) waitUntilDate:(NSDate *) date
+{
+   struct timespec    wait_time;
+   NSTimeInterval     interval;
+   
+   interval = [date timeIntervalSince1970];
+   wait_time.tv_sec  = (long) interval;
+   wait_time.tv_nsec = (long) ((interval - wait_time.tv_sec) * 1000000000);
+   return( pthread_cond_timedwait( &self->_condition,
+                                   &self->_lock,
+                                   &wait_time) ? NO : YES);
+}
+
 
 @end
 

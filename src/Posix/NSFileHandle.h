@@ -23,6 +23,9 @@
    void  (*_closer)( int);
 }
 
++ (id) fileHandleForReadingAtPath:(NSString *) path;
++ (id) fileHandleForWritingAtPath:(NSString *) path;
++ (id) fileHandleForUpdatingAtPath:(NSString *) path;
 
 + (id) fileHandleWithStandardError;
 + (id) fileHandleWithStandardInput;
@@ -43,6 +46,8 @@
 - (void) closeFile;
 - (void) synchronizeFile;
 - (void) truncateFileAtOffset:(unsigned long long) offset;
+
+- (void) writeData:(NSData *) data;
 
 - (int) fileDescriptor;
 

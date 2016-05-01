@@ -14,6 +14,7 @@
 #import <MulleObjCFoundation/MulleObjCFoundation.h>
 
 
+
 //
 // there will be subclasses for Frameworks proper
 // and unix "spread" over multiple folders kinda bundles
@@ -77,17 +78,42 @@
       executablePath:(NSString *) executablePath;
 + (NSString *) _OSIdentifier;
 + (NSString *) _mainBundlePathForExecutablePath:(NSString *) path;
-+ (NSString *) _mainExecutablePath;
 + (NSString *) _inferiorBundlePathForExecutablePath:(NSString *) path;
 
+- (NSString *) localizedStringForKey:(NSString *) key
+                               value:(NSString *) comment
+                               table:(NSString *) tableName;
 @end
+
+
+@interface NSBundle ( Future)
+
++ (NSString *) _mainExecutablePath;
++ (NSArray *) allImages;
+
+@end
+
+
 
 extern NSString   *NSLoadedClasses;
 extern NSString   *NSBundleDidLoadNotification;
 
-NSString   *NSLocalizedStringFromTableInBundle( NSString *key, 
-                                                NSString *tableName, 
-                                                NSBundle *bundle, 
-                                                NSString *comment);
+NSString   *MulleObjCBundleLocalizedStringFromTable( NSBundle *bundle,
+                                                     NSString *tableName,
+                                                     NSString *key,
+                                                     NSString *value);
+
+
+#define NSLocalizedString( key, comment) \
+   MulleObjCBundleLocalizedStringFromTable( [NSBundle mainBundle], nil, (key), @"")
+
+#define NSLocalizedStringFromTable( key, table, comment) \
+   MulleObjCBundleLocalizedStringFromTable( [NSBundle mainBundle], (table), (key), @"")
+
+#define NSLocalizedStringFromTableInBundle( key, table, bundle, comment) \
+   MulleObjCBundleLocalizedStringFromTable( (bundle), (table), (key), @"")
+
+#define NSLocalizedStringWithDefaultValue( key, table, bundle, value, comment) \
+   MulleObjCBundleLocalizedStringFromTable( (bundle), (table), (key), (value))
 
 

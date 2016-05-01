@@ -8,6 +8,14 @@
 
 #import "NSTimeZone+Posix.h"
 
+// other files in this library
+#import "NSString+CString.h"
+#import "NSString+Posix.h"
+#import "NSFileManager.h"
+
+// std-c and dependencies
+
+
 
 @implementation NSTimeZone( Posix)
 
@@ -28,10 +36,10 @@
       return( nil);
    }
       
-   data_ = [[NSData alloc] initWithBytesNoCopy:info
+   _data = [[NSData alloc] initWithBytesNoCopy:info
                                         length:size
                                   freeWhenDone:YES];
-   name_ = [name copy];
+   _name = [name copy];
 
    return( self);
 }
@@ -49,6 +57,12 @@
    name = [NSString stringWithCString:s];
    
    return( [NSTimeZone timeZoneWithName:name]);
+}
+
+
++ (NSArray *) availableLocaleIdentifiers;
+{
+   return( [[NSFileManager defaultManager] directoryContentsAtPath:@"/usr/share/locale"]);
 }
 
 
@@ -149,9 +163,9 @@
    };
    
    NSMutableDictionary   *dict;
-   unsigned int   i;
-   NSString       *value;
-   NSString       *key;
+   NSString              *key;
+   NSString              *value;
+   unsigned int          i;
 
    dict = [NSMutableDictionary dictionary];
    
@@ -166,12 +180,6 @@
 }
 
 
-- (NSInteger) secondsFromGMT
-{
-   return( [self secondsFromGMTForDate:[NSDate date]]);
-}
-
-
 - (NSInteger) secondsFromGMTForDate:(NSDate *) aDate
 {
    extern long      mulle_get_gmt_offset_for_time_interval( void *, time_t);
@@ -179,7 +187,7 @@
    long             offset;
    
    seconds = [aDate timeIntervalSince1970]; // standard unix
-   offset  = mulle_get_gmt_offset_for_time_interval( [data_ bytes], (time_t) seconds);
+   offset  = mulle_get_gmt_offset_for_time_interval( [_data bytes], (time_t) seconds);
    return( offset);
 }
 
@@ -191,7 +199,7 @@
    char             *abr;
    
    seconds = [aDate timeIntervalSince1970]; // standard unix
-   abr     = mulle_get_abbreviation_for_time_interval( [data_ bytes], (time_t) seconds);
+   abr     = mulle_get_abbreviation_for_time_interval( [_data bytes], (time_t) seconds);
    return( [NSString stringWithCString:abr]);
 }
 
@@ -203,7 +211,7 @@
    int              flag;
    
    seconds = [aDate timeIntervalSince1970]; // standard unix
-   flag    = mulle_get_daylight_saving_flag_for_time_interval( [data_ bytes], (time_t) seconds);
+   flag    = mulle_get_daylight_saving_flag_for_time_interval( [_data bytes], (time_t) seconds);
    return( flag ? YES : NO);
 }
 
@@ -215,18 +223,6 @@
 
    abort();
    return( nil);
-}
-
-
-- (NSString *) abbreviation
-{
-   return( [self abbreviationForDate:[NSDate date]]);
-}
-
-
-- (BOOL) isDaylightSavingTime
-{
-   return( [self isDaylightSavingTimeForDate:[NSDate date]]);
 }
 
 @end

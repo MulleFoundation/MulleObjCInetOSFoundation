@@ -15,8 +15,7 @@
 
 // other files in this library
 #import "NSFileManager.h"
-
-// other libraries of MulleObjCFoundation
+#import "NSPathUtilities.h"
 
 // std-c and dependencies
 
@@ -64,7 +63,7 @@ NSString  *NSFilePathExtensionSeparator = @".";
 
 - (NSArray *) pathComponents
 {
-   return( [self componentsSeparatedByStringIfAny:NSFilePathComponentSeparator]);
+   return( [self componentsSeparatedByString:NSFilePathComponentSeparator]);
 }
 
 
@@ -78,7 +77,7 @@ NSString  *NSFilePathExtensionSeparator = @".";
    
    // if this is nil, path has no @"/" anywhere
    // 
-   components = [self _componentsSeparatedByStringIfAny:NSFilePathComponentSeparator];
+   components = [self _componentsSeparatedByString:NSFilePathComponentSeparator];
    if( ! components)
       return( self);
    
@@ -97,8 +96,8 @@ NSString  *NSFilePathExtensionSeparator = @".";
             continue;
          }
          if( ! result)
-            result = [NSMutableArray _arrayWithArray:components
-                                               range:NSMakeRange( 0, i)];
+            result = [NSMutableArray arrayWithArray:components
+                                              range:NSMakeRange( 0, i)];
          continue;
       }
       if( isAbsolute)
@@ -106,8 +105,8 @@ NSString  *NSFilePathExtensionSeparator = @".";
          if( [@".." isEqualToString:s])
          {
             if( ! result)
-               result = [NSMutableArray _arrayWithArray:components
-                                                  range:NSMakeRange( 0, i ? i - 1 : 0)];
+               result = [NSMutableArray arrayWithArray:components
+                                                 range:NSMakeRange( 0, i ? i - 1 : 0)];
             else
                [result removeLastObject];
             continue;
@@ -235,7 +234,7 @@ NSString  *NSFilePathExtensionSeparator = @".";
    NSArray   *components;
    NSString  *s;
    
-   components = [self _componentsSeparatedByStringIfAny:@"~"];
+   components = [self _componentsSeparatedByString:@"~"];
    if( ! components)
       return( self);
       
@@ -393,18 +392,25 @@ static NSRange  getPathExtensionRange( NSString *self)
 //
 - (char *) fileSystemRepresentation
 {
-   return( [self cString]);
+   return( [[NSFileManager sharedInstance] fileSystemRepresentationWithPath:self]);
 }
 
 
+// this is not as fast as you may think :)
 - (BOOL) getFileSystemRepresentation:(char *) buf 
                            maxLength:(NSUInteger) max
 {
-   if( [self _cStringLength] >= max)
+   char     *s;
+   size_t   len;
+   
+   s = [[NSFileManager sharedInstance] fileSystemRepresentationWithPath:self];
+   if( ! s)
       return( NO);
-      
-   [self getCString:buf
-          maxLength:max];
+   len = strlen( s);
+   if( len > max)
+      return( NO);
+   
+   memcpy( buf, s, len);
    return( YES);
-}                           
+}
 @end

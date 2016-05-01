@@ -13,7 +13,11 @@
  */
 #import "NSPathUtilities.h"
 
+// other files in this library
+#import "NSString+PosixPathHandling.h"
 #import "NSPathUtilities+Private.h"
+
+// std-c and dependencies
 
 _NSPathUtilityVectorTable   *_NSPathUtilityVectors;
 

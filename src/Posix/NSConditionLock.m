@@ -89,7 +89,7 @@
       if( _currentCondition == condition)
          return( YES);
       
-      [_lock waitUntilDate:limit];  // or hopefully earlier
+      [_lock lockBeforeDate:limit];  // or hopefully earlier
    }
 }
 

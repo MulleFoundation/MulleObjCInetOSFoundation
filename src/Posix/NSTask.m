@@ -15,7 +15,11 @@
 
 // other files in this library
 #import "NSFileManager.h"
+#import "NSFileHandle.h"
+#import "NSPipe.h"
 #import "NSProcessInfo.h"
+#import "NSString+CString.h"
+#import "NSString+PosixPathHandling.h"
 #import "NSTask+Private.h"
 
 // other libraries of MulleObjCPosixFoundation
@@ -73,11 +77,11 @@ static void   do_the_dup( int fd, id handle)
    
    if( ! (pid = vfork()))
    {
-      void   **argv;
-      void   **envp;
-      char   *path;
-      int    argc;
-      int    i;
+      void         **argv;
+      char         **envp;
+      char         *path;
+      NSUInteger   argc;
+      NSUInteger   i;
       
       _status = _NSTaskIsPresumablyRunning;
       
@@ -91,7 +95,7 @@ static void   do_the_dup( int fd, id handle)
       argv[ i] = 0;
       argv[ 0] = path;  // [[_launchPath lastPathComponent] cString];
 
-      envp     = [NSTask _environment];
+      envp = [NSTask _environment];
       
       //
       // in the end, we might leak a few filedescriptors

@@ -47,7 +47,7 @@ extern NSString   *NSFileTypeBlockSpecial;
 extern NSString   *NSFileTypeUnknown;
 
 
-@interface NSFileManager : NSObject
+@interface NSFileManager : NSObject < MulleObjCSingleton>
 {
 }
 
@@ -64,22 +64,35 @@ extern NSString   *NSFileTypeUnknown;
 - (BOOL) isReadableFileAtPath:(NSString *) path;
 - (BOOL) isWritableFileAtPath:(NSString *) path;
 
-- (char *) fileSystemRepresentationWithPath:(NSString *) path;
-- (NSString *) stringWithFileSystemRepresentation:(char *) s 
-                                           length:(NSUInteger) len;
+- (NSDictionary *) fileSystemAttributesAtPath:(NSString *) path;
 
 - (NSString *) pathContentOfSymbolicLinkAtPath:(NSString *) path;
 
 - (NSArray *) directoryContentsAtPath:(NSString *) path;
+
+- (BOOL) createDirectoryAtPath:(NSString *) path
+   withIntermediateDirectories:(BOOL) createIntermediates
+                    attributes:(NSDictionary *) attributes
+                         error:(NSError **) error;
 
 // useless fluff routines
 - (BOOL) createFileAtPath:(NSString *) path 
                  contents:(NSData *) contents 
                attributes:(NSDictionary *)attributes;
 
+
 - (NSData *) contentsAtPath:(NSString *) path;
 - (BOOL) contentsEqualAtPath:(NSString *) path1 
                      andPath:(NSString *) path2;
+
+@end
+
+
+@interface NSFileManager (Future)
+
+- (char *) fileSystemRepresentationWithPath:(NSString *) path;
+- (NSString *) stringWithFileSystemRepresentation:(char *) s
+                                           length:(NSUInteger) len;
 
 @end
 

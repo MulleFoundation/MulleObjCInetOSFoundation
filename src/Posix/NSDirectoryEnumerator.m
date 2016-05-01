@@ -14,10 +14,12 @@
 #import "NSDirectoryEnumerator.h"
 
 // other files in this library
+#import "NSString+CString.h"
 #import "NSString+PosixPathHandling.h"
+#import "NSFileManager.h"
 #import "NSFileManager+Private.h"
 
-// other libraries of MulleObjCFoundation
+// other libraries of MulleObjCPosixFoundation
 
 // std-c and dependencies
 #include <dirent.h>

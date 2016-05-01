@@ -13,6 +13,11 @@
  */
 #import "NSArray+Posix_Private.h"
 
+// other files in this library
+#import "NSString+CString.h"
+
+// std-c and dependencies
+
 
 @implementation NSArray( _Posix_Private)
 
@@ -30,8 +35,8 @@
    {
       s       = argv[ i];
       tmp[ i] = [[NSString alloc] initWithCStringNoCopy:s
-                                                                        length:strlen( s)
-                                                                  freeWhenDone:YES];
+                                                 length:strlen( s)
+                                           freeWhenDone:YES];
    }
 
    arguments = [[NSArray alloc] initWithObjects:(id *) tmp

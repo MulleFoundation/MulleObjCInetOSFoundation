@@ -33,8 +33,11 @@
 - (char *) fileSystemRepresentation;
 - (BOOL) getFileSystemRepresentation:(char *) buf 
                            maxLength:(NSUInteger) max;
-                           
-- (NSString *) _stringBySimplifingPath;  // just removes /./ and /../
+
+#pragma mark -
+#pragma mark mulle additions
+
+- (NSString *) _stringBySimplifyingPath;  // just removes /./ and /../
                            
 @end
 

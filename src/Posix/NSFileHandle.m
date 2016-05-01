@@ -13,6 +13,15 @@
  */
 #import "NSFileHandle.h"
 
+// other files in this library
+#import "NSString+Posix.h"
+#import "NSString+PosixPathHandling.h"
+
+// other libraries of MulleObjCFoundation
+
+// std-c and dependencies
+#include <fcntl.h>
+
 
 @interface NSNullDeviceFileHandle : NSFileHandle
 {
@@ -98,7 +107,7 @@ static id  NSInitFileHandle( NSFileHandle *self, int fd)
 static id  NSInitFileHandleAndClose( NSFileHandle *self, int fd)
 {
    self->_fd     = fd;
-   self->_closer = close;
+   self->_closer = (void *) close;
    return( self);
 }
 
@@ -142,7 +151,7 @@ static id  NSInitFileHandleAndClose( NSFileHandle *self, int fd)
 - (void) dealloc
 {
    (*_closer)( _fd);
-   NSDeallocateObject( self);
+   [super dealloc];
 }
 
 
@@ -170,7 +179,7 @@ static NSData   *readDataOfLength( int fd, NSUInteger length, BOOL flag)
    {
       readten = read( fd, buf, len);
       if( readten == (size_t) -1)
-         MulleObjCThrowErrnoException( "read failed");
+         mulle_objc_throw_errno_exception( "read failed");
       len -= readten;
       buf  = &buf[ readten];
       
@@ -236,14 +245,13 @@ static NSData   *readAllData( int fd, BOOL flag)
    {
       written = write( _fd, buf, len);
       if( written == (size_t) -1)
-         MulleObjCThrowErrnoException( "write");
+         mulle_objc_throw_errno_exception( "write");
       len -= written;
       buf  = &buf[ written];
       
       // if written is 0, we should yield the thread
       // but actually doing a system call is pretty good also
       // i would assume (given ancient knowledge of OSes)
-      // in any case NSThreadYield is not known here
    }
    while( len);
 }
@@ -253,7 +261,7 @@ static unsigned long long   _seek_or_bail( int fd, off_t offset, int mode)
 {
    offset = lseek( fd, (off_t) offset, mode);
    if( offset == (off_t) -1)
-      MulleObjCThrowErrnoException( "lseek");
+      mulle_objc_throw_errno_exception( "lseek");
    return( (unsigned long long) offset);
 }
 
@@ -310,6 +318,43 @@ static unsigned long long   _seek_zero_or_bail( int fd, int mode)
 {
    return( _fd);
 }
+
+
+#pragma mark -
+#pragma mark path
+
+
+static id  openFileInMode( Class self, NSString *path, int mode)
+{
+   char   *s;
+   int    fd;
+   
+   s  = [path fileSystemRepresentation];
+   fd = open( s, mode);
+   if( fd == -1)
+      return( nil);
+   return( [[[self alloc] initWithFileDescriptor:fd
+                                  closeOnDealloc:YES] autorelease]);
+}
+
+
++ (id) fileHandleForReadingAtPath:(NSString *) path
+{
+   return( openFileInMode( self, path, O_RDONLY));
+}
+
+
++ (id) fileHandleForWritingAtPath:(NSString *) path
+{
+   return( openFileInMode( self, path, O_WRONLY));
+}
+
+
++ (id) fileHandleForUpdatingAtPath:(NSString *) path
+{
+   return( openFileInMode( self, path, O_RDWR));
+}
+
 
 @end
 

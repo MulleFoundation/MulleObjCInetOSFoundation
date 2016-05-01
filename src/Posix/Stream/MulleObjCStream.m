@@ -13,20 +13,23 @@
  */
 #import "MulleObjCStream.h"
 
+// other files in this library
+
+// std-c and dependencies
 
 
 @implementation MulleObjCMemoryInputStream
 
 - (id) initWithData:(NSData *) data
 {
-   data_ = [data retain];
+   _data = [data retain];
    return( self);
 }
 
 
 - (void) dealloc
 {
-   [data_ release];
+   [_data release];
    [super dealloc];
 }
 
@@ -36,10 +39,10 @@
    unsigned char   *dst;
    NSData          *data;
    
-   if( ! current_)
+   if( ! _current)
    {
-      current_  = (unsigned char *) [data_ bytes];
-      sentinel_ = &current_[ [data_ length]];
+      _current  = (unsigned char *) [_data bytes];
+      _sentinel = &_current[ [_data length]];
    }
    
    //
@@ -47,22 +50,22 @@
    // fail miserably. Could reimplement this in NSMutableData or so, to
    // use an integer index instead...
    //
-   NSParameterAssert( current_ >= (unsigned char *) [data_ bytes]);
-   NSParameterAssert( current_ <= &((unsigned char *)[data_ bytes])[ [data_ length]]);
+   NSParameterAssert( _current >= (unsigned char *) [_data bytes]);
+   NSParameterAssert( _current <= &((unsigned char *)[_data bytes])[ [_data length]]);
    
-   dst = &current_[ length];
-   if( dst > sentinel_)
+   dst = &_current[ length];
+   if( dst > _sentinel)
    {
-      length -= (dst - sentinel_);
-      dst     = sentinel_;
+      length -= (dst - _sentinel);
+      dst     = _sentinel;
    }
    
    if( ! length)
       return( nil);
       
-   data = [NSData dataWithBytes:current_
+   data = [NSData dataWithBytes:_current
                          length:length];
-   current_ = dst;
+   _current = dst;
    return( data);
 }
 

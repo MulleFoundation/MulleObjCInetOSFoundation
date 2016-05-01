@@ -14,8 +14,7 @@
 #import "NSLog.h"
 
 // other files in this library
-
-// other libraries of MulleObjCFoundation
+#import "NSString+CString.h"
 
 // std-c and dependencies
 #include <syslog.h>

@@ -36,8 +36,6 @@ enum
 
 + (NSProcessInfo *) processInfo;
 
-- (NSArray *) arguments;
-- (NSDictionary *) environment;
 - (NSString *) globallyUniqueString;
 - (NSString *) hostName;
 - (NSUInteger) operatingSystem;
@@ -49,3 +47,10 @@ enum
 
 @end
 
+
+@interface NSProcessInfo ( OSSpecific)
+
+- (NSArray *) arguments;
+- (NSDictionary *) environment;
+
+@end

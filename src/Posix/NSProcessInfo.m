@@ -13,6 +13,12 @@
  */
 #import "NSProcessInfo.h"
 
+// other files in this library
+
+// other libraries of MulleObjCPosixFoundation
+
+// std-c and dependencies
+
 
 @implementation NSProcessInfo
 

@@ -13,7 +13,16 @@
  */
 #import "NSTask+System.h"
 
+// other files in this library
 #import "NSPipe.h"
+#import "NSFileHandle.h"
+#import "NSString+CString.h"
+#import "NSString+PosixPathHandling.h"
+
+// other libraries of MulleObjCPosixFoundation
+
+// std-c and dependencies
+
 
 
 @implementation NSTask( _System)

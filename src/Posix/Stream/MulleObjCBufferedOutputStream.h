@@ -20,12 +20,12 @@
 #ifdef _NS_BUFFERED_DATA_OUTPUT_STREAM_IVAR_VISIBILITY
 _NS_BUFFERED_DATA_OUTPUT_STREAM_IVAR_VISIBILITY      // allow public access for internal use
 #endif
-   id <MulleObjCOutputStream >  stream_;
+   id <MulleObjCOutputStream >  _stream;
    
-   NSMutableData   *data_;   
+   NSMutableData   *_data;   
    unsigned char   *_start;
-   unsigned char   *current_;
-   unsigned char   *sentinel_; 
+   unsigned char   *_current;
+   unsigned char   *_sentinel; 
 }
 
 - (id) initWithOutputStream:(id <MulleObjCOutputStream>) stream;

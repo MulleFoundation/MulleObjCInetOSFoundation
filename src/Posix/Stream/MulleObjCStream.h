@@ -42,9 +42,9 @@
 //
 @interface MulleObjCMemoryInputStream : NSObject < MulleObjCInputStream >
 {
-   NSData          *data_;
-   unsigned char   *current_;
-   unsigned char   *sentinel_;
+   NSData          *_data;
+   unsigned char   *_current;
+   unsigned char   *_sentinel;
 }
 
 - (id) initWithData:(NSData *) data;

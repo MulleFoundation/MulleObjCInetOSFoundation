@@ -13,7 +13,11 @@
  */
 #import "MulleObjCPosixFoundation.h"
 
+// other files in this library
+#import "NSArray+Posix_Private.h"
+#import "NSDictionary+Posix_Private.h"
 
+// std-c and dependencies
 #include <crt_externs.h>
 
 
@@ -130,12 +134,12 @@ static void  free_env( char **env)
 }
 
 
-static inline void  free_argv_and_env( argv_and_environ *info)
-{
-   free_argv( info->argc, info->argv);
-   free_env( info->env);
-}
-
+//static inline void  free_argv_and_env( argv_and_environ *info)
+//{
+//   free_argv( info->argc, info->argv);
+//   free_env( info->env);
+//}
+//
 
 static inline int   copy_argc_argv( int argc, char **argv, argv_and_environ *info)
 {

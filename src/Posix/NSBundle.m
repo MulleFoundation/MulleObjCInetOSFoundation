@@ -14,8 +14,12 @@
 #import "NSBundle.h"
 
 // other files in this library
+#import "NSDirectoryEnumerator.h"
 #import "NSFileManager.h"
+#import "NSLog.h"
 #import "NSProcessInfo.h"
+#import "NSString+CString.h"
+#import "NSString+PosixPathHandling.h"
 
 // other libraries of MulleObjCPosixFoundation
 
@@ -124,12 +128,6 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
    NSAutoreleaseObject( _path);
    NSAutoreleaseObject( _executablePath);
    [super dealloc];
-}
-
-
-+ (NSString *) _mainExecutablePath
-{
-   return( nil); // done by Darwin
 }
 
 
@@ -455,7 +453,7 @@ static NSString   *contentsPath( NSBundle *self)
 {
    if( _handle)
       if( dlclose( _handle))
-         MulleObjCThrowInternalInconsistencyException( dlerror());
+         MulleObjCThrowInternalInconsistencyException( @"dlcose: %s", dlerror());
 
    return( NO);
 }
@@ -556,36 +554,18 @@ static BOOL  hasFrameworkExtension( NSString *s)
 }
 
 
-#if DEBUG
 
-- (NSUInteger) __numberOfOccurrencesOfReleasableObject:(id) p
-                                             hashTable:(NSHashTable *) set
+NSString   *MulleObjCBundleLocalizedStringFromTable( NSBundle *bundle,
+                                                     NSString *tableName,
+                                                     NSString *key,
+                                                     NSString *value)
 {
-   NSUInteger   count;
+   NSCParameterAssert( [bundle isKindOfClass:[NSBundle class]]);
    
-   count = p == self;
-   if( ! NSHashGet( set, self))
-   {
-      NSHashInsertKnownAbsent( set, self);
-      count += [_path __numberOfOccurrencesOfReleasableObject:p
-                                                     hashTable:set];
-   }
-   return( count);
+   return( [bundle localizedStringForKey:key
+                                   value:value
+                                   table:tableName]);
 }
-
-
-- (NSUInteger) __willBeAddedToAutoreleasePool:(id) pool
-                            inheritedRefCount:(NSUInteger) count
-{
-   count = [super __willBeAddedToAutoreleasePool:pool
-                               inheritedRefCount:count];
-   
-   [_path __willBeAddedToAutoreleasePool:pool
-                       inheritedRefCount:count];
-   return( count);
-}
-
-#endif
 
 @end
 

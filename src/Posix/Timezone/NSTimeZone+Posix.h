@@ -11,7 +11,7 @@
  *  $Id$
  *
  */
-#import "NSTimeZone.h"
+#import <MulleObjCFoundation/MulleObjCFoundation.h>
 
 
 //
