@@ -118,8 +118,8 @@ static void  free_argv( int argc, char **argv)
 {
    // free argv
    while( argc)
-      free( argv[ --argc]);
-   free( argv);
+      mulle_free( argv[ --argc]);
+   mulle_free( argv);
 }
 
 
@@ -129,8 +129,8 @@ static void  free_env( char **env)
    
    if( p = env)
       while( *p)
-         free( *p++);
-   free( env);
+         mulle_free( *p++);
+   mulle_free( env);
 }
 
 
@@ -152,7 +152,7 @@ static inline int   copy_argc_argv( int argc, char **argv, argv_and_environ *inf
       
    for( i = 0; i < argc; i++)
    {
-      s = MulleObjCDuplicateCString( argv[ i]);
+      s = mulle_strdup( argv[ i]);
       if( ! s)
          return( -1);
       
@@ -173,13 +173,13 @@ static inline int   copy_env( char **environment, argv_and_environ *info)
    if( environment)
       for( ; environment[ n_env]; n_env++);
 
-   info->env = calloc( sizeof( char *) * (n_env + 1), 1);
+   info->env = mulle_calloc( sizeof( char *) * (n_env + 1), 1);
    if( ! info->env)
       return( -1);
       
    for( i = 0; i < n_env; i++)
    {
-      s = strdup( environment[ i]);
+      s = mulle_strdup( environment[ i]);
       if( ! s)
          return( -1);
       info->env[ i] = s;

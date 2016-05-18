@@ -21,7 +21,7 @@
 //
 - (char *) fileSystemRepresentationWithPath:(NSString *) path
 {
-   if( ! [path length] || ! [path canBeConvertedToEncoding:[NSString cStringEncoding]])
+   if( ! [path length] || ! [path canBeConvertedToEncoding:[NSString defaultCStringEncoding]])
    {
       errno = EINVAL;
       MulleObjCSetCurrentErrnoError( NULL);

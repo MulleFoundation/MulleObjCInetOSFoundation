@@ -29,83 +29,93 @@
 
 + (instancetype) dataWithContentsOfFile:(NSString *) path
 {
-   return( [[[NSData alloc] initWithContentsOfFile:path] autorelease]);
+   return( [[[self alloc] initWithContentsOfFile:path] autorelease]);
 }
 
 
 
 + (instancetype) dataWithContentsOfMappedFile:(NSString *) path
 {
-   return( [[[NSData alloc] initWithContentsOfFile:path] autorelease]);
+   return( [[[self alloc] initWithContentsOfMappedFile:path] autorelease]);
 }
 
 
 - (id) initWithContentsOfFile:(NSString *) path
 {
-   char          *filename;
-   int           fd;
-   struct stat   info;
-   ssize_t       len;
-   ssize_t       actual_len;
-   char          *buf;
-   struct mulle_allocator  *allocator;
+   char                     *buf;
+   char                     *filename;
+   int                      fd;
+   ssize_t                  actual_len;
+   ssize_t                  len;
+   struct mulle_allocator   *allocator;
+   struct stat              info;
    
    filename = [path fileSystemRepresentation];
    fd = open( filename, O_RDONLY);
-   if( fd != -1)
+   if( fd == -1)
    {
-      buf = NULL;
-      //
-      // the length we get here is "our" length
-      // or more, for simplicity we don't read more
-      // than info.st_size
-      //
-      if( fstat( fd, &info) != -1)
+      [self release];
+      return( nil);
+   }
+   
+   buf = NULL;
+   //
+   // the length we get here is "our" length
+   // or more, for simplicity we don't read more
+   // than info.st_size
+   //
+   if( fstat( fd, &info) != -1)
+   {
+      if( ! (info.st_mode & S_IFDIR))
       {
-         if( ! (info.st_mode & S_IFDIR))
+         // warning this may have a 2 GB problem is off_t is 64 bit
+         // and ssize_t is 32 bit
+         
+         len = (size_t) info.st_size;
+         if( (off_t) len == info.st_size)
          {
-            // warning this may have a 2 GB problem is off_t is 64 bit
-            // and ssize_t is 32 bit
+            allocator = MulleObjCObjectGetAllocator( self);
             
-            len = (size_t) info.st_size;
-            if( (off_t) len == info.st_size)
+            buf = mulle_allocator_malloc( allocator, len);
+            if( buf)
             {
-               allocator = MulleObjCObjectGetAllocator( self);
+               // The system guarantees to read the number of bytes requested
+               // if the descriptor references a normal file that has that
+               // many bytes left before the end-of-file, but in no other case
                
-               buf = mulle_allocator_malloc( allocator, len);
-               if( buf)
+               actual_len = read( fd, buf, len);
+               if( actual_len != -1)
                {
-                  // The system guarantees to read the number of bytes requested 
-                  // if the descriptor references a normal file that has that 
-                  // many bytes left before the end-of-file, but in no other case
-                  
-                  actual_len = read( fd, buf, len);
-                  if( actual_len != -1)
-                  {
-                     if( actual_len != len)
-                        buf = mulle_allocator_realloc( allocator, buf, actual_len);
-                  }
+                  if( actual_len != len)
+                     buf = mulle_allocator_realloc( allocator, buf, actual_len);
                }
             }
-            else
-               errno = EFBIG;
          }
+         else
+            errno = EFBIG;
       }
-      close( fd);
-      
-      if( buf)
-      {
-         return( [self initWithBytesNoCopy:buf
-                                    length:actual_len
-                                 allocator:allocator]);
-      }
-   }      
-   [self autorelease];
-   return( nil);
+   }
+   close( fd);
+   
+   if( ! buf)
+   {
+      [self release];
+      return( nil);
+   }
+
+   return( [self initWithBytesNoCopy:buf
+                              length:actual_len
+                           allocator:allocator]);
 }
 
 
-- (BOOL) writeToFile:(NSString *) path 
+- (id) initWithContentsOfMappedFile:(NSString *) path
+{
+   return( [self initWithContentsOfFile:path]);
+}
+
+
+- (BOOL) writeToFile:(NSString *) path
           atomically:(BOOL) flag
 {
    NSString  *new_path;

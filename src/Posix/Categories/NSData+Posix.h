@@ -14,7 +14,6 @@
 #import <MulleObjCFoundation/MulleObjCFoundation.h>
 
 
-
 enum {
    NSDataReadingMappedIfSafe = 1UL << 0,
    NSDataReadingUncached = 1UL << 1,
@@ -29,7 +28,9 @@ typedef NSUInteger NSDataReadingOptions;
 + (id) dataWithContentsOfMappedFile:(NSString *) path;
 + (id) dataWithContentsOfFile:(NSString *) path;
 - (id) initWithContentsOfFile:(NSString *) path;
-- (BOOL) writeToFile:(NSString *) path 
+- (id) initWithContentsOfMappedFile:(NSString *) path;
+
+- (BOOL) writeToFile:(NSString *) path
           atomically:(BOOL) flag;
 
 

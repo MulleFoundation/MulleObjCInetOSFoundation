@@ -41,11 +41,11 @@
       c_value = strtok_r( NULL, "=", &ctxt);
       
       key = [[NSString alloc] initWithCString:c_key
-                                                 length:strlen( c_key)];
+                                       length:strlen( c_key)];
       if( ! c_value)
          c_value = "YES";
       value = [[NSString alloc] initWithCString:c_value
-                                                   length:strlen( c_value)];
+                                         length:strlen( c_value)];
       [dictionary setObject:value
                       forKey:key];
       [key release];

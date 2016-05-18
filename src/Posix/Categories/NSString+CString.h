@@ -39,8 +39,9 @@
 
 - (NSUInteger) cStringLength;
 
-+ (NSStringEncoding) cStringEncoding;
-- (NSStringEncoding) cStringEncoding;
++ (NSStringEncoding) defaultCStringEncoding;
+- (NSStringEncoding) _cStringEncoding;
 - (char *) cString;
+- (NSUInteger) cStringLength;
 
 @end

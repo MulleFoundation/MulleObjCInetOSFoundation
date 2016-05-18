@@ -33,7 +33,7 @@ NSString   *NSBundleDidLoadNotification = @"NSBundleDidLoadNotification";
 
 @implementation NSBundle
 
-// needs and will be lock protected in threaded environment
+// TODO: put it in the class vars
 static NSMutableDictionary  *_bundleDictionary;
 
 
@@ -65,48 +65,73 @@ static NSBundle  *get_or_register_bundle( NSBundle *bundle, NSString *path)
 
 NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *path) = get_or_register_bundle;
 
++ (BOOL) isBundleFilesystemExtension:(NSString *) extension
+{
+   return( NO);
+}
+
+
+- (id) __initWithPath:(NSString *) fullPath
+       executablePath:(NSString *) executablePath
+{
+   NSAutoreleasePool   *pool;
+   NSFileManager       *manager;
+   BOOL                isDir;
+   BOOL                flag;
+   
+   pool = [NSAutoreleasePool new];
+   
+   fullPath = [fullPath stringByStandardizingPath];
+   fullPath = [fullPath stringByResolvingSymlinksInPath];
+   _path    = [fullPath copy];
+
+   _executablePath = [executablePath copy];
+   
+   manager = [NSFileManager defaultManager];
+   flag    = [manager fileExistsAtPath:fullPath
+                           isDirectory:&isDir];
+
+   [pool release];
+
+   //
+   // bundles must be directories, except we allow a special extension
+   // bundlefs
+   //
+   if( flag && ! isDir && ! [isa isBundleFilesystemExtension:[_path pathExtension]])
+      flag = NO;
+   
+   if( ! flag)
+   {
+      [self release];
+      return( nil);
+   }
+   
+   return( self);
+}
 
 - (id) _initWithPath:(NSString *) fullPath
       executablePath:(NSString *) executablePath
 {
-   NSFileManager   *manager;
-   NSBundle        *bundle;
-   BOOL            flag;
+   NSBundle   *bundle;
    
    if( ! [fullPath isAbsolutePath])
       MulleObjCThrowInvalidArgumentException( fullPath, "not a absolute path");
       
    // speculatively assume fullPath is already correct
    bundle = (*NSBundleGetOrRegisterBundleWithPath)( NULL, fullPath);
-   if( ! bundle)
+   if( bundle)
    {
-      NSAutoreleasePool   *pool;
-      
-      pool = [NSAutoreleasePool new];
-      
-      fullPath = [fullPath stringByStandardizingPath];
-      fullPath = [fullPath stringByResolvingSymlinksInPath];
-      _path    = [fullPath copy];
-      
-      manager = [NSFileManager defaultManager];
-      flag    = [manager isReadableFileAtPath:_path];
-      [pool release];
-
-      if( ! flag)
-         return( nil);
-      
-      bundle = (*NSBundleGetOrRegisterBundleWithPath)( self, _path);
-      if( bundle)
-         bundle->_executablePath = [executablePath copy];
+      [bundle retain];
+      [self release];
+      return( bundle);
    }
    
-   // if bundle is "other", then we need to retain it for virtual retainCount 1
-   // and need to get rid of self (with current retainCount 1)
-   // if bundle is self this is basically a nop
-   [bundle retain];
-   [self release];
+   self = [self __initWithPath:fullPath
+                executablePath:executablePath];
+   if( ! self)
+      return( self);
    
-   return( bundle);
+   return( (*NSBundleGetOrRegisterBundleWithPath)( self, _path));
 }
 
 
@@ -125,8 +150,10 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
 {
    if( _handle)
       dlclose( _handle);
+
    NSAutoreleaseObject( _path);
    NSAutoreleaseObject( _executablePath);
+
    [super dealloc];
 }
 
@@ -155,13 +182,21 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
 //
 static BOOL   haveDiscovered;
 
-+ (void) _makeBundlesFromAllImagesOnce
++ (NSDictionary *) _bundleDictionary
 {
+   NSArray    *bundles;
+   NSBundle   *bundle;
+   
    if( haveDiscovered)
-      return;
+      return( _bundleDictionary);
       
-   [self allImages];
+   bundles = [self allImages];
+   for( bundle in bundles)
+      get_or_register_bundle( bundle, [bundle bundlePath]);
+
    haveDiscovered = YES;
+   
+   return( _bundleDictionary);
 }
 
 
@@ -170,14 +205,15 @@ static BOOL   haveDiscovered;
    NSString         *path;
    NSMutableArray   *array;
    NSEnumerator     *rover;
+   NSDictionary     *bundleInfo;
    
-   [self _makeBundlesFromAllImagesOnce];
+   bundleInfo = [self _bundleDictionary];
    
    array = [NSMutableArray array];
-   rover = [_bundleDictionary keyEnumerator];
+   rover = [bundleInfo keyEnumerator];
    while( path = [rover nextObject])
       if( flag ^ ! [[path pathExtension] isEqualToString:@"framework"])
-         [array addObject:[_bundleDictionary valueForKey:path]];
+         [array addObject:[bundleInfo valueForKey:path]];
    return( array);
 }
 
@@ -239,21 +275,34 @@ static BOOL   haveDiscovered;
 
 + (NSBundle *) bundleWithPath:(NSString *) path
 {
-   NSBundle   *bundle;
-   
-   bundle = [[self alloc] initWithPath:path];
-   return( NSAutoreleaseObject( bundle));
+   return( [[[self alloc] initWithPath:path] autorelease]);
 }
 
 
 + (NSBundle *) _bundleWithPath:(NSString *) path
                 executablePath:(NSString *) executablePath
 {
-   NSBundle   *bundle;
+   return( [[[self alloc] _initWithPath:path
+                         executablePath:executablePath] autorelease]);
+}
+
+
++ (NSBundle *) bundleWithIdentifier:(NSString *) identifier
+{
+   NSEnumerator   *rover;
+   NSString       *path;
+   NSBundle       *bundle;
+   NSDictionary   *bundleInfo;
    
-   bundle = [[self alloc] _initWithPath:path
-                         executablePath:executablePath];
-   return( NSAutoreleaseObject( bundle));
+   bundleInfo = [self _bundleDictionary];
+   rover = [bundleInfo keyEnumerator];
+   while( path = [rover nextObject])
+   {
+      bundle = [bundleInfo objectForKey:path];
+      if( [identifier isEqualToString:[bundle bundleIdentifier]])
+         return( bundle);
+   }
+   return( nil);
 }
 
 
@@ -264,6 +313,7 @@ static NSString   *executableFilename( NSBundle *self)
    filename = [[self bundlePath] lastPathComponent];
    return( [filename stringByDeletingPathExtension]);
 }                                                                          
+
 
 static NSString   *contentsPath( NSBundle *self)
 {
@@ -554,6 +604,15 @@ static BOOL  hasFrameworkExtension( NSString *s)
 }
 
 
+- (Class) classNamed:(NSString *) className
+{
+   if( ! [self isLoaded])
+      [self load];
+
+   // THIS IS NOT CORRECT!
+   return( NSClassFromString(className));
+}
+
 
 NSString   *MulleObjCBundleLocalizedStringFromTable( NSBundle *bundle,
                                                      NSString *tableName,
@@ -566,6 +625,12 @@ NSString   *MulleObjCBundleLocalizedStringFromTable( NSBundle *bundle,
                                    value:value
                                    table:tableName]);
 }
+
+
+
+# pragma mark -
+# pragma mark accessors into infoDictionary
+
 
 @end
 

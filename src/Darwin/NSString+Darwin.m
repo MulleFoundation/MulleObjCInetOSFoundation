@@ -31,19 +31,25 @@
 }
 
 
+- (NSUInteger) cStringLength
+{
+   return( [self _UTF8StringLength]);
+}
+
+
 - (char *) cString
 {
    return( (char *) [self UTF8String]);
 }
 
 
-- (NSStringEncoding) cStringEncoding
+- (NSStringEncoding) _cStringEncoding
 {
    return( NSUTF8StringEncoding);
 }
 
 
-+ (NSStringEncoding) cStringEncoding
++ (NSStringEncoding) defaultCStringEncoding
 {
    return( NSUTF8StringEncoding);
 }

@@ -180,10 +180,13 @@ static id    locale_conv_l_value( locale_t locale, int code)
    case CONV_INT_POSITIVE_SIGN_POSITION                            : flag = conv->int_p_sign_posn; break;
    case CONV_INT_NEGATIVE_SIGN_POSITION                            : flag = conv->int_n_sign_posn; break;
    }
+   
    if( s)
       return( [NSString stringWithCString:s]);
+
    if( nr != -1)
       return( [NSNumber numberWithInt:nr]);
+
    return( [NSNumber numberWithBool:flag]);
 }
 
@@ -215,6 +218,7 @@ static id   query_info( int code, locale_t locale)
    case QUERY_VARIANT    : ++offset;
    case QUERY_LANGUAGE   : s = queryLocaleName( LC_CTYPE_MASK, locale); break;
    }
+   
    components = [s componentsSeparatedByString:@"."];
    if( offset < (int) [components count])
       return( [components objectAtIndex:offset]);
@@ -251,26 +255,100 @@ static id   newLocaleByQuery( Class self, locale_t base)
 }
 
 
+
++ (NSString *) systemLocalePath
+{
+   return( @"/usr/share/locale");
+}
+
+
 + (NSArray *) availableLocaleIdentifiers
 {
-   return( [[NSFileManager defaultManager] directoryContentsAtPath:@"/usr/share/locale"]);
+   return( [[NSFileManager defaultManager] directoryContentsAtPath:[self systemLocalePath]]);
+}
+
+
+/*
+Try to load a dictionary named:
+
+de_DE.plist
+{
+    NSAMPMDesignation = ("vorm.", "nachm.");
+    NSDateFormatString = "%A, %e. %B %Y";
+    NSDateTimeOrdering = DMYH;
+    NSEarlierTimeDesignations = ("fr\U00fcher", vorher, letzten );
+    NSHourNameDesignations = (
+        (0, mitternachts, Mitternacht),
+        (8, morgens, Morgen),
+        (12, mittags, Mittag),
+        (15, nachmittags, Nachmittag),
+        (18, abends, Abend)
+    );
+    NSLaterTimeDesignations = ("n\U00e4chsten");
+    NSMonthNameArray = (
+        Januar,
+        Februar,
+        "M\U00e4rz",
+        April,
+        Mai,
+        Juni,
+        Juli,
+        August,
+        September,
+        Oktober,
+        November,
+        Dezember
+    );
+    NSNextDayDesignations = (morgen);
+    NSNextNextDayDesignations = ( "\U00fcbermorgen");
+    NSPriorDayDesignations = ( gestern);
+    NSShortDateFormatString = "%d.%m.%y";
+    NSShortMonthNameArray = (Jan, Feb, Mrz, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez);
+    NSShortTimeDateFormatString = "%d.%m.%y %H:%M";
+    NSShortWeekDayNameArray = (So, Mo, Di, Mi, Do, Fr, Sa);
+    NSThisDayDesignations = ( heute, jetzt);
+    NSTimeDateFormatString = "%A, %e. %B %Y %1H:%M Uhr %Z";
+    NSTimeFormatString = "%H:%M:%S";
+    NSWeekDayNameArray = (Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag);
+    NSYearMonthWeekDesignations = ( Jahr, Monat, Woche);
+}
+*/
+
++ (NSString *) auxiliaryLocalePath
+{
+   return( @"/usr/share/mulle-locale");
+}
+
+
++ (NSDictionary *) auxiliaryLocaleInfoForIdentifier:(NSString *) identifier
+{
+   NSString  *path;
+   
+   path = [[self auxiliaryLocalePath] stringByAppendingPathComponent:identifier];
+   path = [path stringByAppendingPathExtension:@"plist"];
+   return( [NSDictionary dictionaryWithContentsOfFile:path]);
 }
 
 
 - (id) initWithLocaleIdentifier:(NSString *) name
 {
-   locale_t   locale;
+   locale_t       xlocale;
+   NSDictionary   *auxInfo;
    
-   locale = newlocale( LC_ALL_MASK, [name cString], NULL);
+   xlocale = newlocale( LC_ALL_MASK, [name cString], NULL);
 
-   if( ! locale || ! name)
+   if( ! xlocale || ! name)
    {
       [self release];
       return( nil);
    }
    
-   _locale     = locale;
+   _xlocale    = xlocale;
    _identifier = [name copy];
+   _keyValues  = [NSMutableDictionary new];
+   
+   auxInfo = [isa auxiliaryLocaleInfoForIdentifier:name];
+   [_keyValues addEntriesFromDictionary:auxInfo];
    
    return( self);
 }
@@ -279,8 +357,9 @@ static id   newLocaleByQuery( Class self, locale_t base)
 - (void) dealloc
 {
    [_identifier release];
-   if( _locale)
-      freelocale( _locale);
+   [_keyValues release];
+   if( _xlocale)
+      freelocale( _xlocale);
 
    [super dealloc];
 }
@@ -292,7 +371,8 @@ static id   newLocaleByQuery( Class self, locale_t base)
 }
    
    
-- (id) objectForKey:(id) key
+
+- (id) _localeInfoForKey:(id) key
 {
    local_key_info   info;
    char             *s;
@@ -306,24 +386,42 @@ static id   newLocaleByQuery( Class self, locale_t base)
       return( _identifier);
    
    case QUERY_INFO : 
-      return( query_info( info.code, _locale));
+      return( query_info( info.code, _xlocale));
       
    case LANG_INFO  : 
-      s = nl_langinfo_l( info.code, _locale); 
+      s = nl_langinfo_l( info.code, _xlocale); 
       return( s ? [NSString stringWithCString:s] : nil);
 
    case CONV_INFO : 
-      return( locale_conv_l_value( _locale, info.code));
+      return( locale_conv_l_value( _xlocale, info.code));
    }
    return( nil);
 }
 
 
-- (NSString *) displayNameForKey:(id) key 
-                           value:(id) value
+- (id) objectForKey:(id) key
 {
-   return( key);
-}                           
+   id               value;
+   
+   value = [_keyValues objectForKey:key];
+   if( value)
+   {
+      if( value == [NSNull null])
+         value = nil;
+      return( value);
+   }
+   
+   value = [self _localeInfoForKey:key];
+   [_keyValues setObject:value ? value : [NSNull null]
+                  forKey:key];
+   return( value);
+}
+
+
+- (locale_t) xlocale
+{
+   return( _xlocale);
+}
 
 @end
 

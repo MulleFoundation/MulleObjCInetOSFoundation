@@ -32,11 +32,11 @@
 
 
 - (instancetype) initWithCString:(char *) s
-                length:(NSUInteger) len
+                          length:(NSUInteger) len
 {
    return( [self initWithBytes:s
                         length:len
-                      encoding:[self cStringEncoding]]);
+                      encoding:[self _cStringEncoding]]);
 }
 
 
@@ -44,8 +44,8 @@
 - (instancetype) initWithCString:(char *) s
 {
    return( [self initWithBytes:s
-                        length:strlen( s)
-                      encoding:[self cStringEncoding]]);
+                        length:strlen( s) + 1
+                      encoding:[self _cStringEncoding]]);
 }
 
 
@@ -55,7 +55,7 @@
 {
    return( [self initWithBytesNoCopy:s
                               length:length
-                            encoding:[self cStringEncoding]
+                            encoding:[self _cStringEncoding]
                         freeWhenDone:flag]);
 }
 
@@ -65,33 +65,35 @@
    if( ! [self getBytes:bytes
               maxLength:[self cStringLength]
              usedLength:NULL
-               encoding:[self cStringEncoding]
+               encoding:[self _cStringEncoding]
                 options:0
                   range:NSMakeRange( 0, [self length])
          remainingRange:NULL])
    {
       [NSException raise:@"fail"
-                  format:@"fail"
-                  userInfo:nil];
-   }
+                  format:@"fail"];
+   }
 }
 
 
 - (void) getCString:(char *) bytes
           maxLength:(NSUInteger) maxLength
 {
+   NSUInteger   usedLength;
+   
+   NSParameterAssert( maxLength);
    if( ! [self getBytes:bytes
-              maxLength:maxLength
-             usedLength:NULL
-               encoding:[self cStringEncoding]
+              maxLength:maxLength - 1
+             usedLength:&usedLength
+               encoding:[self _cStringEncoding]
                 options:0
                   range:NSMakeRange( 0, [self length])
          remainingRange:NULL])
    {
       [NSException raise:@"fail"
-                  format:@"fail"
-                  userInfo:nil];
-   }
+                  format:@"fail"];
+   }
+   bytes[ usedLength] = 0;
 }
 
 
@@ -100,18 +102,21 @@
               range:(NSRange) aRange
      remainingRange:(NSRangePointer) leftoverRange
 {
+   NSUInteger   usedLength;
+   NSParameterAssert( maxLength);
+   
    if( ! [self getBytes:bytes
-              maxLength:maxLength
-             usedLength:NULL
-               encoding:[self cStringEncoding]
+              maxLength:maxLength - 1
+             usedLength:&usedLength
+               encoding:[self _cStringEncoding]
                 options:0
                   range:aRange
          remainingRange:leftoverRange])
    {
       [NSException raise:@"fail"
-                  format:@"fail"
-                  userInfo:nil];
-   }
+                  format:@"fail"];
+   }
+   bytes[ usedLength] = 0;
 }
 
 @end

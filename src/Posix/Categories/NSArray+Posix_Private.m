@@ -29,7 +29,7 @@
    id        *tmp;
    NSArray   *arguments;
    
-   tmp = MulleObjCAllocateNonZeroedMemory( argc * sizeof( id));
+   tmp = mulle_malloc( argc * sizeof( id));
    
    for( i = 0; i < argc; i++)
    {
@@ -44,9 +44,9 @@
 
    for( i = 0; i < argc; i++)
       [(id) tmp[ i] release];
-   MulleObjCDeallocateMemory( tmp);
+   mulle_free( tmp);
    
-   free( argv);
+   mulle_free( argv);
    return( arguments);
 }
 

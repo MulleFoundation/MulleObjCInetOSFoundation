@@ -5,10 +5,12 @@
 //  Created by Nat! on 05.04.16.
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
+#import <MulleObjCFoundation/MulleObjCFoundation.h>
 
 #define MULLE_OBJC_POSIX_FOUNDATION_VERSION   MULLE_OBJC_FOUNDATION_VERSION
 
 #import "NSBundle.h"
+#import "NSCalendarDate.h"
 #import "NSCondition.h"
 #import "NSConditionLock.h"
 #import "NSDirectoryEnumerator.h"
@@ -20,12 +22,15 @@
 #import "NSUserDefaults.h"
 
 #import "NSArchiver+Posix.h"
+#import "NSArray+Posix.h"
 #import "NSData+Posix.h"
+#import "NSDictionary+Posix.h"
 #import "NSError+Posix.h"
 #import "NSLocale+Posix.h"
 #import "NSString+CString.h"
 #import "NSString+Posix.h"
 #import "NSString+PosixPathHandling.h"
+#import "NSURL+PosixPathHandling.h"
 #import "NSTimeZone+Posix.h"
 
 #import "NSLog.h"

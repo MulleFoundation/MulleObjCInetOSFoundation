@@ -21,8 +21,9 @@
 //
 @interface NSBundle : NSObject
 {
-   NSString   *_path;
-   void       *_handle;
+   NSString       *_path;
+   void           *_handle;
+   NSDictionary   *_infoDictionary;
 
 @private
    NSString   *_executablePath;
@@ -48,13 +49,14 @@
 
 
 - (NSString *) builtInPlugInsPath;
-- (NSString *) bundleIdentifier;
 - (NSString *) bundlePath;
 - (Class) classNamed:(NSString *) className;
 - (NSString *) executablePath;
-- (NSDictionary *) infoDictionary;
+
 - (BOOL) isLoaded;
 - (BOOL) load;
+- (BOOL) unload;
+
 - (id) objectForInfoDictionaryKey:(NSString *) key;
 - (NSString *) pathForAuxiliaryExecutable:(NSString *) executableName;
 - (NSString *) pathForResource:(NSString *) name 
@@ -64,12 +66,10 @@
                    inDirectory:(NSString *)subpath;
 - (NSArray *) pathsForResourcesOfType:(NSString *) extension
                           inDirectory:(NSString *) subpath;
-- (Class) principalClass;
 - (NSString *) privateFrameworksPath;
 - (NSString *) resourcePath;
 - (NSString *) sharedFrameworksPath;
 - (NSString *) sharedSupportPath;
-- (BOOL) unload;
 
 // 
 + (NSBundle *) _bundleWithPath:(NSString *) fullPath
@@ -86,10 +86,14 @@
 @end
 
 
-@interface NSBundle ( Future)
+// more stuff should be in here
+@interface NSBundle ( OSSpecific)
 
 + (NSString *) _mainExecutablePath;
 + (NSArray *) allImages;
+- (NSDictionary *) infoDictionary;
+- (Class) principalClass;
+- (NSString *) bundleIdentifier;
 
 @end
 
