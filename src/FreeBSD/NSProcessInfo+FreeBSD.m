@@ -14,8 +14,6 @@
 #import "MulleObjCPosixFoundation.h"
 
 
-#include <crt_externs.h>
-
 
 @interface NSProcessInfo( _Darwin)
 @end
