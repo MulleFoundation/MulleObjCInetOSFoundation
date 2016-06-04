@@ -5,6 +5,8 @@
 //  Created by Nat! on 05.05.16.
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
+// define, that make things POSIXly
+#define _XOPEN_SOURCE 700
 
 #import "MulleObjCDateFormatter.h"
 
@@ -52,7 +54,7 @@
                 allowNaturalLanguage:flag];
    if( self)
    {
-      length = [format cStringLength];
+      length   = [format cStringLength];
       _cformat = MulleObjCObjectAllocateNonZeroedMemory( self, length + 1);
       [format getCString:_cformat
                maxLength:length+1];
@@ -181,19 +183,18 @@ static unsigned int   augment_tm_with_tm( struct tm *tm, struct tm *now, int *ha
 
 static NSDate  *mulle_date_from_cstring( char *c_format, Class dateClass, BOOL lenient, NSLocale *locale, NSTimeZone *timeZone, char  **c_str_p)
 {
-   locale_t         xlocale;
-   struct tm        tm;
-   struct tm        now;
+   NSDate           *date;
    NSInteger        estSeconds;
    NSInteger        realSeconds;
-   NSDate           *date;
-   NSUInteger       loops;
    NSTimeInterval   interval;
+   NSUInteger       loops;
    char             *c_str;
-   unsigned int     n;
-   time_t           nowtimeval;
    int              has_tz;
-   char             z_search;
+   locale_t         xlocale;
+   struct tm        now;
+   struct tm        tm;
+   time_t           nowtimeval;
+   unsigned int     n;
    
    // set it all to int min, that way we can deduce how much
    // strptime was able to parse for "leniency"
@@ -236,7 +237,8 @@ static NSDate  *mulle_date_from_cstring( char *c_format, Class dateClass, BOOL l
    // if we flipflop forever return
    for( loops = 8; loops ; --loops)
    {
-      interval    = mulle_timeintervalsince1970_with_tm( &tm, estSeconds);
+      interval    = [NSCalendarDate _timeintervalSince1970WithTm:&tm
+                                                  secondsFromGMT:estSeconds];
       date        = [dateClass dateWithTimeIntervalSince1970:interval];
       if( ! has_tz)
          realSeconds = [timeZone secondsFromGMTForDate:date];

@@ -1,5 +1,5 @@
 /*
- *  MulleFoundation - A tiny Foundation replacement
+ *  MulleFoundation - the mulle-objc class library
  *
  *  NSData+Posix.m is a part of MulleFoundation
  *
@@ -11,6 +11,9 @@
  *  $Id$
  *
  */
+// define, that make things POSIXly
+#define _XOPEN_SOURCE 700
+ 
 #import "NSData+Posix.h"
 
 // other files in this library

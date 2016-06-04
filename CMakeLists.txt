@@ -109,6 +109,7 @@ INSTALL( FILES ${HEADERS} DESTINATION "include/MulleObjCPosixFoundation")
 if( CMAKE_SYSTEM_NAME STREQUAL "Darwin")
    add_library( MulleObjCDarwinFoundation STATIC
 src/Darwin/NSBundle+Darwin.m
+src/Darwin/NSCalendarDate+Darwin.m
 src/Darwin/NSPathUtilities+Darwin.m
 src/Darwin/NSFileManager+Darwin.m
 src/Darwin/NSProcessInfo+Darwin.m
@@ -130,4 +131,11 @@ src/FreeBSD/NSTask+FreeBSD.m
 INSTALL( TARGETS MulleObjCFreeBSDFoundation DESTINATION "lib")
 endif()
 
+
+if( CMAKE_SYSTEM_NAME STREQUAL "Linux")
+   add_library( MulleObjCLinuxFoundation STATIC
+src/Linux/NSCalendarDate+Linux.m
+)
+INSTALL( TARGETS MulleObjCLinuxFoundation DESTINATION "lib")
+endif()
 

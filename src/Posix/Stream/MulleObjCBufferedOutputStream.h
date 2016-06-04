@@ -1,5 +1,5 @@
 /*
- *  MulleFoundation - A tiny Foundation replacement
+ *  MulleFoundation - the mulle-objc class library
  *
  *  MulleObjCBufferedOutputStream.h is a part of MulleFoundation
  *

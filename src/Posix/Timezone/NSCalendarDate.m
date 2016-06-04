@@ -5,6 +5,8 @@
 //  Created by Nat! on 05.05.16.
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
+// define, that make things POSIXly
+#define _XOPEN_SOURCE 700
 
 #import "NSCalendarDate.h"
 
@@ -54,14 +56,6 @@ void  mulle_tm_with_timeintervalsince1970( struct tm *tm, NSTimeInterval timeInt
 }
 
 
-NSTimeInterval   mulle_timeintervalsince1970_with_tm( struct tm *tm, NSInteger secondsFromGMT)
-{
-   time_t   timeval;
-
-   timeval = timegm( tm);
-   return( timeval - secondsFromGMT);
-}
-
 
 @implementation NSCalendarDate
 
@@ -90,7 +84,8 @@ NSTimeInterval   mulle_timeintervalsince1970_with_tm( struct tm *tm, NSInteger s
 {
    NSTimeInterval   interval;
    
-   interval = mulle_timeintervalsince1970_with_tm(tm, [tz secondsFromGMT]);
+   interval = [isa _timeintervalSince1970WithTm:tm
+                                 secondsFromGMT:[tz secondsFromGMT]];
    
    self = [self initWithTimeIntervalSince1970:interval];
    if( self)
@@ -173,7 +168,8 @@ NSTimeInterval   mulle_timeintervalsince1970_with_tm( struct tm *tm, NSInteger s
    tmp.tm_wday   = 0;
    tmp.tm_yday   = 0;
    
-   interval = mulle_timeintervalsince1970_with_tm( &tmp, [tz secondsFromGMT]);
+   interval = [isa _timeintervalSince1970WithTm:&tmp
+                                 secondsFromGMT:[tz secondsFromGMT]];
    
    self = [self initWithTimeIntervalSince1970:interval];
    if( self)

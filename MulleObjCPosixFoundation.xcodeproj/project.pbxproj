@@ -32,6 +32,8 @@
 		4116E48E1CB4012700E4AE64 /* MulleObjCStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 4116E4861CB4012700E4AE64 /* MulleObjCStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4116E48F1CB4012700E4AE64 /* MulleObjCStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 4116E4871CB4012700E4AE64 /* MulleObjCStream.m */; };
 		411DE6181CDA1EE100019FC2 /* libexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 411DE6171CDA1EE100019FC2 /* libexpat.a */; };
+		412902651D03233E00D055B1 /* NSCalendarDate+Darwin.m in Sources */ = {isa = PBXBuildFile; fileRef = 412902641D03233E00D055B1 /* NSCalendarDate+Darwin.m */; };
+		412902681D03248E00D055B1 /* NSCalendarDate+Linux.m in Sources */ = {isa = PBXBuildFile; fileRef = 412902671D03248E00D055B1 /* NSCalendarDate+Linux.m */; };
 		412B03961CDB4F180078495B /* MulleObjCDateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 412B03941CDB4F180078495B /* MulleObjCDateFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		412B03971CDB4F180078495B /* MulleObjCDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 412B03951CDB4F180078495B /* MulleObjCDateFormatter.m */; };
 		412B03C31CDBA8F60078495B /* NSCalendarDate.h in Headers */ = {isa = PBXBuildFile; fileRef = 412B03C11CDBA8F60078495B /* NSCalendarDate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -177,6 +179,8 @@
 		4116E4871CB4012700E4AE64 /* MulleObjCStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MulleObjCStream.m; sourceTree = "<group>"; };
 		411DE6161CDA1E6E00019FC2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		411DE6171CDA1EE100019FC2 /* libexpat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libexpat.a; path = /usr/local/Cellar/expat/2.1.0_1/lib/libexpat.a; sourceTree = "<absolute>"; };
+		412902641D03233E00D055B1 /* NSCalendarDate+Darwin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendarDate+Darwin.m"; sourceTree = "<group>"; };
+		412902671D03248E00D055B1 /* NSCalendarDate+Linux.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendarDate+Linux.m"; sourceTree = "<group>"; };
 		412B03941CDB4F180078495B /* MulleObjCDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MulleObjCDateFormatter.h; sourceTree = "<group>"; };
 		412B03951CDB4F180078495B /* MulleObjCDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MulleObjCDateFormatter.m; sourceTree = "<group>"; };
 		412B03981CDB52310078495B /* NSLocale+PosixPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSLocale+PosixPrivate.h"; sourceTree = "<group>"; };
@@ -355,6 +359,7 @@
 		4141AFB61CB546C000B0306A /* Linux */ = {
 			isa = PBXGroup;
 			children = (
+				412902671D03248E00D055B1 /* NSCalendarDate+Linux.m */,
 			);
 			path = Linux;
 			sourceTree = "<group>";
@@ -399,6 +404,7 @@
 			children = (
 				419658001CB53D4F00B29FB9 /* README-DARWIN.md */,
 				415A01D81CB03868003C4ACF /* NSBundle+Darwin.m */,
+				412902641D03233E00D055B1 /* NSCalendarDate+Darwin.m */,
 				41E13D7F1CD2534D00CE0304 /* NSFileManager+Darwin.m */,
 				415A01DA1CB03868003C4ACF /* NSPathUtilities+Darwin.m */,
 				415A01DB1CB03868003C4ACF /* NSProcessInfo+Darwin.m */,
@@ -741,6 +747,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				412902681D03248E00D055B1 /* NSCalendarDate+Linux.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -791,6 +798,7 @@
 				415A01E71CB03868003C4ACF /* NSTask+Darwin.m in Sources */,
 				415A01E11CB03868003C4ACF /* NSBundle+Darwin.m in Sources */,
 				415A01E61CB03868003C4ACF /* NSString+Darwin.m in Sources */,
+				412902651D03233E00D055B1 /* NSCalendarDate+Darwin.m in Sources */,
 				415A01E31CB03868003C4ACF /* NSPathUtilities+Darwin.m in Sources */,
 				41E13D801CD2534D00CE0304 /* NSFileManager+Darwin.m in Sources */,
 			);

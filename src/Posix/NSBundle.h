@@ -1,5 +1,5 @@
 /*
- *  MulleFoundation - A tiny Foundation replacement
+ *  MulleFoundation - the mulle-objc class library
  *
  *  NSBundle.h is a part of MulleFoundation
  *
@@ -35,7 +35,6 @@
 + (NSArray *) allBundles;
 + (NSArray *) allFrameworks;
 
-+ (NSBundle *) bundleForClass:(Class) aClass;
 + (NSBundle *) bundleWithIdentifier:(NSString *) identifier;
 + (NSBundle *) bundleWithPath:(NSString *) fullPath;
 + (NSBundle *) mainBundle;
@@ -94,6 +93,7 @@
 - (NSDictionary *) infoDictionary;
 - (Class) principalClass;
 - (NSString *) bundleIdentifier;
++ (NSBundle *) bundleForClass:(Class) aClass;
 
 @end
 

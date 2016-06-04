@@ -5,6 +5,8 @@
 //  Created by Nat! on 19.09.11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
+// define, that make things POSIXly
+#define _XOPEN_SOURCE 700
 
 #import "NSTimeZone+Posix.h"
 

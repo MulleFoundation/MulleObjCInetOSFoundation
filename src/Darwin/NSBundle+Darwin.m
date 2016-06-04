@@ -1,5 +1,5 @@
 /*
- *  MulleFoundation - A tiny Foundation replacement
+ *  MulleFoundation - the mulle-objc class library
  *
  *  NSBundle+Darwin.h is a part of MulleFoundation
  *
@@ -148,5 +148,29 @@
    return( NSClassFromString( className));
 }
 
+
++ (NSBundle *) bundleForClass:(Class) aClass
+{
+   Dl_info    info;
+   NSString   *s;
+   
+   if( ! dladdr( aClass, &info))
+      return( nil); // possibly dynamically allocated
+
+   s = [NSString stringWithCString:(char *) info.dli_fname];
+   
+   // a stoopid hacque
+   if( ! [[s pathExtension] length])
+   {
+      s = [s stringByDeletingLastPathComponent];   // remove exe
+      if( ! [[s pathExtension] length])            // already (symlinked) at framework or app ?
+      {
+         s = [s stringByDeletingLastPathComponent];   // remove MacOS/A
+         s = [s stringByDeletingLastPathComponent];   // remove Contents/Version
+      }
+   }
+   
+   return( [self bundleWithPath:s]);
+}
 
 @end

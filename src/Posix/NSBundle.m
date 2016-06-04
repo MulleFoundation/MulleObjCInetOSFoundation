@@ -1,5 +1,5 @@
 /*
- *  MulleFoundation - A tiny Foundation replacement
+ *  MulleFoundation - the mulle-objc class library
  *
  *  NSBundle.m is a part of MulleFoundation
  *
@@ -11,6 +11,9 @@
  *  $Id$
  *
  */
+// define, that make things POSIXly
+#define _XOPEN_SOURCE 700
+ 
 #import "NSBundle.h"
 
 // other files in this library
@@ -247,30 +250,6 @@ static BOOL   haveDiscovered;
    return( nil);
 }
 
-
-+ (NSBundle *) bundleForClass:(Class) aClass
-{
-   Dl_info    info;
-   NSString   *s;
-   
-   if( ! dladdr( aClass, &info))
-      return( nil); // possibly dynamically allocated
-
-   s = [NSString stringWithCString:(char *) info.dli_fname];
-   
-   // a stoopid hacque
-   if( ! [[s pathExtension] length])
-   {
-      s = [s stringByDeletingLastPathComponent];   // remove exe
-      if( ! [[s pathExtension] length])            // already (symlinked) at framework or app ?
-      {
-         s = [s stringByDeletingLastPathComponent];   // remove MacOS/A
-         s = [s stringByDeletingLastPathComponent];   // remove Contents/Version
-      }
-   }
-   
-   return( [self bundleWithPath:s]);
-}
 
 
 + (NSBundle *) bundleWithPath:(NSString *) path

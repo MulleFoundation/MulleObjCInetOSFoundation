@@ -5,6 +5,8 @@
 //  Created by Nat! on 18.04.16.
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
+// define, that make things POSIXly
+#define _XOPEN_SOURCE 700
 
 #import "NSArchiver+Posix.h"
 

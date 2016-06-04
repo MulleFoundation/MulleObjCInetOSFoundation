@@ -22,7 +22,7 @@ int   main( int argc, const char * argv[])
                                        allowNaturalLanguage:NO] autorelease];
 
    date = [formatter dateFromString:@"2013-02-24T20:09:15Z"];
-   NSLog( @"Date: %@", date);
+   printf( "Date: %s\n", [[formatter stringFromDate:date] UTF8String]);
 
    return( 0);
 }

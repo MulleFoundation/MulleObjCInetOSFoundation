@@ -1,5 +1,5 @@
 /*
- *  MulleFoundation - A tiny Foundation replacement
+ *  MulleFoundation - the mulle-objc class library
  *
  *  NSPathUtilities.h is a part of MulleFoundation
  *
@@ -20,7 +20,7 @@ enum
    NSLocalDomainMask   = 2,
    NSNetworkDomainMask = 4,
    NSSystemDomainMask  = 8,
-   NSAllDomainsMask    = 0xFFFFFFFF
+   NSAllDomainsMask    = ~0
 };
 
 typedef NSUInteger   NSSearchPathDomainMask;

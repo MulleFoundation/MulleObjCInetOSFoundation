@@ -80,8 +80,13 @@ struct mulle_mini_tm
 @end
 
 
+@interface NSCalendarDate( OSSpecific)
+
++ (NSTimeInterval) _timeintervalSince1970WithTm:(struct tm *) tm
+                                 secondsFromGMT:(NSUInteger) secondsFromGMT;
+
+@end
+
+
 void    mulle_tm_with_timeintervalsince1970( struct tm *tm, NSTimeInterval timeInterval, NSInteger secondsFromGMT);
-NSTimeInterval   mulle_timeintervalsince1970_with_tm( struct tm *tm, NSInteger secondsFromGMT);
-
-
 

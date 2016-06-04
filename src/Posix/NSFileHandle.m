@@ -1,5 +1,5 @@
 /*
- *  MulleFoundation - A tiny Foundation replacement
+ *  MulleFoundation - the mulle-objc class library
  *
  *  NSFileHandle.m is a part of MulleFoundation
  *
@@ -11,6 +11,9 @@
  *  $Id$
  *
  */
+// define, that make things POSIXly
+#define _XOPEN_SOURCE 700
+ 
 #import "NSFileHandle.h"
 
 // other files in this library
@@ -148,10 +151,9 @@ static id  NSInitFileHandleAndClose( NSFileHandle *self, int fd)
 }
 
 
-- (void) dealloc
+- (void) finalize
 {
    (*_closer)( _fd);
-   [super dealloc];
 }
 
 

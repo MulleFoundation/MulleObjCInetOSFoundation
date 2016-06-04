@@ -1,5 +1,5 @@
 /*
- *  MulleFoundation - A tiny Foundation replacement
+ *  MulleFoundation - the mulle-objc class library
  *
  *  NSString+PosixPathHandling.m is a part of MulleFoundation
  *
@@ -11,6 +11,9 @@
  *  $Id$
  *
  */
+// define, that make things POSIXly
+#define _XOPEN_SOURCE 700
+ 
 #import "NSString+PosixPathHandling.h"
 
 // other files in this library

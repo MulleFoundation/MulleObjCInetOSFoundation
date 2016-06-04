@@ -1,5 +1,5 @@
 /*
- *  MulleFoundation - A tiny Foundation replacement
+ *  MulleFoundation - the mulle-objc class library
  *
  *  NSFileManager.m is a part of MulleFoundation
  *
@@ -11,6 +11,9 @@
  *  $Id$
  *
  */
+// define, that make things POSIXly
+#define _XOPEN_SOURCE 700
+
 #import "NSFileManager.h"
 
 // other files in this library
@@ -109,8 +112,9 @@ NSString   *NSFileTypeUnknown          = @"NSFileTypeUnknown";
 - (NSString *) currentDirectoryPath
 {
    char      *c_string;
+   auto char  buf[ PATH_MAX];
 
-   c_string = getwd( NULL);
+   c_string = getcwd( buf, sizeof( buf));
    if( ! c_string)
    {
       MulleObjCSetCurrentErrnoError( NULL);
@@ -118,7 +122,7 @@ NSString   *NSFileTypeUnknown          = @"NSFileTypeUnknown";
    }
    
    return( [self stringWithFileSystemRepresentation:c_string
-                                             length:strlen(c_string)]);
+                                             length:strlen( c_string)]);
 }
 
 
@@ -521,8 +525,9 @@ static BOOL  is_symlink( char *c_path)
 {
    NSMutableDictionary  *dictionary;
    char                 *c_path;
-   struct stat           c_info;
-   NSString              *type;
+   struct stat          c_info;
+   NSString             *type;
+   struct timespec      timespec;
    
    c_path = [path fileSystemRepresentation];
    if( lstat( c_path, &c_info))
@@ -555,9 +560,14 @@ static BOOL  is_symlink( char *c_path)
    [dictionary setObject:type
                   forKey:NSFileType];
                   
-   // next one is conceivably wrong. really but what's creation anyway ?                  
-   set_date_key_value( dictionary, NSFileCreationDate,     c_info.st_ctimespec);
-   set_date_key_value( dictionary, NSFileModificationDate, c_info.st_mtimespec);
+   // next one is conceivably wrong. really but what's creation anyway ?
+   timespec.tv_sec  = c_info.st_ctime;
+   timespec.tv_nsec = c_info.st_ctimensec;
+   set_date_key_value( dictionary, NSFileCreationDate,     timespec);
+
+   timespec.tv_sec  = c_info.st_mtime;
+   timespec.tv_nsec = c_info.st_mtimensec;
+   set_date_key_value( dictionary, NSFileModificationDate, timespec);
    
    return( dictionary);
 }
