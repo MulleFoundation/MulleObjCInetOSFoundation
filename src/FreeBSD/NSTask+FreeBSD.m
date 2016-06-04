@@ -18,8 +18,6 @@
 // other libraries of MulleObjCPosixFoundation
 #import "NSTask+Private.h"
 
-// std-c and dependencies
-#include <crt_externs.h>
 #include <signal.h>
 
 

@@ -22,7 +22,6 @@
 
 // std-c and dependencies
 #include <dlfcn.h>
-#include <mach-o/dyld.h>
 
 
 @implementation NSBundle( _Darwin)
