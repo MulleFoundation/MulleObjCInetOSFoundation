@@ -88,5 +88,3 @@ struct mulle_mini_tm
 @end
 
 
-void    mulle_tm_with_timeintervalsince1970( struct tm *tm, NSTimeInterval timeInterval, NSInteger secondsFromGMT);
-

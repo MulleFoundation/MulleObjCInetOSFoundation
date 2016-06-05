@@ -14,8 +14,8 @@
 #import "MulleObjCPosixFoundation.h"
 
 // other files in this library
-#import "NSArray+Posix_Private.h"
-#import "NSDictionary+Posix_Private.h"
+#import "NSArray+PosixPrivate.h"
+#import "NSDictionary+PosixPrivate.h"
 
 // std-c and dependencies
 #include <crt_externs.h>

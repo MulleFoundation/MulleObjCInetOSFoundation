@@ -15,6 +15,7 @@
 
 // std-c and dependencies
 
+
 @interface NSObject (Private)
 
 - (BOOL) __isNSArray;

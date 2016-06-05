@@ -11,6 +11,7 @@
 #import "NSCalendarDate.h"
 
 // other files in this library
+#include "mulle_posix_tm.h"
 #import "NSLocale+Posix.h"
 #import "NSTimeZone+Posix.h"
 
@@ -41,20 +42,6 @@ static void  mulle_tm_with_mini_tm( struct tm  *dst, struct mulle_mini_tm *src)
    dst->tm_isdst  = 0;
    dst->tm_wday   = 0;
    dst->tm_yday   = 0;
-#if 0
-   dst->tm_zone   = NULL;
-   dst->tm_gmtoff = 0;
-#endif   
-}
-
-
-void  mulle_tm_with_timeintervalsince1970( struct tm *tm, NSTimeInterval timeInterval, NSInteger secondsFromGMT)
-{
-   time_t      timeval;
-
-   timeval = (time_t) (timeInterval + secondsFromGMT + 0.5);
-   gmtime_r( &timeval, tm);
-   tm->tm_gmtoff = secondsFromGMT;
 }
 
 
@@ -191,7 +178,7 @@ static void  get_tm( NSCalendarDate *self, struct tm *dst)
    NSInteger   seconds;
    
    seconds = [self->_timeZone secondsFromGMT];
-   mulle_tm_with_timeintervalsince1970( dst, self->_interval, seconds);
+   mulle_posix_tm_with_timeintervalsince1970( dst, self->_interval, seconds);
 }
 
 

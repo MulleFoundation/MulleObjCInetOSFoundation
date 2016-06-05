@@ -66,12 +66,12 @@ src/Posix/Timezone/NSTimeZone+Posix.h
 
 add_library( MulleObjCPosixFoundation STATIC
 src/Posix/Categories/NSArray+Posix.m
-src/Posix/Categories/NSArray+Posix_Private.m
+src/Posix/Categories/NSArray+PosixPrivate.m
 src/Posix/Categories/NSArchiver+Posix.m
 src/Posix/Categories/NSData+Posix.m
 src/Posix/Categories/NSError+Posix.m
 src/Posix/Categories/NSDictionary+Posix.m
-src/Posix/Categories/NSDictionary+Posix_Private.m
+src/Posix/Categories/NSDictionary+PosixPrivate.m
 src/Posix/Categories/NSString+CString.m
 src/Posix/Categories/NSString+Posix.m
 src/Posix/Categories/NSString+PosixPathHandling.m
@@ -79,6 +79,7 @@ src/Posix/Categories/NSURL+PosixPathHandling.m
 src/Posix/Functions/NSLog.m
 src/Posix/Functions/NSPathUtilities.m
 src/Posix/MulleObjCDateFormatter.m
+src/Posix/mulle_posix_tm.c
 src/Posix/NSBundle.m
 src/Posix/NSCondition.m
 src/Posix/NSConditionLock.m
@@ -108,8 +109,10 @@ INSTALL( FILES ${HEADERS} DESTINATION "include/MulleObjCPosixFoundation")
 
 if( CMAKE_SYSTEM_NAME STREQUAL "Darwin")
    add_library( MulleObjCDarwinFoundation STATIC
+src/BSD/mulle_bsd_tm.c
+src/BSD/NSDate+FreeBSD.m
+src/BSD/NSCalendarDate+FreeBSD.m
 src/Darwin/NSBundle+Darwin.m
-src/Darwin/NSCalendarDate+Darwin.m
 src/Darwin/NSPathUtilities+Darwin.m
 src/Darwin/NSFileManager+Darwin.m
 src/Darwin/NSProcessInfo+Darwin.m
@@ -122,6 +125,9 @@ endif()
 
 if( CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
    add_library( MulleObjCFreeBSDFoundation STATIC
+src/BSD/mulle_bsd_tm.c
+src/BSD/NSDate+FreeBSD.m
+src/BSD/NSCalendarDate+FreeBSD.m
 src/FreeBSD/NSBundle+FreeBSD.m
 src/FreeBSD/NSPathUtilities+FreeBSD.m
 src/FreeBSD/NSProcessInfo+FreeBSD.m

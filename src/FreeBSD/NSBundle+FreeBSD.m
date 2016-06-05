@@ -12,8 +12,6 @@
  *
  */
 
-// eek eeek eek, should be OSX rather than Darwin
-
 #import "MulleObjCPosixFoundation.h"
 
 // other files in this library

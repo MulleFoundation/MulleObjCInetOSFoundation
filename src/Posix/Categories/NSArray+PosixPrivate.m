@@ -14,7 +14,7 @@
 // define, that make things POSIXly
 #define _XOPEN_SOURCE 700
  
-#import "NSArray+Posix_Private.h"
+#import "NSArray+PosixPrivate.h"
 
 // other files in this library
 #import "NSString+CString.h"

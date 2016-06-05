@@ -14,12 +14,13 @@
 #import <MulleObjCFoundation/MulleObjCFoundation.h>
 
 
-enum {
+enum
+{
    NSDataReadingMappedIfSafe = 1UL << 0,
-   NSDataReadingUncached = 1UL << 1,
+   NSDataReadingUncached     = 1UL << 1,
    NSDataReadingMappedAlways = 1UL << 3,
 };
-typedef NSUInteger NSDataReadingOptions;
+typedef NSUInteger   NSDataReadingOptions;
 
 
 
