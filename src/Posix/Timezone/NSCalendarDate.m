@@ -145,17 +145,14 @@ static void  mulle_tm_with_mini_tm( struct tm  *dst, struct mulle_mini_tm *src)
    struct tm        tmp;
    NSTimeInterval   interval;
    
-   tmp.tm_gmtoff = 0;
+   memset( &tmp, 0, sizeof( tmp));  // portable
+   
    tmp.tm_year   = (int) (year - 1900);
    tmp.tm_mon    = (int) month;
    tmp.tm_mday   = (int) day;
    tmp.tm_hour   = (int) hour;
    tmp.tm_sec    = (int) second;
    tmp.tm_min    = (int) minute;
-   
-   tmp.tm_zone   = NULL;
-   tmp.tm_wday   = 0;
-   tmp.tm_yday   = 0;
    
    interval = [isa _timeintervalSince1970WithTm:&tmp
                                  secondsFromGMT:[tz secondsFromGMT]];
@@ -178,7 +175,9 @@ static void  get_tm( NSCalendarDate *self, struct tm *dst)
    NSInteger   seconds;
    
    seconds = [self->_timeZone secondsFromGMT];
-   mulle_posix_tm_with_timeintervalsince1970( dst, self->_interval, seconds);
+   mulle_posix_tm_with_timeintervalsince1970( dst,
+                                              self->_interval,
+                                              (unsigned int) seconds);
 }
 
 
