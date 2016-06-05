@@ -98,12 +98,6 @@
 		417FFAE31CD8FB1400FBBE87 /* libmulle_thread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F96CE71CB28833009499A9 /* libmulle_thread.a */; };
 		417FFAE41CD8FB1400FBBE87 /* libmulle_utf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F96CE81CB28833009499A9 /* libmulle_utf.a */; };
 		417FFAE51CD8FB1400FBBE87 /* libMulleObjC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F96CE91CB28833009499A9 /* libMulleObjC.a */; };
-		417FFAE61CD8FB2300FBBE87 /* NSBundle+Darwin.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A01D81CB03868003C4ACF /* NSBundle+Darwin.m */; };
-		417FFAE71CD8FB2300FBBE87 /* NSPathUtilities+Darwin.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A01DA1CB03868003C4ACF /* NSPathUtilities+Darwin.m */; };
-		417FFAE81CD8FB2300FBBE87 /* NSProcessInfo+Darwin.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A01DB1CB03868003C4ACF /* NSProcessInfo+Darwin.m */; };
-		417FFAE91CD8FB2300FBBE87 /* NSFileManager+Darwin.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E13D7F1CD2534D00CE0304 /* NSFileManager+Darwin.m */; };
-		417FFAEA1CD8FB2300FBBE87 /* NSString+Darwin.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A01DD1CB03868003C4ACF /* NSString+Darwin.m */; };
-		417FFAEB1CD8FB2300FBBE87 /* NSTask+Darwin.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A01DE1CB03868003C4ACF /* NSTask+Darwin.m */; };
 		417FFAEE1CD8FB5700FBBE87 /* MulleStandaloneObjCPosixFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 417FFAEC1CD8FB5700FBBE87 /* MulleStandaloneObjCPosixFoundation.m */; };
 		417FFAEF1CD8FB5700FBBE87 /* MulleStandaloneObjCPosixFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = 417FFAED1CD8FB5700FBBE87 /* MulleStandaloneObjCPosixFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		417FFAF81CD8FDE500FBBE87 /* libmulle_sprintf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 417FFAF71CD8FDE500FBBE87 /* libmulle_sprintf.a */; };
@@ -121,6 +115,7 @@
 		41E13D801CD2534D00CE0304 /* NSFileManager+Darwin.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E13D7F1CD2534D00CE0304 /* NSFileManager+Darwin.m */; };
 		41E9C67B1CC543A500ED4145 /* NSArchiver+Posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 41E9C6791CC543A500ED4145 /* NSArchiver+Posix.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		41E9C67C1CC543A500ED4145 /* NSArchiver+Posix.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E9C67A1CC543A500ED4145 /* NSArchiver+Posix.m */; };
+		41FA9F621D041EAC004D8E61 /* libMulleObjCDarwinFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 415A015D1CB036C5003C4ACF /* libMulleObjCDarwinFoundation.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -322,10 +317,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41FA9F621D041EAC004D8E61 /* libMulleObjCDarwinFoundation.a in Frameworks */,
+				417FFADB1CD8FB0800FBBE87 /* libMulleObjCPosixFoundation.a in Frameworks */,
 				411DE6181CDA1EE100019FC2 /* libexpat.a in Frameworks */,
 				417FFAF81CD8FDE500FBBE87 /* libmulle_sprintf.a in Frameworks */,
-				417FFADB1CD8FB0800FBBE87 /* libMulleObjCPosixFoundation.a in Frameworks */,
 				417FFADC1CD8FB1400FBBE87 /* libMulleObjCFoundation.a in Frameworks */,
+				417FFAE51CD8FB1400FBBE87 /* libMulleObjC.a in Frameworks */,
 				417FFADD1CD8FB1400FBBE87 /* libmulle_aba.a in Frameworks */,
 				417FFADE1CD8FB1400FBBE87 /* libmulle_allocator.a in Frameworks */,
 				417FFADF1CD8FB1400FBBE87 /* libmulle_concurrent.a in Frameworks */,
@@ -334,7 +331,6 @@
 				417FFAE21CD8FB1400FBBE87 /* libmulle_test_allocator.a in Frameworks */,
 				417FFAE31CD8FB1400FBBE87 /* libmulle_thread.a in Frameworks */,
 				417FFAE41CD8FB1400FBBE87 /* libmulle_utf.a in Frameworks */,
-				417FFAE51CD8FB1400FBBE87 /* libMulleObjC.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -808,13 +804,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				417FFAE61CD8FB2300FBBE87 /* NSBundle+Darwin.m in Sources */,
-				417FFAE71CD8FB2300FBBE87 /* NSPathUtilities+Darwin.m in Sources */,
-				417FFAE81CD8FB2300FBBE87 /* NSProcessInfo+Darwin.m in Sources */,
-				417FFAE91CD8FB2300FBBE87 /* NSFileManager+Darwin.m in Sources */,
 				417FFAEE1CD8FB5700FBBE87 /* MulleStandaloneObjCPosixFoundation.m in Sources */,
-				417FFAEA1CD8FB2300FBBE87 /* NSString+Darwin.m in Sources */,
-				417FFAEB1CD8FB2300FBBE87 /* NSTask+Darwin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -957,6 +947,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/Cellar/expat/2.1.0_1/lib,
+					"$(PROJECT_DIR)/dependencies/lib/Debug",
 				);
 				USER_HEADER_SEARCH_PATHS = "src/Darwin src/Posix src/Posix/Categories src/Posix/Functions src/Posix/Locale src/Posix/Stream src/Posix/Timezone";
 			};
@@ -969,6 +960,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/Cellar/expat/2.1.0_1/lib,
+					"$(PROJECT_DIR)/dependencies/lib/Debug",
 				);
 				USER_HEADER_SEARCH_PATHS = "src/Darwin src/Posix src/Posix/Categories src/Posix/Functions src/Posix/Locale src/Posix/Stream src/Posix/Timezone";
 			};

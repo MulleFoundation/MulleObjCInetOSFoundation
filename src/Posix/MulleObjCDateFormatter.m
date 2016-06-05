@@ -107,8 +107,10 @@ static void   set_tm_to_invalid( struct tm *tm)
    tm->tm_wday   = INT_MIN;
    tm->tm_yday   = INT_MIN;
    tm->tm_isdst  = INT_MIN;
+#if 0
    tm->tm_gmtoff = LONG_MIN; // LONG_MIN here
    tm->tm_zone   = (void *) &tm;  // surely NOT a zone address
+#endif
 }
 
 
@@ -124,9 +126,10 @@ static int   has_tm_invalid_fields( struct tm *tm)
       return( 1);
    if( tm->tm_year == INT_MIN)
       return( 1);
+#if 0
    if( tm->tm_gmtoff == LONG_MIN && tm->tm_zone == (void *) tm)
       return( 1);
-   
+#endif
    return( 0);
 }
 

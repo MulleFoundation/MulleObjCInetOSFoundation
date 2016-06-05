@@ -41,8 +41,10 @@ static void  mulle_tm_with_mini_tm( struct tm  *dst, struct mulle_mini_tm *src)
    dst->tm_isdst  = 0;
    dst->tm_wday   = 0;
    dst->tm_yday   = 0;
+#if 0
    dst->tm_zone   = NULL;
    dst->tm_gmtoff = 0;
+#endif   
 }
 
 

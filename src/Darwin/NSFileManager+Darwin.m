@@ -11,6 +11,11 @@
 // other files in this library
 
 // std-c and dependencies
+#include <sys/stat.h>
+#include <sys/time.h>
+#include <dirent.h>
+#include <float.h>
+#include <unistd.h>
 
 
 @implementation NSFileManager (Darwin)
@@ -38,5 +43,18 @@
    return( [NSString stringWithCString:s
                                 length:len]);
 }
+
+
+- (struct timespec) _getCTimeFromStat:(struct stat *) stat
+{
+   return( stat->st_ctimespec);
+}
+
+
+- (struct timespec) _getMTimeFromStat:(struct stat *) stat
+{
+   return( stat->st_mtimespec);
+}
+
 
 @end

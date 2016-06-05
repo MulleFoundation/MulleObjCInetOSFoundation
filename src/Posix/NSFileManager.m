@@ -521,6 +521,26 @@ static BOOL  is_symlink( char *c_path)
 }
 
 
+- (struct timespec) _getCTimeFromStat:(struct stat *) stat
+{
+   struct timespec   timespec;
+
+   timespec.tv_sec  = stat->st_ctime;
+   timespec.tv_nsec = 0;
+   return( timespec);
+}
+
+
+- (struct timespec) _getMTimeFromStat:(struct stat *) stat
+{
+   struct timespec   timespec;
+
+   timespec.tv_sec  = stat->st_mtime;
+   timespec.tv_nsec = 0;
+   return( timespec);
+}
+
+
 - (NSDictionary *) fileSystemAttributesAtPath:(NSString *) path
 {
    NSMutableDictionary  *dictionary;
@@ -561,12 +581,13 @@ static BOOL  is_symlink( char *c_path)
                   forKey:NSFileType];
                   
    // next one is conceivably wrong. really but what's creation anyway ?
-   timespec.tv_sec  = c_info.st_ctime;
-   timespec.tv_nsec = c_info.st_ctimensec;
-   set_date_key_value( dictionary, NSFileCreationDate,     timespec);
+   timespec = [self _getCTimeFromStat:&c_info];
+   
+//   timespec.tv_nsec = c_info.st_ctimensec;
+   set_date_key_value( dictionary, NSFileCreationDate, timespec);
 
-   timespec.tv_sec  = c_info.st_mtime;
-   timespec.tv_nsec = c_info.st_mtimensec;
+   timespec = [self _getMTimeFromStat:&c_info];
+//   timespec.tv_nsec = c_info.st_mtimensec;
    set_date_key_value( dictionary, NSFileModificationDate, timespec);
    
    return( dictionary);

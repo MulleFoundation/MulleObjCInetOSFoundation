@@ -371,7 +371,7 @@ static NSRange  getPathExtensionRange( NSString *self)
    
    range = getPathExtensionRange( self);
    if( ! range.length)
-      return( nil);
+      return( @"");
    return( [self substringWithRange:range]);
 }
 
