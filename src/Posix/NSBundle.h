@@ -88,7 +88,6 @@
 // more stuff should be in here
 @interface NSBundle ( OSSpecific)
 
-+ (NSString *) _mainExecutablePath;
 + (NSArray *) allImages;
 - (NSDictionary *) infoDictionary;
 - (Class) principalClass;

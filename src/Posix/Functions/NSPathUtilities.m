@@ -15,7 +15,7 @@
 
 // other files in this library
 #import "NSString+PosixPathHandling.h"
-#import "NSPathUtilities+Private.h"
+#import "NSPathUtilities+PosixPrivate.h"
 
 // std-c and dependencies
 

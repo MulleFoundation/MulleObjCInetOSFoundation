@@ -28,6 +28,7 @@
 {
    NSAutoreleasePool   *pool;
    NSBundle            *bundle;
+   NSBundle            *mainBundle;
    NSMutableArray      *array;
    NSString            *path;
    NSString            *s;
@@ -36,14 +37,20 @@
    
    array = [NSMutableArray array];
    
+   mainBundle = [self mainBundle];
+   
    n = _dyld_image_count();
    for( i = 0; i < n; i++)
    {
-     pool =  NSPushAutoreleasePool();
+      pool = NSPushAutoreleasePool();
+      
       c_s = (char *) _dyld_get_image_name( i);
       s   = [NSString stringWithCString:c_s];
-      if( [s isEqualToString:[self _mainExecutablePath]])
-         bundle = [self mainBundle];
+      
+      // TODO: canonicalize s
+      
+      if( [s isEqualToString:[mainBundle executablePath]])
+         bundle = mainBundle;
       else
       {
          s    = [s stringByResolvingSymlinksInPath];
@@ -75,29 +82,33 @@
 }
 
 
-//   extern int   _NSGetExecutablePath( char *buf, size_t *bufsize);
-
-+ (NSString *) _mainExecutablePath
-{
-   NSString   *s;
-   char       *buf;
-   char       dummy;
-   uint32_t   len;
-
-   
-   len = 0;
-   buf = &dummy;
-   _NSGetExecutablePath( buf, &len);
-   
-   buf = malloc( len * sizeof( char));
-   if( ! buf)
-      MulleObjCThrowAllocationException( len * sizeof( char));
-      
-   _NSGetExecutablePath( buf, &len);
-    s = NSAutoreleaseObject([[NSString alloc] initWithCStringNoCopy:buf
-                                                                       length:strlen( buf)
-                                                                 freeWhenDone:YES]);
-   return( s);
-}
+////   extern int   _NSGetExecutablePath( char *buf, size_t *bufsize);
+//
+//+ (NSString *) _mainExecutablePath
+//{
+//   return( [NSProcessInfo )
+//   NSString   *s;
+//   char       *buf;
+//   char       dummy;
+//   uint32_t   len;
+//
+//   char  *name;
+//   
+//   name = getprogname();
+//   
+//   len = 0;
+//   buf = &dummy;
+//   _NSGetExecutablePath( buf, &len);
+//   
+//   buf = malloc( len * sizeof( char));
+//   if( ! buf)
+//      MulleObjCThrowAllocationException( len * sizeof( char));
+//      
+//   _NSGetExecutablePath( buf, &len);
+//    s = NSAutoreleaseObject([[NSString alloc] initWithCStringNoCopy:buf
+//                                                                       length:strlen( buf)
+//                                                                 freeWhenDone:YES]);
+//   return( s);
+//}
 
 @end

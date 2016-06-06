@@ -20,7 +20,9 @@
 // std-c and dependencies
 
 
-@implementation NSString( _Darwin)
+@implementation NSString( FreeBSD)
+
+// should probably query system locale or something
 
 + (NSStringEncoding) defaultCStringEncoding
 {
@@ -67,9 +69,6 @@
 
 - (NSString *) _stringByRemovingPrivatePrefix
 {
-   if( [self hasPrefix:@"/private/"])
-      if( [[NSFileManager defaultManager] fileExistsAtPath:self])
-         return( [self substringFromIndex:8]);
    return( self);
 }
 

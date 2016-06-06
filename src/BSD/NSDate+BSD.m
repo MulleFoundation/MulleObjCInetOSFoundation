@@ -12,7 +12,6 @@
 #include "mulle_bsd_tm.h"
 
 // other libraries of MulleObjCPosixFoundation
-#import "NSLocale+Posix.h"
 #import "NSLocale+PosixPrivate.h"
 #include "mulle_posix_tm.h"
 

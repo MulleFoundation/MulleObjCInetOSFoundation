@@ -61,7 +61,7 @@
 @end
 
 
-@interface NSUserDefaults ( _Conveniences)
+@interface NSUserDefaults ( Conveniences)
 
 - (NSInteger) integerForKey:(NSString *) key;
 - (NSString *) stringForKey:(NSString *) key;

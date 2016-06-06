@@ -1,7 +1,7 @@
 /*
  *  MulleFoundation - the mulle-objc class library
  *
- *  NSPathUtilities+Private.h is a part of MulleFoundation
+ *  NSPathUtilities+PosixPrivate.h is a part of MulleFoundation
  *
  *  Copyright (C) 2011 Nat!, __MyCompanyName__ 
  *  All rights reserved.

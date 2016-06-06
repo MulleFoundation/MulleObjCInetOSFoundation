@@ -14,7 +14,7 @@
 #import <MulleObjCFoundation/MulleObjCFoundation.h>
 
 
-@interface NSArray( Posix_Private)
+@interface NSArray( PosixPrivate)
 
 // don't access argv and argv contents afterwards(!), do not free it 
 + (NSArray *) _newWithArgc:(int) argc

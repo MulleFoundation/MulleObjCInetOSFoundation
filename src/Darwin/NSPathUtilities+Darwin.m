@@ -14,7 +14,7 @@
 #import "MulleObjCPosixFoundation.h"
 
 // other files in this library
-#import "NSPathUtilities+Private.h"
+#import "NSPathUtilities+PosixPrivate.h"
 #import "NSString+CString.h"
 #import "NSString+Posix.h"
 #import "NSString+PosixPathHandling.h"
