@@ -59,9 +59,9 @@ static int  argc_argv_set_arguments( struct argc_argv  *info,
                                      char *s,
                                      size_t length)
 {
-   char   **q;
    char   *p;
-   char   *q_sentinel;
+   char   **q;
+   char   **q_sentinel;
    char   *sentinel;
    int    argc;
    int    i;
@@ -78,7 +78,7 @@ static int  argc_argv_set_arguments( struct argc_argv  *info,
       if( ! *p)
          argc++;
 
-   assert( argc && ! p[ -1]);
+   assert( argc && ! p[ -1]);
 
    info->argv = mulle_calloc( argc, sizeof( char *));
    if( ! info->argv)
@@ -93,7 +93,7 @@ static int  argc_argv_set_arguments( struct argc_argv  *info,
    while( q < q_sentinel)
    {
       *q++ = p;
-      p    = &p[ strlen( s) + 1];
+      p    = &p[ strlen( s) + 1];
    }
 
    return( 0);

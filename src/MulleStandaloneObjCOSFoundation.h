@@ -6,4 +6,4 @@
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
 
-#import <MulleObjCPosixFoundation/MulleObjCPosixFoundation.h>
+#import <MulleObjCOSFoundation/MulleObjCOSFoundation.h>

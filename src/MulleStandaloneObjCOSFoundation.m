@@ -6,7 +6,7 @@
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
 
-#include "MulleObjCPosixFoundation.h"
+#include "_MulleObjCOSFoundation.h"
 
 // other files in this library
 
@@ -24,11 +24,11 @@ static void   versionassert( struct _mulle_objc_runtime *runtime,
                             void *friend,
                             struct mulle_objc_loadversion *version)
 {
-   if( (version->foundation & ~0xFF) != (MULLE_OBJC_POSIX_FOUNDATION_VERSION & ~0xFF))
+   if( (version->foundation & ~0xFF) != (MULLE_OBJC_OS_FOUNDATION_VERSION & ~0xFF))
       _mulle_objc_runtime_raise_inconsistency_exception( runtime, "mulle_objc_runtime %p: foundation version set to %x but runtime foundation is %x",
                                                         runtime,
                                                         version->foundation,
-                                                        MULLE_OBJC_POSIX_FOUNDATION_VERSION);
+                                                        MULLE_OBJC_OS_FOUNDATION_VERSION);
 }
 
 

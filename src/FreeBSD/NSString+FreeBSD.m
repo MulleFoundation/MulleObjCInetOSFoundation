@@ -75,7 +75,7 @@
 
 - (char *) cString
 {
-   return( [self UTF8String]);
+   return( (char *) [self UTF8String]);
 }
 
 @end

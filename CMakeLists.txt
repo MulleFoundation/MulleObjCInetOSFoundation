@@ -23,7 +23,7 @@ src/Posix/Timezone
 )
 
 
-set( HEADERS
+set( POSIX_HEADERS
 src/Posix/Categories/NSArchiver+Posix.h
 src/Posix/Categories/NSArray+Posix.h
 src/Posix/Categories/NSDictionary+Posix.h
@@ -62,8 +62,10 @@ src/Posix/Timezone/NSDate+NSCalendarDate.h
 src/Posix/Timezone/NSTimeZone+Posix.h
 )
 
+INSTALL( FILES ${POSIX_HEADERS} DESTINATION "include/MulleObjCPosixFoundation")
 
-add_library( MulleObjCPosixFoundation STATIC
+
+set( POSIX_SOURCES
 src/Posix/Categories/NSArray+Posix.m
 src/Posix/Categories/NSArray+PosixPrivate.m
 src/Posix/Categories/NSArchiver+Posix.m
@@ -102,18 +104,19 @@ src/Posix/Timezone/NSDate+NSCalendarDate.m
 src/Posix/Timezone/localtime.c
 )
 
-INSTALL( TARGETS MulleObjCPosixFoundation DESTINATION "lib")
-INSTALL( FILES ${HEADERS} DESTINATION "include/MulleObjCPosixFoundation")
 
-
-if( CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-   add_library( MulleObjCDarwinFoundation STATIC
+set( BSD_SOURCES
+${POSIX_SOURCES}
 src/BSD/mulle_bsd_tm.c
 src/BSD/NSDate+BSD.m
 src/BSD/NSCalendarDate+BSD.m
 src/BSD/NSLocale+BSD.m
 src/BSD/NSProcessInfo+BSD.m
 src/BSD/NSTask+BSD.m
+)
+
+set( DARWIN_SOURCES
+${BSD_SOURCES}
 src/Darwin/NSBundle+Darwin.m
 src/Darwin/NSPathUtilities+Darwin.m
 src/Darwin/NSFileManager+Darwin.m
@@ -121,34 +124,71 @@ src/Darwin/NSProcessInfo+Darwin.m
 src/Darwin/NSString+Darwin.m
 src/Darwin/NSTask+Darwin.m
 )
-INSTALL( TARGETS MulleObjCDarwinFoundation DESTINATION "lib")
-endif()
 
-
-if( CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
-   add_library( MulleObjCFreeBSDFoundation STATIC
-src/BSD/mulle_bsd_tm.c
-src/BSD/NSDate+BSD.m
-src/BSD/NSCalendarDate+BSD.m
-src/BSD/NSLocale+BSD.m
-src/BSD/NSProcessInfo+BSD.m
-src/BSD/NSTask+BSD.m
+set( FREEBSD_SOURCES
+${BSD_SOURCES}
 src/FreeBSD/NSBundle+FreeBSD.m
 src/FreeBSD/NSPathUtilities+FreeBSD.m
 src/FreeBSD/NSProcessInfo+FreeBSD.m
 src/FreeBSD/NSString+FreeBSD.m
 src/FreeBSD/NSTask+FreeBSD.m
 )
-INSTALL( TARGETS MulleObjCFreeBSDFoundation DESTINATION "lib")
-endif()
 
-
-if( CMAKE_SYSTEM_NAME STREQUAL "Linux")
-   add_library( MulleObjCLinuxFoundation STATIC
+set( LINUX_SOURCES
+${POSIX_SOURCES}
 src/Linux/NSCalendarDate+Linux.m
 src/Linux/NSDate+Linux.m
 src/Linux/NSLocale+Linux.m
 )
-INSTALL( TARGETS MulleObjCLinuxFoundation DESTINATION "lib")
+
+
+if( CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+set( SOURCES ${DARWIN_SOURCES})
 endif()
 
+
+if( CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
+set( SOURCES ${FREEBSD_SOURCES})
+endif()
+
+
+if( CMAKE_SYSTEM_NAME STREQUAL "Linux")
+set( SOURCES ${LINUX_SOURCES})
+endif()
+
+
+add_library( MulleObjCOSFoundation STATIC
+src/MulleObjCOSFoundation.m
+${SOURCES}
+)
+
+
+add_library( MulleStandaloneObjCOSFoundation SHARED
+src/MulleStandaloneObjCOSFoundation.m
+)
+
+
+add_dependencies( MulleStandaloneObjCOSFoundation MulleObjCOSFoundation)
+
+TARGET_LINK_LIBRARIES( MulleStandaloneObjCOSFoundation
+${BEGIN_ALL_LOAD}
+MulleObjCOSFoundation
+MulleObjCFoundation
+MulleObjC
+mulle_objc_runtime
+mulle_utf
+mulle_sprintf
+mulle_container
+mulle_concurrent
+mulle_aba
+mulle_allocator
+mulle_test_allocator
+${END_ALL_LOAD}
+)
+
+INSTALL( TARGETS MulleObjCOSFoundation DESTINATION "lib")
+INSTALL( TARGETS MulleStandaloneObjCOSFoundation DESTINATION "lib")
+
+
+INSTALL( FILES "src/MulleObjCOSFoundation.h" DESTINATION "include/MulleObjCOSFoundation")
+INSTALL( FILES "src/MulleStandaloneObjCOSFoundation.h" DESTINATION "include/MulleStandaloneObjCOSFoundation.h")
