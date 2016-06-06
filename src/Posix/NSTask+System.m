@@ -28,7 +28,7 @@
 
 
 
-@implementation NSTask( _System)
+@implementation NSTask( System)
 
 + (NSString *) _system:(NSArray *) argv
       workingDirectory:(NSString *) dir

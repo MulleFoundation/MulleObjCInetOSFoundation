@@ -20,7 +20,7 @@
 #import "NSString+CString.h"
 #import "NSString+PosixPathHandling.h"
 #import "NSFileManager.h"
-#import "NSFileManager+Private.h"
+#import "NSFileManager+PosixPrivate.h"
 
 // other libraries of MulleObjCPosixFoundation
 

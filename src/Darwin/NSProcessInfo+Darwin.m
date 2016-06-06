@@ -21,11 +21,7 @@
 #include <crt_externs.h>
 
 
-@interface NSProcessInfo( _Darwin)
-@end
-
-
-@implementation NSProcessInfo( _Darwin)
+@implementation NSProcessInfo( Darwin)
 
 
 ///* The MIT License

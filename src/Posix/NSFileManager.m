@@ -17,7 +17,7 @@
 #import "NSFileManager.h"
 
 // other files in this library
-#import "NSFileManager+Private.h"
+#import "NSFileManager+PosixPrivate.h"
 #import "NSDirectoryEnumerator.h"
 #import "NSData+Posix.h"
 #import "NSError+Posix.h"

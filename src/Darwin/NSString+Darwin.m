@@ -20,7 +20,7 @@
 // std-c and dependencies
 
 
-@implementation NSString( _Darwin)
+@implementation NSString( Darwin)
 
 - (NSString *) _stringByRemovingPrivatePrefix
 {

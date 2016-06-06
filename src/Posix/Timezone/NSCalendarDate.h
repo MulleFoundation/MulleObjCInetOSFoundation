@@ -69,13 +69,13 @@ struct mulle_mini_tm
 - (NSInteger) secondOfMinute;
 - (NSInteger) yearOfCommonEra;
 
-- (void) years:(NSInteger *) yp
-        months:(NSInteger *) mop
-          days:(NSInteger *) dp
-         hours:(NSInteger *) hp
-       minutes:(NSInteger *) mip
-       seconds:(NSInteger *) sp
-     sinceDate:(NSCalendarDate *) date;
+//- (void) years:(NSInteger *) yp
+//        months:(NSInteger *) mop
+//          days:(NSInteger *) dp
+//         hours:(NSInteger *) hp
+//       minutes:(NSInteger *) mip
+//       seconds:(NSInteger *) sp
+//     sinceDate:(NSCalendarDate *) date;
 
 @end
 

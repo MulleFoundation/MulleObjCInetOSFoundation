@@ -21,7 +21,7 @@
 // std-c and dependencies
 
 
-@implementation NSDictionary( _Posix_Private)
+@implementation NSDictionary( PosixPrivate)
 
 + (NSDictionary *) _newWithEnvironmentNoCopy:(char **) env
 {

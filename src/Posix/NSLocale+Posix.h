@@ -36,3 +36,14 @@
 
 @end
 
+
+@interface NSLocale ( OSSpecific)
+
++ (NSString *) systemLocalePath;
+
++ (id) systemLocale;
++ (id) currentLocale;
+- (id) _localeInfoForKey:(id) key;
+
+@end
+

@@ -35,7 +35,6 @@ src/Posix/Categories/NSString+Posix.h
 src/Posix/Categories/NSString+PosixPathHandling.h
 src/Posix/Categories/NSURL+PosixPathHandling.h
 src/Posix/Functions/NSLog.h
-src/Posix/Functions/NSPathUtilities+Private.h
 src/Posix/Functions/NSPathUtilities.h
 src/Posix/NSLocale+Posix.h
 src/Posix/Categories/NSString+PosixPathHandling.h
@@ -110,8 +109,10 @@ INSTALL( FILES ${HEADERS} DESTINATION "include/MulleObjCPosixFoundation")
 if( CMAKE_SYSTEM_NAME STREQUAL "Darwin")
    add_library( MulleObjCDarwinFoundation STATIC
 src/BSD/mulle_bsd_tm.c
-src/BSD/NSDate+FreeBSD.m
-src/BSD/NSCalendarDate+FreeBSD.m
+src/BSD/NSDate+BSD.m
+src/BSD/NSCalendarDate+BSD.m
+src/BSD/NSLocale+BSD.m
+src/BSD/NSTask+BSD.m
 src/Darwin/NSBundle+Darwin.m
 src/Darwin/NSPathUtilities+Darwin.m
 src/Darwin/NSFileManager+Darwin.m
@@ -126,8 +127,10 @@ endif()
 if( CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
    add_library( MulleObjCFreeBSDFoundation STATIC
 src/BSD/mulle_bsd_tm.c
-src/BSD/NSDate+FreeBSD.m
-src/BSD/NSCalendarDate+FreeBSD.m
+src/BSD/NSDate+BSD.m
+src/BSD/NSCalendarDate+BSD.m
+src/BSD/NSLocale+BSD.m
+src/BSD/NSTask+BSD.m
 src/FreeBSD/NSBundle+FreeBSD.m
 src/FreeBSD/NSPathUtilities+FreeBSD.m
 src/FreeBSD/NSProcessInfo+FreeBSD.m
@@ -141,6 +144,8 @@ endif()
 if( CMAKE_SYSTEM_NAME STREQUAL "Linux")
    add_library( MulleObjCLinuxFoundation STATIC
 src/Linux/NSCalendarDate+Linux.m
+src/Linux/NSDate+Linux.m
+src/Linux/NSLocale+Linux.m
 )
 INSTALL( TARGETS MulleObjCLinuxFoundation DESTINATION "lib")
 endif()

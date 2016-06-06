@@ -146,7 +146,7 @@ static NSMutableDictionary   *applicationDomain( NSUserDefaults *self)
 @end
 
 
-@implementation NSUserDefaults( _Conveniences)
+@implementation NSUserDefaults( Conveniences)
 
 static id   objectValueOfClassForKey( NSUserDefaults *self, Class cls, NSString *key)
 {

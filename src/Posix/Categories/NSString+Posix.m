@@ -22,7 +22,7 @@
 // std-c and dependencies
 
 
-@implementation NSString( _Posix)
+@implementation NSString( Posix)
 
 + (id) stringWithContentsOfFile:(NSString *) path
 {

@@ -16,7 +16,7 @@
 
 // just so convenient...
 
-@interface NSTask( _System)
+@interface NSTask( System)
 
 + (NSString *) _systemWithString:(NSString *) s
                 workingDirectory:(NSString *) dir;
