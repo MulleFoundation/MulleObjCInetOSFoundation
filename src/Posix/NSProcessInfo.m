@@ -21,6 +21,7 @@
 // other libraries of MulleObjCPosixFoundation
 
 // std-c and dependencies
+#include <unistd.h>
 
 
 @implementation NSProcessInfo
@@ -46,38 +47,9 @@
 }
 
 
-- (NSString *) hostName
-{
-   return( @"localhost");
-}
-
-
-- (NSUInteger) operatingSystem
-{
-   return( NSDarwinOperatingSystem);
-}
-
-
-- (NSString *) operatingSystemName
-{
-   return( @"Darwin");
-}
-
-
 - (int) processIdentifier
 {
    return( getpid());
-}
-
-
-- (NSString *) processName
-{
-   return( @"process");
-}
-
-
-- (void) setProcessName:(NSString *) name
-{
 }
 
 @end

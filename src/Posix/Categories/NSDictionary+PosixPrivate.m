@@ -17,13 +17,14 @@
 #import "NSDictionary+PosixPrivate.h"
 
 // other files in this library
+#import "NSString+CString.h"
 
 // std-c and dependencies
 
 
 @implementation NSDictionary( PosixPrivate)
 
-+ (NSDictionary *) _newWithEnvironmentNoCopy:(char **) env
++ (NSDictionary *) _newWithEnvironment:(char **) env
 {
    NSMutableDictionary   *dictionary;
    NSString              *key;
@@ -39,7 +40,7 @@
    p = env;
    while( *p)
    {
-      s       = *p++;  
+      s       = *p++;
       c_key   = strtok_r( s, "=", &ctxt);
       c_value = strtok_r( NULL, "=", &ctxt);
       
@@ -50,9 +51,27 @@
       value = [[NSString alloc] initWithCString:c_value
                                          length:strlen( c_value)];
       [dictionary setObject:value
-                      forKey:key];
+                     forKey:key];
       [key release];
       [value release];
+   }
+   
+   return( dictionary);
+}
+
+
++ (NSDictionary *) _newWithEnvironmentNoCopy:(char **) env
+{
+   NSDictionary   *dictionary;
+   char           **p;
+   char           *s;
+
+   dictionary = [self _newWithEnvironment:env];
+   
+   p = env;
+   while( *p)
+   {
+      s = *p++;
       free( s);
    }
    

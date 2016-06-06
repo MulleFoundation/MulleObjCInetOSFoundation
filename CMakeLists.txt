@@ -112,6 +112,7 @@ src/BSD/mulle_bsd_tm.c
 src/BSD/NSDate+BSD.m
 src/BSD/NSCalendarDate+BSD.m
 src/BSD/NSLocale+BSD.m
+src/BSD/NSProcessInfo+BSD.m
 src/BSD/NSTask+BSD.m
 src/Darwin/NSBundle+Darwin.m
 src/Darwin/NSPathUtilities+Darwin.m
@@ -130,6 +131,7 @@ src/BSD/mulle_bsd_tm.c
 src/BSD/NSDate+BSD.m
 src/BSD/NSCalendarDate+BSD.m
 src/BSD/NSLocale+BSD.m
+src/BSD/NSProcessInfo+BSD.m
 src/BSD/NSTask+BSD.m
 src/FreeBSD/NSBundle+FreeBSD.m
 src/FreeBSD/NSPathUtilities+FreeBSD.m

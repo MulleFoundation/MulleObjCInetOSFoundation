@@ -19,6 +19,7 @@
 
 // std-c and dependencies
 #include <crt_externs.h>
+#include <mach-o/dyld.h>
 
 
 @implementation NSProcessInfo( Darwin)
@@ -142,7 +143,7 @@ static inline int   copy_argc_argv( int argc, char **argv, argv_and_environ *inf
    char   *s;
    int    i;
    
-   info->argv = (char **) calloc( sizeof( char *) * argc, 1);
+   info->argv = (char **) mulle_calloc( argc, sizeof( char *));
    if( ! info->argv)
       return( -1);
       
@@ -169,7 +170,7 @@ static inline int   copy_env( char **environment, argv_and_environ *info)
    if( environment)
       for( ; environment[ n_env]; n_env++);
 
-   info->env = mulle_calloc( sizeof( char *) * (n_env + 1), 1);
+   info->env = mulle_calloc( n_env + 1, sizeof( char *));
    if( ! info->env)
       return( -1);
       
@@ -395,6 +396,54 @@ static void   unlazyArgumentsAndEnvironment( NSProcessInfo *self)
    if( ! _environment)
       unlazyArgumentsAndEnvironment( self);
    return( _environment);
+}
+
+
+static void   unlazyExecutablePath( NSProcessInfo *self)
+{
+   int        rval;
+   uint32_t   size;
+   char       *buf;
+   
+   _NSGetExecutablePath( NULL, &size);
+   buf = mulle_malloc( size);
+   if( ! buf)
+      MulleObjCThrowAllocationException( size);
+   
+   rval = _NSGetExecutablePath( buf, &size);
+   if( rval)
+      MulleObjCThrowInternalInconsistencyException( @"can't get executable path from _NSGetExecutablePath (%d,%d)", rval, errno);
+
+   self->_executablePath = [[NSString alloc] initWithCString:buf];
+}
+
+
+- (NSString *) _executablePath
+{
+   if( ! _executablePath)
+      unlazyExecutablePath( self);
+   return( _executablePath);
+}
+
+
+#pragma mark -
+#pragma mark Host and OS
+
+- (NSString *) hostName
+{
+   return( @"localhost");
+}
+
+
+- (NSUInteger) operatingSystem
+{
+   return( NSDarwinOperatingSystem);
+}
+
+
+- (NSString *) operatingSystemName
+{
+   return( @"Darwin");
 }
 
 @end

@@ -88,28 +88,29 @@ static void   do_the_dup( int fd, id handle)
       
       _status = _NSTaskIsPresumablyRunning;
       
-      path     = [_launchPath fileSystemRepresentation];
+      path    = [_launchPath fileSystemRepresentation];
 
       argc = [_arguments count];
       
       {
-      void  **argv[ argc + 2];
-      [_arguments getObjects:(id *) &argv[ 1]];
-      for( i = 1; i <= argc; i++) 
-         argv[ i] = [(id) argv[ i] cString];
-      argv[ i] = 0;
-      argv[ 0] = path;  // [[_launchPath lastPathComponent] cString];
-
-      envp = [NSTask _environment];
-      
-      //
-      // in the end, we might leak a few filedescriptors
-      // until child exits 
-      //
-      do_the_dup( 0, _standardInput);
-      do_the_dup( 1, _standardOutput);
-      do_the_dup( 2, _standardError);
-      execve( path, (char **) argv, envp);
+         void  *argv[ argc + 2];
+         
+         [_arguments getObjects:(id *) &argv[ 1]];
+         for( i = 1; i <= argc; i++)
+            argv[ i] = [(id) argv[ i] cString];
+         argv[ i] = 0;
+         argv[ 0] = path;  // [[_launchPath lastPathComponent] cString];
+         
+         envp = [NSTask _environment];
+         
+         //
+         // in the end, we might leak a few filedescriptors
+         // until child exits
+         //
+         do_the_dup( 0, _standardInput);
+         do_the_dup( 1, _standardOutput);
+         do_the_dup( 2, _standardError);
+         execve( path, (char **) argv, envp);
       }      
 
       // oughta be back in "parent" here

@@ -32,25 +32,31 @@ enum
 {
    NSArray       *_arguments;
    NSDictionary  *_environment;
+   NSString      *_executablePath;
 }
 
 + (NSProcessInfo *) processInfo;
 
 - (NSString *) globallyUniqueString;
-- (NSString *) hostName;
-- (NSUInteger) operatingSystem;
-- (NSString *) operatingSystemName;
-- (NSString *) operatingSystemVersionString;
 - (int) processIdentifier;
-- (NSString *) processName;
-- (void) setProcessName:(NSString *) name;
+
 
 @end
 
 
 @interface NSProcessInfo ( OSSpecific)
 
+- (NSString *) hostName;
+
+- (NSUInteger) operatingSystem;
+- (NSString *) operatingSystemName;
+- (NSString *) operatingSystemVersionString;
+
 - (NSArray *) arguments;
 - (NSDictionary *) environment;
+- (NSString *) _executablePath;
+
+- (NSString *) processName;
+- (void) setProcessName:(NSString *) name;
 
 @end

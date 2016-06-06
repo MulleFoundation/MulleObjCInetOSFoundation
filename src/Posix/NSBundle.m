@@ -165,10 +165,8 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
 {
    NSBundle   *bundle;
    NSString   *path;
-   NSArray    *arguments;
    
-   arguments = [[NSProcessInfo processInfo] arguments];
-   path      = [arguments objectAtIndex:0];
+   path = [[NSProcessInfo processInfo] _executablePath];
    NSParameterAssert( [path length]);
    
    bundle = [self _bundleWithPath:[self _mainBundlePathForExecutablePath:path]

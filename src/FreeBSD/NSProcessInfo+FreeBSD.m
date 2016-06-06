@@ -18,6 +18,7 @@
 
 // other libraries of MulleObjCPosixFoundation
 #import "NSArray+PosixPrivate.h"
+#import "NSDictionary+PosixPrivate.h"
 
 // std-c and dependencies
 #include <sys/types.h>
@@ -27,90 +28,11 @@
 @implementation NSProcessInfo( FreeBSD)
 
 
-///* The MIT License
-// *
-// * Copyright (C) 2007 Chris Miles
-// *
-// * Copyright (C) 2009 Erick Tryzelaar
-// *
-// *
-// * Permission is hereby granted, free of charge, to any person obtaining a
-// * copy of this software and associated documentation files (the "Software"),
-// * to deal in the Software without restriction, including without limitation
-// * the rights to use, copy, modify, merge, publish, distribute, sublicense,
-// * and/or sell copies of the Software, and to permit persons to whom the
-// * Software is furnished to do so, subject to the following conditions:
-// *
-// * The above copyright notice and this permission notice shall be included in
-// * all copies or substantial portions of the Software.
-// *
-// * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-// * DEALINGS IN THE SOFTWARE.
-// */
-//
-//
-///** Find the executable, argument list and environment
-// *
-// * This will also fill in the command attribute.
-// *
-// * The sysctl calls here don't use a wrapper as in darwin_prcesstable.c since
-// * they know the size of the returned structure already.
-// *
-// * The layout of the raw argument space is documented in start.s, which is
-// * part of the Csu project.  In summary, it looks like:
-// *
-// * XXX: This layout does not match whith what the code does.  The code seems
-// * to think exec_path is in between the first argc and arg[0], also the data
-// * returned by ssyctl() seems to be starting at the first argc according to
-// * the code.
-// *
-// * /---------------\ 0x00000000
-// * :               :
-// * :               :
-// * |---------------|
-// * | argc          |
-// * |---------------|
-// * | arg[0]        |
-// * |---------------|
-// * :               :
-// * :               :
-// * |---------------|
-// * | arg[argc - 1] |
-// * |---------------|
-// * | 0             |
-// * |---------------|
-// * | env[0]        |
-// * |---------------|
-// * :               :
-// * :               :
-// * |---------------|
-// * | env[n]        |
-// * |---------------|
-// * | 0             |
-// * |---------------| <-- Beginning of data returned by sysctl() is here.
-// * | argc          |
-// * |---------------|
-// * | exec_path     |
-// * |:::::::::::::::|
-// * |               |
-// * | String area.  |
-// * |               |
-// * |---------------| <-- Top of stack.
-// * :               :
-// * :               :
-// * \---------------/ 0xffffffff
-// */
-typedef struct
+struct argc_argv
 {
-   int      argc;
-   char     **argv;
-   char     **env;
-} argv_and_environ;
+   int    argc;
+   char   **argv;
+};
 
 
 static void  free_argv( int argc, char **argv)
@@ -122,69 +44,9 @@ static void  free_argv( int argc, char **argv)
 }
 
 
-static void  free_env( char **env)
-{
-   char   **p;
-   
-   if( p = env)
-      while( *p)
-         mulle_free( *p++);
-   mulle_free( env);
-}
-
-
-static inline void  free_argv_and_env( argv_and_environ *info)
+static inline void  argc_argv_free( struct argc_argv *info)
 {
    free_argv( info->argc, info->argv);
-   free_env( info->env);
-}
-
-
-static inline int   copy_argc_argv( int argc, char **argv, argv_and_environ *info)
-{
-   char   *s;
-   int    i;
-   
-   info->argv = (char **) calloc( sizeof( char *) * argc, 1);
-   if( ! info->argv)
-      return( -1);
-      
-   for( i = 0; i < argc; i++)
-   {
-      s = mulle_strdup( argv[ i]);
-      if( ! s)
-         return( -1);
-      
-      info->argv[ info->argc++] = s;
-   }
-   return( 0);
-}
-
-
-static inline int   copy_env( char **environment, argv_and_environ *info)
-{
-   int    n_env;
-   int    i;
-   char   *s;
-   
-   /* The environment, we figure out how many entries there are first */
-   n_env = 0;
-   if( environment)
-      for( ; environment[ n_env]; n_env++);
-
-   info->env = mulle_calloc( sizeof( char *) * (n_env + 1), 1);
-   if( ! info->env)
-      return( -1);
-      
-   for( i = 0; i < n_env; i++)
-   {
-      s = mulle_strdup( environment[ i]);
-      if( ! s)
-         return( -1);
-      info->env[ i] = s;
-   }
-   
-   return( 0);
 }
 
 
@@ -193,178 +55,201 @@ static inline int   copy_env( char **environment, argv_and_environ *info)
 // -1 : memory error
 // -2 : parse error
 //
-static int  parse_stack_frame( char *buf, size_t size, int n_args, argv_and_environ *info)
+static int  argc_argv_set_arguments( struct argc_argv  *info,
+                                     char *s,
+                                     size_t length)
 {
-   char     *p;
-   char     *s;
-   char     *sentinel;
-   size_t   env_size;
-   int      i;
-   int      n_env;
+   char   **q;
+   char   *p;
+   char   *q_sentinel;
+   char   *sentinel;
+   int    argc;
+   int    i;
    
-   assert( ! info->argc);
-   assert( info->argv);
-   assert( ! info->env);
-   
-   sentinel = &buf[ size];
-   p        = buf;
-   
-   // need some executable here
-   if( ! p)
-      return( -2);
-   
-   s = strdup( p);
-   p = &p[ strlen( p) + 1];
-   if( ! s)
-      return( -1);
-   
-   info->argv[ info->argc++] = s;
-   
-   // really needed ??? probably because of alignment
-   while( p < sentinel && ! *p)
-      ++p;
-   
-   //
-   // now we are in "string area"
-   //
-   while( info->argc <= n_args)
-   {
-      if( p >= sentinel)
-         return( -2);
-      
-      s = strdup( p);
-      p = &p[ strlen( p) + 1];
-      if( ! s)
-         return( -1);
-      
-      info->argv[ info->argc++] = s;
-   }
-   
-   /* The environment, we figure out how many entries there are first */
-   s = p;
-   for( n_env = 0; s < sentinel; n_env++)
-      s = &s[ strlen( s) + 1];
+   info->argc = 0;
+   info->argv = NULL;
 
-   info->env = malloc( sizeof( char *) * (n_env + 1));
-   info->env[ n_env] = 0;
+   sentinel = &s[ length];
+   if( p == sentinel)
+      return( 0);
    
-   for( i = 0; i < n_env; i++)
+   argc = 0;
+   for( p = s; p < s; p++)
+      if( ! *p)
+         argc++;
+
+   assert( argc && ! p[ -1]);
+
+   info->argv = mulle_calloc( argc, sizeof( char *));
+   if( ! info->argv)
+      return( -1);
+
+   info->argc = arc;
+
+   q          = info->argv;
+   q_sentinel = &q[ argc];
+   p          = s;
+   
+   while( q < q_sentinel)
    {
-      s = strdup( p);
-      p = &p[ strlen( p) + 1];
-      if( ! s)
-         return( -1);
-      
-      info->env[ i] = s;
+      *q++ = p;
+      p    = &p[ strlen( s) + 1];
    }
+
    return( 0);
 }
 
 
-static int   _NSGetArgcArgvEnviron( int *o_argc, char ***o_argv, char ***o_env)
+static int    _NSGetArgcArgv( struct argc_argv *info)
 {
-   argv_and_environ   info;
    char     *buf;
    size_t   size;
    int      mib[3];
-   int      argmax;
-   int      n_args;
    int      rval;
-   
-   rval = -1;  // generic system error
-   
-   *o_argc = 0;
-   *o_argv = NULL;
-   if( o_env)
-      *o_env = NULL;
-   
-   /* Get the maximum process arguments size. */
-   mib[ 0] = CTL_KERN;
-   mib[ 1] = KERN_ARGMAX;
-   
-   size = sizeof( argmax);
-   if( sysctl( mib, 2, &argmax, &size, NULL, 0) == -1) 
-      return( -1);
-   
-   /* Allocate space for the arguments. */
-   buf = malloc( argmax);
-   if( ! buf)
-      return( -1);
-   
+
+   memset( info, 0, sizeof( *info));
+
    /* Make a sysctl() call to get the raw argument space of the process. */
    mib[ 0] = CTL_KERN;
    mib[ 1] = KERN_PROC_ARGS;
    mib[ 2] = getpid();
+
+   size = 0;
+   sysctl( mib, 3, NULL, &size, NULL, 0);
+   if( ! size)
+      return( -1);
    
-   size = (size_t) argmax;
-   if( sysctl( mib, 3, buf, &size, NULL, 0) == -1) 
-      goto fail_and_bail;
-   
-   buf = realloc( buf, size);
+   buf = mulle_malloc( size);
    if( ! buf)
       return( -1);
 
-   //
-   // grab n_args off 
-   //
-   memcpy( &n_args, buf, sizeof( n_args));
-   
-   info.argc = 0;
-   info.env  = 0;
-   info.argv = (char **) malloc( sizeof( char *) * (n_args + 1));
-   if( ! info.argv)
-      goto fail_and_bail;
-   
-   rval = parse_stack_frame( &buf[ sizeof( n_args)], size - sizeof( n_args), n_args, &info);
-   
-   if( ! rval)
+   if( sysctl( mib, 3, buf, &size, NULL, 0) == -1)
    {
-      *o_argc = info.argc;
-      *o_argv = info.argv;
-      if( o_env)
-         *o_env = info.env;
-      else
-         free_env( info.env);
+      free( buf);
+      return( -1);
    }
-   else
-      free_argv_and_env( &info);
    
-fail_and_bail:
+   rval = argc_argv_set_arguments( info, buf, size);
    free( buf);
-   return( rval);
+   
+   return( 0);
 }
 
 
 
-static void   unlazyArgumentsAndEnvironment( NSProcessInfo *self)
+static void   unlazyArguments( NSProcessInfo *self)
 {
-   int    argc;
-   char   **argv;
-   char   **env;
-   int    rval;
-   
-   if( rval = _NSGetArgcArgvEnviron( &argc, (char ***) &argv, &env))
+   struct argc_argv   info;
+
+   rval = _NSGetArgcArgv( &info);
+   if( rval)
       MulleObjCThrowInternalInconsistencyException( @"can't get argc/argv from sysctl (%d,%d)", rval, errno);
-   
-   self->_arguments  = [NSArray _newWithArgc:argc
-                                  argvNoCopy:argv];
-   self->_environment = [NSDictionary _newWithEnvironmentNoCopy:env];
+
+   self->_arguments = [NSArray _newWithArgc:info.argc
+                                 argvNoCopy:info.argv];
 }
 
 
 - (NSArray *) arguments
 {
    if( ! _arguments)
-      unlazyArgumentsAndEnvironment( self);
+      unlazyArguments( self);
    return( _arguments);
+}
+
+
+#pragma mark -
+#pragma mark Environment
+
+static void   unlazyEnvironment( NSProcessInfo *self)
+{
+   extern char   **environ;
+
+   self->_environment = [NSDictionary _newWithEnvironment:environ];
 }
 
 
 - (NSDictionary *) environment
 {
    if( ! _environment)
-      unlazyArgumentsAndEnvironment( self);
+      unlazyEnvironment( self);
    return( _environment);
+}
+
+
+#pragma mark -
+#pragma mark Executable Path
+
+static int   _NSGetExecutablePath( char **path)
+{
+   char     *buf;
+   size_t   size;
+   int      mib[3];
+
+   mib[ 0] = CTL_KERN;
+   mib[ 1] = KERN_PROC_PATHNAME;
+   mib[ 2] = -1;
+
+   size = 0;
+   sysctl( mib, 3, NULL, &size, NULL, 0);
+
+   if( ! size)
+      return( -1);
+   
+   buf = mulle_malloc( size);
+   if( ! buf)
+      return( -1);
+
+   if( sysctl( mib, 3, buf, &size, NULL, 0) == -1)
+   {
+      mulle_allocator_free( NULL, buf);
+      return( -1);
+   }
+
+   *path = buf;
+
+   return( 0);
+}
+
+
+static void   unlazyExecutablePath( NSProcessInfo *self)
+{
+   char   *path;
+
+   if( _NSGetExecutablePath( &path))
+      MulleObjCThrowInternalInconsistencyException( @"can't get executable path from sysctl (%d,%d)", rval, errno);
+
+   self->_executablePath = [[NSString alloc] initWithCString:path];
+   mulle_allocator_free( NULL, path);
+}
+
+
+- (NSString *) _executablePath
+{
+   if( ! _executablePath)
+      unlazyExecutablePath( self);
+   return( _executablePath);
+}
+
+
+#pragma mark -
+#pragma mark Host and OS
+
+- (NSString *) hostName
+{
+   return( @"localhost");
+}
+
+
+- (NSString *) operatingSystemName
+{
+   return( @"FreeBSD");
+}
+
+
+- (NSUInteger) operatingSystem
+{
+   return( NSBSDOperatingSystem);
 }
 
 @end

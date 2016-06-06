@@ -23,6 +23,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		4107BCAD1D05C2B2008C9CAC /* NSProcessInfo+BSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4107BCAC1D05C2B2008C9CAC /* NSProcessInfo+BSD.m */; };
 		4116E4881CB4012700E4AE64 /* MulleObjCBufferedInputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 4116E4801CB4012700E4AE64 /* MulleObjCBufferedInputStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4116E4891CB4012700E4AE64 /* MulleObjCBufferedInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 4116E4811CB4012700E4AE64 /* MulleObjCBufferedInputStream.m */; };
 		4116E48A1CB4012700E4AE64 /* MulleObjCBufferedInputStream+InlineAccessors.h in Headers */ = {isa = PBXBuildFile; fileRef = 4116E4821CB4012700E4AE64 /* MulleObjCBufferedInputStream+InlineAccessors.h */; };
@@ -175,6 +176,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4107BCAC1D05C2B2008C9CAC /* NSProcessInfo+BSD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSProcessInfo+BSD.m"; sourceTree = "<group>"; };
 		4116E4801CB4012700E4AE64 /* MulleObjCBufferedInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MulleObjCBufferedInputStream.h; sourceTree = "<group>"; };
 		4116E4811CB4012700E4AE64 /* MulleObjCBufferedInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MulleObjCBufferedInputStream.m; sourceTree = "<group>"; };
 		4116E4821CB4012700E4AE64 /* MulleObjCBufferedInputStream+InlineAccessors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MulleObjCBufferedInputStream+InlineAccessors.h"; sourceTree = "<group>"; };
@@ -602,6 +604,7 @@
 				41FA9F641D04384C004D8E61 /* NSDate+BSD.m */,
 				41FA9F681D0439D9004D8E61 /* NSCalendarDate+BSD.m */,
 				413A20491D04A20600CF7746 /* NSLocale+BSD.m */,
+				4107BCAC1D05C2B2008C9CAC /* NSProcessInfo+BSD.m */,
 				41BFA5281D05844D0072D27D /* NSTask+BSD.m */,
 				41641C2C1D0468C900DBE1CE /* mulle_bsd_tm.h */,
 				41641C2B1D0468C900DBE1CE /* mulle_bsd_tm.c */,
@@ -852,6 +855,7 @@
 				41BFA5261D05842D0072D27D /* NSTask+Darwin.m in Sources */,
 				413A204A1D04A20600CF7746 /* NSLocale+BSD.m in Sources */,
 				415A01E31CB03868003C4ACF /* NSPathUtilities+Darwin.m in Sources */,
+				4107BCAD1D05C2B2008C9CAC /* NSProcessInfo+BSD.m in Sources */,
 				41E13D801CD2534D00CE0304 /* NSFileManager+Darwin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

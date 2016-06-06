@@ -86,6 +86,7 @@ int   mulle_bsd_tm_from_string_with_format( struct tm *tm,
          return( -1);
    }
 
+   has_tz = 0;
    if( mulle_bsd_tm_is_invalid( tm))
    {
       // augment formatter with current time (or only when parsing failed ?)
