@@ -84,7 +84,7 @@ static int  argc_argv_set_arguments( struct argc_argv  *info,
    if( ! info->argv)
       return( -1);
 
-   info->argc = arc;
+   info->argc = argc;
 
    q          = info->argv;
    q_sentinel = &q[ argc];
@@ -140,6 +140,7 @@ static int    _NSGetArgcArgv( struct argc_argv *info)
 static void   unlazyArguments( NSProcessInfo *self)
 {
    struct argc_argv   info;
+   int                rval;
 
    rval = _NSGetArgcArgv( &info);
    if( rval)
@@ -217,7 +218,7 @@ static void   unlazyExecutablePath( NSProcessInfo *self)
    char   *path;
 
    if( _NSGetExecutablePath( &path))
-      MulleObjCThrowInternalInconsistencyException( @"can't get executable path from sysctl (%d,%d)", rval, errno);
+      MulleObjCThrowInternalInconsistencyException( @"can't get executable path from sysctl (%d)", errno);
 
    self->_executablePath = [[NSString alloc] initWithCString:path];
    mulle_allocator_free( NULL, path);
