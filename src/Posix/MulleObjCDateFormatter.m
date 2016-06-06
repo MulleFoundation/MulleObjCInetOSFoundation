@@ -25,7 +25,6 @@
 // std-c and dependencies
 #include <time.h>
 #include <xlocale.h>
-#include <alloca.h>
 
 
 @implementation MulleObjCDateFormatter
@@ -91,21 +90,26 @@
 //
 - (NSString *) stringFromDate:(NSDate *) date
 {
-   size_t   len;
-   char     *buf;
-   
+   NSString   *s;
+   size_t     len;
+   char       *buf;
+  
+   buf = NULL; 
    for(;;)
    {
-      buf = alloca( _buflen);
-
+      buf = mulle_allocator_realloc( NULL, buf, _buflen);
       len = [date _getAsCString:buf
                          length:_buflen
                   cStringFormat:_cformat
                          locale:[self locale]
                        timeZone:[self timeZone]];
       if( len)
-         return( [NSString stringWithCString:buf
-                                      length:len + 1]);
+      {
+          s = [NSString stringWithCString:buf
+                                   length:len + 1];
+          mulle_allocator_free( NULL, buf);
+          return( s);
+      }
       _buflen *= 2;  // weak ...
    }
 }

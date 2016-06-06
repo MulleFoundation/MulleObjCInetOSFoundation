@@ -123,11 +123,11 @@ static NSArray   *FreeBSDSearchPathForDirectoriesInDomains( NSSearchPathDirector
 
 static _NSPathUtilityVectorTable   _FreeBSDTable =
 {
-   FreeBSDFullUserName,
+   FreeBSDUserName,
    FreeBSDHomeDirectory,
-   FreeBSDHomeDirectoryForUser,
+   NULL,
    FreeBSDSearchPathForDirectoriesInDomains,
-   FreeBSDOpenStepRootDirectory,
+   FreeBSDRootDirectory,
    FreeBSDTemporaryDirectory,
    FreeBSDUserName
 };

@@ -293,7 +293,7 @@ static int   _NSGetArgcArgvEnviron( int *o_argc, char ***o_argv, char ***o_env)
    
    /* Make a sysctl() call to get the raw argument space of the process. */
    mib[ 0] = CTL_KERN;
-   mib[ 1] = KERN_PROCARGS2;
+   mib[ 1] = KERN_PROC_ARGS;
    mib[ 2] = getpid();
    
    size = (size_t) argmax;
@@ -324,7 +324,7 @@ static int   _NSGetArgcArgvEnviron( int *o_argc, char ***o_argv, char ***o_env)
       if( o_env)
          *o_env = info.env;
       else
-         free_env( &info);
+         free_env( info.env);
    }
    else
       free_argv_and_env( &info);

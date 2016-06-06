@@ -15,6 +15,9 @@
 
 // std-c and dependencies
 #include <signal.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 
 @implementation NSTask( BSD)

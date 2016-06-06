@@ -28,7 +28,7 @@
 // other libraries of MulleObjCPosixFoundation
 
 // std-c and dependencies
-#include <alloca.h>
+#include <unistd.h>
 
 
 @implementation NSTask
@@ -81,7 +81,6 @@ static void   do_the_dup( int fd, id handle)
    
    if( ! (pid = vfork()))
    {
-      void         **argv;
       char         **envp;
       char         *path;
       NSUInteger   argc;
@@ -92,7 +91,9 @@ static void   do_the_dup( int fd, id handle)
       path     = [_launchPath fileSystemRepresentation];
 
       argc = [_arguments count];
-      argv = alloca( (argc + 2) * sizeof( void *));
+      
+      {
+      void  **argv[ argc + 2];
       [_arguments getObjects:(id *) &argv[ 1]];
       for( i = 1; i <= argc; i++) 
          argv[ i] = [(id) argv[ i] cString];
@@ -108,8 +109,8 @@ static void   do_the_dup( int fd, id handle)
       do_the_dup( 0, _standardInput);
       do_the_dup( 1, _standardOutput);
       do_the_dup( 2, _standardError);
-      
       execve( path, (char **) argv, envp);
+      }      
 
       // oughta be back in "parent" here
       _status = _NSTaskHasFailed;
