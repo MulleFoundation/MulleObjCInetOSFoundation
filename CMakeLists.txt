@@ -34,6 +34,7 @@ src/Posix/Categories/NSString+CString.h
 src/Posix/Categories/NSString+Posix.h
 src/Posix/Categories/NSString+PosixPathHandling.h
 src/Posix/Categories/NSURL+PosixPathHandling.h
+src/Posix/Functions/NSAllocation.h
 src/Posix/Functions/NSLog.h
 src/Posix/Functions/NSPathUtilities.h
 src/Posix/NSLocale+Posix.h
@@ -77,6 +78,7 @@ src/Posix/Categories/NSString+CString.m
 src/Posix/Categories/NSString+Posix.m
 src/Posix/Categories/NSString+PosixPathHandling.m
 src/Posix/Categories/NSURL+PosixPathHandling.m
+src/Posix/Functions/NSAllocation.m
 src/Posix/Functions/NSLog.m
 src/Posix/Functions/NSPathUtilities.m
 src/Posix/MulleObjCDateFormatter.m

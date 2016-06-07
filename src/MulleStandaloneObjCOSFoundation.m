@@ -148,8 +148,7 @@ struct _mulle_objc_runtime  *__get_or_create_objc_runtime( void)
          {
             sizeof( struct _ns_foundationconfiguration),
             &mulle_allocator_objc,
-            NULL,
-            0
+            NULL
          },
       }
    };
@@ -179,7 +178,6 @@ struct _mulle_objc_runtime  *__get_or_create_objc_runtime( void)
          if( is_test & 0x2)
             setup.config.runtime.allocator          = &mulle_test_allocator_objc;
 
-         setup.config.foundation.pagesize = getpagesize();
 #if DEBUG
          if( is_test & 0x3)
             fprintf( stderr, "MulleObjC uses \"mulle_test_allocator_objc\" to detect leaks.\n");

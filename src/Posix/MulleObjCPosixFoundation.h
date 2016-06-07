@@ -33,6 +33,7 @@
 #import "NSURL+PosixPathHandling.h"
 #import "NSTimeZone+Posix.h"
 
+#import "NSAllocation.h"
 #import "NSLog.h"
 #import "NSPathUtilities.h"
 
