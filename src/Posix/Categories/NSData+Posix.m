@@ -26,6 +26,7 @@
 // std-c and dependencies
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 
 @implementation NSData( _Posix)

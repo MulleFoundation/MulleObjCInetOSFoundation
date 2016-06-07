@@ -16,6 +16,10 @@
 #import <MulleObjC/ns_test_allocation.h>
 #import <mulle_sprintf/mulle_sprintf.h>
 
+#if defined( __APPLE__) || defined( __unix__)
+# include <unistd.h>
+#endif
+
 
 #pragma mark -
 #pragma mark versioning
@@ -144,7 +148,8 @@ struct _mulle_objc_runtime  *__get_or_create_objc_runtime( void)
          {
             sizeof( struct _ns_foundationconfiguration),
             &mulle_allocator_objc,
-            NULL
+            NULL,
+            0
          },
       }
    };
@@ -173,6 +178,8 @@ struct _mulle_objc_runtime  *__get_or_create_objc_runtime( void)
             setup.config.foundation.objectallocator = &mulle_test_allocator_objc;
          if( is_test & 0x2)
             setup.config.runtime.allocator          = &mulle_test_allocator_objc;
+
+         setup.config.foundation.pagesize = getpagesize();
 #if DEBUG
          if( is_test & 0x3)
             fprintf( stderr, "MulleObjC uses \"mulle_test_allocator_objc\" to detect leaks.\n");
