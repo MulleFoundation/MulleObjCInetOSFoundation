@@ -11,6 +11,7 @@
 // other files in this library
 
 // other libraries of MulleObjCPosixFoundation
+#import <NSLocale+PosixPrivate.h>
 
 // std-c and dependencies
 #include <locale.h>

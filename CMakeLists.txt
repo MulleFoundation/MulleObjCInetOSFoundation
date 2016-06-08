@@ -12,6 +12,14 @@ else()
   include( Release)
 endif()
 
+#
+# -D_XOPEN_SOURCE is only needed only in CMakeLists.txt
+# ObjC code is "shielded" from <unistd.h>
+#
+set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_XOPEN_SOURCE=700")
+set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_XOPEN_SOURCE=700")
+
+
 include_directories(
 src
 src/Posix
