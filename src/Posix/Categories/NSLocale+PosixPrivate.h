@@ -7,6 +7,7 @@
 //
 #import <MulleObjCFoundation/MulleObjCFoundation.h>
 
+#include <locale.h>
 #include <xlocale.h>
 
 

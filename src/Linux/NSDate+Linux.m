@@ -12,6 +12,7 @@
 
 // other libraries of MulleObjCPosixFoundation
 #include "mulle_posix_tm.h"
+#import "NSLocale+PosixPrivate.h"
 
 // std-c and dependencies
 #include <time.h>
@@ -51,8 +52,7 @@
       interval    = [NSCalendarDate _timeintervalSince1970WithTm:&tm
                                                   secondsFromGMT:estSeconds];
       date        = [self dateWithTimeIntervalSince1970:interval];
-      if( ! has_tz)
-         realSeconds = [timeZone secondsFromGMTForDate:date];
+      realSeconds = [timeZone secondsFromGMTForDate:date];
       if( realSeconds == estSeconds)
         break;
 
