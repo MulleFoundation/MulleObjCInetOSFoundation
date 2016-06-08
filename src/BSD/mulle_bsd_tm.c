@@ -104,4 +104,14 @@ int   mulle_bsd_tm_from_string_with_format( struct tm *tm,
 }
 
 
+void  mulle_bsd_tm_with_timeintervalsince1970( struct tm *tm,
+                                               double timeInterval,
+                                               unsigned int secondsFromGMT)
+{
+   time_t      timeval;
+   
+   mulle_posix_tm_with_timeintervalsince1970( tm, timeInterval, secondsFromGMT);
+   tm->tm_gmtoff = secondsFromGMT;
+}
+
 

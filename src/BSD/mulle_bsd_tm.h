@@ -22,4 +22,9 @@ int            mulle_bsd_tm_from_string_with_format( struct tm *tm,
                                                      char *c_format,
                                                      locale_t locale,
                                                      int is_lenient);
+
+void  mulle_bsd_tm_with_timeintervalsince1970( struct tm *tm,
+                                               double timeInterval,
+                                               unsigned int secondsFromGMT);
+
 #endif

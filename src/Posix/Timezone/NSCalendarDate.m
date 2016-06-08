@@ -170,6 +170,7 @@ static void  mulle_tm_with_mini_tm( struct tm  *dst, struct mulle_mini_tm *src)
 //}
 
 
+// move it to BSD
 static void  get_tm( NSCalendarDate *self, struct tm *dst)
 {
    NSInteger   seconds;

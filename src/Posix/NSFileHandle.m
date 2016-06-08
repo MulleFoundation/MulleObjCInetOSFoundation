@@ -17,13 +17,13 @@
 #import "NSFileHandle.h"
 
 // other files in this library
+#import "NSAllocation.h"
 #import "NSString+Posix.h"
 #import "NSString+PosixPathHandling.h"
 
-// other libraries of MulleObjCFoundation
-
 // std-c and dependencies
 #include <fcntl.h>
+#include <unistd.h>
 
 
 @interface NSNullDeviceFileHandle : NSFileHandle

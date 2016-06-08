@@ -149,7 +149,6 @@ void  mulle_posix_tm_with_timeintervalsince1970( struct tm *tm,
 
    timeval = (time_t) (timeInterval + secondsFromGMT + 0.5);
    gmtime_r( &timeval, tm);
-   tm->tm_gmtoff = secondsFromGMT;
 }
 
 

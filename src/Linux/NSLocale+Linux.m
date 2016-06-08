@@ -13,7 +13,8 @@
 // other libraries of MulleObjCPosixFoundation
 
 // std-c and dependencies
-#include <time.h>
+#include <locale.h>
+#include <xlocale.h>
 
 
 @implementation NSLocale (Linux)
