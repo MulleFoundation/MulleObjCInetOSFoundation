@@ -16,34 +16,10 @@
 // std-c and dependencies
 #include <locale.h>
 #include <xlocale.h>
+#include <langinfo.h>
 
 
 @implementation NSLocale (Linux)
-
-static NSString   *queryLocaleName( int mask, locale_t base)
-{
-   char   *c_name;
-   
-   c_name = (char *) querylocale( mask, base);
-
-   return( c_name ? [NSString stringWithCString:c_name] : nil);
-}
-
-
-static id   newLocaleByQuery( Class self, locale_t base)
-{
-   NSString  *name;
-
-   name = queryLocaleName( LC_ALL_MASK, base);
-   if( ! name)
-   {
-      [self release];
-      return( nil);
-   }
-
-   return( [[[self alloc] initWithLocaleIdentifier:name] autorelease]);
-}
-
 
 + (NSString *) systemLocalePath
 {
@@ -53,13 +29,15 @@ static id   newLocaleByQuery( Class self, locale_t base)
 
 + (id) systemLocale
 {
-   return( newLocaleByQuery( self, LC_GLOBAL_LOCALE));
+   // bullshit
+   return( [[[NSLocale alloc] initWithLocaleIdentifier:@"C"] autorelease]);
 }
 
 
 + (id) currentLocale
 {
-   return( newLocaleByQuery( self, NULL));
+   // bullshit
+   return( [[[NSLocale alloc] initWithLocaleIdentifier:@"C"] autorelease]);
 }
 
 
