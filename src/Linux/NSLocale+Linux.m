@@ -20,6 +20,16 @@
 
 @implementation NSLocale (Linux)
 
+static NSString   *queryLocaleName( int mask, locale_t base)
+{
+   char   *c_name;
+   
+   c_name = (char *) querylocale( mask, base);
+
+   return( c_name ? [NSString stringWithCString:c_name] : nil);
+}
+
+
 static id   newLocaleByQuery( Class self, locale_t base)
 {
    NSString  *name;
