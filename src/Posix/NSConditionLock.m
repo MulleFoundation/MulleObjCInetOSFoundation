@@ -21,6 +21,7 @@
 // other libraries of MulleObjCPosixFoundation
 
 // std-c and dependencies
+#include <pthread.h>
 
 
 @implementation NSConditionLock

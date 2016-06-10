@@ -30,14 +30,14 @@
 + (id) systemLocale
 {
    // bullshit
-   return( [[[NSLocale alloc] initWithLocaleIdentifier:@"C"] autorelease]);
+   return( [[[NSLocale alloc] initWithLocaleIdentifier:@"C"] autorelease]);
 }
 
 
 + (id) currentLocale
 {
    // bullshit
-   return( [[[NSLocale alloc] initWithLocaleIdentifier:@"C"] autorelease]);
+   return( [[[NSLocale alloc] initWithLocaleIdentifier:@"C"] autorelease]);
 }
 
 

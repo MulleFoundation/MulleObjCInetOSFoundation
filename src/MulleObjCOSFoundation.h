@@ -11,6 +11,20 @@
 
 
 // BSD, OS X, Linux
-#if defined( __unix__) || defined( __APPLE__)
+
+// want to have alloca available from now on
+
+#ifdef __APPLE__
 # import <MulleObjCPosixFoundation/MulleObjCPosixFoundation.h>
+# include <alloca.h>
+#else
+# ifdef __linux__
+#  import <MulleObjCPosixFoundation/MulleObjCPosixFoundation.h>
+#  include <alloca.h>
+# else
+#  ifdef __unix__
+#   import <MulleObjCPosixFoundation/MulleObjCPosixFoundation.h>
+#   include <stdlib.h> // has alloca
+#  endif
+# endif
 #endif
