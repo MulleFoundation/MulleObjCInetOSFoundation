@@ -11,6 +11,8 @@
  *  $Id$
  *
  */
+#define _DARWIN_C_SOURCE
+
 #import "MulleObjCPosixFoundation.h"
 
 // other files in this library

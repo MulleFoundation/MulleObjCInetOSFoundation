@@ -11,6 +11,7 @@
  *  $Id$
  *
  */
+#define _DARWIN_C_SOURCE
 
 // eek eeek eek, should be OSX rather than Darwin
 
