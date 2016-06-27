@@ -52,36 +52,63 @@ static inline void  argc_argv_free( struct argc_argv *info)
 }
 
 
+static size_t   get_file_size( char *file)
+{
+   char      buf[ 0x1000];
+   ssize_t   bytes;
+   size_t    total;
+   int       fd;
+ 
+   fd = open( "/proc/self/cmdline", O_RDONLY);
+   if( fd == -1)
+      return( -1);
 
-static char  *get_arguments( size_t *size)
+   total = 0;
+   for(;;)
+   { 
+      bytes = read( fd, buf, sizeof( buf));
+      if( ! bytes)
+	 break;
+      if( bytes == -1)
+      {
+         total = -1;
+         break;
+      }
+      total += bytes;
+   } 
+
+   close( fd);
+   return( total);
+} 
+
+
+static char  *get_arguments( size_t *p_size)
 {
    char     *buf;
    off_t    offset;
    int      fd;
+   size_t   size;
+
+   size = get_file_size( "/proc/self/cmdline");
+   if( size == -1)
+       return( NULL);
  
    fd = open( "/proc/self/cmdline", O_RDONLY);
    if( fd == -1)
       return( NULL);
    
-   offset = lseek( fd, SEEK_END, 0);
-   lseek( fd, SEEK_SET, 0);
-   
-   if( offset == -1)
+   buf = mulle_malloc( size + 1);
+   if( ! buf) 
    {
       close( fd);
       return( NULL);
    }
-   
-   *size = (size_t) offset;
-   buf   = mulle_malloc( *size + 1);
-   if( ! buf)
-      return( NULL);
-   
-   read( fd, buf, (size_t) *size);
+  
+   read( fd, buf, size);
    close( fd);
    
-   buf[ *size] = 0;  // paranoia
-   
+   buf[ size] = 0;  // paranoia
+   *p_size    = size;
    return( buf);
 }
 
@@ -100,13 +127,14 @@ static void  argc_argv_set_arguments( struct argc_argv  *info,
    
    info->argc = 0;
    info->argv = NULL;
-
-   sentinel = &s[ length];
-   if( p == sentinel)
+ 
+   p        = s;
+   sentinel = &p[ length];
+   if( s == sentinel)
       return;
    
    argc = 0;
-   for( p = s; p < s; p++)
+   for( p = s; p < sentinel; p++)
       if( ! *p)
          argc++;
 

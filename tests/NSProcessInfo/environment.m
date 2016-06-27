@@ -22,6 +22,8 @@ int   main( int argc, const char * argv[])
    NSString        *cString;
    NSString        *key;
    int             i;
+   char            *env_s;
+   char            *key_s;
 
    environment = [[NSProcessInfo processInfo] environment];
    if( ! [environment count])
@@ -33,7 +35,9 @@ int   main( int argc, const char * argv[])
    rover = [environment keyEnumerator];
    while( key = [rover nextObject])
    {
-      cString = [NSString stringWithCString:getenv( [key cString])];
+      key_s   = [key cString];
+      env_s   = getenv( key_s);
+      cString = [NSString stringWithCString:env_s];
       if( ! [[environment objectForKey:key] isEqualToString:cString])
       {
           printf( "%d failed\n", i);
