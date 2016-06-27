@@ -154,6 +154,8 @@ ${POSIX_SOURCES}
 src/Linux/NSCalendarDate+Linux.m
 src/Linux/NSDate+Linux.m
 src/Linux/NSLocale+Linux.m
+src/Linux/NSProcessInfo+Linux.m
+src/Linux/NSString+Linux.m
 )
 
 
