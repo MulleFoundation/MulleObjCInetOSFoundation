@@ -1,5 +1,10 @@
 cmake_minimum_required (VERSION 3.0)
 
+# probably better to remove it, and specify as
+# cmake -DCMAKE_OSX_SYSROOT=macosx ..
+#
+set( CMAKE_OSX_SYSROOT macosx)
+
 project (MulleObjCPosixFoundation)
 
 

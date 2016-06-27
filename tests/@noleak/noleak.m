@@ -1,4 +1,4 @@
-#import <MulleStandaloneObjCPosixFoundation/MulleStandaloneObjCPosixFoundation.h>
+#import <MulleStandaloneObjCOSFoundation/MulleStandaloneObjCOSFoundation.h>
 
 
 @implementation Foo

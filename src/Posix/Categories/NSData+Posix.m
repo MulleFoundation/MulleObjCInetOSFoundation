@@ -13,7 +13,7 @@
  */
 // define, that make things POSIXly
 #define _XOPEN_SOURCE 700
- 
+
 #import "NSData+Posix.h"
 
 // other files in this library
@@ -53,7 +53,7 @@
    ssize_t                  len;
    struct mulle_allocator   *allocator;
    struct stat              info;
-   
+
    filename = [path fileSystemRepresentation];
    fd = open( filename, O_RDONLY);
    if( fd == -1)
@@ -61,7 +61,7 @@
       [self release];
       return( nil);
    }
-   
+
    buf = NULL;
    //
    // the length we get here is "our" length
@@ -74,19 +74,19 @@
       {
          // warning this may have a 2 GB problem is off_t is 64 bit
          // and ssize_t is 32 bit
-         
+
          len = (size_t) info.st_size;
          if( (off_t) len == info.st_size)
          {
             allocator = MulleObjCObjectGetAllocator( self);
-            
+
             buf = mulle_allocator_malloc( allocator, len);
             if( buf)
             {
                // The system guarantees to read the number of bytes requested
                // if the descriptor references a normal file that has that
                // many bytes left before the end-of-file, but in no other case
-               
+
                actual_len = read( fd, buf, len);
                if( actual_len != -1)
                {
@@ -100,7 +100,7 @@
       }
    }
    close( fd);
-   
+
    if( ! buf)
    {
       [self release];
@@ -131,14 +131,14 @@
    char      *c_old;
 
    NSParameterAssert( [path length]);
-   
+
    new_path = flag ? [path stringByAppendingString:@"~"] : path;
    c_path    = [new_path fileSystemRepresentation];
-   
+
    fd = open( c_path, O_WRONLY|O_CREAT|O_TRUNC, 0666 );
    if( fd == -1)
       return( NO);
-   
+
    len = [self length];
    if( write( fd, [self bytes], len) != len)
    {
@@ -146,13 +146,13 @@
       return( NO);
    }
    close( fd );
-   
+
    if( ! flag)
       return( YES);
-   
+
    c_new = [path fileSystemRepresentation];
    c_old = c_path;
-   
+
    rval = unlink( c_new);
    if( rval)
    {
@@ -162,7 +162,7 @@
          return( NO);
       }
    }
-   
+
    rval = rename( c_old, c_new);
    if( rval)
    {
