@@ -208,4 +208,4 @@ INSTALL( TARGETS MulleStandaloneObjCOSFoundation DESTINATION "lib")
 
 
 INSTALL( FILES "src/MulleObjCOSFoundation.h" DESTINATION "include/MulleObjCOSFoundation")
-INSTALL( FILES "src/MulleStandaloneObjCOSFoundation.h" DESTINATION "include/MulleStandaloneObjCOSFoundation.h")
+INSTALL( FILES "src/MulleStandaloneObjCOSFoundation.h" DESTINATION "include/MulleStandaloneObjCOSFoundation")
