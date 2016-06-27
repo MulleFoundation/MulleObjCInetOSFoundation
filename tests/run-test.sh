@@ -17,7 +17,11 @@ case `uname` in
    Darwin)
       SHLIB_EXTENSION=".dylib"
       ;;
+
+   Linux)
+     LDFLAGS="-ldl -lpthread"
 esac
+
 
 LIBRARY_FILENAME="${SHLIB_PREFIX}MulleStandalone${LIBRARY_SHORTNAME}${SHLIB_EXTENSION}"
 
@@ -281,6 +285,7 @@ fail_test()
       -fobjc-runtime=mulle \
       "-I${LIBRARY_INCLUDE}" \
       "-I${DEPENDENCIES_INCLUDE}" \
+      ${LDFLAGS} \
       "${LIBRARY}" \
       "${m_source}" > "$errput" 2>&1
 
@@ -323,7 +328,7 @@ run()
    local fail
    local match
 
-   random=`mktemp -t "MulleObjC"`
+   random=`mktemp -t "MulleObjCOSFoundation.XXXX"`
    output="$random.stdout"
    errput="$random.stderr"
    errors=`basename $m_source .m`.errors
@@ -357,10 +362,11 @@ run()
       "-I${LIBRARY_INCLUDE}" \
       "-I${DEPENDENCIES_INCLUDE}" \
       "${LIBRARY}" \
+      ${LDFLAGS} \
       "${m_source}" > "$errput" 2>&1
       rval=$?
    else
-      "${CC}" ${CFLAGS}  -o "${a_out}" -framework Foundation "${m_source}" > "$errput" 2>&1
+      "${CC}" ${CFLAGS} -o "${a_out}" ${LDFLAGS} -framework Foundation "${m_source}" > "$errput" 2>&1
       rval=$?
    fi
 
