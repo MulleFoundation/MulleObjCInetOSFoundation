@@ -57,13 +57,12 @@ static char  *get_arguments( size_t *size)
 {
    char     *buf;
    off_t    offset;
-   
+   int      fd;
+ 
    fd = open( "/proc/self/cmdline", O_RDONLY);
    if( fd == -1)
       return( NULL);
    
-   memset( info, 0, sizeof( *info));
-
    offset = lseek( fd, SEEK_END, 0);
    lseek( fd, SEEK_SET, 0);
    
@@ -74,9 +73,9 @@ static char  *get_arguments( size_t *size)
    }
    
    *size = (size_t) offset;
-   buf   = mulle_malloc( size + 1);
+   buf   = mulle_malloc( *size + 1);
    if( ! buf)
-      return( -1);
+      return( NULL);
    
    read( fd, buf, (size_t) *size);
    close( fd);
@@ -89,8 +88,8 @@ static char  *get_arguments( size_t *size)
 
 
 static void  argc_argv_set_arguments( struct argc_argv  *info,
-                                     char *s,
-                                     size_t length)
+                                      char *s,
+                                      size_t length)
 {
    char   *p;
    char   **q;
@@ -142,7 +141,7 @@ static void   unlazyArguments( NSProcessInfo *self)
    if( ! arguments)
       MulleObjCThrowInternalInconsistencyException( @"can't get argc/argv from /proc/self/cmdline (%d)", errno);
 
-   argc_argv_set_argument( &info, arguments, size);
+   argc_argv_set_arguments( &info, arguments, size);
    self->_arguments = [NSArray _newWithArgc:info.argc
                                  argvNoCopy:info.argv];
 }
