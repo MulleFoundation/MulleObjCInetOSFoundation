@@ -33,7 +33,8 @@
    char                  *s;
    char                  *c_key;
    char                  *c_value;
-   char                  *ctxt;
+   size_t                c_key_len;
+   size_t                c_value_len;
    
    dictionary = [NSMutableDictionary new];
    
@@ -41,15 +42,30 @@
    while( *p)
    {
       s       = *p++;
-      c_key   = strtok_r( s, "=", &ctxt);
-      c_value = strtok_r( NULL, "=", &ctxt);
+      c_key   = s;
+      c_value = strchr( s, '=');
+
+      if( c_value)
+      {
+         c_key_len = c_value - c_key;
+         if( ! *++c_value)
+            c_value = NULL;
+         else
+            c_value_len = strlen( c_value);
+      }
+      else
+         c_key_len = strlen( c_key);
+         
+      if( ! c_value)
+      {
+         c_value = "YES";
+         c_value_len = 3;
+      }
       
       key = [[NSString alloc] initWithCString:c_key
-                                       length:strlen( c_key)];
-      if( ! c_value)
-         c_value = "YES";
+                                       length:c_key_len];
       value = [[NSString alloc] initWithCString:c_value
-                                         length:strlen( c_value)];
+                                         length:c_value_len];
       [dictionary setObject:value
                      forKey:key];
       [key release];
