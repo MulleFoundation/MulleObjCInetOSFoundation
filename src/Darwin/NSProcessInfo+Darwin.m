@@ -380,8 +380,10 @@ static void   unlazyArgumentsAndEnvironment( NSProcessInfo *self)
       MulleObjCThrowInternalInconsistencyException( @"can't get argc/argv from sysctl (%d,%d)", rval, errno);
    
    self->_arguments = [NSArray _newWithArgc:argc
-                                 argvNoCopy:argv];
-   self->_environment = [NSDictionary _newWithEnvironmentNoCopy:env];
+                                       argv:argv];
+   self->_environment = [NSDictionary _newWithEnvironment:env];
+   free_argv( argc, argv);
+   free_env( env);
 }
 
 
@@ -407,7 +409,9 @@ static void   unlazyExecutablePath( NSProcessInfo *self)
    uint32_t   size;
    char       *buf;
    
+   size = 0;
    _NSGetExecutablePath( NULL, &size);
+
    buf = mulle_malloc( size);
    if( ! buf)
       MulleObjCThrowAllocationException( size);

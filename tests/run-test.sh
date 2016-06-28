@@ -291,8 +291,8 @@ fail_test()
       "${LIBRARY}" \
       "${m_source}" > "$errput" 2>&1
 
-   echo "LIBRARY_AUTORELEASEPOOL_TRACE=15 \
-   LIBRARY_TEST_ALLOCATOR=1 \
+   echo "MULLE_OBJC_AUTORELEASEPOOL_TRACE=15 \
+MULLE_OBJC_TEST_ALLOCATOR=1 \
 MULLE_TEST_ALLOCATOR_TRACE=2 \
 MallocStackLogging=1 \
 MALLOC_FILL_SPACE=1 \
@@ -391,7 +391,7 @@ run()
       fi
    fi
 
-   LIBRARY_TEST_ALLOCATOR=1 \
+   MULLE_OBJC_TEST_ALLOCATOR=1 \
 MallocStackLogging=1 \
 MallocScribble=1 \
 MallocPreScribble=1 \

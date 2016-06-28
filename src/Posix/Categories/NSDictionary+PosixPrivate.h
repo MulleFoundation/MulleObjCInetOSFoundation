@@ -16,11 +16,6 @@
 
 @interface NSDictionary( _Posix_Private)
 
-// don't access env and env contents afterwards(!), do not free it
-
-// env is malloced, env[ n] is malloced
-+ (NSDictionary *) _newWithEnvironmentNoCopy:(char **) env;
-
 + (NSDictionary *) _newWithEnvironment:(char **) env;
 
 @end

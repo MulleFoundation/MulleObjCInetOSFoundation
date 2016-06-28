@@ -16,8 +16,7 @@
 
 @interface NSArray( PosixPrivate)
 
-// don't access argv and argv contents afterwards(!), do not free it 
 + (NSArray *) _newWithArgc:(int) argc
-                argvNoCopy:(char **) argv;
+                      argv:(char **) argv;
                 
 @end

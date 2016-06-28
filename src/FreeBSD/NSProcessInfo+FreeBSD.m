@@ -147,7 +147,8 @@ static void   unlazyArguments( NSProcessInfo *self)
       MulleObjCThrowInternalInconsistencyException( @"can't get argc/argv from sysctl (%d,%d)", rval, errno);
 
    self->_arguments = [NSArray _newWithArgc:info.argc
-                                 argvNoCopy:info.argv];
+                                        argv:info.argv];
+   free_argv( info.argc, info.argv);
 }
 
 

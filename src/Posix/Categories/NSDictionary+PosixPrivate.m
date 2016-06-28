@@ -74,26 +74,4 @@
    
    return( dictionary);
 }
-
-
-+ (NSDictionary *) _newWithEnvironmentNoCopy:(char **) env
-{
-   NSDictionary   *dictionary;
-   char           **p;
-   char           *s;
-
-   dictionary = [self _newWithEnvironment:env];
-   
-   p = env;
-   while( *p)
-   {
-      s = *p++;
-      free( s);
-   }
-   
-   free( env);
-   
-   return( dictionary);
-}
-
 @end

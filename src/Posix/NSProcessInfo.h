@@ -28,12 +28,13 @@ enum
 };
 
 
-@interface NSProcessInfo : NSObject
+@interface NSProcessInfo : NSObject < MulleObjCSingleton>
 {
    NSArray       *_arguments;
    NSDictionary  *_environment;
    NSString      *_executablePath;
 }
+
 
 + (NSProcessInfo *) processInfo;
 

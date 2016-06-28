@@ -171,7 +171,8 @@ static void   unlazyArguments( NSProcessInfo *self)
 
    argc_argv_set_arguments( &info, arguments, size);
    self->_arguments = [NSArray _newWithArgc:info.argc
-                                 argvNoCopy:info.argv];
+                                       argv:info.argv];
+   free_argv( info.argc, info.argv);
 }
 
 

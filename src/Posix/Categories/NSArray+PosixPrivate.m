@@ -25,7 +25,7 @@
 @implementation NSArray( _Posix_Private)
 
 + (NSArray *) _newWithArgc:(int) argc
-                argvNoCopy:(char **) argv
+                      argv:(char **) argv
 {
    int        i;
    char      *s;
@@ -37,19 +37,14 @@
    for( i = 0; i < argc; i++)
    {
       s       = argv[ i];
-      tmp[ i] = [[NSString alloc] initWithCStringNoCopy:s
-                                                 length:strlen( s)
-                                           freeWhenDone:YES];
+      tmp[ i] = [[[NSString alloc] initWithCString:s] autorelease];
    }
 
    arguments = [[NSArray alloc] initWithObjects:(id *) tmp
                                           count:argc];
 
-   for( i = 0; i < argc; i++)
-      [(id) tmp[ i] release];
    mulle_free( tmp);
    
-   mulle_free( argv);
    return( arguments);
 }
 

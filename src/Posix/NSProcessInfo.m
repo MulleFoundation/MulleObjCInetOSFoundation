@@ -28,12 +28,19 @@
 
 + (NSProcessInfo *) processInfo
 {
-   static id  processInfo;
-   
-   if( ! processInfo)
-      processInfo = [self new];
-   return( processInfo);
+   return( [self sharedInstance]);
 }
+
+
+- (void) dealloc
+{
+   [_arguments release];
+   [_environment release];
+   [_executablePath release];
+   
+   [super dealloc];
+}
+
 
 - (NSArray *) arguments
 {
