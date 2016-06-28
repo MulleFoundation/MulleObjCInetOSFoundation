@@ -9,9 +9,11 @@
 
 set -m
 
-LIBRARY_SHORTNAME=ObjCOSFoundation
-SHLIB_PREFIX=lib
-SHLIB_EXTENSION=.so
+SOURCE_EXTENSION=".m"
+
+LIBRARY_SHORTNAME="ObjCOSFoundation"
+SHLIB_PREFIX="lib"
+SHLIB_EXTENSION=".so"
 
 case `uname` in
    Darwin)
@@ -632,11 +634,11 @@ else
        dirname="."
     fi
     file=`basename "$TEST"`
-    filename=`basename "$file" .c`
+    filename=`basename "$file" "${SOURCE_EXTENSION}"`
 
     if [ "$file" = "$filename" ]
     then
-       echo "error: source file must have .c extension" >&2
+       echo "error: source file must have ${SOURCE_EXTENSION} extension" >&2
        exit 1
     fi
 
