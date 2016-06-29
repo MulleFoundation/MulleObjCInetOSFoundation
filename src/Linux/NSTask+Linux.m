@@ -6,8 +6,21 @@
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
 
-#import "NSTask+Linux.h"
+#import "MulleObjCPosixFoundation.h"
 
-@implementation NSTask (Linux)
+// other files in this library
+
+// other libraries of MulleObjCPosixFoundation
+
+
+
+@implementation NSTask( Linux)
+
++ (char **) _environment
+{
+   extern char  **environ;
+   
+   return( environ);
+}
 
 @end
