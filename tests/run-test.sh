@@ -398,7 +398,7 @@ MallocPreScribble=1 \
 MallocGuardEdges=1 \
 MallocCheckHeapEach=1 \
 \
-   "${a_out}" < "$stdin" > "$output" 2> "$errput"
+   "${a_out}" 1 2 3 < "$stdin" > "$output" 2> "$errput"
    rval=$?
 
    if [ $rval -ne 0 ]

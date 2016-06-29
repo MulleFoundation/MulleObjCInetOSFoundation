@@ -19,15 +19,18 @@ int   main( int argc, const char * argv[])
 {
    NSArray    *arguments;
    NSString   *cString;
+   NSString   *s;
    int         i;
 
    arguments = [[NSProcessInfo processInfo] arguments];
    for( i = 0; i < argc; i++)
    {
       cString = [NSString stringWithCString:argv[ i]];
-      if( ! [[arguments objectAtIndex:0] isEqualToString:cString])
+      s       = [arguments objectAtIndex:i];
+
+      if( ! [s isEqualToString:cString])
       {
-          printf( "%d failed\n", i);
+          printf( "%d failed (%s <> %s)\n", i, [s UTF8String], argv[ i]);
       }
    }
 
