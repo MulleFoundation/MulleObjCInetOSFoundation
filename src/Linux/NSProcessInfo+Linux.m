@@ -34,15 +34,7 @@ struct argc_argv
 {
    int    argc;
    char   **argv;
-   char   *storage;
 };
-
-
-static inline void  argc_argv_free( struct argc_argv *info)
-{
-   mulle_free( info->argv);
-   mulle_free( info->storage);
-}
 
 
 static size_t   get_file_size( char *file)
@@ -90,7 +82,7 @@ static char  *get_arguments( size_t *p_size)
    if( fd == -1)
       return( NULL);
    
-   buf = mulle_malloc( size + 1);
+   buf = mulle_malloc( size);
    if( ! buf) 
    {
       close( fd);
@@ -100,16 +92,15 @@ static char  *get_arguments( size_t *p_size)
    read( fd, buf, size);
    close( fd);
    
-   buf[ size] = 0;  // paranoia
-   *p_size    = size;
+   *p_size = size;
    return( buf);
 }
 
 
 
-static void  argc_argv_set_arguments( struct argc_argv  *info,
-                                      char *s,
-                                      size_t length)
+static void  linux_argc_argv_set_arguments( struct argc_argv  *info,
+                                            char *s,
+                                            size_t length)
 {
    char   *p;
    char   **q;
@@ -120,7 +111,6 @@ static void  argc_argv_set_arguments( struct argc_argv  *info,
    
    info->argc    = 0;
    info->argv    = NULL;
-   info->storage = s;
  
    sentinel = &s[ length];
    if( s == sentinel)
@@ -143,7 +133,7 @@ static void  argc_argv_set_arguments( struct argc_argv  *info,
    q_sentinel = &q[ argc];
    p          = s;
    
-   while( q < q_sentinel)
+   while( q < q_sentinel && p < sentinel)
    {
       *q++ = p;
       p    = &p[ strlen( p) + 1];
@@ -162,10 +152,11 @@ static void   unlazyArguments( NSProcessInfo *self)
    if( ! arguments)
       MulleObjCThrowInternalInconsistencyException( @"can't get argc/argv from /proc/self/cmdline (%d)", errno);
 
-   argc_argv_set_arguments( &info, arguments, size);
+   linux_argc_argv_set_arguments( &info, arguments, size);
    self->_arguments = [NSArray _newWithArgc:info.argc
                                        argv:info.argv];
-   argc_argv_free( &info);
+   mulle_free( info.argv);
+   mulle_free( arguments);
 }
 
 
