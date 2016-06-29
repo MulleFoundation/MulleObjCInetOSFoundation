@@ -143,6 +143,7 @@ src/Darwin/NSTask+Darwin.m
 set( FREEBSD_SOURCES
 ${BSD_SOURCES}
 src/FreeBSD/NSBundle+FreeBSD.m
+src/FreeBSD/NSFileManager+FreeBSD.m
 src/FreeBSD/NSPathUtilities+FreeBSD.m
 src/FreeBSD/NSProcessInfo+FreeBSD.m
 src/FreeBSD/NSString+FreeBSD.m
@@ -154,6 +155,7 @@ ${POSIX_SOURCES}
 src/Linux/NSBundle+Linux.m
 src/Linux/NSCalendarDate+Linux.m
 src/Linux/NSDate+Linux.m
+src/Linux/NSFileManager+Linux.m
 src/Linux/NSLocale+Linux.m
 src/Linux/NSPathUtilities+Linux.m
 src/Linux/NSProcessInfo+Linux.m
