@@ -34,21 +34,14 @@ struct argc_argv
 {
    int    argc;
    char   **argv;
+   char   *storage;
 };
-
-
-static void  free_argv( int argc, char **argv)
-{
-   // free argv
-   while( argc)
-      mulle_free( argv[ --argc]);
-   mulle_free( argv);
-}
 
 
 static inline void  argc_argv_free( struct argc_argv *info)
 {
-   free_argv( info->argc, info->argv);
+   mulle_free( info->argv);
+   mulle_free( info->storage);
 }
 
 
@@ -125,11 +118,11 @@ static void  argc_argv_set_arguments( struct argc_argv  *info,
    int    argc;
    int    i;
    
-   info->argc = 0;
-   info->argv = NULL;
+   info->argc    = 0;
+   info->argv    = NULL;
+   info->storage = s;
  
-   p        = s;
-   sentinel = &p[ length];
+   sentinel = &s[ length];
    if( s == sentinel)
       return;
    
@@ -153,7 +146,7 @@ static void  argc_argv_set_arguments( struct argc_argv  *info,
    while( q < q_sentinel)
    {
       *q++ = p;
-      p    = &p[ strlen( s) + 1];
+      p    = &p[ strlen( p) + 1];
    }
 }
 
@@ -172,7 +165,7 @@ static void   unlazyArguments( NSProcessInfo *self)
    argc_argv_set_arguments( &info, arguments, size);
    self->_arguments = [NSArray _newWithArgc:info.argc
                                        argv:info.argv];
-   free_argv( info.argc, info.argv);
+   argc_argv_free( &info);
 }
 
 
