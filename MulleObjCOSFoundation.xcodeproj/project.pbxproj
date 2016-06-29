@@ -119,6 +119,9 @@
 		417FFAF81CD8FDE500FBBE87 /* libmulle_sprintf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 417FFAF71CD8FDE500FBBE87 /* libmulle_sprintf.a */; };
 		418639411CCD22EC00A1784E /* NSLocale+Posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 418639331CCD22EC00A1784E /* NSLocale+Posix.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		418639421CCD22EC00A1784E /* NSLocale+Posix.m in Sources */ = {isa = PBXBuildFile; fileRef = 418639341CCD22EC00A1784E /* NSLocale+Posix.m */; };
+		418BCC361D23FE4100447F73 /* NSPathUtilities+Linux.m in Sources */ = {isa = PBXBuildFile; fileRef = 418BCC351D23FE4100447F73 /* NSPathUtilities+Linux.m */; };
+		418BCC391D23FF3C00447F73 /* NSBundle+Linux.m in Sources */ = {isa = PBXBuildFile; fileRef = 418BCC381D23FF3C00447F73 /* NSBundle+Linux.m */; };
+		418BCC3C1D23FFC100447F73 /* NSTask+Linux.m in Sources */ = {isa = PBXBuildFile; fileRef = 418BCC3B1D23FFC100447F73 /* NSTask+Linux.m */; };
 		41A5ADEE1CB40DB300FD7930 /* MulleObjCPosixFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = 41A5ADED1CB40DB300FD7930 /* MulleObjCPosixFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		41A963B71CE21FAE00412367 /* NSDate+NSCalendarDate.h in Headers */ = {isa = PBXBuildFile; fileRef = 41A963B31CE21C6C00412367 /* NSDate+NSCalendarDate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		41A963B81CE21FB400412367 /* NSDate+NSCalendarDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A963B41CE21C6C00412367 /* NSDate+NSCalendarDate.m */; };
@@ -287,6 +290,9 @@
 		417FFAF71CD8FDE500FBBE87 /* libmulle_sprintf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmulle_sprintf.a; path = dependencies/lib/Debug/libmulle_sprintf.a; sourceTree = "<group>"; };
 		418639331CCD22EC00A1784E /* NSLocale+Posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSLocale+Posix.h"; path = "../NSLocale+Posix.h"; sourceTree = "<group>"; };
 		418639341CCD22EC00A1784E /* NSLocale+Posix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSLocale+Posix.m"; path = "../NSLocale+Posix.m"; sourceTree = "<group>"; };
+		418BCC351D23FE4100447F73 /* NSPathUtilities+Linux.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPathUtilities+Linux.m"; sourceTree = "<group>"; };
+		418BCC381D23FF3C00447F73 /* NSBundle+Linux.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+Linux.m"; sourceTree = "<group>"; };
+		418BCC3B1D23FFC100447F73 /* NSTask+Linux.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTask+Linux.m"; sourceTree = "<group>"; };
 		419658001CB53D4F00B29FB9 /* README-DARWIN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "README-DARWIN.md"; sourceTree = "<group>"; };
 		41A5ADED1CB40DB300FD7930 /* MulleObjCPosixFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MulleObjCPosixFoundation.h; sourceTree = "<group>"; };
 		41A5AE121CB417C500FD7930 /* libMulleObjCFoundation.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMulleObjCFoundation.a; path = dependencies/lib/Debug/libMulleObjCFoundation.a; sourceTree = "<group>"; };
@@ -412,11 +418,14 @@
 			isa = PBXGroup;
 			children = (
 				41641C261D043AA000DBE1CE /* README-Linux.md */,
-				41641C241D043A9100DBE1CE /* NSDate+Linux.m */,
+				418BCC381D23FF3C00447F73 /* NSBundle+Linux.m */,
 				412902671D03248E00D055B1 /* NSCalendarDate+Linux.m */,
+				41641C241D043A9100DBE1CE /* NSDate+Linux.m */,
+				413A204C1D04A8D100CF7746 /* NSLocale+Linux.m */,
+				418BCC351D23FE4100447F73 /* NSPathUtilities+Linux.m */,
 				4120953A1D21BB2D00E50D1E /* NSProcessInfo+Linux.m */,
 				412095381D21BACA00E50D1E /* NSString+Linux.m */,
-				413A204C1D04A8D100CF7746 /* NSLocale+Linux.m */,
+				418BCC3B1D23FFC100447F73 /* NSTask+Linux.m */,
 			);
 			path = Linux;
 			sourceTree = "<group>";
@@ -867,9 +876,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				418BCC3C1D23FFC100447F73 /* NSTask+Linux.m in Sources */,
 				41641C251D043A9100DBE1CE /* NSDate+Linux.m in Sources */,
 				412902681D03248E00D055B1 /* NSCalendarDate+Linux.m in Sources */,
 				413A204D1D04A8D100CF7746 /* NSLocale+Linux.m in Sources */,
+				418BCC391D23FF3C00447F73 /* NSBundle+Linux.m in Sources */,
+				418BCC361D23FE4100447F73 /* NSPathUtilities+Linux.m in Sources */,
 				4120953B1D21BB2D00E50D1E /* NSProcessInfo+Linux.m in Sources */,
 				412095391D21BACA00E50D1E /* NSString+Linux.m in Sources */,
 			);

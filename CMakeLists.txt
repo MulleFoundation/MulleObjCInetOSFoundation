@@ -151,11 +151,14 @@ src/FreeBSD/NSTask+FreeBSD.m
 
 set( LINUX_SOURCES
 ${POSIX_SOURCES}
+src/Linux/NSBundle+Linux.m
 src/Linux/NSCalendarDate+Linux.m
 src/Linux/NSDate+Linux.m
 src/Linux/NSLocale+Linux.m
+src/Linux/NSPathUtilities+Linux.m
 src/Linux/NSProcessInfo+Linux.m
 src/Linux/NSString+Linux.m
+src/Linux/NSTask+Linux.m
 )
 
 

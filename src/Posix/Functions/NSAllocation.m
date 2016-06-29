@@ -11,6 +11,8 @@
  *  $Id$
  *
  */
+#define _GNU_SOURCE  // ugliness
+
 #include "NSAllocation.h"
 
 // other files in this library
@@ -24,7 +26,6 @@
 
 NSUInteger     _ns_page_size;
 NSUInteger     _ns_log_page_size;
-
 
 
 static void  __MulleObjCSetPageSize( size_t pagesize)
@@ -42,7 +43,7 @@ static void  __MulleObjCSetPageSize( size_t pagesize)
 
 static void  _MulleObjCSetPageSize( void)
 {
-   __MulleObjCSetPageSize( getpagesize());
+   __MulleObjCSetPageSize( getpagesize());  // a gnuism it seems
 }
 
 

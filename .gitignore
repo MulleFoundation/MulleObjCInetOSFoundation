@@ -1,11 +1,12 @@
-.bootstrap.auto/
-.bootstrap.local/
-dependencies/
-.repos/
-mulle-configuration/
-.repos/
+/.bootstrap.auto
+/.bootstrap.local
+/dependencies
+/.repos
+/mulle-configuration
 build/
 old/
+/include
+/lib
 xcuserdata/
 project.xcworkspace/
 *~.*
@@ -13,3 +14,5 @@ project.xcworkspace/
 tmp/
 *.dSYM/
 *.exe
+*.exe.debug
+
