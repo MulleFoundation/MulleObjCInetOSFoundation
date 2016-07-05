@@ -11,6 +11,8 @@
  *  $Id$
  *
  */
+#define _GNU_SOURCE
+
 #import "MulleObjCPosixFoundation.h"
 
 
