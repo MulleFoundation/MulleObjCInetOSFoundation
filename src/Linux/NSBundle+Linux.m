@@ -68,13 +68,4 @@ static int  collect_filesystem_libraries( struct dl_phdr_info *info, size_t size
    return( array);
 }
 
-
-+ (NSBundle *) _bundleWithExecutablePath:(NSString *) executablePath
-{
-   bundle = [[[NSBundle alloc] _initWithPath:executablePath
-                              executablePath:executablePath] autorelease];
-   return( bundle);
-}
-
-
 @end
