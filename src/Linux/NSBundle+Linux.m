@@ -37,11 +37,17 @@ static int  collect_bundles( struct dl_phdr_info *info, size_t size, void *useri
    NSMutableArray   *array;
    NSString         *path;
    NSBundle         *bundle;
+   size_t           len;
    
    array = userinfo;
    
+   // exe has no name it seems
+   len  = strlen( info->dlpi_name);
+   if( ! len)
+      return( 0);
+   
    path = [[NSFileManager defaultManager] stringWithFileSystemRepresentation:info->dlpi_name
-                                                                      length:strlen( info->dlpi_name)];
+                                                                      length:len];
    //
    // path is really the executable path, what is my bundle path ??
    // probably the same

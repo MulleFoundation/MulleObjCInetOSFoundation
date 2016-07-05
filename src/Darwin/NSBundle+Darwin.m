@@ -60,6 +60,58 @@
 //}
 
 
+
++ (NSArray *) allImages
+{
+   NSMutableArray  *array;
+   uint32_t         i;
+   char             *s;
+   NSString         *executablePath;
+   NSString         *path;
+   NSBundle         *bundle;
+   
+   array = [NSMutableArray array];
+
+   for( i = 0; s = (char *) _dyld_get_image_name( i); i++)
+   {
+      
+      executablePath = [[NSFileManager defaultManager] stringWithFileSystemRepresentation:s
+                                                                         length:strlen( s)];
+         
+      //
+      // path is really the executable path, what is my bundle path
+      // on OS X, we need to figure it out ...
+      //
+      // App:
+      //    binary is in Contents/MacOSX/<binary>
+      // Bundle:
+      //    binary is in Contents/MacOSX/<binary>
+      // Framework:
+      //    binary is in Versions/A/<binary>
+      // Shared Library
+      //    binary is in <binary>
+      
+      // use some lame heursitic until I think of something better
+      path = executablePath;
+      if( ! [[executablePath pathExtension] isEqualToString:@"dylib"])
+      {
+         // get rid of exe
+         path = [path stringByDeletingLastPathComponent];
+         // get rid of A/MacOSX
+         path = [path stringByDeletingLastPathComponent];
+         // get rid of Contents/Versions
+         path = [path stringByDeletingLastPathComponent];
+      }
+         
+      bundle = [[[NSBundle alloc] _initWithPath:path
+                                 executablePath:executablePath] autorelease];
+      [array addObject:bundle];
+   }
+   
+   return( array);
+}
+
+
 #pragma mark -
 #pragma mark Info.plist
 

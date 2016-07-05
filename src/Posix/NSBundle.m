@@ -118,7 +118,7 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
    NSBundle   *bundle;
    
    if( ! [fullPath isAbsolutePath])
-      MulleObjCThrowInvalidArgumentException( fullPath, "not a absolute path");
+      MulleObjCThrowInvalidArgumentException( @"\%@\" is not an absolute path", fullPath);
       
    // speculatively assume fullPath is already correct
    bundle = (*NSBundleGetOrRegisterBundleWithPath)( NULL, fullPath);

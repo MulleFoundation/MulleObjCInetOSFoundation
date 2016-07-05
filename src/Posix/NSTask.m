@@ -116,7 +116,7 @@ static void   do_the_dup( int fd, id handle)
       // oughta be back in "parent" here
       _status = _NSTaskHasFailed;
       // error
-      MulleObjCThrowInvalidArgumentException( self, "could not launch");
+      MulleObjCThrowInvalidArgumentException( @"%@ could not launch", self);
    }
    
    _pid = pid;
