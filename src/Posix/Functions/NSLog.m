@@ -55,7 +55,7 @@ void   NSLogv( NSString *format, va_list args)
    s = [NSString stringWithFormat:format
                           va_list:args];
    cString = [s cString];                       
-   syslog( __NSLogPriority, cString, NULL, NULL, NULL);
+   syslog( __NSLogPriority, "%s", cString);
    fprintf( stderr, "%s\n", cString);
 }
 
@@ -68,6 +68,6 @@ void   NSLogArguments( NSString *format, mulle_vararg_list args)
    s = [NSString stringWithFormat:format
                         arguments:args];
    cString = [s cString];                       
-   syslog( __NSLogPriority, cString, NULL, NULL, NULL);
+   syslog( __NSLogPriority, "%s", cString);
    fprintf( stderr, "%s\n", cString);
 }
