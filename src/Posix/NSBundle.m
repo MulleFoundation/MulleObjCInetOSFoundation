@@ -118,7 +118,7 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
    NSBundle   *bundle;
    
    if( ! [fullPath isAbsolutePath])
-      MulleObjCThrowInvalidArgumentException( @"\%@\" is not an absolute path", fullPath);
+      MulleObjCThrowInvalidArgumentException( @"\"%@\" is not an absolute path", fullPath);
       
    // speculatively assume fullPath is already correct
    bundle = (*NSBundleGetOrRegisterBundleWithPath)( NULL, fullPath);
@@ -148,7 +148,6 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
 }
 
 
-
 - (void) dealloc
 {
    if( _handle)
@@ -164,13 +163,15 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
 + (NSBundle *) mainBundle
 {
    NSBundle   *bundle;
+   NSString   *executablePath;
    NSString   *path;
    
-   path = [[NSProcessInfo processInfo] _executablePath];
-   NSParameterAssert( [path length]);
+   executablePath = [[NSProcessInfo processInfo] _executablePath];
+   NSParameterAssert( [executablePath length]);
    
-   bundle = [self _bundleWithPath:[self _mainBundlePathForExecutablePath:path]
-                   executablePath:path];
+   path   = [self _mainBundlePathForExecutablePath:executablePath];
+   bundle = [self _bundleWithPath:path
+                   executablePath:executablePath];
    return( bundle);
 }
 
@@ -187,16 +188,32 @@ static BOOL   haveDiscovered;
 
 + (NSDictionary *) _bundleDictionary
 {
-   NSArray    *bundles;
    NSBundle   *bundle;
+   NSArray    *executablePaths;
+   NSString   *executablePath;
+   NSString   *path;
+   NSString   *mainExecutablePath;
+   NSBundle   *mainBundle;
    
    if( haveDiscovered)
       return( _bundleDictionary);
+   
+   mainBundle         = [self mainBundle];
+   mainExecutablePath = [mainBundle executablePath];
+   
+   executablePaths = [self _allImagePaths];
+   for( executablePath in executablePaths)
+   {
+      path = [self _bundlePathForExecutablePath:executablePath];
       
-   bundles = [self allImages];
-   for( bundle in bundles)
+      // superflous check ?
+      if( [path isEqualToString:mainExecutablePath])
+         continue;
+      
+      bundle = [[[NSBundle alloc] _initWithPath:path
+                                 executablePath:executablePath] autorelease];
       get_or_register_bundle( bundle, [bundle bundlePath]);
-
+   }
    haveDiscovered = YES;
    
    return( _bundleDictionary);
@@ -506,80 +523,17 @@ static NSString   *contentsPath( NSBundle *self)
    return( @"???");   
 }
 
-
-+ (NSString *) _mainBundlePathForExecutablePath:(NSString *) path
++ (NSString *) _mainBundlePathForExecutablePath:(NSString *) executablePath
 {
-   NSString   *dir;
-   NSString   *architecture;
-
-   // i hate calling this too often, so assume this is done but alss check
-   NSParameterAssert( [path isEqualToString:[path stringByResolvingSymlinksInPath]]);
-   
-   dir          = [path stringByDeletingLastPathComponent];
-   architecture = [dir lastPathComponent];
-   if( [architecture isEqualToString:[self _OSIdentifier]])
-   {
-      dir = [dir stringByDeletingLastPathComponent];
-      dir = [dir stringByDeletingLastPathComponent];
-   }
-   return( dir);
-}
-
-static BOOL  isCurrentOS( NSString *s)
-{
-   return( [s isEqualToString:[NSBundle _OSIdentifier]]);
+   // default, overridden by Darwin
+   return( executablePath);
 }
 
 
-static BOOL  hasFrameworkExtension( NSString *s)
++ (NSString *) _bundlePathForExecutablePath:(NSString *) executablePath
 {
-   return( [[s pathExtension] isEqualToString:@"framework"]);
-}
-
-
-// bundles can be Frameworks
-// bundles can be PlugIns
-// the mainBundle is either an App or a Tool, 
-//   both which is not treated by this method
-//
-+ (NSString *) _inferiorBundlePathForExecutablePath:(NSString *) path
-{
-   NSString   *dir;
-   NSString   *fallback;
-   
-   // i hate calling this too often, so assume this is done but alss check
-   NSParameterAssert( [path isEqualToString:[path stringByResolvingSymlinksInPath]]);
-
-   dir          = [path stringByDeletingLastPathComponent];
-   fallback     = dir;
-
-   //
-   // PlugIns. 
-   //
-   if( isCurrentOS( [dir lastPathComponent]))         // check for "MacOS"
-   {
-      dir = [dir stringByDeletingLastPathComponent];  // Consume that
-      dir = [dir stringByDeletingLastPathComponent];  // consume Contents
-      return( dir);
-   }
-   
-   // could be a Framework, then dir is probably
-   // /Library/Frameworks/Foo.framework/Versions/A
-   if( hasFrameworkExtension( dir))
-      return( dir);
-
-   //
-   // skip over version number
-   //
-   dir = [dir stringByDeletingLastPathComponent];
-   if( ! [[dir lastPathComponent] isEqualToString:@"Versions"])
-      return( fallback);
-
-   dir = [dir stringByDeletingLastPathComponent];
-   if( hasFrameworkExtension( dir))
-      return( dir);
-      
-   return( fallback);
+   // default, overridden by Darwin
+   return( executablePath);
 }
 
 
@@ -589,7 +543,7 @@ static BOOL  hasFrameworkExtension( NSString *s)
       [self load];
 
    // THIS IS NOT CORRECT!
-   return( NSClassFromString(className));
+   return( NSClassFromString( className));
 }
 
 
@@ -604,12 +558,6 @@ NSString   *MulleObjCBundleLocalizedStringFromTable( NSBundle *bundle,
                                    value:value
                                    table:tableName]);
 }
-
-
-
-# pragma mark -
-# pragma mark accessors into infoDictionary
-
 
 @end
 

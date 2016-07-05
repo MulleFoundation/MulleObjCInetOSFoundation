@@ -32,7 +32,7 @@
 }
 
 
-static int  collect_bundles( struct dl_phdr_info *info, size_t size, void *userinfo)
+static int  collect_filesystem_libraries( struct dl_phdr_info *info, size_t size, void *userinfo)
 {
    NSMutableArray   *array;
    NSString         *path;
@@ -41,30 +41,40 @@ static int  collect_bundles( struct dl_phdr_info *info, size_t size, void *useri
    
    array = userinfo;
    
-   // exe has no name it seems
-   len  = strlen( info->dlpi_name);
+   // binary itself has no name it seems
+
+   len = strlen( info->dlpi_name);
    if( ! len)
+      return( 0);
+
+   // no absolute path ? injected by kernel
+   if( info->dlpi_name[ 0] != '/')
       return( 0);
    
    path = [[NSFileManager defaultManager] stringWithFileSystemRepresentation:info->dlpi_name
                                                                       length:len];
-   //
-   // path is really the executable path, what is my bundle path ??
-   // probably the same
-   bundle = [[[NSBundle alloc] initWithPath:path] autorelease];
-   [array addObject:bundle];
+   [array addObject:path];
    
    return( 0);
 }
 
 
-+ (NSArray *) allImages
++ (NSArray *) _allImagePaths
 {
    NSMutableArray  *array;
    
    array = [NSMutableArray array];
-   dl_iterate_phdr( collect_bundles, array);
+   dl_iterate_phdr( collect_filesystem_libraries, array);
    return( array);
 }
+
+
++ (NSBundle *) _bundleWithExecutablePath:(NSString *) executablePath
+{
+   bundle = [[[NSBundle alloc] _initWithPath:executablePath
+                              executablePath:executablePath] autorelease];
+   return( bundle);
+}
+
 
 @end

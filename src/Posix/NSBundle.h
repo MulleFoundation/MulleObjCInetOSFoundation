@@ -77,7 +77,7 @@
       executablePath:(NSString *) executablePath;
 + (NSString *) _OSIdentifier;
 + (NSString *) _mainBundlePathForExecutablePath:(NSString *) path;
-+ (NSString *) _inferiorBundlePathForExecutablePath:(NSString *) path;
++ (NSString *) _bundlePathForExecutablePath:(NSString *) path;
 
 - (NSString *) localizedStringForKey:(NSString *) key
                                value:(NSString *) comment
@@ -88,7 +88,7 @@
 // more stuff should be in here
 @interface NSBundle ( OSSpecific)
 
-+ (NSArray *) allImages;
++ (NSArray *) _allImagePaths;
 - (NSDictionary *) infoDictionary;
 - (Class) principalClass;
 - (NSString *) bundleIdentifier;

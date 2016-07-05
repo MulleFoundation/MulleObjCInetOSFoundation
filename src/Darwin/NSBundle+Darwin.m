@@ -61,54 +61,109 @@
 
 
 
-+ (NSArray *) allImages
++ (NSArray *) _allImagePaths
 {
    NSMutableArray  *array;
    uint32_t         i;
    char             *s;
-   NSString         *executablePath;
    NSString         *path;
-   NSBundle         *bundle;
+   NSFileManager    *fileManager;
    
    array = [NSMutableArray array];
 
+   fileManager = [NSFileManager defaultManager];
    for( i = 0; s = (char *) _dyld_get_image_name( i); i++)
    {
+      if( ! strlen( s) || s[ 0] != '/')
+         continue;
       
-      executablePath = [[NSFileManager defaultManager] stringWithFileSystemRepresentation:s
-                                                                         length:strlen( s)];
-         
-      //
-      // path is really the executable path, what is my bundle path
-      // on OS X, we need to figure it out ...
-      //
-      // App:
-      //    binary is in Contents/MacOSX/<binary>
-      // Bundle:
-      //    binary is in Contents/MacOSX/<binary>
-      // Framework:
-      //    binary is in Versions/A/<binary>
-      // Shared Library
-      //    binary is in <binary>
+      path = [fileManager stringWithFileSystemRepresentation:s
+                                                      length:strlen( s)];
       
-      // use some lame heursitic until I think of something better
-      path = executablePath;
-      if( ! [[executablePath pathExtension] isEqualToString:@"dylib"])
-      {
-         // get rid of exe
-         path = [path stringByDeletingLastPathComponent];
-         // get rid of A/MacOSX
-         path = [path stringByDeletingLastPathComponent];
-         // get rid of Contents/Versions
-         path = [path stringByDeletingLastPathComponent];
-      }
-         
-      bundle = [[[NSBundle alloc] _initWithPath:path
-                                 executablePath:executablePath] autorelease];
-      [array addObject:bundle];
+      [array addObject:path];
+   }
+
+   return( array);
+}
+
+
++ (NSString *) _mainBundlePathForExecutablePath:(NSString *) executablePath
+{
+   NSString   *dir;
+   NSString   *architecture;
+   
+   // i hate calling this too often
+   NSParameterAssert( [executablePath isEqualToString:[executablePath stringByResolvingSymlinksInPath]]);
+
+   dir          = [executablePath stringByDeletingLastPathComponent];
+   architecture = [dir lastPathComponent];
+   if( [architecture isEqualToString:[self _OSIdentifier]])
+   {
+      dir = [dir stringByDeletingLastPathComponent];
+      dir = [dir stringByDeletingLastPathComponent];
+   }
+   return( dir);
+}
+
+
+static BOOL  isCurrentOS( NSString *s)
+{
+   return( [s isEqualToString:[NSBundle _OSIdentifier]]);
+}
+
+
+static BOOL  hasFrameworkExtension( NSString *s)
+{
+   return( [[s pathExtension] isEqualToString:@"framework"]);
+}
+
+
+// bundles can be Frameworks
+// bundles can be PlugIns
+// the mainBundle is either an App or a Tool,
+//   both which is not treated by this method
+//
++ (NSString *) _bundlePathForExecutablePath:(NSString *) executablePath
+{
+   NSString   *dir;
+   NSString   *fallback;
+   
+   // i hate calling this too often, so assume this is done but alss check
+   NSParameterAssert( [executablePath isEqualToString:[executablePath stringByResolvingSymlinksInPath]]);
+
+   if( [[executablePath pathExtension] isEqualToString:@"dylib"])
+      return( executablePath);
+
+   dir      = [executablePath stringByDeletingLastPathComponent];
+   fallback = dir;
+   
+   //
+   // PlugIns.
+   //
+   if( isCurrentOS( [dir lastPathComponent]))         // check for "MacOS"
+   {
+      dir = [dir stringByDeletingLastPathComponent];  // Consume that
+      dir = [dir stringByDeletingLastPathComponent];  // consume Contents
+      return( dir);
    }
    
-   return( array);
+   // could be a Framework, then dir is probably
+   // /Library/Frameworks/Foo.framework/Versions/A
+   if( hasFrameworkExtension( dir))
+      return( dir);
+   
+   //
+   // skip over version number
+   //
+   dir = [dir stringByDeletingLastPathComponent];
+   if( ! [[dir lastPathComponent] isEqualToString:@"Versions"])
+      return( fallback);
+   
+   dir = [dir stringByDeletingLastPathComponent];
+   if( hasFrameworkExtension( dir))
+      return( dir);
+   
+   return( fallback);
 }
 
 
