@@ -1,5 +1,5 @@
 
-#import <MulleStandaloneObjCOSFoundation/MulleStandaloneObjCOSFoundation.h>
+#import <MulleObjCOSFoundation/MulleObjCOSFoundation.h>
 
 
 #include <stdio.h>

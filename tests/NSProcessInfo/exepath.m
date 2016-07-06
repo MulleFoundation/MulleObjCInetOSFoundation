@@ -7,7 +7,7 @@
 //
 
 
-#import <MulleStandaloneObjCOSFoundation/MulleStandaloneObjCOSFoundation.h>
+#import <MulleObjCOSFoundation/MulleObjCOSFoundation.h>
 //#import "MulleStandaloneObjCFoundation.h"
 
 #include <stdio.h>
