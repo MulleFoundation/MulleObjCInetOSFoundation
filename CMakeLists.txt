@@ -185,19 +185,19 @@ ${SOURCES}
 )
 
 
-add_library( MulleStandaloneObjCOSFoundation SHARED
-src/MulleStandaloneObjCOSFoundation.m
+add_library( MulleObjCOSFoundationStandalone SHARED
+src/MulleObjCOSFoundationStandalone.m
 )
 
 
-add_dependencies( MulleStandaloneObjCOSFoundation MulleObjCOSFoundation)
+add_dependencies( MulleObjCOSFoundationStandalone MulleObjCOSFoundation)
 
-TARGET_LINK_LIBRARIES( MulleStandaloneObjCOSFoundation
+TARGET_LINK_LIBRARIES( MulleObjCOSFoundationStandalone
 ${BEGIN_ALL_LOAD}
 MulleObjCOSFoundation
 MulleObjCFoundation
 MulleObjC
-mulle_objc_runtime
+mulle_objc
 mulle_utf
 mulle_sprintf
 mulle_container
@@ -209,8 +209,7 @@ ${END_ALL_LOAD}
 )
 
 INSTALL( TARGETS MulleObjCOSFoundation DESTINATION "lib")
-INSTALL( TARGETS MulleStandaloneObjCOSFoundation DESTINATION "lib")
+INSTALL( TARGETS MulleObjCOSFoundationStandalone DESTINATION "lib")
 
 
 INSTALL( FILES "src/MulleObjCOSFoundation.h" DESTINATION "include/MulleObjCOSFoundation")
-INSTALL( FILES "src/MulleStandaloneObjCOSFoundation.h" DESTINATION "include/MulleStandaloneObjCOSFoundation")

@@ -16,3 +16,8 @@ tmp/
 *.exe
 *.exe.debug
 
+.bootstrap.auto/
+.bootstrap.local/
+dependencies/
+.repos/
+mulle-configuration/
