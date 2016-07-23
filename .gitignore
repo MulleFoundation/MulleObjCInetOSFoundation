@@ -21,3 +21,4 @@ tmp/
 dependencies/
 .repos/
 mulle-configuration/
+mulle-tests/
