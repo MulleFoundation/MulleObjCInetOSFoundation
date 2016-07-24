@@ -184,11 +184,14 @@ src/MulleObjCOSFoundation.m
 ${SOURCES}
 )
 
+INSTALL( TARGETS MulleObjCOSFoundation DESTINATION "lib")
+INSTALL( FILES "src/MulleObjCOSFoundation.h" DESTINATION "include/MulleObjCOSFoundation")
+
+
 
 add_library( MulleObjCOSFoundationStandalone SHARED
 src/MulleObjCOSFoundationStandalone.m
 )
-
 
 add_dependencies( MulleObjCOSFoundationStandalone MulleObjCOSFoundation)
 
@@ -208,8 +211,4 @@ mulle_test_allocator
 ${END_ALL_LOAD}
 )
 
-INSTALL( TARGETS MulleObjCOSFoundation DESTINATION "lib")
 INSTALL( TARGETS MulleObjCOSFoundationStandalone DESTINATION "lib")
-
-
-INSTALL( FILES "src/MulleObjCOSFoundation.h" DESTINATION "include/MulleObjCOSFoundation")

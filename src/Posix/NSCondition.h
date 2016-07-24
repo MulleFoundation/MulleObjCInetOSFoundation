@@ -16,7 +16,7 @@
 #include <pthread.h>
 
 
-// ugliness must hide it, to get rid off <pthread.h>
+// ugliness. must hide it, to get rid off <pthread.h>
 
 @interface NSCondition : NSObject <NSLocking>
 {
