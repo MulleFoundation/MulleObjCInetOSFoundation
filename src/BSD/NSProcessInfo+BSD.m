@@ -5,7 +5,7 @@
 //  Created by Nat! on 06.06.16.
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
-
+#define _DARWIN_C_SOURCE
 
 #import "MulleObjCPosixFoundation.h"
 
