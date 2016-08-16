@@ -63,16 +63,15 @@
 
 @interface NSUserDefaults ( Conveniences)
 
-- (NSInteger) integerForKey:(NSString *) key;
-- (NSString *) stringForKey:(NSString *) key;
-- (NSArray *) arrayForKey:(NSString *) key;
+- (BOOL)                 boolForKey:(NSString *) key;
+- (double)             doubleForKey:(NSString *) key;
+- (float)               floatForKey:(NSString *) key;
+- (NSArray *)           arrayForKey:(NSString *) key;
+- (NSArray *)     stringArrayForKey:(NSString *) key;
+- (NSData *)             dataForKey:(NSString *) key;
 - (NSDictionary *) dictionaryForKey:(NSString *) key;
-- (NSData *) dataForKey:(NSString *) key;
-- (NSArray *) stringArrayForKey:(NSString *) key;
-- (NSInteger)integerForKey:(NSString *) key;
-- (float) floatForKey:(NSString *) key;
-- (double) doubleForKey:(NSString *) key;
-- (BOOL) boolForKey:(NSString *) key;
+- (NSInteger)         integerForKey:(NSString *) key;
+- (NSString *)         stringForKey:(NSString *) key;
 
 - (void) setInteger:(NSInteger)value 
              forKey:(NSString *) key;
