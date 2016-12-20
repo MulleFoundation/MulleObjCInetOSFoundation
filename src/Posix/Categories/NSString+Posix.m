@@ -59,14 +59,14 @@
       
       bytes = [data bytes];
       c16   = (mulle_utf16_t) ((bytes[ 0] << 8) | bytes[ 1]);
-      if( mulle_utf16_get_bom_char() == c16)
+      if( mulle_utf16_get_bomcharacter() == c16)
       {
          encoding = NSUTF16BigEndianStringEncoding;
          break;
       }
       
       c16   = (mulle_utf16_t) ((bytes[ 1] << 8) | bytes[ 0]);
-      if( mulle_utf16_get_bom_char() == c16)
+      if( mulle_utf16_get_bomcharacter() == c16)
       {
          encoding = NSUTF16LittleEndianStringEncoding;
          break;
@@ -79,7 +79,7 @@
                              (bytes[ 1] << 16) |
                              (bytes[ 2] << 8) |
                               bytes[ 3]);
-      if( mulle_utf32_get_bom_char() == c32)
+      if( mulle_utf32_get_bomcharacter() == c32)
       {
          encoding = NSUTF32BigEndianStringEncoding;
          break;
@@ -89,7 +89,7 @@
                              (bytes[ 2] << 16) |
                              (bytes[ 1] << 8) |
                               bytes[ 0]);
-      if( mulle_utf32_get_bom_char() == c32)
+      if( mulle_utf32_get_bomcharacter() == c32)
       {
          encoding = NSUTF32LittleEndianStringEncoding;
          break;

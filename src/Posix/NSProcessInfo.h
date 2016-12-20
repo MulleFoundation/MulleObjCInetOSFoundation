@@ -38,7 +38,7 @@ enum
 
 + (NSProcessInfo *) processInfo;
 
-- (NSString *) globallyUniqueString;
+- (NSString *) globallyUniqueString;  // needs NSHost should be moved
 - (int) processIdentifier;
 
 

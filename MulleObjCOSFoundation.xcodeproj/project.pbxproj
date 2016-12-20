@@ -122,6 +122,7 @@
 		418BCC391D23FF3C00447F73 /* NSBundle+Linux.m in Sources */ = {isa = PBXBuildFile; fileRef = 418BCC381D23FF3C00447F73 /* NSBundle+Linux.m */; };
 		418BCC3C1D23FFC100447F73 /* NSTask+Linux.m in Sources */ = {isa = PBXBuildFile; fileRef = 418BCC3B1D23FFC100447F73 /* NSTask+Linux.m */; };
 		418BCC411D240D9E00447F73 /* NSFileManager+Linux.m in Sources */ = {isa = PBXBuildFile; fileRef = 418BCC401D240D9E00447F73 /* NSFileManager+Linux.m */; };
+		4190098F1E093C7D00B65799 /* libmulle_buffer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4190098E1E093C6D00B65799 /* libmulle_buffer.a */; };
 		41A5ADEE1CB40DB300FD7930 /* MulleObjCPosixFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = 41A5ADED1CB40DB300FD7930 /* MulleObjCPosixFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		41A963B71CE21FAE00412367 /* NSDate+NSCalendarDate.h in Headers */ = {isa = PBXBuildFile; fileRef = 41A963B31CE21C6C00412367 /* NSDate+NSCalendarDate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		41A963B81CE21FB400412367 /* NSDate+NSCalendarDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A963B41CE21C6C00412367 /* NSDate+NSCalendarDate.m */; };
@@ -217,7 +218,7 @@
 		413A20491D04A20600CF7746 /* NSLocale+BSD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+BSD.m"; sourceTree = "<group>"; };
 		413A204C1D04A8D100CF7746 /* NSLocale+Linux.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+Linux.m"; sourceTree = "<group>"; };
 		4140634E1D3FBA5E0067E64E /* libmulle_objc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmulle_objc.a; path = dependencies/lib/libmulle_objc.a; sourceTree = "<group>"; };
-		4141AFB21CB546A500B0306A /* lib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = lib.a; path = libMulleObjCLinuxFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4141AFB21CB546A500B0306A /* libMulleObjCLinuxFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMulleObjCLinuxFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4158A7831D05D942009697C0 /* MulleObjCOSFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MulleObjCOSFoundation.m; sourceTree = "<group>"; };
 		4158A7881D05DF33009697C0 /* _MulleObjCOSFoundation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MulleObjCOSFoundation.h; sourceTree = "<group>"; };
 		415A01551CB036B5003C4ACF /* libMulleObjCPosixFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMulleObjCPosixFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -285,7 +286,7 @@
 		417B4C1B1CECA2AE00055E8D /* NSURL+PosixPathHandling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+PosixPathHandling.m"; sourceTree = "<group>"; };
 		417C3C361CCF6D99006AC6A4 /* NSString+CString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CString.h"; sourceTree = "<group>"; };
 		417C3C371CCF6D99006AC6A4 /* NSString+CString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CString.m"; sourceTree = "<group>"; };
-		417FFAD51CD8FAEB00FBBE87 /* .dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; name = .dylib; path = libMulleObjCOSFoundationStandalone.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		417FFAD51CD8FAEB00FBBE87 /* libMulleObjCOSFoundationStandalone.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libMulleObjCOSFoundationStandalone.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		417FFAEC1CD8FB5700FBBE87 /* MulleObjCOSFoundationStandalone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MulleObjCOSFoundationStandalone.m; sourceTree = "<group>"; };
 		417FFAF71CD8FDE500FBBE87 /* libmulle_sprintf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmulle_sprintf.a; path = dependencies/lib/libmulle_sprintf.a; sourceTree = "<group>"; };
 		418639331CCD22EC00A1784E /* NSLocale+Posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSLocale+Posix.h"; path = "../NSLocale+Posix.h"; sourceTree = "<group>"; };
@@ -295,6 +296,7 @@
 		418BCC3B1D23FFC100447F73 /* NSTask+Linux.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTask+Linux.m"; sourceTree = "<group>"; };
 		418BCC3E1D240D1400447F73 /* NSFileManager+FreeBSD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+FreeBSD.m"; sourceTree = "<group>"; };
 		418BCC401D240D9E00447F73 /* NSFileManager+Linux.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+Linux.m"; sourceTree = "<group>"; };
+		4190098E1E093C6D00B65799 /* libmulle_buffer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmulle_buffer.a; path = ../MulleObjCFoundation/dependencies/lib/libmulle_buffer.a; sourceTree = "<group>"; };
 		419658001CB53D4F00B29FB9 /* README-DARWIN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "README-DARWIN.md"; sourceTree = "<group>"; };
 		41A5ADED1CB40DB300FD7930 /* MulleObjCPosixFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MulleObjCPosixFoundation.h; sourceTree = "<group>"; };
 		41A5AE121CB417C500FD7930 /* libMulleObjCFoundation.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMulleObjCFoundation.a; path = dependencies/lib/libMulleObjCFoundation.a; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 				417FFAE51CD8FB1400FBBE87 /* libMulleObjC.a in Frameworks */,
 				417FFADD1CD8FB1400FBBE87 /* libmulle_aba.a in Frameworks */,
 				417FFADE1CD8FB1400FBBE87 /* libmulle_allocator.a in Frameworks */,
+				4190098F1E093C7D00B65799 /* libmulle_buffer.a in Frameworks */,
 				417FFADF1CD8FB1400FBBE87 /* libmulle_concurrent.a in Frameworks */,
 				417FFAE01CD8FB1400FBBE87 /* libmulle_container.a in Frameworks */,
 				417FFAE21CD8FB1400FBBE87 /* libmulle_test_allocator.a in Frameworks */,
@@ -450,8 +453,8 @@
 			children = (
 				415A01551CB036B5003C4ACF /* libMulleObjCPosixFoundation.a */,
 				415A015D1CB036C5003C4ACF /* libMulleObjCDarwinFoundation.a */,
-				4141AFB21CB546A500B0306A /* lib.a */,
-				417FFAD51CD8FAEB00FBBE87 /* .dylib */,
+				4141AFB21CB546A500B0306A /* libMulleObjCLinuxFoundation.a */,
+				417FFAD51CD8FAEB00FBBE87 /* libMulleObjCOSFoundationStandalone.dylib */,
 				4107BCFF1D05D603008C9CAC /* libMulleObjCOSFoundation.a */,
 			);
 			name = Products;
@@ -600,6 +603,7 @@
 				41A5AE121CB417C500FD7930 /* libMulleObjCFoundation.a */,
 				41F96CE11CB28832009499A9 /* libmulle_aba.a */,
 				41F96CE21CB28832009499A9 /* libmulle_allocator.a */,
+				4190098E1E093C6D00B65799 /* libmulle_buffer.a */,
 				41F96CE31CB28833009499A9 /* libmulle_concurrent.a */,
 				41F96CE41CB28833009499A9 /* libmulle_container.a */,
 				4140634E1D3FBA5E0067E64E /* libmulle_objc.a */,
@@ -761,7 +765,7 @@
 			);
 			name = MulleObjCLinuxFoundation;
 			productName = MulleObjCLinuxFoundation;
-			productReference = 4141AFB21CB546A500B0306A /* lib.a */;
+			productReference = 4141AFB21CB546A500B0306A /* libMulleObjCLinuxFoundation.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		415A01541CB036B5003C4ACF /* MulleObjCPosixFoundation */ = {
@@ -813,7 +817,7 @@
 			);
 			name = MulleObjCOSFoundationStandalone;
 			productName = MulleStandaloneObjCPosixFoundation;
-			productReference = 417FFAD51CD8FAEB00FBBE87 /* .dylib */;
+			productReference = 417FFAD51CD8FAEB00FBBE87 /* libMulleObjCOSFoundationStandalone.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -1037,6 +1041,7 @@
 			baseConfigurationReference = 41F96CF71CB28E7F009499A9 /* Debug.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 0.2.0;
+				GCC_VERSION = "de.codeon.compilers.mulle-clang";
 				HEADER_SEARCH_PATHS = (
 					"$(DEPENDENCIES_DIR)/include",
 					/usr/local/include,
@@ -1062,6 +1067,7 @@
 			baseConfigurationReference = 41F96CFE1CB28E7F009499A9 /* Release.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 0.2.0;
+				GCC_VERSION = "de.codeon.compilers.mulle-clang";
 				HEADER_SEARCH_PATHS = (
 					"$(DEPENDENCIES_DIR)/include",
 					/usr/local/include,

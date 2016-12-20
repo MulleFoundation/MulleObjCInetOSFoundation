@@ -11,6 +11,9 @@ project (MulleObjCPosixFoundation)
 set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/mulle-configuration)
 message(STATUS "CMAKE_MODULE_PATH is ${CMAKE_MODULE_PATH}")
 message(STATUS "CMAKE_BUILD_TYPE is ${CMAKE_BUILD_TYPE}")
+
+set( MULLE_LANGUAGE "ObjC")
+
 if( "${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
   include( Debug)
 else()
