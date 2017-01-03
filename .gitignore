@@ -1,5 +1,13 @@
+.DS_Store
+
+*.debug
+*.dSYM/
+*.exe
+*.old
+
 /.bootstrap.auto
 /.bootstrap.local
+/.repos
 /.repos/
 /addictions
 /bin/mulle-homebrew
@@ -7,11 +15,7 @@
 /mulle-configuration
 /tests/mulle-tests
 build/
-xcuserdata/
-lib/
 include/
-*.debug
-*.exe
-*.dSYM/
+lib/
 tmp/
-*.old
+xcuserdata/
