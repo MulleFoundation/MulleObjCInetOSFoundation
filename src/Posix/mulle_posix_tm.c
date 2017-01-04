@@ -151,4 +151,3 @@ void  mulle_posix_tm_with_timeintervalsince1970( struct tm *tm,
    gmtime_r( &timeval, tm);
 }
 
-

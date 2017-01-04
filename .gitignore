@@ -19,3 +19,10 @@ include/
 lib/
 tmp/
 xcuserdata/
+tests/@noleak/noleak
+tests/CString/cstring
+tests/Formatter/dateformatter
+tests/NSProcessInfo/arguments
+tests/NSProcessInfo/environment
+tests/NSProcessInfo/exepath
+tests/Paths/extension
