@@ -24,8 +24,20 @@
 
 @implementation NSBundle( FreeBSD)
 
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( BSD),
+      0
+   };
+   
+   return( dependencies);
+}
+
+
 - (NSString *) localizedStringForKey:(NSString *) key
-                               value:(NSString *) value 
+                               value:(NSString *) value
                                table:(NSString *) tableName
 {
    NSParameterAssert( ! key || [key isKindOfClass:[NSString class]]);

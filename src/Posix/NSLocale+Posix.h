@@ -11,38 +11,12 @@
  *  $Id$
  *
  */
-#import <MulleObjCFoundation/MulleObjCFoundation.h>
+#import "MulleObjCOSBaseFoundation.h"
 
 
-@interface NSLocale ( Posix)
-
-+ (id) systemLocale;
-+ (id) currentLocale;
-
-+ (NSArray *) availableLocaleIdentifiers;
-+ (NSArray *) ISOLanguageCodes;
-+ (NSArray *) ISOCountryCodes;
-+ (NSArray *) ISOCurrencyCodes;
-
-+ (NSString *) canonicalLocaleIdentifierFromString:(NSString *) string;
-+ (NSString *) canonicalLanguageIdentifierFromString:(NSString *) string;
-
-- (id) initWithLocaleIdentifier:(NSString *) string;
-- (NSString *) localeIdentifier;  
-
-- (id) objectForKey:(id) key;
-- (NSString *) displayNameForKey:(id) key 
-                           value:(id) value;
-
-@end
-
-
-@interface NSLocale ( OSSpecific)
+@interface NSLocale ( PosixFuture)
 
 + (NSString *) systemLocalePath;
-
-+ (id) systemLocale;
-+ (id) currentLocale;
 - (id) _localeInfoForKey:(id) key;
 
 @end

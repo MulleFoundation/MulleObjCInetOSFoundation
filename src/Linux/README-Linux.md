@@ -8,3 +8,6 @@ can not be "overriding" categories here.
 
 Linux seemingly doesn't have <xlocale.h>
 
+# the loader is in NSPathUtilties
+
+Linux -> Posix -> OSBase

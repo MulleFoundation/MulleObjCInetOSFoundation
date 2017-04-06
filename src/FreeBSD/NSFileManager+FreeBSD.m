@@ -16,6 +16,17 @@
 
 @implementation NSFileManager (FreeBSD)
 
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( BSD),
+      0
+   };
+   
+   return( dependencies);
+}
+
 //
 // is the idea, that NSFileManager can manage various filesystems
 // and convert to the proper encoding for each ?
@@ -25,10 +36,10 @@
    if( ! [path length] || ! [path canBeConvertedToEncoding:[NSString defaultCStringEncoding]])
    {
       errno = EINVAL;
-      MulleObjCSetCurrentErrnoError( NULL);
+      MulleObjCPOSIXSetCurrentErrnoError( NULL);
       return( NULL);
    }
-   
+
    return( [path cString]);  // assume
 }
 

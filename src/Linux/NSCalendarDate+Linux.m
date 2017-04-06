@@ -19,13 +19,30 @@
 
 @implementation NSCalendarDate (Linux)
 
-+ (NSTimeInterval) _timeintervalSince1970WithTm:(struct tm *) tm
-                                 secondsFromGMT:(NSUInteger) secondsFromGMT
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( Posix),
+      0
+   };
+   
+   return( dependencies);
+}
+
+
+
+
+- (instancetype) _initWithTM:(struct tm *) tm
+                    timeZone:(NSTimeZone *) tz
 {
    time_t   timeval;
 
-   timeval = timegm( tm);
-   return( timeval - secondsFromGMT);
+   timeval  = timegm( tm);
+   interval = timeval - [tz secondsFromGMT];
+
+   return( [self initWithTimeIntervalSince1970:interval
+                                      timeZone:tz]);
 }
 
 @end

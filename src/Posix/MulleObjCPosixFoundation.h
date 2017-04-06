@@ -1,43 +1,14 @@
 //
 //  MulleObjCPosixFoundation.h
-//  MulleObjCPosixFoundation
+//  MulleObjCOSFoundation
 //
-//  Created by Nat! on 05.04.16.
-//  Copyright © 2016 Mulle kybernetiK. All rights reserved.
+//  Created by Nat! on 27.03.17.
+//  Copyright © 2017 Mulle kybernetiK. All rights reserved.
 //
-#import <MulleObjCFoundation/MulleObjCFoundation.h>
 
-#define MULLE_OBJC_POSIX_FOUNDATION_VERSION   MULLE_OBJC_FOUNDATION_VERSION
+// Some symbols need to be shared
 
-#import "NSBundle.h"
-#import "NSCalendarDate.h"
 #import "NSCondition.h"
-#import "NSConditionLock.h"
-#import "NSDirectoryEnumerator.h"
-#import "NSFileHandle.h"
-#import "NSFileManager.h"
-#import "NSPipe.h"
-#import "NSProcessInfo.h"
-#import "NSTask.h"
-#import "NSUserDefaults.h"
 
-#import "NSArchiver+Posix.h"
-#import "NSArray+Posix.h"
-#import "NSData+Posix.h"
-#import "NSDictionary+Posix.h"
-#import "NSError+Posix.h"
 #import "NSLocale+Posix.h"
-#import "NSString+CString.h"
-#import "NSString+Posix.h"
-#import "NSString+PosixPathHandling.h"
-#import "NSURL+PosixPathHandling.h"
-#import "NSTimeZone+Posix.h"
-
-#import "NSAllocation.h"
-#import "NSLog.h"
-#import "NSPathUtilities.h"
-
-#import "MulleObjCStream.h"
-#import "MulleObjCBufferedInputStream.h"
-#import "MulleObjCBufferedOutputStream.h"
-
+#import "NSError+Posix.h"

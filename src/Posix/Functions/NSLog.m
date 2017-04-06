@@ -11,15 +11,18 @@
  *  $Id$
  *
  */
-#import "NSLog.h"
+#define _XOPEN_SOURCE 700
+
+#import "MulleObjCOSBaseFoundation.h"
 
 // other files in this library
-#import "NSString+CString.h"
 
 // std-c and dependencies
 #include <syslog.h>
 #include <mulle_vararg/mulle_vararg.h>
 
+
+// TODO: vectorize NSLog like PathUtilities
 
 int  __NSLogPriority = LOG_WARNING;
 
@@ -27,18 +30,18 @@ int  __NSLogPriority = LOG_WARNING;
 //void  NSLogName( NSString *s)
 //{
 //   char   *name;
-//   
+//
 //   name = strdup( [s UTF8String]);  // sic!
 //   openlog( name, LOG_ERR|LOG_PID, LOG_USER);
-//}    
+//}
 
-   
+
 void   NSLog( NSString *format, ...)
 {
    va_list   args;
-   
+
    //NSPushAutoreleasePool();
-   
+
    va_start( args, format );
    NSLogv( format, args);
    va_end( args);
@@ -51,10 +54,10 @@ void   NSLogv( NSString *format, va_list args)
 {
    NSString  *s;
    char      *cString;
-   
+
    s = [NSString stringWithFormat:format
                           va_list:args];
-   cString = [s cString];                       
+   cString = [s cString];
    syslog( __NSLogPriority, "%s", cString);
    fprintf( stderr, "%s\n", cString);
 }
@@ -64,10 +67,10 @@ void   NSLogArguments( NSString *format, mulle_vararg_list args)
 {
    NSString  *s;
    char      *cString;
-   
+
    s = [NSString stringWithFormat:format
                         arguments:args];
-   cString = [s cString];                       
+   cString = [s cString];
    syslog( __NSLogPriority, "%s", cString);
    fprintf( stderr, "%s\n", cString);
 }

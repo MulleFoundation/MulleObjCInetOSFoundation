@@ -39,11 +39,11 @@ struct tz_tm {
 	char	*tm_zone;	/* timezone abbreviation */
 };
 
-#define TM_GMTOFF  tm_gmtoff 
-#define TM_ZONE    tm_zone 
+#define TM_GMTOFF  tm_gmtoff
+#define TM_ZONE    tm_zone
 
 #ifdef __APPLE__
-#define TZDIR  "/usr/share/zoneinfo" 
+#define TZDIR  "/usr/share/zoneinfo"
 #endif
 
 

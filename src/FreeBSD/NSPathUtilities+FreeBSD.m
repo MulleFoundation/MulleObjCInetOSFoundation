@@ -3,7 +3,7 @@
  *
  *  NSPathUtilities+FreeBSD.m is a part of MulleFoundation
  *
- *  Copyright (C) 2011 Nat!, __MyCompanyName__ 
+ *  Copyright (C) 2011 Nat!, __MyCompanyName__
  *  All rights reserved.
  *
  *  Coded by Nat!
@@ -12,19 +12,19 @@
  *
  */
 #import "MulleObjCPosixFoundation.h"
+#import "NSPathUtilities+Private.h"
 
 // other files in this library
 
 // other libraries of MulleObjCPosixFoundation
-#import "NSPathUtilities+PosixPrivate.h"
 
 
 static NSString   *FreeBSDHomeDirectory( void)
 {
    char  *s;
-   
+
    s = getenv( "HOME");
-   if( s) 
+   if( s)
       return( [NSString stringWithCString:s]);
    return( @"~");
 }
@@ -39,11 +39,11 @@ static NSString   *FreeBSDRootDirectory( void)
 static NSString   *FreeBSDTemporaryDirectory( void)
 {
    char  *s;
-   
+
    s = getenv( "TMPDIR");
-   if( ! s) 
+   if( ! s)
       s = "/tmp";
-      
+
    return( [NSString stringWithCString:s]);
 }
 
@@ -51,11 +51,11 @@ static NSString   *FreeBSDTemporaryDirectory( void)
 static NSString   *FreeBSDUserName( void)
 {
    char  *s;
-   
+
    s = getenv( "USER");
-   if( ! s) 
+   if( ! s)
       s = getenv( "LOGNAME");
-   
+
    return( [NSString stringWithCString:s]);
 }
 
@@ -70,7 +70,7 @@ static NSArray   *FreeBSDSearchPathForDirectoriesInDomains( NSSearchPathDirector
    NSString                *path;
    NSString                *prefix;
    NSString                *systemRoot;
-   
+
    systemRoot      = NSOpenStepRootDirectory();
    array           = [NSMutableArray array];
    leftoverDomains = domains & (NSUserDomainMask|NSLocalDomainMask|NSNetworkDomainMask|NSSystemDomainMask);
@@ -101,19 +101,19 @@ static NSArray   *FreeBSDSearchPathForDirectoriesInDomains( NSSearchPathDirector
                currentDomain = NSSystemDomainMask;
                prefix        = systemRoot;
             }
-            
+
       leftoverDomains &= ~currentDomain;
-      
+
       path = nil;
       switch( type)
       {
       case NSAllApplicationsDirectory : // fake but better than nothing
          break;
 
-      case NSAllLibrariesDirectory  : 
+      case NSAllLibrariesDirectory  :
          break;
 
-      default  : 
+      default  :
          break;
       }
    }
@@ -133,15 +133,23 @@ static _NSPathUtilityVectorTable   _FreeBSDTable =
 };
 
 
-@interface _NSPathUtilities_FreeBSD_Loader
-@end
 
+@implementation _MulleObjCOSLoader( FreeBSD)
 
-@implementation _NSPathUtilities_FreeBSD_Loader
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( BSD),
+      0
+   };
+   
+   return( dependencies);
+}
+
 
 + (void) load
 {
-   assert( ! _NSPathUtilityVectors);  // competitor ?? DENIED!
    _NSPathUtilityVectors = &_FreeBSDTable;
 }
 

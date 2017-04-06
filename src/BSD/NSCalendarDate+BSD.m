@@ -17,13 +17,29 @@
 
 @implementation NSCalendarDate (Darwin)
 
-+ (NSTimeInterval) _timeintervalSince1970WithTm:(struct tm *) tm
-                                 secondsFromGMT:(NSUInteger) secondsFromGMT
++ (SEL *) categoryDependencies
 {
-   time_t   timeval;
+   static SEL   dependencies[] =
+   {
+      @selector( Posix),
+      0
+   };
 
-   timeval = timegm( tm);
-   return( timeval - secondsFromGMT);
+   return( dependencies);
+}
+
+
+- (instancetype) _initWithTM:(struct tm *) tm
+                    timeZone:(NSTimeZone *) tz
+{
+   time_t           timeval;
+   NSTimeInterval   interval;
+
+   timeval  = timegm( tm);
+   interval = timeval - [tz secondsFromGMT];
+
+   return( [self initWithTimeIntervalSince1970:interval
+                                      timeZone:tz]);
 }
 
 @end

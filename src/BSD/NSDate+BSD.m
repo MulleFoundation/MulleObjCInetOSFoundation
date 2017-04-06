@@ -22,6 +22,18 @@
 
 @implementation NSDate( BSD)
 
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( Posix),
+      0
+   };
+   
+   return( dependencies);
+}
+
+
 + (NSDate *) _dateWithCStringFormat:(char *) c_format
                              locale:(NSLocale *) locale
                            timeZone:(NSTimeZone *) timeZone
@@ -31,11 +43,10 @@
    NSDate           *date;
    NSInteger        estSeconds;
    NSInteger        realSeconds;
-   NSTimeInterval   interval;
    NSUInteger       loops;
    int              has_tz;
    struct tm        tm;
-   
+
    has_tz = mulle_bsd_tm_from_string_with_format( &tm,
                                                   c_str_p,
                                                   c_format,
@@ -43,7 +54,7 @@
                                                   lenient);
    if( has_tz < 0)
       return( nil);
-   
+
    estSeconds = 0;
    realSeconds = 0;
    if( ! has_tz)
@@ -52,9 +63,10 @@
    // if we flipflop forever return
    for( loops = 8; loops ; --loops)
    {
-      interval    = [NSCalendarDate _timeintervalSince1970WithTm:&tm
-                                                  secondsFromGMT:estSeconds];
-      date        = [self dateWithTimeIntervalSince1970:interval];
+      time_t   timeval;
+
+      timeval = timegm( &tm);
+      date    = [self dateWithTimeIntervalSince1970:(NSTimeInterval) timeval];
       if( ! has_tz)
          realSeconds = [timeZone secondsFromGMTForDate:date];
       if( realSeconds == estSeconds)
@@ -62,10 +74,10 @@
 
       estSeconds = realSeconds;
    }
-   
+
    if( ! loops)
       NSLog( @"Date %@ is possibly off by %ld seconds", date, realSeconds - estSeconds);
-   
+
    return( date);
 }
 
@@ -78,11 +90,11 @@
 {
    locale_t    xlocale;
    struct tm   tm;
-   
+
    mulle_posix_tm_with_timeintervalsince1970( &tm,
                                               (double) [self timeIntervalSince1970],
                                               (unsigned int) [timeZone secondsFromGMTForDate:self]);
-   
+
    xlocale  = [locale xlocale];
    if( xlocale)
       len = strftime_l( buf, len, c_format, &tm, xlocale);

@@ -17,10 +17,22 @@
 
 @implementation NSTask( Linux)
 
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( Posix),
+      0
+   };
+   
+   return( dependencies);
+}
+
+
 + (char **) _environment
 {
    extern char  **environ;
-   
+
    return( environ);
 }
 

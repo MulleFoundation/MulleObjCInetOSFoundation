@@ -20,7 +20,7 @@
 static NSString   *LinuxHomeDirectory( void)
 {
    char  *s;
-   
+
    s = getenv( "HOME");
    if( s)
       return( [NSString stringWithCString:s]);
@@ -37,11 +37,11 @@ static NSString   *LinuxRootDirectory( void)
 static NSString   *LinuxTemporaryDirectory( void)
 {
    char  *s;
-   
+
    s = getenv( "TMPDIR");
    if( ! s)
       s = "/tmp";
-   
+
    return( [NSString stringWithCString:s]);
 }
 
@@ -49,11 +49,11 @@ static NSString   *LinuxTemporaryDirectory( void)
 static NSString   *LinuxUserName( void)
 {
    char  *s;
-   
+
    s = getenv( "USER");
    if( ! s)
       s = getenv( "LOGNAME");
-   
+
    return( [NSString stringWithCString:s]);
 }
 
@@ -68,13 +68,13 @@ static NSArray   *LinuxSearchPathForDirectoriesInDomains( NSSearchPathDirectory 
    NSString                *path;
    NSString                *prefix;
    NSString                *systemRoot;
-   
+
    systemRoot      = NSOpenStepRootDirectory();
    array           = [NSMutableArray array];
    leftoverDomains = domains & (NSUserDomainMask|NSLocalDomainMask|NSNetworkDomainMask|NSSystemDomainMask);
-   
+
    NSCParameterAssert( [systemRoot length]);
-   
+
    while( leftoverDomains)
    {
       if( leftoverDomains & NSUserDomainMask)
@@ -99,18 +99,18 @@ static NSArray   *LinuxSearchPathForDirectoriesInDomains( NSSearchPathDirectory 
                currentDomain = NSSystemDomainMask;
                prefix        = systemRoot;
             }
-      
+
       leftoverDomains &= ~currentDomain;
-      
+
       path = nil;
       switch( type)
       {
          case NSAllApplicationsDirectory : // fake but better than nothing
             break;
-            
+
          case NSAllLibrariesDirectory  :
             break;
-            
+
          default  :
             break;
       }
@@ -131,16 +131,25 @@ static _NSPathUtilityVectorTable   _LinuxTable =
 };
 
 
-@interface _NSPathUtilities_Linux_Loader
-@end
+@implementation _MulleObjCOSLoader (Linux)
 
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( Posix),
+      0
+   };
+   
+   return( dependencies);
+}
 
-@implementation _NSPathUtilities_Linux_Loader
 
 + (void) load
 {
-   assert( ! _NSPathUtilityVectors);  // competitor ?? DENIED!
    _NSPathUtilityVectors = &_LinuxTable;
 }
 
 @end
+
+

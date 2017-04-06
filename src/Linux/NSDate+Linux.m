@@ -22,6 +22,17 @@
 
 @implementation NSDate (Linux)
 
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( Posix),
+      0
+   };
+   
+   return( dependencies);
+}
+
 + (NSDate *) _dateWithCStringFormat:(char *) c_format
                              locale:(NSLocale *) locale
                            timeZone:(NSTimeZone *) timeZone
@@ -35,7 +46,7 @@
    NSUInteger       loops;
    int              rval;
    struct tm        tm;
-   
+
    rval = mulle_posix_tm_from_string_with_format( &tm,
                                                   c_str_p,
                                                   c_format,
@@ -43,7 +54,7 @@
                                                   lenient);
    if( rval < 0)
       return( nil);
-   
+
    realSeconds = 0;
    estSeconds  = [timeZone secondsFromGMT];
 
@@ -59,10 +70,10 @@
 
       estSeconds = realSeconds;
    }
-   
+
    if( ! loops)
       NSLog( @"Date %@ is possibly off by %ld seconds", date, realSeconds - estSeconds);
-   
+
    return( date);
 }
 
@@ -75,17 +86,17 @@
 {
    locale_t    old_locale;
    struct tm   tm;
-   
+
    mulle_posix_tm_with_timeintervalsince1970( &tm,
                                               (double) [self timeIntervalSince1970],
                                               (unsigned int) [timeZone secondsFromGMTForDate:self]);
-   
+
    old_locale  = uselocale( [locale xlocale]);
    {
       len = strftime( buf, len, c_format, &tm);
    }
    uselocale( old_locale);
-   
+
    return( len);
 }
 

@@ -3,7 +3,7 @@
  *
  *  NSDecimalNumber+Localization.m is a part of MulleFoundation
  *
- *  Copyright (C) 2011 Nat!, Mulle kybernetiK 
+ *  Copyright (C) 2011 Nat!, Mulle kybernetiK
  *  All rights reserved.
  *
  *  Coded by Nat!
@@ -17,7 +17,7 @@
 @implementation NSDecimalNumber( _Localization)
 
 
-- (id) initWithString:(NSString *) numberValue 
+- (id) initWithString:(NSString *) numberValue
               locale:(id) locale
 {
    abort();
@@ -25,7 +25,7 @@
 }
 
 
-+ (NSDecimalNumber *) decimalNumberWithString:(NSString *) numberValue 
++ (NSDecimalNumber *) decimalNumberWithString:(NSString *) numberValue
                                        locale:(id) locale
 {
    abort();
@@ -35,7 +35,7 @@
 
 - (NSString *) descriptionWithLocale:(id) locale
 {
-   
+
    return( nil);
 }
 

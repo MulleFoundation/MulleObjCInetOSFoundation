@@ -22,6 +22,18 @@
 
 @implementation NSLocale (Linux)
 
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( Posix),
+      0
+   };
+   
+   return( dependencies);
+}
+
+
 + (NSString *) systemLocalePath
 {
    return( @"/usr/share/locale");
@@ -46,17 +58,17 @@
 {
    struct mulle_locale_key_info   info;
    char                           *s;
-   
+
    s    = NULL;
    info = mulle_locale_map_string_key_to_local_key( key);
 
    switch( info.type)
    {
-   case IDENTIFIER_INFO : 
+   case IDENTIFIER_INFO :
       return( _identifier);
-   
-   case LANG_INFO  : 
-      s = nl_langinfo_l( info.code, _xlocale); 
+
+   case LANG_INFO  :
+      s = nl_langinfo_l( info.code, _xlocale);
       return( s ? [NSString stringWithCString:s] : nil);
    }
    return( nil);

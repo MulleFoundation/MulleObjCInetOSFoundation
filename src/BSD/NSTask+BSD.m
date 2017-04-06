@@ -11,7 +11,7 @@
 // other files in this library
 
 // other libraries of MulleObjCPosixFoundation
-#import "NSTask+PosixPrivate.h"
+#import "NSTask+Private.h"
 
 // std-c and dependencies
 #include <signal.h>
@@ -22,6 +22,18 @@
 
 @implementation NSTask( BSD)
 
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( Posix),
+      0
+   };
+   
+   return( dependencies);
+}
+
+
 - (void) waitUntilExit
 {
    switch( _status)
@@ -29,11 +41,11 @@
    default :
       MulleObjCThrowInternalInconsistencyException( @"task not started");
       break;
-      
+
    case _NSTaskIsPresumablyRunning :
       NSParameterAssert( _pid);
       waitpid( _pid, &_terminationStatus, WNOHANG);
-      
+
    case _NSTaskHasTerminated :
       break;
    }
@@ -47,11 +59,11 @@
       default :
          MulleObjCThrowInternalInconsistencyException( @"task not started");
          break;
-         
+
       case _NSTaskIsPresumablyRunning :
          NSParameterAssert( _pid);
          kill( _pid, a_signal);
-         
+
       case _NSTaskHasTerminated :
          break;
    }
@@ -90,11 +102,11 @@
    {
       default :
          MulleObjCThrowInternalInconsistencyException( @"task not terminated yet");
-         
+
       case _NSTaskHasTerminated :
          break;
    }
-   
+
    if( WIFEXITED( _terminationStatus))
       return( NSTaskTerminationReasonExit);
    return( NSTaskTerminationReasonUncaughtSignal);

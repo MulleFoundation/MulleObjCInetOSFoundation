@@ -12,7 +12,7 @@
  *
  */
 #define _DARWIN_C_SOURCE
- 
+
 #import "MulleObjCPosixFoundation.h"
 
 // other files in this library
@@ -23,6 +23,18 @@
 
 
 @implementation NSString( Darwin)
+
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( OSBase),  // there is no Posix or BSD
+      0
+   };
+   
+   return( dependencies);
+}
+
 
 - (NSString *) _stringByRemovingPrivatePrefix
 {

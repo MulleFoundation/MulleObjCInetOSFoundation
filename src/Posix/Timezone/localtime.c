@@ -147,7 +147,7 @@ struct tz_context
 #ifndef ALL_STATE
    struct state         lclmem;
    struct state         gmtmem;
-#endif 
+#endif
    struct state *	lclptr;
    struct state *	gmtptr;
    /* State Farm */
@@ -184,13 +184,13 @@ static void  init_tz_context( self)
 struct tz_context *self;
 {
    memset( self, 0, sizeof( *self));
-   
+
    self->tzname[ 0] = wildabbr;
    self->tzname[ 1] = wildabbr;
 #ifndef ALL_STATE
    self->lclptr = &self->lclmem;
    self->gmtptr = &self->gmtmem;
-#endif   
+#endif
 }
 
 
@@ -210,7 +210,7 @@ static const char *	getoffset(const char * strp, long * offsetp);
 static const char *	getrule(const char * strp, struct rule * rulep);
 static void		gmtload(struct state * sp);
 
-static struct tz_tm *	_gmtsub(struct tz_context *self, 
+static struct tz_tm *	_gmtsub(struct tz_context *self,
                                const time_t * timep, long offset,
 				struct tz_tm * tmp);
 static struct tz_tm *	_localsub(struct tz_context *self,
@@ -223,27 +223,27 @@ static int		long_normalize_overflow(long * tensptr,
 				int * unitsptr, int base);
 static int		normalize_overflow(int * tensptr, int * unitsptr,
 				int base);
-                                
+
 static void		_settzname(struct tz_context *self);
 static time_t		_time1(struct tz_context *self,
                                 struct tz_tm * tmp,
-				struct tz_tm * (*funcp)(struct tz_context *self, 
+				struct tz_tm * (*funcp)(struct tz_context *self,
                                 const time_t *,
 				long, struct tz_tm *),
 				long offset);
 static time_t		_time2(struct tz_context *self,
                               struct tz_tm *tmp,
-				struct tz_tm * (*funcp)(struct tz_context *self, 
+				struct tz_tm * (*funcp)(struct tz_context *self,
                                  const time_t *,
 				long, struct tz_tm*),
 				long offset, int * okayp);
 static time_t		_time2sub(struct tz_context *self,
                                   struct tz_tm *tmp,
-				struct tz_tm * (*funcp)(struct tz_context *self, 
+				struct tz_tm * (*funcp)(struct tz_context *self,
                                 const time_t *,
 				long, struct tz_tm*),
 				long offset, int * okayp, int do_norm_secs);
-                                
+
 static struct tz_tm *	timesub(const time_t * timep, long offset,
 				const struct state * sp, struct tz_tm * tmp);
 static int		tmcomp(const struct tz_tm * atmp,
@@ -2176,17 +2176,17 @@ static struct tz_context    *mulle_new_tz_context( size_t *size)
 {
    struct tz_context  *p;
    size_t             dummy;
-   
+
    if( ! size)
       size = &dummy;
-      
+
    p = malloc( sizeof( struct tz_context));
    if( ! p)
    {
       *size = 0;
       return( NULL);
    }
-   
+
    *size = sizeof( struct tz_context);
 
    init_tz_context( p);
@@ -2197,14 +2197,14 @@ static struct tz_context    *mulle_new_tz_context( size_t *size)
 void   *mulle_tz_context_for_gmt_seconds( long seconds, size_t *size)
 {
    struct tz_context  *p;
-   
+
    p = mulle_new_tz_context( size);
    if( ! p)
       return( p);
-      
+
    p->lclmem.ttis[ 0].tt_gmtoff = seconds;
    p->lclmem.timecnt            = 1;
-   
+
    return( p);
 }
 
@@ -2212,13 +2212,13 @@ void   *mulle_tz_context_for_gmt_seconds( long seconds, size_t *size)
 void   *mulle_tz_context_with_name( char *name, size_t *size)
 {
    struct tz_context  *p;
-   
+
    p = mulle_new_tz_context( size);
    if( ! p)
       return( p);
-   
+
    __tzset( p, name);
-   
+
    return( p);
 }
 
@@ -2230,11 +2230,11 @@ char  *mulle_get_abbreviation_for_time_interval( void *self, time_t seconds)
 {
    struct tz_context  *p;
    struct tz_tm          result;
-   
+
    p = self;
    if( ! p)
       return( NULL);
-   
+
    _localtime_r( p, &seconds, &result);
 
    // valid as long as 'p' is valid
@@ -2247,11 +2247,11 @@ int   mulle_get_daylight_saving_flag_for_time_interval( void *self, time_t secon
 {
    struct tz_context  *p;
    struct tz_tm          result;
-   
+
    p = self;
    if( ! p)
       return( 0);
-   
+
    _localtime_r( p, &seconds, &result);
 
    // valid as long as 'p' is valid
@@ -2263,11 +2263,11 @@ long   mulle_get_gmt_offset_for_time_interval( void *self, time_t seconds)
 {
    struct tz_context  *p;
    struct tz_tm          result;
-   
+
    p = self;
    if( ! p)
       return( 0);
-   
+
    _localtime_r( p, &seconds, &result);
 
    // valid as long as 'p' is valid
@@ -2278,7 +2278,7 @@ long   mulle_get_gmt_offset_for_time_interval( void *self, time_t seconds)
 static char  *path_to_zoneinfo_file( char *name, char *buf, size_t buflen)
 {
    char   *p;
-   
+
    if ((p = _TZDIR) == NULL)
       return( NULL);
    if ((strlen( p) + strlen(name) + 1) >= buflen)
@@ -2286,7 +2286,7 @@ static char  *path_to_zoneinfo_file( char *name, char *buf, size_t buflen)
    (void) strcpy( buf, p);
    (void) strcat( buf, "/");
    (void) strcat( buf, name);
-   
+
    return( buf);
 }
 
@@ -2308,7 +2308,7 @@ static void   _mulle_set_zoneinfo_path( char *path)
 char  *mulle_get_timezone_zone_tab_file()
 {
    char     fullname[FILENAME_MAX + 1];
-   
+
    path_to_zoneinfo_file( "zone.tab", fullname, sizeof( fullname));
    return( strdup( fullname));
 }

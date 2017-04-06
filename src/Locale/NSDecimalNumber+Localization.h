@@ -3,7 +3,7 @@
  *
  *  NSDecimalNumber+Localization.h is a part of MulleFoundation
  *
- *  Copyright (C) 2011 Nat!, Mulle kybernetiK 
+ *  Copyright (C) 2011 Nat!, Mulle kybernetiK
  *  All rights reserved.
  *
  *  Coded by Nat!
@@ -16,10 +16,10 @@
 
 @interface NSDecimalNumber( _Localization)
 
-- (id) initWithString:(NSString *) numberValue 
+- (id) initWithString:(NSString *) numberValue
               locale:(id) locale;
 
-+ (NSDecimalNumber *) decimalNumberWithString:(NSString *) numberValue 
++ (NSDecimalNumber *) decimalNumberWithString:(NSString *) numberValue
                                        locale:(id) locale;
 
 - (NSString *) descriptionWithLocale:(id) locale;

@@ -13,15 +13,11 @@
  */
 // define, that make things POSIXly
 #define _XOPEN_SOURCE 700
- 
+
 #import "NSLocale+Posix.h"
 
 // other files in this library
 #import "NSLocale+PosixPrivate.h"
-#import "NSDictionary+Posix.h"
-#import "NSFileManager.h"
-#import "NSString+Posix.h"
-#import "NSString+PosixPathHandling.h"
 
 // std-c and dependencies
 #include <locale.h>
@@ -29,44 +25,35 @@
 #include <langinfo.h>
 
 
-@interface NSString ( CString)
-
-+ (instancetype) stringWithCString:(char *) s;
-- (char *) cString;
-
-@end
-
-
-
 #define match( key, identifier, type, code)               \
    if( [key isEqualToString:identifier ])                 \
    {                                                      \
       return( make_mulle_locale_key_info( type, code));   \
-   } 
+   }
 
 
 struct mulle_locale_key_info   mulle_locale_map_string_key_to_local_key( NSString *key)
 {
-   match( key, NSLocaleAlternateQuotationBeginDelimiterKey, -1, 0); 
-   match( key, NSLocaleAlternateQuotationEndDelimiterKey, -1, 0); 
-   match( key, NSLocaleCalendar, -1, 0); 
-   match( key, NSLocaleCollationIdentifier, QUERY_INFO, QUERY_COLLATION); 
-   match( key, NSLocaleCollatorIdentifier, -1, 0); 
-   match( key, NSLocaleCountryCode, -1, 0); 
-   match( key, NSLocaleCurrencyCode, -1, 0); 
-   match( key, NSLocaleCurrencySymbol, CONV_INFO, CONV_CURRENCY_SYMBOL); 
-   match( key, NSLocaleDecimalSeparator, CONV_INFO, CONV_DECIMAL_POINT); 
-   match( key, NSLocaleExemplarCharacterSet, -1, 0); 
-   match( key, NSLocaleGroupingSeparator, CONV_INFO, CONV_GROUPING); 
-   match( key, NSLocaleIdentifier, IDENTIFIER_INFO, 0); 
-   match( key, NSLocaleLanguageCode, QUERY_INFO, QUERY_LANGUAGE); 
-   match( key, NSLocaleMeasurementSystem, -1, 0); 
-   match( key, NSLocaleQuotationBeginDelimiterKey, -1, 0); 
-   match( key, NSLocaleQuotationEndDelimiterKey, -1, 0); 
-   match( key, NSLocaleScriptCode, -1, 0); 
-   match( key, NSLocaleUsesMetricSystem, -1, 0); 
-   match( key, NSLocaleVariantCode, QUERY_INFO, QUERY_VARIANT); 
-   
+   match( key, NSLocaleAlternateQuotationBeginDelimiterKey, -1, 0);
+   match( key, NSLocaleAlternateQuotationEndDelimiterKey, -1, 0);
+   match( key, NSLocaleCalendar, -1, 0);
+   match( key, NSLocaleCollationIdentifier, QUERY_INFO, QUERY_COLLATION);
+   match( key, NSLocaleCollatorIdentifier, -1, 0);
+   match( key, NSLocaleCountryCode, -1, 0);
+   match( key, NSLocaleCurrencyCode, -1, 0);
+   match( key, NSLocaleCurrencySymbol, CONV_INFO, CONV_CURRENCY_SYMBOL);
+   match( key, NSLocaleDecimalSeparator, CONV_INFO, CONV_DECIMAL_POINT);
+   match( key, NSLocaleExemplarCharacterSet, -1, 0);
+   match( key, NSLocaleGroupingSeparator, CONV_INFO, CONV_GROUPING);
+   match( key, NSLocaleIdentifier, IDENTIFIER_INFO, 0);
+   match( key, NSLocaleLanguageCode, QUERY_INFO, QUERY_LANGUAGE);
+   match( key, NSLocaleMeasurementSystem, -1, 0);
+   match( key, NSLocaleQuotationBeginDelimiterKey, -1, 0);
+   match( key, NSLocaleQuotationEndDelimiterKey, -1, 0);
+   match( key, NSLocaleScriptCode, -1, 0);
+   match( key, NSLocaleUsesMetricSystem, -1, 0);
+   match( key, NSLocaleVariantCode, QUERY_INFO, QUERY_VARIANT);
+
    return( make_mulle_locale_key_info( ERROR_INFO, 0));
 }
 
@@ -76,26 +63,26 @@ id    mulle_locale_lconv_value( struct lconv *conv, int code)
    char   *s;
    int    nr;
    BOOL   flag;
-   
+
    nr   = -1;
    s    = NULL;
    flag = NO;
-   
+
    switch( code)
    {
    default                             : return( nil);
    case CONV_DECIMAL_POINT             : s = conv->decimal_point; break;
-   case CONV_THOUSANDS_SEPERATOR       : s = conv->thousands_sep; break; 
-   case CONV_GROUPING                  : s = conv->grouping; break; 
+   case CONV_THOUSANDS_SEPERATOR       : s = conv->thousands_sep; break;
+   case CONV_GROUPING                  : s = conv->grouping; break;
    case CONV_INT_CURRENCY_SYMBOL       : s = conv->int_curr_symbol; break;
-   
+
    case CONV_CURRENCY_SYMBOL           : s = conv->currency_symbol; break;
    case CONV_MONEY_DECIMAL_POINT       : s = conv->mon_decimal_point; break;
-   case CONV_MONEY_THOUSANDS_SEPERATOR : s = conv->mon_thousands_sep; break; 
-   case CONV_MONEY_GROUPING            : s = conv->mon_grouping; break; 
+   case CONV_MONEY_THOUSANDS_SEPERATOR : s = conv->mon_thousands_sep; break;
+   case CONV_MONEY_GROUPING            : s = conv->mon_grouping; break;
 
-   case CONV_POSITIVE_SIGN             : s = conv->positive_sign; break; 
-   case CONV_NEGATIVE_SIGN             : s = conv->negative_sign; break; 
+   case CONV_POSITIVE_SIGN             : s = conv->positive_sign; break;
+   case CONV_NEGATIVE_SIGN             : s = conv->negative_sign; break;
    case CONV_INT_FRACTIONAL_DIGITS     : nr = conv->int_frac_digits; break;
    case CONV_FRACTIONAL_DIGITS         : nr = conv->frac_digits; break;
 
@@ -106,15 +93,15 @@ id    mulle_locale_lconv_value( struct lconv *conv, int code)
 
    case CONV_POSITIVE_SIGN_POSITION                      : nr   = conv->p_sign_posn; break;
    case CONV_NEGATIVE_SIGN_POSITION                      : nr   = conv->n_sign_posn; break;
-   case CONV_INT_POSITIVE_VALUE_CURRENCY_SYMBOL_PRECEDES : flag = conv->int_p_cs_precedes; break; 
-   case CONV_INT_NEGATIVE_VALUE_CURRENCY_SYMBOL_PRECEDES : flag = conv->int_n_cs_precedes; break; 
+   case CONV_INT_POSITIVE_VALUE_CURRENCY_SYMBOL_PRECEDES : flag = conv->int_p_cs_precedes; break;
+   case CONV_INT_NEGATIVE_VALUE_CURRENCY_SYMBOL_PRECEDES : flag = conv->int_n_cs_precedes; break;
 
-   case CONV_INT_POSITIVE_VALUE_CURRENCY_SYMBOL_SEPARATED_BY_SPACE : flag = conv->int_p_sep_by_space; break; 
+   case CONV_INT_POSITIVE_VALUE_CURRENCY_SYMBOL_SEPARATED_BY_SPACE : flag = conv->int_p_sep_by_space; break;
    case CONV_INT_NEGATIVE_VALUE_CURRENCY_SYMBOL_SEPARATED_BY_SPACE : flag = conv->int_n_sep_by_space; break;
    case CONV_INT_POSITIVE_SIGN_POSITION                            : flag = conv->int_p_sign_posn; break;
    case CONV_INT_NEGATIVE_SIGN_POSITION                            : flag = conv->int_n_sign_posn; break;
    }
-   
+
    if( s)
       return( [NSString stringWithCString:s]);
 
@@ -125,7 +112,7 @@ id    mulle_locale_lconv_value( struct lconv *conv, int code)
 }
 
 
-@implementation NSLocale ( Posix)
+@implementation NSLocale( Posix)
 
 + (NSArray *) availableLocaleIdentifiers
 {
@@ -188,7 +175,7 @@ de_DE.plist
 + (NSDictionary *) auxiliaryLocaleInfoForIdentifier:(NSString *) identifier
 {
    NSString  *path;
-   
+
    path = [[self auxiliaryLocalePath] stringByAppendingPathComponent:identifier];
    path = [path stringByAppendingPathExtension:@"plist"];
    return( [NSDictionary dictionaryWithContentsOfFile:path]);
@@ -199,7 +186,7 @@ de_DE.plist
 {
    locale_t       xlocale;
    NSDictionary   *auxInfo;
-   
+
    xlocale = newlocale( LC_ALL_MASK, [name cString], NULL);
 
    if( ! xlocale || ! name)
@@ -207,14 +194,14 @@ de_DE.plist
       [self release];
       return( nil);
    }
-   
+
    _xlocale    = xlocale;
    _identifier = [name copy];
    _keyValues  = [NSMutableDictionary new];
-   
-   auxInfo = [isa auxiliaryLocaleInfoForIdentifier:name];
+
+   auxInfo = [[self class] auxiliaryLocaleInfoForIdentifier:name];
    [_keyValues addEntriesFromDictionary:auxInfo];
-   
+
    return( self);
 }
 
@@ -234,13 +221,13 @@ de_DE.plist
 {
    return( _identifier);
 }
-   
-   
+
+
 
 - (id) objectForKey:(id) key
 {
    id               value;
-   
+
    value = [_keyValues objectForKey:key];
    if( value)
    {
@@ -248,7 +235,7 @@ de_DE.plist
          value = nil;
       return( value);
    }
-   
+
    value = [self _localeInfoForKey:key];
    [_keyValues setObject:value ? value : [NSNull null]
                   forKey:key];

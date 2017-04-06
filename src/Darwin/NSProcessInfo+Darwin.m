@@ -12,12 +12,10 @@
  *
  */
 #define _DARWIN_C_SOURCE
- 
+
 #import "MulleObjCPosixFoundation.h"
 
 // other files in this library
-#import "NSArray+PosixPrivate.h"
-#import "NSDictionary+PosixPrivate.h"
 
 // std-c and dependencies
 #include <crt_externs.h>
@@ -25,6 +23,17 @@
 
 
 @implementation NSProcessInfo( Darwin)
+
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( Posix),
+      0
+   };
+   
+   return( dependencies);
+}
 
 
 ///* The MIT License
@@ -125,7 +134,7 @@ static void  free_argv( int argc, char **argv)
 static void  free_env( char **env)
 {
    char   **p;
-   
+
    if( p = env)
       while( *p)
          mulle_free( *p++);
@@ -144,17 +153,17 @@ static inline int   copy_argc_argv( int argc, char **argv, argv_and_environ *inf
 {
    char   *s;
    int    i;
-   
+
    info->argv = (char **) mulle_calloc( argc, sizeof( char *));
    if( ! info->argv)
       return( -1);
-      
+
    for( i = 0; i < argc; i++)
    {
       s = mulle_strdup( argv[ i]);
       if( ! s)
          return( -1);
-      
+
       info->argv[ info->argc++] = s;
    }
    return( 0);
@@ -166,7 +175,7 @@ static inline int   copy_env( char **environment, argv_and_environ *info)
    int    n_env;
    int    i;
    char   *s;
-   
+
    /* The environment, we figure out how many entries there are first */
    n_env = 0;
    if( environment)
@@ -175,7 +184,7 @@ static inline int   copy_env( char **environment, argv_and_environ *info)
    info->env = mulle_calloc( n_env + 1, sizeof( char *));
    if( ! info->env)
       return( -1);
-      
+
    for( i = 0; i < n_env; i++)
    {
       s = mulle_strdup( environment[ i]);
@@ -183,7 +192,7 @@ static inline int   copy_env( char **environment, argv_and_environ *info)
          return( -1);
       info->env[ i] = s;
    }
-   
+
    return( 0);
 }
 
@@ -201,29 +210,29 @@ static inline int   copy_env( char **environment, argv_and_environ *info)
 //   size_t   env_size;
 //   int      i;
 //   int      n_env;
-//   
+//
 //   assert( ! info->argc);
 //   assert( info->argv);
 //   assert( ! info->env);
-//   
+//
 //   sentinel = &buf[ size];
 //   p        = buf;
-//   
+//
 //   // need some executable here
 //   if( ! p)
 //      return( -2);
-//   
+//
 //   s = strdup( p);
 //   p = &p[ strlen( p) + 1];
 //   if( ! s)
 //      return( -1);
-//   
+//
 //   info->argv[ info->argc++] = s;
-//   
+//
 //   // really needed ??? probably because of alignment
 //   while( p < sentinel && ! *p)
 //      ++p;
-//   
+//
 //   //
 //   // now we are in "string area"
 //   //
@@ -231,15 +240,15 @@ static inline int   copy_env( char **environment, argv_and_environ *info)
 //   {
 //      if( p >= sentinel)
 //         return( -2);
-//      
+//
 //      s = strdup( p);
 //      p = &p[ strlen( p) + 1];
 //      if( ! s)
 //         return( -1);
-//      
+//
 //      info->argv[ info->argc++] = s;
 //   }
-//   
+//
 //   /* The environment, we figure out how many entries there are first */
 //   s = p;
 //   for( n_env = 0; s < sentinel; n_env++)
@@ -247,14 +256,14 @@ static inline int   copy_env( char **environment, argv_and_environ *info)
 //
 //   info->env = malloc( sizeof( char *) * (n_env + 1));
 //   info->env[ n_env] = 0;
-//   
+//
 //   for( i = 0; i < n_env; i++)
 //   {
 //      s = strdup( p);
 //      p = &p[ strlen( p) + 1];
 //      if( ! s)
 //         return( -1);
-//      
+//
 //      info->env[ i] = s;
 //   }
 //   return( 0);
@@ -270,53 +279,53 @@ static inline int   copy_env( char **environment, argv_and_environ *info)
 //   int      argmax;
 //   int      n_args;
 //   int      rval;
-//   
+//
 //   rval = -1;  // generic system error
-//   
+//
 //   *o_argc = 0;
 //   *o_argv = NULL;
 //   if( o_env)
 //      *o_env = NULL;
-//   
+//
 //   /* Get the maximum process arguments size. */
 //   mib[ 0] = CTL_KERN;
 //   mib[ 1] = KERN_ARGMAX;
-//   
+//
 //   size = sizeof( argmax);
-//   if( sysctl( mib, 2, &argmax, &size, NULL, 0) == -1) 
+//   if( sysctl( mib, 2, &argmax, &size, NULL, 0) == -1)
 //      return( -1);
-//   
+//
 //   /* Allocate space for the arguments. */
 //   buf = malloc( argmax);
 //   if( ! buf)
 //      return( -1);
-//   
+//
 //   /* Make a sysctl() call to get the raw argument space of the process. */
 //   mib[ 0] = CTL_KERN;
 //   mib[ 1] = KERN_PROCARGS2;
 //   mib[ 2] = getpid();
-//   
+//
 //   size = (size_t) argmax;
-//   if( sysctl( mib, 3, buf, &size, NULL, 0) == -1) 
+//   if( sysctl( mib, 3, buf, &size, NULL, 0) == -1)
 //      goto fail_and_bail;
-//   
+//
 //   buf = realloc( buf, size);
 //   if( ! buf)
 //      return( -1);
 //
 //   //
-//   // grab n_args off 
+//   // grab n_args off
 //   //
 //   memcpy( &n_args, buf, sizeof( n_args));
-//   
+//
 //   info.argc = 0;
 //   info.env  = 0;
 //   info.argv = (char **) malloc( sizeof( char *) * (n_args + 1));
 //   if( ! info.argv)
 //      goto fail_and_bail;
-//   
+//
 //   rval = parse_stack_frame( &buf[ sizeof( n_args)], size - sizeof( n_args), n_args, &info);
-//   
+//
 //   if( ! rval)
 //   {
 //      *o_argc = info.argc;
@@ -328,7 +337,7 @@ static inline int   copy_env( char **environment, argv_and_environ *info)
 //   }
 //   else
 //      free_argv_and_env( &info);
-//   
+//
 //fail_and_bail:
 //   free( buf);
 //   return( rval);
@@ -339,31 +348,31 @@ static int   _NSGetArgcArgvEnviron( int *o_argc, char ***o_argv, char ***o_env)
 {
    int                *argc_p;
    argv_and_environ   info;
-   
+
    memset( &info, 0, sizeof( info));
 
    argc_p = _NSGetArgc();
    if( ! argc_p)
       return( -1);
-      
+
    if( ! *argc_p)
       return( -2);
-      
+
    if( copy_argc_argv( *argc_p, *_NSGetArgv(), &info))
       goto argv_bail;
-   
+
    if( copy_env( *_NSGetEnviron(), &info))
       goto env_and_argv_bail;
 
    *o_argc = info.argc;
    *o_argv = info.argv;
    *o_env  = info.env;
-   
+
    return( 0);
 
 env_and_argv_bail:
    free_env( info.env);
-argv_bail:   
+argv_bail:
    free_argv( info.argc, info.argv);
    return( -1);
 }
@@ -375,10 +384,10 @@ static void   unlazyArgumentsAndEnvironment( NSProcessInfo *self)
    char   **argv;
    char   **env;
    int    rval;
-   
+
    if( rval = _NSGetArgcArgvEnviron( &argc, (char ***) &argv, &env))
       MulleObjCThrowInternalInconsistencyException( @"can't get argc/argv from sysctl (%d,%d)", rval, errno);
-   
+
    self->_arguments = [NSArray _newWithArgc:argc
                                        argv:argv];
    self->_environment = [NSDictionary _newWithEnvironment:env];
@@ -408,14 +417,14 @@ static void   unlazyExecutablePath( NSProcessInfo *self)
    int        rval;
    uint32_t   size;
    char       *buf;
-   
+
    size = 0;
    _NSGetExecutablePath( NULL, &size);
 
    buf = mulle_malloc( size);
    if( ! buf)
       MulleObjCThrowAllocationException( size);
-   
+
    rval = _NSGetExecutablePath( buf, &size);
    if( rval)
       MulleObjCThrowInternalInconsistencyException( @"can't get executable path from _NSGetExecutablePath (%d,%d)", rval, errno);

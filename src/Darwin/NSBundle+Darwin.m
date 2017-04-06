@@ -16,6 +16,7 @@
 // eek eeek eek, should be OSX rather than Darwin
 
 #import "MulleObjCPosixFoundation.h"
+#import "NSBundle+Private.h"
 
 // other files in this library
 
@@ -24,11 +25,22 @@
 #include <mach-o/dyld.h>
 
 
-@implementation NSBundle( _Darwin)
+@implementation NSBundle( Darwin)
+
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( Posix),  // there is no BSD bundle (yet)
+      0
+   };
+   
+   return( dependencies);
+}
 
 
-- (NSString *) localizedStringForKey:(NSString *) key 
-                               value:(NSString *) value 
+- (NSString *) localizedStringForKey:(NSString *) key
+                               value:(NSString *) value
                                table:(NSString *) tableName
 {
    NSParameterAssert( ! key || [key isKindOfClass:[NSString class]]);
@@ -51,7 +63,7 @@
 //   len = 0;
 //   buf = &dummy;
 //   _NSGetExecutablePath( buf, &len);
-//   
+//
 //   buf = [[NSMutableData dataWithLength:len] mutableBytes];
 //   _NSGetExecutablePath( buf, &len);
 //   s = [[NSFileManager sharedInstance] stringWithFileSystemRepresentation:buf
@@ -68,7 +80,7 @@
    char             *s;
    NSString         *path;
    NSFileManager    *fileManager;
-   
+
    array = [NSMutableArray array];
 
    fileManager = [NSFileManager defaultManager];
@@ -76,10 +88,10 @@
    {
       if( ! strlen( s) || s[ 0] != '/')
          continue;
-      
+
       path = [fileManager stringWithFileSystemRepresentation:s
                                                       length:strlen( s)];
-      
+
       [array addObject:path];
    }
 
@@ -91,7 +103,7 @@
 {
    NSString   *dir;
    NSString   *architecture;
-   
+
    // i hate calling this too often
    NSParameterAssert( [executablePath isEqualToString:[executablePath stringByResolvingSymlinksInPath]]);
 
@@ -127,7 +139,7 @@ static BOOL  hasFrameworkExtension( NSString *s)
 {
    NSString   *dir;
    NSString   *fallback;
-   
+
    // i hate calling this too often, so assume this is done but alss check
    NSParameterAssert( [executablePath isEqualToString:[executablePath stringByResolvingSymlinksInPath]]);
 
@@ -136,7 +148,7 @@ static BOOL  hasFrameworkExtension( NSString *s)
 
    dir      = [executablePath stringByDeletingLastPathComponent];
    fallback = dir;
-   
+
    //
    // PlugIns.
    //
@@ -146,23 +158,23 @@ static BOOL  hasFrameworkExtension( NSString *s)
       dir = [dir stringByDeletingLastPathComponent];  // consume Contents
       return( dir);
    }
-   
+
    // could be a Framework, then dir is probably
    // /Library/Frameworks/Foo.framework/Versions/A
    if( hasFrameworkExtension( dir))
       return( dir);
-   
+
    //
    // skip over version number
    //
    dir = [dir stringByDeletingLastPathComponent];
    if( ! [[dir lastPathComponent] isEqualToString:@"Versions"])
       return( fallback);
-   
+
    dir = [dir stringByDeletingLastPathComponent];
    if( hasFrameworkExtension( dir))
       return( dir);
-   
+
    return( fallback);
 }
 

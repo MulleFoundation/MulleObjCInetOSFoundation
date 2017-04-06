@@ -18,6 +18,18 @@
 
 @implementation NSProcessInfo (BSD)
 
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( Posix),
+      0
+   };
+   
+   return( dependencies);
+}
+
+
 - (NSString *) processName
 {
    return( [NSString stringWithCString:(char *) getprogname()]);

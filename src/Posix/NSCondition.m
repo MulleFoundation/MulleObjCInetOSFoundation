@@ -13,17 +13,15 @@
  */
 // define, that make things POSIXly
 #define _XOPEN_SOURCE 700
- 
+
 #import "NSCondition.h"
 
 // other files in this library
 
 // std-c and dependencies
-#import <pthread.h>
 
 
 @implementation NSCondition
-
 
 - (id) init
 {
@@ -87,7 +85,7 @@
 {
    struct timespec    wait_time;
    NSTimeInterval     interval;
-   
+
    interval = [date timeIntervalSince1970];
    wait_time.tv_sec  = (long) interval;
    wait_time.tv_nsec = (long) ((interval - wait_time.tv_sec) * 1000000000);
@@ -95,7 +93,6 @@
                                    &self->_lock,
                                    &wait_time) ? NO : YES);
 }
-
 
 @end
 

@@ -5,7 +5,7 @@
 //  Created by Nat! on 29.06.16.
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
-#define _GNU_SOURCE         
+#define _GNU_SOURCE
 
 #import "MulleObjCPosixFoundation.h"
 
@@ -19,6 +19,17 @@
 
 @implementation NSBundle (Linux)
 
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( Posix),
+      0
+   };
+   
+   return( dependencies);
+}
+
 
 - (NSString *) localizedStringForKey:(NSString *) key
                                value:(NSString *) value
@@ -27,7 +38,7 @@
    NSParameterAssert( ! key || [key isKindOfClass:[NSString class]]);
    NSParameterAssert( ! tableName || [tableName isKindOfClass:[NSString class]]);
    NSParameterAssert( ! value || [value isKindOfClass:[NSString class]]);
-   
+
    return( key);
 }
 
@@ -38,9 +49,9 @@ static int  collect_filesystem_libraries( struct dl_phdr_info *info, size_t size
    NSString         *path;
    NSBundle         *bundle;
    size_t           len;
-   
+
    array = userinfo;
-   
+
    // binary itself has no name it seems
 
    len = strlen( info->dlpi_name);
@@ -50,11 +61,11 @@ static int  collect_filesystem_libraries( struct dl_phdr_info *info, size_t size
    // no absolute path ? injected by kernel
    if( info->dlpi_name[ 0] != '/')
       return( 0);
-   
+
    path = [[NSFileManager defaultManager] stringWithFileSystemRepresentation:info->dlpi_name
                                                                       length:len];
    [array addObject:path];
-   
+
    return( 0);
 }
 
@@ -62,7 +73,7 @@ static int  collect_filesystem_libraries( struct dl_phdr_info *info, size_t size
 + (NSArray *) _allImagePaths
 {
    NSMutableArray  *array;
-   
+
    array = [NSMutableArray array];
    dl_iterate_phdr( collect_filesystem_libraries, array);
    return( array);

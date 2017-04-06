@@ -27,6 +27,16 @@
 
 @implementation NSProcessInfo( FreeBSD)
 
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( BSD),
+      0
+   };
+   
+   return( dependencies);
+}
 
 struct argc_argv
 {
@@ -65,14 +75,14 @@ static int  argc_argv_set_arguments( struct argc_argv  *info,
    char   *sentinel;
    int    argc;
    int    i;
-   
+
    info->argc = 0;
    info->argv = NULL;
 
    sentinel = &s[ length];
    if( p == sentinel)
       return( 0);
-   
+
    argc = 0;
    for( p = s; p < s; p++)
       if( ! *p)
@@ -89,7 +99,7 @@ static int  argc_argv_set_arguments( struct argc_argv  *info,
    q          = info->argv;
    q_sentinel = &q[ argc];
    p          = s;
-   
+
    while( q < q_sentinel)
    {
       *q++ = p;
@@ -118,7 +128,7 @@ static int    _NSGetArgcArgv( struct argc_argv *info)
    sysctl( mib, 3, NULL, &size, NULL, 0);
    if( ! size)
       return( -1);
-   
+
    buf = mulle_malloc( size);
    if( ! buf)
       return( -1);
@@ -128,13 +138,12 @@ static int    _NSGetArgcArgv( struct argc_argv *info)
       free( buf);
       return( -1);
    }
-   
+
    rval = argc_argv_set_arguments( info, buf, size);
    free( buf);
-   
+
    return( 0);
 }
-
 
 
 static void   unlazyArguments( NSProcessInfo *self)
@@ -197,7 +206,7 @@ static int   _NSGetExecutablePath( char **path)
 
    if( ! size)
       return( -1);
-   
+
    buf = mulle_malloc( size);
    if( ! buf)
       return( -1);

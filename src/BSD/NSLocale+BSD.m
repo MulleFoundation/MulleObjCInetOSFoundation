@@ -22,7 +22,7 @@ static id    mulle_localeconv_value( locale_t locale, int code)
    conv = localeconv_l( locale);
    if( ! conv)
       return( NULL);
-   
+
    return( mulle_locale_lconv_value( conv, code));
 }
 
@@ -30,7 +30,7 @@ static id    mulle_localeconv_value( locale_t locale, int code)
 static NSString   *queryLocaleName( int mask, locale_t base)
 {
    char   *c_name;
-   
+
    c_name = (char *) querylocale( mask, base);
 
    return( c_name ? [NSString stringWithCString:c_name] : nil);
@@ -39,6 +39,17 @@ static NSString   *queryLocaleName( int mask, locale_t base)
 
 @implementation NSLocale (BSD)
 
+
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( Posix),
+      0
+   };
+   
+   return( dependencies);
+}
 
 static id   newLocaleByQuery( Class self, locale_t base)
 {
@@ -78,7 +89,7 @@ static id   query_info( int code, locale_t locale)
    NSString   *s;
    NSArray    *components;
    int        offset;
-   
+
    offset = 0;
    switch( code)
    {
@@ -89,7 +100,7 @@ static id   query_info( int code, locale_t locale)
    case QUERY_VARIANT    : ++offset;
    case QUERY_LANGUAGE   : s = queryLocaleName( LC_CTYPE_MASK, locale); break;
    }
-   
+
    components = [s componentsSeparatedByString:@"."];
    if( offset < (int) [components count])
       return( [components objectAtIndex:offset]);
@@ -101,23 +112,23 @@ static id   query_info( int code, locale_t locale)
 {
    struct mulle_locale_key_info   info;
    char                           *s;
-   
+
    s    = NULL;
    info = mulle_locale_map_string_key_to_local_key( key);
 
    switch( info.type)
    {
-   case IDENTIFIER_INFO : 
+   case IDENTIFIER_INFO :
       return( _identifier);
-   
-   case QUERY_INFO : 
+
+   case QUERY_INFO :
       return( query_info( info.code, _xlocale));
-      
-   case LANG_INFO  : 
-      s = nl_langinfo_l( info.code, _xlocale); 
+
+   case LANG_INFO  :
+      s = nl_langinfo_l( info.code, _xlocale);
       return( s ? [NSString stringWithCString:s] : nil);
 
-   case CONV_INFO : 
+   case CONV_INFO :
       return( mulle_localeconv_value( _xlocale, info.code));
    }
    return( nil);

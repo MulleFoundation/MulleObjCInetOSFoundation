@@ -1,0 +1,194 @@
+# Generated on 2017-4-6 16:12:08 by version 0.5.4 of mulle-xcode-to-cmake
+# Commandline arguments:
+#    -t MulleObjCOSFoundation -t MulleObjCOSFoundationStandalone -t MulleObjCOSBaseFoundation -t MulleObjCPosixFoundation -t MulleObjCBSDFoundation -t MulleObjCLinuxFoundation -t MulleObjCFreeBSDFoundation -t MulleObjCDarwinFoundation sexport MulleObjCOSFoundation.xcodeproj
+
+
+
+##
+## MulleObjCOSFoundation Files
+##
+
+set( MULLE_OBJC_OS_FOUNDATION_SOURCES
+src/MulleObjCOSFoundation.m
+)
+
+set( MULLE_OBJC_OS_FOUNDATION_PUBLIC_HEADERS
+src/MulleObjCOSFoundation.h
+src/MulleObjCOSFoundationParents.h
+)
+
+
+##
+## MulleObjCOSFoundationStandalone Files
+##
+
+set( MULLE_OBJC_OS_FOUNDATION_STANDALONE_SOURCES
+src/MulleObjCOSFoundationStandalone.m
+)
+
+set( MULLE_OBJC_OS_FOUNDATION_STANDALONE_PUBLIC_HEADERS
+)
+
+
+##
+## MulleObjCOSBaseFoundation Files
+##
+
+set( MULLE_OBJC_OSBASE_FOUNDATION_SOURCES
+src/Base/Categories/NSArchiver+OSBase.m
+src/Base/Categories/NSArray+OSBasePrivate.m
+src/Base/Categories/NSDictionary+OSBase.m
+src/Base/Categories/NSDictionary+OSBasePrivate.m
+src/Base/Categories/NSHost+OSBase.m
+src/Base/Categories/NSString+CString.m
+src/Base/Categories/NSString+OSBase.m
+src/Base/Categories/NSTask+System.m
+src/Base/Categories/NSURL+OSBase.m
+src/Base/Functions/NSPageAllocation.m
+src/Base/Functions/NSPathUtilities.m
+src/Base/NSBundle.m
+src/Base/NSConditionLock.m
+src/Base/NSDirectoryEnumerator.m
+src/Base/NSFileHandle+NSRunLoop.m
+src/Base/NSFileHandle.m
+src/Base/NSFileManager.m
+src/Base/NSPipe.m
+src/Base/NSProcessInfo.m
+src/Base/NSRunLoop.m
+src/Base/NSTask.m
+src/Base/NSUserDefaults.m
+src/Base/_MulleObjCOSLoader.m
+)
+
+set( MULLE_OBJC_OSBASE_FOUNDATION_PUBLIC_HEADERS
+src/Base/Categories/NSArchiver+OSBase.h
+src/Base/Categories/NSArray+OSBase.h
+src/Base/Categories/NSData+OSBase.h
+src/Base/Categories/NSDictionary+OSBase.h
+src/Base/Categories/NSString+CString.h
+src/Base/Categories/NSString+OSBase.h
+src/Base/Categories/NSTask+System.h
+src/Base/Categories/NSURL+OSBase.h
+src/Base/Functions/NSPageAllocation.h
+src/Base/Functions/NSPathUtilities.h
+src/Base/MulleObjCOSBaseFoundation.h
+src/Base/NSBundle.h
+src/Base/NSConditionLock.h
+src/Base/NSDirectoryEnumerator.h
+src/Base/NSFileHandle+NSRunLoop.h
+src/Base/NSFileHandle.h
+src/Base/NSFileManager.h
+src/Base/NSPipe.h
+src/Base/NSProcessInfo.h
+src/Base/NSRunLoop.h
+src/Base/NSTask.h
+src/Base/NSUserDefaults.h
+src/Base/_MulleObjCOSLoader.h
+src/Posix/MulleObjCPosixDateFormatter.h
+)
+
+
+##
+## MulleObjCPosixFoundation Files
+##
+
+set( MULLE_OBJC_POSIX_FOUNDATION_SOURCES
+src/Posix/Functions/NSLog.m
+src/Posix/Functions/mulle_posix_tm.c
+src/Posix/MulleObjCPosixDateFormatter.m
+src/Posix/NSBundle+Posix.m
+src/Posix/NSCalendarDate+Posix.m
+src/Posix/NSCondition.m
+src/Posix/NSData+Posix.m
+src/Posix/NSDate+Posix.m
+src/Posix/NSDirectoryEnumerator+Posix.m
+src/Posix/NSError+Posix.m
+src/Posix/NSFileHandle+Posix.m
+src/Posix/NSFileManager+Posix.m
+src/Posix/NSLocale+Posix.m
+src/Posix/NSPipe+Posix.m
+src/Posix/NSProcessInfo+Posix.m
+src/Posix/NSRunLoop+Posix.m
+src/Posix/NSString+Posix.m
+src/Posix/NSTask+Posix.m
+src/Posix/NSTimeZone+Posix.m
+src/Posix/Timezone/localtime.c
+src/Posix/_MulleObjCOSLoader+Posix.m
+)
+
+set( MULLE_OBJC_POSIX_FOUNDATION_PUBLIC_HEADERS
+src/Base/Functions/NSLog.h
+src/Posix/Functions/mulle_posix_tm.h
+src/Posix/MulleObjCPosixDateFormatter.h
+src/Posix/MulleObjCPosixFoundation.h
+src/Posix/NSCondition.h
+src/Posix/NSError+Posix.h
+src/Posix/NSLocale+Posix.h
+src/Posix/Timezone/tzfile.h
+)
+
+
+##
+## MulleObjCBSDFoundation Files
+##
+
+set( MULLE_OBJC_BSD_FOUNDATION_SOURCES
+src/BSD/NSCalendarDate+BSD.m
+src/BSD/NSDate+BSD.m
+src/BSD/NSLocale+BSD.m
+src/BSD/NSProcessInfo+BSD.m
+src/BSD/NSTask+BSD.m
+src/BSD/_MulleObjCOSLoader+BSD.m
+src/BSD/mulle_bsd_tm.c
+)
+
+set( MULLE_OBJC_BSD_FOUNDATION_PUBLIC_HEADERS
+)
+
+
+##
+## MulleObjCLinuxFoundation Files
+##
+
+set( MULLE_OBJC_LINUX_FOUNDATION_SOURCES
+src/Linux/NSBundle+Linux.m
+src/Linux/NSCalendarDate+Linux.m
+src/Linux/NSDate+Linux.m
+src/Linux/NSFileManager+Linux.m
+src/Linux/NSLocale+Linux.m
+src/Linux/NSPathUtilities+Linux.m
+src/Linux/NSProcessInfo+Linux.m
+src/Linux/NSString+Linux.m
+src/Linux/NSTask+Linux.m
+)
+
+
+##
+## MulleObjCFreeBSDFoundation Files
+##
+
+set( MULLE_OBJC_FREE_BSD_FOUNDATION_SOURCES
+src/FreeBSD/NSBundle+FreeBSD.m
+src/FreeBSD/NSFileManager+FreeBSD.m
+src/FreeBSD/NSPathUtilities+FreeBSD.m
+src/FreeBSD/NSProcessInfo+FreeBSD.m
+src/FreeBSD/NSString+FreeBSD.m
+src/FreeBSD/NSTask+FreeBSD.m
+)
+
+set( MULLE_OBJC_FREE_BSD_FOUNDATION_PUBLIC_HEADERS
+)
+
+
+##
+## MulleObjCDarwinFoundation Files
+##
+
+set( MULLE_OBJC_DARWIN_FOUNDATION_SOURCES
+src/Darwin/NSBundle+Darwin.m
+src/Darwin/NSFileManager+Darwin.m
+src/Darwin/NSPathUtilities+Darwin.m
+src/Darwin/NSProcessInfo+Darwin.m
+src/Darwin/NSString+Darwin.m
+src/Darwin/NSTask+Darwin.m
+)

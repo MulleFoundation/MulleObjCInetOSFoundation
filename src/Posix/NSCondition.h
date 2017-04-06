@@ -11,12 +11,12 @@
  *  $Id$
  *
  */
-#import <MulleObjCFoundation/MulleObjCFoundation.h>
+#import "MulleObjCOSFoundationParents.h"
 
 #include <pthread.h>
 
 
-// ugliness. must hide it, to get rid off <pthread.h>
+// ugliness. should hide it, to get rid off <pthread.h>
 
 @interface NSCondition : NSObject <NSLocking>
 {

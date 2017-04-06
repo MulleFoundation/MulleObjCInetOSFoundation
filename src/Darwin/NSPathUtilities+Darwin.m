@@ -3,7 +3,7 @@
  *
  *  NSPathUtilities+Darwin.m is a part of MulleFoundation
  *
- *  Copyright (C) 2011 Nat!, __MyCompanyName__ 
+ *  Copyright (C) 2011 Nat!, __MyCompanyName__
  *  All rights reserved.
  *
  *  Coded by Nat!
@@ -16,11 +16,8 @@
 #import "MulleObjCPosixFoundation.h"
 
 // other files in this library
-#import "NSPathUtilities+PosixPrivate.h"
-#import "NSString+CString.h"
-#import "NSString+Posix.h"
-#import "NSString+PosixPathHandling.h"
-#import "NSTask+System.h"
+#import "_MulleObjCOSLoader.h"
+#import "NSPathUtilities+Private.h"
 
 // other libraries of MulleObjCPosixFoundation
 
@@ -37,12 +34,12 @@ static NSString  *_NSUserRegistryValueForKey( NSString *user, NSString *key)
    NSString  *result;
    NSRange   range;
    char      *dscl;
-   
+
    // is this a security hole ?
    dscl = getenv( "DSCL_UTILITY_PATH");
    if( ! dscl)
       dscl = "/usr/bin/dscl";
-      
+
    //    sysdscl -raw . -read /Users/nat RealName
 
    s      = [NSString stringWithFormat:@"%s -raw . -read /Users/%@ %@", dscl, user, key];
@@ -54,7 +51,7 @@ static NSString  *_NSUserRegistryValueForKey( NSString *user, NSString *key)
    range = [result rangeOfString:@": "];
    if( ! range.length)
       return( nil);
-      
+
    return( [result substringFromIndex:range.location + range.length]);
 }
 
@@ -78,9 +75,9 @@ static NSString   *DarwinHomeDirectoryForUser( NSString *user)
 static NSString   *DarwinHomeDirectory( void)
 {
    char  *s;
-   
+
    s = getenv( "HOME");
-   if( s) 
+   if( s)
       return( [NSString stringWithCString:s]);
 
    return( DarwinHomeDirectoryForUser( NSUserName()));
@@ -96,11 +93,11 @@ static NSString   *DarwinOpenStepRootDirectory( void)
 static NSString   *DarwinTemporaryDirectory( void)
 {
    char  *s;
-   
+
    s = getenv( "TMPDIR");
-   if( ! s) 
+   if( ! s)
       s = "/tmp";
-      
+
    return( [NSString stringWithCString:s]);
 }
 
@@ -108,11 +105,11 @@ static NSString   *DarwinTemporaryDirectory( void)
 static NSString   *DarwinUserName( void)
 {
    char  *s;
-   
+
    s = getenv( "USER");
-   if( ! s) 
+   if( ! s)
       s = getenv( "LOGNAME");
-   
+
    return( [NSString stringWithCString:s]);
 }
 
@@ -120,7 +117,7 @@ static NSString   *DarwinUserName( void)
 static NSString  *pathForType( NSSearchPathDirectory type, NSSearchPathDomainMask domain)
 {
    NSString  *path;
-   
+
    path = nil;
    switch( type)
    {
@@ -140,9 +137,9 @@ static NSString  *pathForType( NSSearchPathDirectory type, NSSearchPathDomainMas
 
 
 static void  addPrefixedPathForType( NSMutableArray *array, NSString *prefix, NSSearchPathDirectory type, NSSearchPathDomainMask domain)
-{  
+{
    NSString  *path;
-   
+
    path = pathForType( type, domain);
    if( path)
    {
@@ -151,7 +148,7 @@ static void  addPrefixedPathForType( NSMutableArray *array, NSString *prefix, NS
    }
 }
 
-static NSArray   *DarwinSearchPathForDirectoriesInDomains( NSSearchPathDirectory type,      
+static NSArray   *DarwinSearchPathForDirectoriesInDomains( NSSearchPathDirectory type,
                                                          NSSearchPathDomainMask domains)
 {
    NSMutableArray          *array;
@@ -160,7 +157,7 @@ static NSArray   *DarwinSearchPathForDirectoriesInDomains( NSSearchPathDirectory
    NSString                *path;
    NSString                *prefix;
    NSString                *systemRoot;
-   
+
    systemRoot      = [NSOpenStepRootDirectory() stringByAppendingPathComponent:@"System"];
    array           = [NSMutableArray array];
    leftoverDomains = domains & (NSUserDomainMask|NSLocalDomainMask|NSNetworkDomainMask|NSSystemDomainMask);
@@ -184,16 +181,16 @@ static NSArray   *DarwinSearchPathForDirectoriesInDomains( NSSearchPathDirectory
             if( leftoverDomains & NSNetworkDomainMask)
             {
                currentDomain = NSNetworkDomainMask;
-               prefix        = @"/Network";  
+               prefix        = @"/Network";
             }
             else
             {
                currentDomain = NSSystemDomainMask;
                prefix        = systemRoot;
             }
-            
+
       leftoverDomains &= ~currentDomain;
-      
+
       path = nil;
       switch( type)
       {
@@ -203,12 +200,12 @@ static NSArray   *DarwinSearchPathForDirectoriesInDomains( NSSearchPathDirectory
          addPrefixedPathForType( array, prefix, NSDeveloperApplicationDirectory, currentDomain);
          break;
 
-      case NSAllLibrariesDirectory  : 
+      case NSAllLibrariesDirectory  :
          addPrefixedPathForType( array, prefix, NSLibraryDirectory, currentDomain);
          addPrefixedPathForType( array, prefix, NSDeveloperDirectory, currentDomain);  // curious but compatible
          break;
 
-      default                              : 
+      default                              :
          addPrefixedPathForType( array, prefix, type, currentDomain);
          break;
       }
@@ -229,15 +226,22 @@ static _NSPathUtilityVectorTable   _DarwinTable =
 };
 
 
-@interface _NSPathUtilities_Darwin_Loader
-@end
+@implementation _MulleObjCOSLoader( Darwin)
 
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( Posix),
+      0
+   };
+   
+   return( dependencies);
+}
 
-@implementation _NSPathUtilities_Darwin_Loader
 
 + (void) load
 {
-   assert( ! _NSPathUtilityVectors);  // competitor ?? DENIED!
    _NSPathUtilityVectors = &_DarwinTable;
 }
 

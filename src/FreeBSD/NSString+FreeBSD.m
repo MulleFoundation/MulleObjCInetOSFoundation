@@ -22,6 +22,17 @@
 
 @implementation NSString( FreeBSD)
 
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( BSD),
+      0
+   };
+   
+   return( dependencies);
+}
+
 // should probably query system locale or something
 
 - (NSString *) _stringByRemovingPrivatePrefix

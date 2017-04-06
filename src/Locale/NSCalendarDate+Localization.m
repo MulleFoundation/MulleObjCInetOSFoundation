@@ -3,7 +3,7 @@
  *
  *  NSCalendarDate+Localization.m is a part of MulleFoundation
  *
- *  Copyright (C) 2011 Nat!, Mulle kybernetiK 
+ *  Copyright (C) 2011 Nat!, Mulle kybernetiK
  *  All rights reserved.
  *
  *  Coded by Nat!
@@ -16,16 +16,16 @@
 
 @implementation NSCalendarDate( _Localization)
 
-- (id) initWithString:(NSString *) description 
-       calendarFormat:(NSString *) format 
+- (id) initWithString:(NSString *) description
+       calendarFormat:(NSString *) format
                locale:(id) locale;
 {
    abort();
    return( nil);
 }
 
-               
-- (NSString *) descriptionWithCalendarFormat:(NSString *) format 
+
+- (NSString *) descriptionWithCalendarFormat:(NSString *) format
                                       locale:(id) locale
 {
    abort();

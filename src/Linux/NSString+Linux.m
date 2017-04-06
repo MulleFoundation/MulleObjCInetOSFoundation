@@ -24,6 +24,17 @@
 
 @implementation NSString( Linux)
 
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( Posix),
+      0
+   };
+   
+   return( dependencies);
+}
+
 
 // should probably query system locale or something
 

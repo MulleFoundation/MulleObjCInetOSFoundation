@@ -32,6 +32,18 @@
 @implementation NSProcessInfo( Linux)
 
 
++ (SEL *) categoryDependencies
+{
+   static SEL   dependencies[] =
+   {
+      @selector( Posix),
+      0
+   };
+   
+   return( dependencies);
+}
+
+
 struct argc_argv
 {
    int    argc;
@@ -45,14 +57,14 @@ static size_t   get_file_size( char *file)
    ssize_t   bytes;
    size_t    total;
    int       fd;
- 
+
    fd = open( "/proc/self/cmdline", O_RDONLY);
    if( fd == -1)
       return( -1);
 
    total = 0;
    for(;;)
-   { 
+   {
       bytes = read( fd, buf, sizeof( buf));
       if( ! bytes)
 	 break;
@@ -62,11 +74,11 @@ static size_t   get_file_size( char *file)
          break;
       }
       total += bytes;
-   } 
+   }
 
    close( fd);
    return( total);
-} 
+}
 
 
 static char  *get_arguments( size_t *p_size)
@@ -79,21 +91,21 @@ static char  *get_arguments( size_t *p_size)
    size = get_file_size( "/proc/self/cmdline");
    if( size == -1)
        return( NULL);
- 
+
    fd = open( "/proc/self/cmdline", O_RDONLY);
    if( fd == -1)
       return( NULL);
-   
+
    buf = mulle_malloc( size);
-   if( ! buf) 
+   if( ! buf)
    {
       close( fd);
       return( NULL);
    }
-  
+
    read( fd, buf, size);
    close( fd);
-   
+
    *p_size = size;
    return( buf);
 }
@@ -110,14 +122,14 @@ static void  linux_argc_argv_set_arguments( struct argc_argv  *info,
    char   *sentinel;
    int    argc;
    int    i;
-   
+
    info->argc    = 0;
    info->argv    = NULL;
- 
+
    sentinel = &s[ length];
    if( s == sentinel)
       return;
-   
+
    argc = 0;
    for( p = s; p < sentinel; p++)
       if( ! *p)
@@ -134,7 +146,7 @@ static void  linux_argc_argv_set_arguments( struct argc_argv  *info,
    q          = info->argv;
    q_sentinel = &q[ argc];
    p          = s;
-   
+
    while( q < q_sentinel && p < sentinel)
    {
       *q++ = p;
@@ -149,7 +161,7 @@ static void   unlazyArguments( NSProcessInfo *self)
    int                rval;
    char               *arguments;
    size_t             size;
-   
+
    arguments = get_arguments( &size);
    if( ! arguments)
       MulleObjCThrowInternalInconsistencyException( @"can't get argc/argv from /proc/self/cmdline (%d)", errno);
@@ -196,7 +208,7 @@ static void   unlazyExecutablePath( NSProcessInfo *self)
 {
    char      buf[ PATH_MAX + 1];
    ssize_t   len;
-   
+
    len = readlink("/proc/self/exe", buf, PATH_MAX);
    if( len == (size_t) -1)
       MulleObjCThrowInternalInconsistencyException( @"can't get executable path from /proc/self/exe (%d)", errno);
