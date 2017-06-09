@@ -1,0 +1,19 @@
+include( ${DEPENDENCIES_DIR}/include/MulleObjCInetFoundation/CMakeDependencies.txt)
+
+if( NOT MULLE_OBJC_INET_FOUNDATION_LIBRARY)
+   find_library( MULLE_OBJC_INET_FOUNDATION_LIBRARY NAMES MulleObjCInetFoundation)
+   message(STATUS "MULLE_OBJC_INET_FOUNDATION_LIBRARY is ${MULLE_OBJC_INET_FOUNDATION_LIBRARY}")
+   set( OBJC_DEPENDENCY_LIBRARIES
+${MULLE_OBJC_INET_FOUNDATION_LIBRARY}
+${OBJC_DEPENDENCY_LIBRARIES}
+CACHE INTERNAL "need to cache this"
+)
+   set( OBJC_DEPENDENCY_NAMES
+MulleObjCInetFoundation
+${OBJC_DEPENDENCY_NAMES}
+CACHE INTERNAL "need to cache this too"
+)
+endif()
+
+
+message( STATUS "# Included \"MulleObjCOSFoundation\" CMakeDependencies.txt")

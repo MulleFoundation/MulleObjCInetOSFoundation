@@ -18,10 +18,10 @@
 
 @implementation NSDate (Posix)
 
-+ (id) date
++ (instancetype) date
 {
    NSTimeInterval   seconds;
-   
+
    seconds = time( NULL) + NSTimeIntervalSince1970;
    return( [[[self alloc] initWithTimeIntervalSinceReferenceDate:seconds] autorelease]);
 }
@@ -40,7 +40,7 @@
    NSTimeInterval   now;
    NSTimeInterval   interval;
    struct timeval   value;
-   
+
    now      = time( NULL) - NSTimeIntervalSince1970 ;
    interval = _interval - now;
    if( interval < 0)

@@ -22,14 +22,14 @@
 
 @implementation NSLocale (Linux)
 
-+ (SEL *) categoryDependencies
++ (struct _mulle_objc_dependency *) dependencies
 {
-   static SEL   dependencies[] =
+   static struct _mulle_objc_dependency   dependencies[] =
    {
-      @selector( Posix),
-      0
+      { @selector( MulleObjCLoader), @selector( Posix) },
+      { 0, 0 }
    };
-   
+
    return( dependencies);
 }
 
@@ -40,14 +40,14 @@
 }
 
 
-+ (id) systemLocale
++ (instancetype) systemLocale
 {
    // bullshit
    return( [[[NSLocale alloc] initWithLocaleIdentifier:@"C"] autorelease]);
 }
 
 
-+ (id) currentLocale
++ (instancetype) currentLocale
 {
    // bullshit
    return( [[[NSLocale alloc] initWithLocaleIdentifier:@"C"] autorelease]);

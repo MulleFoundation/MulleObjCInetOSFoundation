@@ -18,7 +18,7 @@
 
 // ugliness. should hide it, to get rid off <pthread.h>
 
-@interface NSCondition : NSObject <NSLocking>
+@interface NSCondition : NSObject < NSLocking>
 {
    pthread_mutex_t   _lock;
    pthread_cond_t    _condition;

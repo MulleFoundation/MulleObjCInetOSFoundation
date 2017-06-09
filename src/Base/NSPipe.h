@@ -23,7 +23,7 @@
    NSFileHandle   *_write;
 }
 
-+ (id) pipe;
++ (instancetype) pipe;
 
 - (NSFileHandle *) fileHandleForReading;
 - (NSFileHandle *) fileHandleForWriting;
@@ -36,6 +36,6 @@
 
 @interface NSPipe( Future)
 
-- (id) init;
+- (instancetype) init;
 
 @end

@@ -10,43 +10,33 @@
 
 // other files in this library
 
-// other libraries of MulleObjCFoundation
+// other libraries of MulleObjCStandardFoundation
 
 // std-c and other dependencies
-#import <MulleObjCFoundation/MulleObjCFoundationSetup.h>
+#import <MulleObjCStandardFoundation/MulleObjCFoundationSetup.h>
 
 
-#pragma mark -
-#pragma mark versioning
-
-static void   versionassert( struct _mulle_objc_runtime *runtime,
-                            void *friend,
-                            struct mulle_objc_loadversion *version)
+static void   bang( struct _mulle_objc_universe *universe,
+                    void (*crunch)( void),
+                    void *userinfo)
 {
-   if( (version->foundation & ~0xFF) != (MULLE_OBJC_OS_FOUNDATION_VERSION & ~0xFF))
-      _mulle_objc_runtime_raise_inconsistency_exception( runtime, "mulle_objc_runtime %p: foundation version set to %x but runtime foundation is %x",
-                                                        runtime,
-                                                        version->foundation,
-                                                        MULLE_OBJC_OS_FOUNDATION_VERSION);
+   struct _ns_foundation_setupconfig   setup;
+
+   MulleObjCFoundationGetDefaultSetupConfig( &setup);
+   ns_objc_universe_setup( universe, &setup.config);
 }
 
 
-__attribute__((const))  // always returns same value (in same thread)
-struct _mulle_objc_runtime  *__get_or_create_objc_runtime( void)
+MULLE_C_CONST_RETURN  // always returns same value (in same thread)
+struct _mulle_objc_universe  *__get_or_create_mulle_objc_universe( void)
 {
-   struct _mulle_objc_runtime  *runtime;
+   struct _mulle_objc_universe   *universe;
 
-   runtime = __mulle_objc_get_runtime();
-   if( _mulle_objc_runtime_is_initalized( runtime))
-      return( runtime);
+   universe = __mulle_objc_get_universe();
+   if( ! _mulle_objc_universe_is_initialized( universe))
+      _mulle_objc_universe_bang( universe, bang, NULL, NULL);
 
-   {
-      struct _ns_foundation_setupconfig   setup;
-
-      MulleObjCFoundationGetDefaultSetupConfig( &setup);
-      setup.config.runtime.versionassert = versionassert;
-      return( ns_objc_create_runtime( &setup.config));
-   }
+   return( universe);
 }
 
 

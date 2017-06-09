@@ -16,6 +16,6 @@
 
 @interface NSDictionary( OSBasePrivate)
 
-+ (NSDictionary *) _newWithEnvironment:(char **) env;
++ (instancetype) _newWithEnvironment:(char **) env;
 
 @end

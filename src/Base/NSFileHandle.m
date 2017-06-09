@@ -99,34 +99,34 @@ static id  NSInitFileHandle( NSFileHandle *self, void *fd)
 }
 
 
-- (id) initWithFileDescriptor:(int) fd
+- (instancetype) initWithFileDescriptor:(int) fd
 {
    return( NSInitFileHandle( self, (void *) fd));
 }
 
 
-+ (id) fileHandleForReadingAtPath:(NSString *) path
++ (instancetype) fileHandleForReadingAtPath:(NSString *) path
 {
    return( [self _fileHandleWithPath:path
                                 mode:_MulleObjCOpenReadOnly]);
 }
 
 
-+ (id) fileHandleForWritingAtPath:(NSString *) path
++ (instancetype) fileHandleForWritingAtPath:(NSString *) path
 {
    return( [self _fileHandleWithPath:path
                                 mode:_MulleObjCOpenWriteOnly]);
 }
 
 
-+ (id) fileHandleForUpdatingAtPath:(NSString *) path
++ (instancetype) fileHandleForUpdatingAtPath:(NSString *) path
 {
    return( [self _fileHandleWithPath:path
                                 mode:_MulleObjCOpenReadWrite]);
 }
 
 
-+ (id) fileHandleWithNullDevice
++ (instancetype) fileHandleWithNullDevice
 {
    return( [[NSNullDeviceFileHandle new] autorelease]);
 }
@@ -237,7 +237,7 @@ static NSData   *readAllData( NSFileHandle *self, BOOL flag)
    size_t   len;
    size_t   written;
    char     *buf;
-   
+
    len = [data length];
    buf = [data bytes];
    do
@@ -246,7 +246,7 @@ static NSData   *readAllData( NSFileHandle *self, BOOL flag)
                            length:len];
       len -= written;
       buf  = &buf[ written];
-      
+
       // if written is 0, we should yield the thread
       // but actually doing a system call is pretty good also
       // i would assume (given ancient knowledge of OSes)

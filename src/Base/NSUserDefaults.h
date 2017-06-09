@@ -29,8 +29,8 @@
 + (NSUserDefaults *)  standardUserDefaults;
 + (void) resetStandardUserDefaults;
 
-- (id) init;
-- (id) initWithUser:(NSString *) username;
+- (instancetype) init;
+- (instancetype) initWithUser:(NSString *) username;
 
 - (id) objectForKey:(NSString *) key;
 - (void) setObject:(id) value

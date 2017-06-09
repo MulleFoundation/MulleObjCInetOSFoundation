@@ -1,12 +1,10 @@
 //
-//  NSDate+Darwin.m
+//  NSCalendarDate+BSD.m
 //  MulleObjCPosixFoundation
 //
 //  Created by Nat! on 04.06.16.
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
-#define _DARWIN_C_SOURCE
-
 #import "MulleObjCPosixFoundation.h"
 
 // other files in this library
@@ -15,14 +13,14 @@
 #include <time.h>
 
 
-@implementation NSCalendarDate (Darwin)
+@implementation NSCalendarDate( BSD)
 
-+ (SEL *) categoryDependencies
++ (struct _mulle_objc_dependency *) dependencies
 {
-   static SEL   dependencies[] =
+   static struct _mulle_objc_dependency   dependencies[] =
    {
-      @selector( Posix),
-      0
+      { @selector( MulleObjCLoader), @selector( Posix) },
+      { 0, 0 }
    };
 
    return( dependencies);

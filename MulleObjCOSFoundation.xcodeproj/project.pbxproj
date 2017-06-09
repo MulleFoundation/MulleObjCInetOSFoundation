@@ -28,30 +28,31 @@
 		412095391D21BACA00E50D1E /* NSString+Linux.m in Sources */ = {isa = PBXBuildFile; fileRef = 412095381D21BACA00E50D1E /* NSString+Linux.m */; };
 		4120953B1D21BB2D00E50D1E /* NSProcessInfo+Linux.m in Sources */ = {isa = PBXBuildFile; fileRef = 4120953A1D21BB2D00E50D1E /* NSProcessInfo+Linux.m */; };
 		412902681D03248E00D055B1 /* NSCalendarDate+Linux.m in Sources */ = {isa = PBXBuildFile; fileRef = 412902671D03248E00D055B1 /* NSCalendarDate+Linux.m */; };
+		4136AEEF1EF95911000CACDA /* MulleObjCLoader+MulleObjCOSFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4136AEEE1EF95911000CACDA /* MulleObjCLoader+MulleObjCOSFoundation.h */; };
 		413994501E8D3C6200A85C2C /* NSBundle+FreeBSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 41EC16651CBFD98A00676349 /* NSBundle+FreeBSD.m */; };
 		413994511E8D3C6200A85C2C /* NSFileManager+FreeBSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 418BCC3E1D240D1400447F73 /* NSFileManager+FreeBSD.m */; };
 		413994521E8D3C6200A85C2C /* NSPathUtilities+FreeBSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 41EC16661CBFD98A00676349 /* NSPathUtilities+FreeBSD.m */; };
 		413994531E8D3C6200A85C2C /* NSProcessInfo+FreeBSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 41EC16671CBFD98A00676349 /* NSProcessInfo+FreeBSD.m */; };
 		413994541E8D3C6200A85C2C /* NSString+FreeBSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 41EC16681CBFD98A00676349 /* NSString+FreeBSD.m */; };
 		413994551E8D3C6200A85C2C /* NSTask+FreeBSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 41EC16691CBFD98A00676349 /* NSTask+FreeBSD.m */; };
-		4139945E1E8D3CC800A85C2C /* NSDate+BSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FA9F641D04384C004D8E61 /* NSDate+BSD.m */; };
+		4139945E1E8D3CC800A85C2C /* NSDateFormatter+BSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FA9F641D04384C004D8E61 /* NSDateFormatter+BSD.m */; };
 		4139945F1E8D3CC800A85C2C /* NSCalendarDate+BSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FA9F681D0439D9004D8E61 /* NSCalendarDate+BSD.m */; };
 		413994601E8D3CC800A85C2C /* NSLocale+BSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 413A20491D04A20600CF7746 /* NSLocale+BSD.m */; };
 		413994611E8D3CC800A85C2C /* NSProcessInfo+BSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4107BCAC1D05C2B2008C9CAC /* NSProcessInfo+BSD.m */; };
 		413994621E8D3CC800A85C2C /* NSTask+BSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BFA5281D05844D0072D27D /* NSTask+BSD.m */; };
-		413994631E8D3CC800A85C2C /* _MulleObjCOSLoader+BSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 414CE92F1E896B6700B90F96 /* _MulleObjCOSLoader+BSD.m */; };
+		413994631E8D3CC800A85C2C /* MulleObjCLoader+BSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 414CE92F1E896B6700B90F96 /* MulleObjCLoader+BSD.m */; };
 		413994651E8D3CC800A85C2C /* mulle_bsd_tm.c in Sources */ = {isa = PBXBuildFile; fileRef = 41641C2B1D0468C900DBE1CE /* mulle_bsd_tm.c */; };
 		413994661E8D3CD700A85C2C /* mulle_bsd_tm.h in Headers */ = {isa = PBXBuildFile; fileRef = 41641C2C1D0468C900DBE1CE /* mulle_bsd_tm.h */; };
-		4139946B1E8D3D5E00A85C2C /* MulleObjCPosixDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E0281E89097A0091E718 /* MulleObjCPosixDateFormatter.m */; };
-		4139946C1E8D3DAA00A85C2C /* MulleObjCPosixDateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4172E0271E89097A0091E718 /* MulleObjCPosixDateFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4139946B1E8D3D5E00A85C2C /* _NSPosixDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E0281E89097A0091E718 /* _NSPosixDateFormatter.m */; };
+		4139946C1E8D3DAA00A85C2C /* _NSPosixDateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4172E0271E89097A0091E718 /* _NSPosixDateFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		413A204D1D04A8D100CF7746 /* NSLocale+Linux.m in Sources */ = {isa = PBXBuildFile; fileRef = 413A204C1D04A8D100CF7746 /* NSLocale+Linux.m */; };
 		4140634F1D3FBA5E0067E64E /* libmulle_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4140634E1D3FBA5E0067E64E /* libmulle_objc.a */; };
+		41413C8A1EC8DF3100389C87 /* _NSGMTTimeZone+Linux.m in Sources */ = {isa = PBXBuildFile; fileRef = 41413C891EC8DF3100389C87 /* _NSGMTTimeZone+Linux.m */; };
+		41413C8E1EC8E02300389C87 /* _NSGMTTimeZone+BSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 41413C8C1EC8E02300389C87 /* _NSGMTTimeZone+BSD.m */; };
 		414CE9051E895D8D00B90F96 /* NSFileManager+Posix.m in Sources */ = {isa = PBXBuildFile; fileRef = 414CE9031E895D8D00B90F96 /* NSFileManager+Posix.m */; };
 		414CE9091E8960AD00B90F96 /* NSDirectoryEnumerator+Posix.m in Sources */ = {isa = PBXBuildFile; fileRef = 414CE9071E8960AD00B90F96 /* NSDirectoryEnumerator+Posix.m */; };
 		414CE90B1E89677600B90F96 /* NSLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 414CE90A1E89677600B90F96 /* NSLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		414CE90E1E8968CE00B90F96 /* _MulleObjCOSLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 414CE90C1E8968CE00B90F96 /* _MulleObjCOSLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		414CE90F1E8968CE00B90F96 /* _MulleObjCOSLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 414CE90D1E8968CE00B90F96 /* _MulleObjCOSLoader.m */; };
-		414CE9131E89694200B90F96 /* _MulleObjCOSLoader+Posix.m in Sources */ = {isa = PBXBuildFile; fileRef = 414CE9111E89694200B90F96 /* _MulleObjCOSLoader+Posix.m */; };
+		414CE9131E89694200B90F96 /* MulleObjCLoader+Posix.m in Sources */ = {isa = PBXBuildFile; fileRef = 414CE9111E89694200B90F96 /* MulleObjCLoader+Posix.m */; };
 		414CE9151E8969D900B90F96 /* NSPageAllocation+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 414CE9141E8969D900B90F96 /* NSPageAllocation+Private.h */; };
 		414CE9341E896D1000B90F96 /* NSCalendarDate+Posix.m in Sources */ = {isa = PBXBuildFile; fileRef = 414CE9321E896D1000B90F96 /* NSCalendarDate+Posix.m */; };
 		414CE9361E896E0B00B90F96 /* NSCalendarDate+PosixPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 414CE9351E896E0B00B90F96 /* NSCalendarDate+PosixPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -67,7 +68,7 @@
 		415A01E31CB03868003C4ACF /* NSPathUtilities+Darwin.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A01DA1CB03868003C4ACF /* NSPathUtilities+Darwin.m */; };
 		415A01E41CB03868003C4ACF /* NSProcessInfo+Darwin.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A01DB1CB03868003C4ACF /* NSProcessInfo+Darwin.m */; };
 		415A01E61CB03868003C4ACF /* NSString+Darwin.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A01DD1CB03868003C4ACF /* NSString+Darwin.m */; };
-		41641C251D043A9100DBE1CE /* NSDate+Linux.m in Sources */ = {isa = PBXBuildFile; fileRef = 41641C241D043A9100DBE1CE /* NSDate+Linux.m */; };
+		41641C251D043A9100DBE1CE /* NSDateFormatter+Linux.m in Sources */ = {isa = PBXBuildFile; fileRef = 41641C241D043A9100DBE1CE /* NSDateFormatter+Linux.m */; };
 		41684CA91E9513D1009E8833 /* NSArray+OSBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4172E08A1E8909D80091E718 /* NSArray+OSBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		41684CAA1E9513D1009E8833 /* NSData+OSBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4172E08E1E8909D80091E718 /* NSData+OSBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		41688DA61E94197D006AE5A3 /* NSBundle+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 41688DA51E94197D006AE5A3 /* NSBundle+Private.h */; };
@@ -78,7 +79,7 @@
 		4172E0561E89097A0091E718 /* NSPageAllocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E0221E89097A0091E718 /* NSPageAllocation.m */; };
 		4172E0591E89097A0091E718 /* NSPathUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 4172E0251E89097A0091E718 /* NSPathUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4172E05A1E89097A0091E718 /* NSPathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E0261E89097A0091E718 /* NSPathUtilities.m */; };
-		4172E05B1E89097A0091E718 /* MulleObjCPosixDateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4172E0271E89097A0091E718 /* MulleObjCPosixDateFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4172E05B1E89097A0091E718 /* _NSPosixDateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4172E0271E89097A0091E718 /* _NSPosixDateFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4172E05D1E89097A0091E718 /* NSBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = 4172E0291E89097A0091E718 /* NSBundle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4172E05E1E89097A0091E718 /* NSBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E02A1E89097A0091E718 /* NSBundle.m */; };
 		4172E0611E89097A0091E718 /* NSConditionLock.h in Headers */ = {isa = PBXBuildFile; fileRef = 4172E02D1E89097A0091E718 /* NSConditionLock.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -99,12 +100,12 @@
 		4172E0701E89097A0091E718 /* NSTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E03C1E89097A0091E718 /* NSTask.m */; };
 		4172E0711E89097A0091E718 /* NSUserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = 4172E03D1E89097A0091E718 /* NSUserDefaults.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4172E0721E89097A0091E718 /* NSUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E03E1E89097A0091E718 /* NSUserDefaults.m */; };
-		4172E0BA1E8909D80091E718 /* NSError+Posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 4172E0961E8909D80091E718 /* NSError+Posix.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4172E0BB1E8909D90091E718 /* NSError+Posix.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E0971E8909D80091E718 /* NSError+Posix.m */; };
+		4172E0BA1E8909D80091E718 /* MulleObjCPOSIXError.h in Headers */ = {isa = PBXBuildFile; fileRef = 4172E0961E8909D80091E718 /* MulleObjCPOSIXError.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4172E0BB1E8909D90091E718 /* MulleObjCPOSIXError.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E0971E8909D80091E718 /* MulleObjCPOSIXError.m */; };
 		4172E0BD1E8909D90091E718 /* NSLocale+Posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 4172E0991E8909D80091E718 /* NSLocale+Posix.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4172E0BE1E8909D90091E718 /* NSLocale+Posix.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E09A1E8909D80091E718 /* NSLocale+Posix.m */; };
 		4172E0BF1E8909D90091E718 /* NSLocale+PosixPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4172E09B1E8909D80091E718 /* NSLocale+PosixPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		4172E0C41E8909D90091E718 /* NSString+Posix.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E0A01E8909D80091E718 /* NSString+Posix.m */; };
+		4172E0C41E8909D90091E718 /* MulleObjCPOSIXString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E0A01E8909D80091E718 /* MulleObjCPOSIXString.m */; };
 		4172E0CB1E8909D90091E718 /* NSTimeZone+Posix.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E0A71E8909D80091E718 /* NSTimeZone+Posix.m */; };
 		4172E0D11E890A050091E718 /* MulleObjCOSBaseFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4172E0D01E890A050091E718 /* MulleObjCOSBaseFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4172E0D51E890B180091E718 /* NSString+CString.h in Headers */ = {isa = PBXBuildFile; fileRef = 4172E0D31E890B180091E718 /* NSString+CString.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -132,13 +133,15 @@
 		419534A81E9682B0003127E4 /* NSTask+Posix.m in Sources */ = {isa = PBXBuildFile; fileRef = 419534A61E9682B0003127E4 /* NSTask+Posix.m */; };
 		419534AA1E969875003127E4 /* NSDate+PosixPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 419534A91E969875003127E4 /* NSDate+PosixPrivate.h */; };
 		41BFA5261D05842D0072D27D /* NSTask+Darwin.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BFA5251D05842D0072D27D /* NSTask+Darwin.m */; };
+		41CE12191EC4792700691FF2 /* MulleObjCLoader+OSBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 41CE12171EC4792700691FF2 /* MulleObjCLoader+OSBase.m */; };
+		41CE121D1EC47A2700691FF2 /* MulleObjCLoader+MulleObjCOSFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 41CE121B1EC47A2700691FF2 /* MulleObjCLoader+MulleObjCOSFoundation.m */; };
 		41D7A7411E89243300E63C12 /* NSFileHandle+Posix.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D7A73F1E89243300E63C12 /* NSFileHandle+Posix.m */; };
 		41D7A7451E893B7E00E63C12 /* NSData+Posix.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D7A7431E893B7E00E63C12 /* NSData+Posix.m */; };
 		41D7A7481E893D1A00E63C12 /* NSURL+OSBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 41D7A7461E893D1A00E63C12 /* NSURL+OSBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		41D7A7491E893D1A00E63C12 /* NSURL+OSBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D7A7471E893D1A00E63C12 /* NSURL+OSBase.m */; };
 		41D7A74C1E893DCA00E63C12 /* NSString+OSBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 41D7A74A1E893DCA00E63C12 /* NSString+OSBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		41D7A74D1E893DCA00E63C12 /* NSString+OSBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D7A74B1E893DCA00E63C12 /* NSString+OSBase.m */; };
-		41D7A7531E893FA500E63C12 /* NSPathUtilities+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 41D7A7521E893FA500E63C12 /* NSPathUtilities+Private.h */; };
+		41D7A7531E893FA500E63C12 /* NSPathUtilities+OSBasePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 41D7A7521E893FA500E63C12 /* NSPathUtilities+OSBasePrivate.h */; };
 		41D7A7581E89411B00E63C12 /* NSLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D7A7561E89411B00E63C12 /* NSLog.m */; };
 		41D7A75B1E89414000E63C12 /* mulle_posix_tm.c in Sources */ = {isa = PBXBuildFile; fileRef = 41D7A7591E89414000E63C12 /* mulle_posix_tm.c */; };
 		41D7A75C1E89414000E63C12 /* mulle_posix_tm.h in Headers */ = {isa = PBXBuildFile; fileRef = 41D7A75A1E89414000E63C12 /* mulle_posix_tm.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -160,6 +163,10 @@
 		41D7A7811E89570600E63C12 /* NSDate+Posix.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D7A77F1E89570600E63C12 /* NSDate+Posix.m */; };
 		41D7A7831E89586400E63C12 /* libMulleObjCOSBaseFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4172E01C1E8909630091E718 /* libMulleObjCOSBaseFoundation.a */; };
 		41E13D801CD2534D00CE0304 /* NSFileManager+Darwin.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E13D7F1CD2534D00CE0304 /* NSFileManager+Darwin.m */; };
+		41F0E9EA1EF46EED00AB4017 /* NSArray+OSBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E08B1E8909D80091E718 /* NSArray+OSBase.m */; };
+		41F0E9EB1EF46EED00AB4017 /* NSData+OSBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E08F1E8909D80091E718 /* NSData+OSBase.m */; };
+		41FFA7371EC72FD3009DF9FD /* NSCalendarDate+NSUserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = 41FFA7351EC72FD3009DF9FD /* NSCalendarDate+NSUserDefaults.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		41FFA7381EC72FD3009DF9FD /* NSCalendarDate+NSUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FFA7361EC72FD3009DF9FD /* NSCalendarDate+NSUserDefaults.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -217,20 +224,22 @@
 		412095381D21BACA00E50D1E /* NSString+Linux.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Linux.m"; sourceTree = "<group>"; };
 		4120953A1D21BB2D00E50D1E /* NSProcessInfo+Linux.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSProcessInfo+Linux.m"; sourceTree = "<group>"; };
 		412902671D03248E00D055B1 /* NSCalendarDate+Linux.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendarDate+Linux.m"; sourceTree = "<group>"; };
+		4136AEED1EF958D8000CACDA /* CMakeDependencies.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = CMakeDependencies.txt; path = "../mulle-objc-list/CMakeDependencies.txt"; sourceTree = "<group>"; };
+		4136AEEE1EF95911000CACDA /* MulleObjCLoader+MulleObjCOSFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MulleObjCLoader+MulleObjCOSFoundation.h"; sourceTree = "<group>"; };
 		4139944C1E8D3C3A00A85C2C /* libMulleObjCFreeBSDFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMulleObjCFreeBSDFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4139945A1E8D3CB700A85C2C /* libMulleObjCBSDFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMulleObjCBSDFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		413A20491D04A20600CF7746 /* NSLocale+BSD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+BSD.m"; sourceTree = "<group>"; };
 		413A204C1D04A8D100CF7746 /* NSLocale+Linux.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+Linux.m"; sourceTree = "<group>"; };
 		4140634E1D3FBA5E0067E64E /* libmulle_objc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmulle_objc.a; path = dependencies/lib/libmulle_objc.a; sourceTree = "<group>"; };
+		41413C891EC8DF3100389C87 /* _NSGMTTimeZone+Linux.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "_NSGMTTimeZone+Linux.m"; sourceTree = "<group>"; };
+		41413C8C1EC8E02300389C87 /* _NSGMTTimeZone+BSD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "_NSGMTTimeZone+BSD.m"; sourceTree = "<group>"; };
 		4141AFB21CB546A500B0306A /* libMulleObjCLinuxFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMulleObjCLinuxFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		414CE9031E895D8D00B90F96 /* NSFileManager+Posix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+Posix.m"; sourceTree = "<group>"; };
 		414CE9071E8960AD00B90F96 /* NSDirectoryEnumerator+Posix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDirectoryEnumerator+Posix.m"; sourceTree = "<group>"; };
 		414CE90A1E89677600B90F96 /* NSLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSLog.h; sourceTree = "<group>"; };
-		414CE90C1E8968CE00B90F96 /* _MulleObjCOSLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _MulleObjCOSLoader.h; sourceTree = "<group>"; };
-		414CE90D1E8968CE00B90F96 /* _MulleObjCOSLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _MulleObjCOSLoader.m; sourceTree = "<group>"; };
-		414CE9111E89694200B90F96 /* _MulleObjCOSLoader+Posix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "_MulleObjCOSLoader+Posix.m"; sourceTree = "<group>"; };
+		414CE9111E89694200B90F96 /* MulleObjCLoader+Posix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MulleObjCLoader+Posix.m"; sourceTree = "<group>"; };
 		414CE9141E8969D900B90F96 /* NSPageAllocation+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSPageAllocation+Private.h"; sourceTree = "<group>"; };
-		414CE92F1E896B6700B90F96 /* _MulleObjCOSLoader+BSD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "_MulleObjCOSLoader+BSD.m"; sourceTree = "<group>"; };
+		414CE92F1E896B6700B90F96 /* MulleObjCLoader+BSD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MulleObjCLoader+BSD.m"; sourceTree = "<group>"; };
 		414CE9321E896D1000B90F96 /* NSCalendarDate+Posix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendarDate+Posix.m"; sourceTree = "<group>"; };
 		414CE9351E896E0B00B90F96 /* NSCalendarDate+PosixPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendarDate+PosixPrivate.h"; sourceTree = "<group>"; };
 		414CE9381E896F7800B90F96 /* NSPipe+Posix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPipe+Posix.m"; sourceTree = "<group>"; };
@@ -247,7 +256,7 @@
 		415A01DA1CB03868003C4ACF /* NSPathUtilities+Darwin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPathUtilities+Darwin.m"; sourceTree = "<group>"; };
 		415A01DB1CB03868003C4ACF /* NSProcessInfo+Darwin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSProcessInfo+Darwin.m"; sourceTree = "<group>"; };
 		415A01DD1CB03868003C4ACF /* NSString+Darwin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Darwin.m"; sourceTree = "<group>"; };
-		41641C241D043A9100DBE1CE /* NSDate+Linux.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Linux.m"; sourceTree = "<group>"; };
+		41641C241D043A9100DBE1CE /* NSDateFormatter+Linux.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+Linux.m"; sourceTree = "<group>"; };
 		41641C261D043AA000DBE1CE /* README-Linux.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "README-Linux.md"; sourceTree = "<group>"; };
 		41641C2B1D0468C900DBE1CE /* mulle_bsd_tm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mulle_bsd_tm.c; sourceTree = "<group>"; };
 		41641C2C1D0468C900DBE1CE /* mulle_bsd_tm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mulle_bsd_tm.h; sourceTree = "<group>"; };
@@ -260,8 +269,8 @@
 		4172E0221E89097A0091E718 /* NSPageAllocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSPageAllocation.m; sourceTree = "<group>"; };
 		4172E0251E89097A0091E718 /* NSPathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSPathUtilities.h; sourceTree = "<group>"; };
 		4172E0261E89097A0091E718 /* NSPathUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSPathUtilities.m; sourceTree = "<group>"; };
-		4172E0271E89097A0091E718 /* MulleObjCPosixDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MulleObjCPosixDateFormatter.h; sourceTree = "<group>"; };
-		4172E0281E89097A0091E718 /* MulleObjCPosixDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MulleObjCPosixDateFormatter.m; sourceTree = "<group>"; };
+		4172E0271E89097A0091E718 /* _NSPosixDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _NSPosixDateFormatter.h; sourceTree = "<group>"; };
+		4172E0281E89097A0091E718 /* _NSPosixDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _NSPosixDateFormatter.m; sourceTree = "<group>"; };
 		4172E0291E89097A0091E718 /* NSBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBundle.h; sourceTree = "<group>"; };
 		4172E02A1E89097A0091E718 /* NSBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundle.m; sourceTree = "<group>"; };
 		4172E02D1E89097A0091E718 /* NSConditionLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSConditionLock.h; sourceTree = "<group>"; };
@@ -286,12 +295,12 @@
 		4172E08B1E8909D80091E718 /* NSArray+OSBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+OSBase.m"; sourceTree = "<group>"; };
 		4172E08E1E8909D80091E718 /* NSData+OSBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+OSBase.h"; sourceTree = "<group>"; };
 		4172E08F1E8909D80091E718 /* NSData+OSBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+OSBase.m"; sourceTree = "<group>"; };
-		4172E0961E8909D80091E718 /* NSError+Posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+Posix.h"; sourceTree = "<group>"; };
-		4172E0971E8909D80091E718 /* NSError+Posix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+Posix.m"; sourceTree = "<group>"; };
+		4172E0961E8909D80091E718 /* MulleObjCPOSIXError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MulleObjCPOSIXError.h; sourceTree = "<group>"; };
+		4172E0971E8909D80091E718 /* MulleObjCPOSIXError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MulleObjCPOSIXError.m; sourceTree = "<group>"; };
 		4172E0991E8909D80091E718 /* NSLocale+Posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+Posix.h"; sourceTree = "<group>"; };
 		4172E09A1E8909D80091E718 /* NSLocale+Posix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+Posix.m"; sourceTree = "<group>"; };
 		4172E09B1E8909D80091E718 /* NSLocale+PosixPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+PosixPrivate.h"; sourceTree = "<group>"; };
-		4172E0A01E8909D80091E718 /* NSString+Posix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Posix.m"; sourceTree = "<group>"; };
+		4172E0A01E8909D80091E718 /* MulleObjCPOSIXString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MulleObjCPOSIXString.m; sourceTree = "<group>"; };
 		4172E0A71E8909D80091E718 /* NSTimeZone+Posix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimeZone+Posix.m"; sourceTree = "<group>"; };
 		4172E0D01E890A050091E718 /* MulleObjCOSBaseFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MulleObjCOSBaseFoundation.h; sourceTree = "<group>"; };
 		4172E0D31E890B180091E718 /* NSString+CString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CString.h"; sourceTree = "<group>"; };
@@ -312,9 +321,13 @@
 		419534A61E9682B0003127E4 /* NSTask+Posix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTask+Posix.m"; sourceTree = "<group>"; };
 		419534A91E969875003127E4 /* NSDate+PosixPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+PosixPrivate.h"; sourceTree = "<group>"; };
 		419658001CB53D4F00B29FB9 /* README-DARWIN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "README-DARWIN.md"; sourceTree = "<group>"; };
+		41A473EA1EAA125100ECB6D6 /* CMakeSourcesAndHeaders.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeSourcesAndHeaders.txt; sourceTree = "<group>"; };
 		41A5AE121CB417C500FD7930 /* libMulleObjCFoundation.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMulleObjCFoundation.a; path = dependencies/lib/libMulleObjCFoundation.a; sourceTree = "<group>"; };
+		41BC56ED1ECA3A62003283DB /* NSTimeZone+PosixPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSTimeZone+PosixPrivate.h"; sourceTree = "<group>"; };
 		41BFA5251D05842D0072D27D /* NSTask+Darwin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTask+Darwin.m"; sourceTree = "<group>"; };
 		41BFA5281D05844D0072D27D /* NSTask+BSD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTask+BSD.m"; sourceTree = "<group>"; };
+		41CE12171EC4792700691FF2 /* MulleObjCLoader+OSBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MulleObjCLoader+OSBase.m"; sourceTree = "<group>"; };
+		41CE121B1EC47A2700691FF2 /* MulleObjCLoader+MulleObjCOSFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MulleObjCLoader+MulleObjCOSFoundation.m"; sourceTree = "<group>"; };
 		41D115251CED0C2600264476 /* RELEASENOTES.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = RELEASENOTES.md; sourceTree = "<group>"; };
 		41D7A73F1E89243300E63C12 /* NSFileHandle+Posix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileHandle+Posix.m"; sourceTree = "<group>"; };
 		41D7A7431E893B7E00E63C12 /* NSData+Posix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Posix.m"; sourceTree = "<group>"; };
@@ -322,7 +335,7 @@
 		41D7A7471E893D1A00E63C12 /* NSURL+OSBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+OSBase.m"; sourceTree = "<group>"; };
 		41D7A74A1E893DCA00E63C12 /* NSString+OSBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+OSBase.h"; sourceTree = "<group>"; };
 		41D7A74B1E893DCA00E63C12 /* NSString+OSBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+OSBase.m"; sourceTree = "<group>"; };
-		41D7A7521E893FA500E63C12 /* NSPathUtilities+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSPathUtilities+Private.h"; path = "../NSPathUtilities+Private.h"; sourceTree = "<group>"; };
+		41D7A7521E893FA500E63C12 /* NSPathUtilities+OSBasePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSPathUtilities+OSBasePrivate.h"; path = "../NSPathUtilities+OSBasePrivate.h"; sourceTree = "<group>"; };
 		41D7A7561E89411B00E63C12 /* NSLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSLog.m; sourceTree = "<group>"; };
 		41D7A7591E89414000E63C12 /* mulle_posix_tm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mulle_posix_tm.c; sourceTree = "<group>"; };
 		41D7A75A1E89414000E63C12 /* mulle_posix_tm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mulle_posix_tm.h; sourceTree = "<group>"; };
@@ -374,9 +387,11 @@
 		41F96D011CB28E7F009499A9 /* StaticLibraryOSX.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = StaticLibraryOSX.xcconfig; sourceTree = "<group>"; };
 		41F96D021CB28E7F009499A9 /* ToolOSX.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ToolOSX.xcconfig; sourceTree = "<group>"; };
 		41F96D031CB28E7F009499A9 /* _Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = _Common.xcconfig; sourceTree = "<group>"; };
-		41FA9F641D04384C004D8E61 /* NSDate+BSD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+BSD.m"; sourceTree = "<group>"; };
+		41FA9F641D04384C004D8E61 /* NSDateFormatter+BSD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+BSD.m"; sourceTree = "<group>"; };
 		41FA9F671D0438E6004D8E61 /* README-BSD.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "README-BSD.md"; sourceTree = "<group>"; };
 		41FA9F681D0439D9004D8E61 /* NSCalendarDate+BSD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSCalendarDate+BSD.m"; sourceTree = "<group>"; };
+		41FFA7351EC72FD3009DF9FD /* NSCalendarDate+NSUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendarDate+NSUserDefaults.h"; sourceTree = "<group>"; };
+		41FFA7361EC72FD3009DF9FD /* NSCalendarDate+NSUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendarDate+NSUserDefaults.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -462,8 +477,9 @@
 				41641C261D043AA000DBE1CE /* README-Linux.md */,
 				418BCC381D23FF3C00447F73 /* NSBundle+Linux.m */,
 				412902671D03248E00D055B1 /* NSCalendarDate+Linux.m */,
-				41641C241D043A9100DBE1CE /* NSDate+Linux.m */,
+				41641C241D043A9100DBE1CE /* NSDateFormatter+Linux.m */,
 				418BCC401D240D9E00447F73 /* NSFileManager+Linux.m */,
+				41413C891EC8DF3100389C87 /* _NSGMTTimeZone+Linux.m */,
 				413A204C1D04A8D100CF7746 /* NSLocale+Linux.m */,
 				418BCC351D23FE4100447F73 /* NSPathUtilities+Linux.m */,
 				4120953A1D21BB2D00E50D1E /* NSProcessInfo+Linux.m */,
@@ -488,6 +504,8 @@
 			isa = PBXGroup;
 			children = (
 				41EC16631CBFD91500676349 /* CMakeLists.txt */,
+				4136AEED1EF958D8000CACDA /* CMakeDependencies.txt */,
+				41A473EA1EAA125100ECB6D6 /* CMakeSourcesAndHeaders.txt */,
 				411DE6161CDA1E6E00019FC2 /* README.md */,
 				41D115251CED0C2600264476 /* RELEASENOTES.md */,
 				41F96CF51CB28E7F009499A9 /* mulle-configuration */,
@@ -520,12 +538,14 @@
 				4158A7831D05D942009697C0 /* MulleObjCOSFoundation.m */,
 				417FFAEC1CD8FB5700FBBE87 /* MulleObjCOSFoundationStandalone.m */,
 				417E7AB91E8D650A005772E5 /* MulleObjCOSFoundationParents.h */,
+				4136AEEE1EF95911000CACDA /* MulleObjCLoader+MulleObjCOSFoundation.h */,
+				41CE121B1EC47A2700691FF2 /* MulleObjCLoader+MulleObjCOSFoundation.m */,
 				4172E0171E8907E30091E718 /* Base */,
 				415A01671CB0371C003C4ACF /* Posix */,
-				4141AFB61CB546C000B0306A /* Linux */,
 				41FA9F661D0438B7004D8E61 /* BSD */,
-				41EC16621CBFD8EA00676349 /* FreeBSD */,
 				415A01661CB0371C003C4ACF /* Darwin */,
+				41EC16621CBFD8EA00676349 /* FreeBSD */,
+				4141AFB61CB546C000B0306A /* Linux */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -550,19 +570,19 @@
 				41D7A7821E89573E00E63C12 /* README-Posix.md */,
 				41D7A76D1E89453E00E63C12 /* MulleObjCPosixFoundation.h */,
 				41D7A7541E89411B00E63C12 /* Functions */,
-				4172E0271E89097A0091E718 /* MulleObjCPosixDateFormatter.h */,
-				4172E0281E89097A0091E718 /* MulleObjCPosixDateFormatter.m */,
+				4172E0271E89097A0091E718 /* _NSPosixDateFormatter.h */,
+				4172E0281E89097A0091E718 /* _NSPosixDateFormatter.m */,
 				41D7A77B1E8952DD00E63C12 /* NSBundle+Posix.m */,
+				414CE9351E896E0B00B90F96 /* NSCalendarDate+PosixPrivate.h */,
+				414CE9321E896D1000B90F96 /* NSCalendarDate+Posix.m */,
 				41D7A7771E89522E00E63C12 /* NSCondition.h */,
 				41D7A7761E89522E00E63C12 /* NSCondition.m */,
 				41D7A7431E893B7E00E63C12 /* NSData+Posix.m */,
-				414CE9351E896E0B00B90F96 /* NSCalendarDate+PosixPrivate.h */,
-				414CE9321E896D1000B90F96 /* NSCalendarDate+Posix.m */,
 				41D7A77F1E89570600E63C12 /* NSDate+Posix.m */,
 				419534A91E969875003127E4 /* NSDate+PosixPrivate.h */,
 				414CE9071E8960AD00B90F96 /* NSDirectoryEnumerator+Posix.m */,
-				4172E0961E8909D80091E718 /* NSError+Posix.h */,
-				4172E0971E8909D80091E718 /* NSError+Posix.m */,
+				4172E0961E8909D80091E718 /* MulleObjCPOSIXError.h */,
+				4172E0971E8909D80091E718 /* MulleObjCPOSIXError.m */,
 				41D7A73F1E89243300E63C12 /* NSFileHandle+Posix.m */,
 				414CE9031E895D8D00B90F96 /* NSFileManager+Posix.m */,
 				4172E0991E8909D80091E718 /* NSLocale+Posix.h */,
@@ -571,10 +591,11 @@
 				414CE9381E896F7800B90F96 /* NSPipe+Posix.m */,
 				414CE93C1E89700800B90F96 /* NSProcessInfo+Posix.m */,
 				417E7AB61E8D4A70005772E5 /* NSRunLoop+Posix.m */,
-				4172E0A01E8909D80091E718 /* NSString+Posix.m */,
+				4172E0A01E8909D80091E718 /* MulleObjCPOSIXString.m */,
 				419534A61E9682B0003127E4 /* NSTask+Posix.m */,
 				4172E0A71E8909D80091E718 /* NSTimeZone+Posix.m */,
-				414CE9111E89694200B90F96 /* _MulleObjCOSLoader+Posix.m */,
+				41BC56ED1ECA3A62003283DB /* NSTimeZone+PosixPrivate.h */,
+				414CE9111E89694200B90F96 /* MulleObjCLoader+Posix.m */,
 				414CE94B1E8977AF00B90F96 /* Timezone */,
 			);
 			path = Posix;
@@ -613,8 +634,7 @@
 				4172E03C1E89097A0091E718 /* NSTask.m */,
 				4172E03D1E89097A0091E718 /* NSUserDefaults.h */,
 				4172E03E1E89097A0091E718 /* NSUserDefaults.m */,
-				414CE90C1E8968CE00B90F96 /* _MulleObjCOSLoader.h */,
-				414CE90D1E8968CE00B90F96 /* _MulleObjCOSLoader.m */,
+				41CE12171EC4792700691FF2 /* MulleObjCLoader+OSBase.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -627,7 +647,7 @@
 				414CE9141E8969D900B90F96 /* NSPageAllocation+Private.h */,
 				4172E0221E89097A0091E718 /* NSPageAllocation.m */,
 				4172E0251E89097A0091E718 /* NSPathUtilities.h */,
-				41D7A7521E893FA500E63C12 /* NSPathUtilities+Private.h */,
+				41D7A7521E893FA500E63C12 /* NSPathUtilities+OSBasePrivate.h */,
 				4172E0261E89097A0091E718 /* NSPathUtilities.m */,
 			);
 			path = Functions;
@@ -642,6 +662,8 @@
 				4172E08B1E8909D80091E718 /* NSArray+OSBase.m */,
 				41D7A75D1E8941F900E63C12 /* NSArray+OSBasePrivate.h */,
 				41D7A75E1E8941F900E63C12 /* NSArray+OSBasePrivate.m */,
+				41FFA7351EC72FD3009DF9FD /* NSCalendarDate+NSUserDefaults.h */,
+				41FFA7361EC72FD3009DF9FD /* NSCalendarDate+NSUserDefaults.m */,
 				4172E08E1E8909D80091E718 /* NSData+OSBase.h */,
 				4172E08F1E8909D80091E718 /* NSData+OSBase.m */,
 				41D7A7731E894AE100E63C12 /* NSDate+OSBasePrivate.h */,
@@ -732,11 +754,12 @@
 			children = (
 				41FA9F671D0438E6004D8E61 /* README-BSD.md */,
 				41FA9F681D0439D9004D8E61 /* NSCalendarDate+BSD.m */,
-				41FA9F641D04384C004D8E61 /* NSDate+BSD.m */,
+				41FA9F641D04384C004D8E61 /* NSDateFormatter+BSD.m */,
+				41413C8C1EC8E02300389C87 /* _NSGMTTimeZone+BSD.m */,
 				413A20491D04A20600CF7746 /* NSLocale+BSD.m */,
 				4107BCAC1D05C2B2008C9CAC /* NSProcessInfo+BSD.m */,
 				41BFA5281D05844D0072D27D /* NSTask+BSD.m */,
-				414CE92F1E896B6700B90F96 /* _MulleObjCOSLoader+BSD.m */,
+				414CE92F1E896B6700B90F96 /* MulleObjCLoader+BSD.m */,
 				41641C2C1D0468C900DBE1CE /* mulle_bsd_tm.h */,
 				41641C2B1D0468C900DBE1CE /* mulle_bsd_tm.c */,
 			);
@@ -750,6 +773,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4136AEEF1EF95911000CACDA /* MulleObjCLoader+MulleObjCOSFoundation.h in Headers */,
 				4158A7851D05D9D6009697C0 /* MulleObjCOSFoundation.h in Headers */,
 				417E7ABA1E8D650A005772E5 /* MulleObjCOSFoundationParents.h in Headers */,
 			);
@@ -778,11 +802,11 @@
 				414CE90B1E89677600B90F96 /* NSLog.h in Headers */,
 				4172E0BD1E8909D90091E718 /* NSLocale+Posix.h in Headers */,
 				419534AA1E969875003127E4 /* NSDate+PosixPrivate.h in Headers */,
-				4172E0BA1E8909D80091E718 /* NSError+Posix.h in Headers */,
+				4172E0BA1E8909D80091E718 /* MulleObjCPOSIXError.h in Headers */,
 				414CE9521E8977AF00B90F96 /* tzfile.h in Headers */,
 				41D7A75C1E89414000E63C12 /* mulle_posix_tm.h in Headers */,
 				41D7A76E1E89453E00E63C12 /* MulleObjCPosixFoundation.h in Headers */,
-				4139946C1E8D3DAA00A85C2C /* MulleObjCPosixDateFormatter.h in Headers */,
+				4139946C1E8D3DAA00A85C2C /* _NSPosixDateFormatter.h in Headers */,
 				414CE9361E896E0B00B90F96 /* NSCalendarDate+PosixPrivate.h in Headers */,
 				4172E0BF1E8909D90091E718 /* NSLocale+PosixPrivate.h in Headers */,
 				414CE9511E8977AF00B90F96 /* private.h in Headers */,
@@ -798,6 +822,7 @@
 				414CE9151E8969D900B90F96 /* NSPageAllocation+Private.h in Headers */,
 				4172E06F1E89097A0091E718 /* NSTask.h in Headers */,
 				4172E0D11E890A050091E718 /* MulleObjCOSBaseFoundation.h in Headers */,
+				41FFA7371EC72FD3009DF9FD /* NSCalendarDate+NSUserDefaults.h in Headers */,
 				4172E0591E89097A0091E718 /* NSPathUtilities.h in Headers */,
 				4172E06B1E89097A0091E718 /* NSProcessInfo.h in Headers */,
 				4172E05D1E89097A0091E718 /* NSBundle.h in Headers */,
@@ -808,7 +833,6 @@
 				4172E0711E89097A0091E718 /* NSUserDefaults.h in Headers */,
 				41D7A76B1E8943A000E63C12 /* NSDictionary+OSBasePrivate.h in Headers */,
 				41688DA81E94223D006AE5A3 /* NSFileHandle+NSRunLoop.h in Headers */,
-				414CE90E1E8968CE00B90F96 /* _MulleObjCOSLoader.h in Headers */,
 				41D7A75F1E8941F900E63C12 /* NSArray+OSBasePrivate.h in Headers */,
 				41D7A7641E8942F000E63C12 /* NSArchiver+OSBase.h in Headers */,
 				41684CA91E9513D1009E8833 /* NSArray+OSBase.h in Headers */,
@@ -817,13 +841,13 @@
 				41D7A74C1E893DCA00E63C12 /* NSString+OSBase.h in Headers */,
 				41D7A7481E893D1A00E63C12 /* NSURL+OSBase.h in Headers */,
 				4172E0D91E890B480091E718 /* NSTask+System.h in Headers */,
-				41D7A7531E893FA500E63C12 /* NSPathUtilities+Private.h in Headers */,
+				41D7A7531E893FA500E63C12 /* NSPathUtilities+OSBasePrivate.h in Headers */,
 				4172E0691E89097A0091E718 /* NSPipe.h in Headers */,
 				4172E0671E89097A0091E718 /* NSFileManager.h in Headers */,
 				41688DA61E94197D006AE5A3 /* NSBundle+Private.h in Headers */,
 				4172E0D51E890B180091E718 /* NSString+CString.h in Headers */,
 				4172E0651E89097A0091E718 /* NSFileHandle.h in Headers */,
-				4172E05B1E89097A0091E718 /* MulleObjCPosixDateFormatter.h in Headers */,
+				4172E05B1E89097A0091E718 /* _NSPosixDateFormatter.h in Headers */,
 				41D7A7741E894AE100E63C12 /* NSDate+OSBasePrivate.h in Headers */,
 				4172E0551E89097A0091E718 /* NSPageAllocation.h in Headers */,
 			);
@@ -1044,6 +1068,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4158A7841D05D942009697C0 /* MulleObjCOSFoundation.m in Sources */,
+				41CE121D1EC47A2700691FF2 /* MulleObjCLoader+MulleObjCOSFoundation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1065,11 +1090,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				4139945F1E8D3CC800A85C2C /* NSCalendarDate+BSD.m in Sources */,
-				4139945E1E8D3CC800A85C2C /* NSDate+BSD.m in Sources */,
+				4139945E1E8D3CC800A85C2C /* NSDateFormatter+BSD.m in Sources */,
 				413994601E8D3CC800A85C2C /* NSLocale+BSD.m in Sources */,
 				413994611E8D3CC800A85C2C /* NSProcessInfo+BSD.m in Sources */,
 				413994621E8D3CC800A85C2C /* NSTask+BSD.m in Sources */,
-				413994631E8D3CC800A85C2C /* _MulleObjCOSLoader+BSD.m in Sources */,
+				413994631E8D3CC800A85C2C /* MulleObjCLoader+BSD.m in Sources */,
+				41413C8E1EC8E02300389C87 /* _NSGMTTimeZone+BSD.m in Sources */,
 				413994651E8D3CC800A85C2C /* mulle_bsd_tm.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1078,15 +1104,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				418BCC3C1D23FFC100447F73 /* NSTask+Linux.m in Sources */,
-				418BCC411D240D9E00447F73 /* NSFileManager+Linux.m in Sources */,
-				41641C251D043A9100DBE1CE /* NSDate+Linux.m in Sources */,
-				412902681D03248E00D055B1 /* NSCalendarDate+Linux.m in Sources */,
-				413A204D1D04A8D100CF7746 /* NSLocale+Linux.m in Sources */,
 				418BCC391D23FF3C00447F73 /* NSBundle+Linux.m in Sources */,
+				412902681D03248E00D055B1 /* NSCalendarDate+Linux.m in Sources */,
+				41641C251D043A9100DBE1CE /* NSDateFormatter+Linux.m in Sources */,
+				418BCC411D240D9E00447F73 /* NSFileManager+Linux.m in Sources */,
+				41413C8A1EC8DF3100389C87 /* _NSGMTTimeZone+Linux.m in Sources */,
+				413A204D1D04A8D100CF7746 /* NSLocale+Linux.m in Sources */,
 				418BCC361D23FE4100447F73 /* NSPathUtilities+Linux.m in Sources */,
 				4120953B1D21BB2D00E50D1E /* NSProcessInfo+Linux.m in Sources */,
 				412095391D21BACA00E50D1E /* NSString+Linux.m in Sources */,
+				418BCC3C1D23FFC100447F73 /* NSTask+Linux.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1096,24 +1123,24 @@
 			files = (
 				41D7A75B1E89414000E63C12 /* mulle_posix_tm.c in Sources */,
 				41D7A7581E89411B00E63C12 /* NSLog.m in Sources */,
-				4139946B1E8D3D5E00A85C2C /* MulleObjCPosixDateFormatter.m in Sources */,
+				4139946B1E8D3D5E00A85C2C /* _NSPosixDateFormatter.m in Sources */,
 				41D7A77D1E8952DD00E63C12 /* NSBundle+Posix.m in Sources */,
+				414CE9341E896D1000B90F96 /* NSCalendarDate+Posix.m in Sources */,
 				41D7A7781E89522E00E63C12 /* NSCondition.m in Sources */,
 				41D7A7451E893B7E00E63C12 /* NSData+Posix.m in Sources */,
-				419534A81E9682B0003127E4 /* NSTask+Posix.m in Sources */,
-				414CE9341E896D1000B90F96 /* NSCalendarDate+Posix.m in Sources */,
 				41D7A7811E89570600E63C12 /* NSDate+Posix.m in Sources */,
 				414CE9091E8960AD00B90F96 /* NSDirectoryEnumerator+Posix.m in Sources */,
-				4172E0BB1E8909D90091E718 /* NSError+Posix.m in Sources */,
-				417E7AB81E8D4A70005772E5 /* NSRunLoop+Posix.m in Sources */,
+				4172E0BB1E8909D90091E718 /* MulleObjCPOSIXError.m in Sources */,
 				41D7A7411E89243300E63C12 /* NSFileHandle+Posix.m in Sources */,
 				414CE9051E895D8D00B90F96 /* NSFileManager+Posix.m in Sources */,
 				4172E0BE1E8909D90091E718 /* NSLocale+Posix.m in Sources */,
 				414CE93A1E896F7800B90F96 /* NSPipe+Posix.m in Sources */,
 				414CE93E1E89700800B90F96 /* NSProcessInfo+Posix.m in Sources */,
-				4172E0C41E8909D90091E718 /* NSString+Posix.m in Sources */,
+				417E7AB81E8D4A70005772E5 /* NSRunLoop+Posix.m in Sources */,
+				4172E0C41E8909D90091E718 /* MulleObjCPOSIXString.m in Sources */,
+				419534A81E9682B0003127E4 /* NSTask+Posix.m in Sources */,
 				4172E0CB1E8909D90091E718 /* NSTimeZone+Posix.m in Sources */,
-				414CE9131E89694200B90F96 /* _MulleObjCOSLoader+Posix.m in Sources */,
+				414CE9131E89694200B90F96 /* MulleObjCLoader+Posix.m in Sources */,
 				414CE9501E8977AF00B90F96 /* localtime.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1122,12 +1149,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				415A01E41CB03868003C4ACF /* NSProcessInfo+Darwin.m in Sources */,
 				415A01E11CB03868003C4ACF /* NSBundle+Darwin.m in Sources */,
+				41E13D801CD2534D00CE0304 /* NSFileManager+Darwin.m in Sources */,
+				415A01E31CB03868003C4ACF /* NSPathUtilities+Darwin.m in Sources */,
+				415A01E41CB03868003C4ACF /* NSProcessInfo+Darwin.m in Sources */,
 				415A01E61CB03868003C4ACF /* NSString+Darwin.m in Sources */,
 				41BFA5261D05842D0072D27D /* NSTask+Darwin.m in Sources */,
-				415A01E31CB03868003C4ACF /* NSPathUtilities+Darwin.m in Sources */,
-				41E13D801CD2534D00CE0304 /* NSFileManager+Darwin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1135,29 +1162,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4172E0621E89097A0091E718 /* NSConditionLock.m in Sources */,
-				4172E0681E89097A0091E718 /* NSFileManager.m in Sources */,
-				4172E0641E89097A0091E718 /* NSDirectoryEnumerator.m in Sources */,
-				4172E0721E89097A0091E718 /* NSUserDefaults.m in Sources */,
-				41D7A7601E8941F900E63C12 /* NSArray+OSBasePrivate.m in Sources */,
-				4172E0DA1E890B480091E718 /* NSTask+System.m in Sources */,
-				41D7A74D1E893DCA00E63C12 /* NSString+OSBase.m in Sources */,
-				4172E06E1E89097A0091E718 /* NSRunLoop.m in Sources */,
-				4172E05A1E89097A0091E718 /* NSPathUtilities.m in Sources */,
-				4172E06A1E89097A0091E718 /* NSPipe.m in Sources */,
-				4172E05E1E89097A0091E718 /* NSBundle.m in Sources */,
-				4172E0661E89097A0091E718 /* NSFileHandle.m in Sources */,
-				41D7A7491E893D1A00E63C12 /* NSURL+OSBase.m in Sources */,
 				41D7A7631E8942F000E63C12 /* NSArchiver+OSBase.m in Sources */,
-				4172E0561E89097A0091E718 /* NSPageAllocation.m in Sources */,
-				414CE90F1E8968CE00B90F96 /* _MulleObjCOSLoader.m in Sources */,
-				41D7A76C1E8943A000E63C12 /* NSDictionary+OSBasePrivate.m in Sources */,
-				411D29881E8D305F006FAD92 /* NSHost+OSBase.m in Sources */,
-				4172E0D61E890B180091E718 /* NSString+CString.m in Sources */,
-				4172E06C1E89097A0091E718 /* NSProcessInfo.m in Sources */,
+				41F0E9EA1EF46EED00AB4017 /* NSArray+OSBase.m in Sources */,
+				41D7A7601E8941F900E63C12 /* NSArray+OSBasePrivate.m in Sources */,
+				41FFA7381EC72FD3009DF9FD /* NSCalendarDate+NSUserDefaults.m in Sources */,
+				41F0E9EB1EF46EED00AB4017 /* NSData+OSBase.m in Sources */,
 				41D7A76A1E8943A000E63C12 /* NSDictionary+OSBase.m in Sources */,
-				4172E0701E89097A0091E718 /* NSTask.m in Sources */,
+				41D7A76C1E8943A000E63C12 /* NSDictionary+OSBasePrivate.m in Sources */,
+				41D7A74D1E893DCA00E63C12 /* NSString+OSBase.m in Sources */,
+				4172E0D61E890B180091E718 /* NSString+CString.m in Sources */,
+				41D7A7491E893D1A00E63C12 /* NSURL+OSBase.m in Sources */,
+				411D29881E8D305F006FAD92 /* NSHost+OSBase.m in Sources */,
+				4172E0DA1E890B480091E718 /* NSTask+System.m in Sources */,
+				4172E05E1E89097A0091E718 /* NSBundle.m in Sources */,
+				4172E0621E89097A0091E718 /* NSConditionLock.m in Sources */,
+				4172E0641E89097A0091E718 /* NSDirectoryEnumerator.m in Sources */,
+				4172E0661E89097A0091E718 /* NSFileHandle.m in Sources */,
 				41688DAA1E9422AE006AE5A3 /* NSFileHandle+NSRunLoop.m in Sources */,
+				4172E0681E89097A0091E718 /* NSFileManager.m in Sources */,
+				4172E06A1E89097A0091E718 /* NSPipe.m in Sources */,
+				4172E06C1E89097A0091E718 /* NSProcessInfo.m in Sources */,
+				4172E06E1E89097A0091E718 /* NSRunLoop.m in Sources */,
+				4172E0701E89097A0091E718 /* NSTask.m in Sources */,
+				4172E0721E89097A0091E718 /* NSUserDefaults.m in Sources */,
+				41CE12191EC4792700691FF2 /* MulleObjCLoader+OSBase.m in Sources */,
+				4172E05A1E89097A0091E718 /* NSPathUtilities.m in Sources */,
+				4172E0561E89097A0091E718 /* NSPageAllocation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

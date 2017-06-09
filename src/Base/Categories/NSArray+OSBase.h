@@ -11,8 +11,8 @@
 
 @interface NSArray (OSBase)
 
-+ (id) arrayWithContentsOfFile:(NSString *) path;
-- (id) initWithContentsOfFile:(NSString *) path;
++ (instancetype) arrayWithContentsOfFile:(NSString *) path;
+- (instancetype) initWithContentsOfFile:(NSString *) path;
 - (BOOL) writeToFile:(NSString *) path
           atomically:(BOOL) flag;
 

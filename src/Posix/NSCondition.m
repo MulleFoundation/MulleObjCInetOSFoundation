@@ -23,7 +23,7 @@
 
 @implementation NSCondition
 
-- (id) init
+- (instancetype) init
 {
    pthread_mutex_init( &self->_lock, NULL);
    pthread_cond_init(  &self->_condition, NULL);

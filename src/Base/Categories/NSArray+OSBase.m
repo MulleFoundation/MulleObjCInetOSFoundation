@@ -6,10 +6,10 @@
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
 // define, that make things POSIXly
-#import "NSArray+Posix.h"
+#import "NSArray+OSBase.h"
 
 // other files in this library
-#import "NSData+Posix.h"
+#import "NSData+OSBase.h"
 
 // std-c and dependencies
 
@@ -24,13 +24,13 @@
 
 @implementation NSArray (Posix)
 
-+ (id) arrayWithContentsOfFile:(NSString *) path
++ (instancetype) arrayWithContentsOfFile:(NSString *) path
 {
    return( [[[self alloc] initWithContentsOfFile:path] autorelease]);
 }
 
 
-- (id) initWithContentsOfFile:(NSString *) path
+- (instancetype) initWithContentsOfFile:(NSString *) path
 {
    NSData                            *data;
    id                                plist;

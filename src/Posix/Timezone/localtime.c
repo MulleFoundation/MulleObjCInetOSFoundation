@@ -2225,7 +2225,6 @@ void   *mulle_tz_context_with_name( char *name, size_t *size)
 
 #ifdef TM_ZONE
 
-
 char  *mulle_get_abbreviation_for_time_interval( void *self, time_t seconds)
 {
    struct tz_context  *p;
@@ -2246,7 +2245,7 @@ char  *mulle_get_abbreviation_for_time_interval( void *self, time_t seconds)
 int   mulle_get_daylight_saving_flag_for_time_interval( void *self, time_t seconds)
 {
    struct tz_context  *p;
-   struct tz_tm          result;
+   struct tz_tm       result;
 
    p = self;
    if( ! p)
@@ -2256,6 +2255,18 @@ int   mulle_get_daylight_saving_flag_for_time_interval( void *self, time_t secon
 
    // valid as long as 'p' is valid
    return( result.tm_isdst);
+}
+
+
+time_t   mulle_get_timeinterval_for_tm( void *self, struct tz_tm *tm)
+{
+   struct tz_context  *p;
+   
+   p = self;
+   if( ! p)
+      return( -1);
+
+   return( _mktime( p, tm));
 }
 
 

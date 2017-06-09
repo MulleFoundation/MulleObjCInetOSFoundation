@@ -6,5 +6,5 @@
 //  Copyright © 2017 Mulle kybernetiK. All rights reserved.
 //
 
-#import <MulleObjCFoundation/MulleObjCFoundation.h>
+#import <MulleObjCStandardFoundation/MulleObjCStandardFoundation.h>
 #import <MulleObjCInetFoundation/MulleObjCInetFoundation.h>

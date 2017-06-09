@@ -25,7 +25,7 @@
 @interface NSRunLoop( Private)
 
 - (void) _addObject:(NSObject <_NSFileDescriptor> *) handle
-            forMode:(NSObject <_NSFileDescriptor> *) mode;
+            forMode:(NSString *) mode;
 
 - (void) _addObject:(NSObject <_NSFileDescriptor> *) handle
            forModes:(NSArray *) mode;

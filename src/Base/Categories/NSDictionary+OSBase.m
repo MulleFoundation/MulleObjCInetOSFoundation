@@ -25,13 +25,13 @@
 
 @implementation NSDictionary( OSBase)
 
-+ (id) dictionaryWithContentsOfFile:(NSString *) path
++ (instancetype) dictionaryWithContentsOfFile:(NSString *) path
 {
    return( [[[self alloc] initWithContentsOfFile:path] autorelease]);
 }
 
 
-- (id) initWithContentsOfFile:(NSString *) path
+- (instancetype) initWithContentsOfFile:(NSString *) path
 {
    NSData                            *data;
    id                                plist;

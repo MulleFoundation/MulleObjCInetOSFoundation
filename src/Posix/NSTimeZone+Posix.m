@@ -11,14 +11,16 @@
 #import "MulleObjCOSBaseFoundation.h"
 
 // other files in this library
+#include "private.h"
 
 // std-c and dependencies
+#import <MulleObjCStandardFoundation/private/_NSGMTTimeZone.h>
 
 
 
 @implementation NSTimeZone( Posix)
 
-- (id) initWithName:(NSString *) name
+- (instancetype) initWithName:(NSString *) name
 {
    extern void   *mulle_tz_context_with_name( char *, size_t *);
    size_t     size;
@@ -51,15 +53,14 @@
 
    s = getenv( "TZ");
    if( ! s)
-      s = "GMT";
+      return( [_NSGMTTimeZone sharedInstance]);
 
    name = [NSString stringWithCString:s];
-
    return( [NSTimeZone timeZoneWithName:name]);
 }
 
 
-+ (NSArray *) availableLocaleIdentifiers;
++ (NSArray *) availableLocaleIdentifiers
 {
    return( [[NSFileManager defaultManager] directoryContentsAtPath:@"/usr/share/locale"]);
 }
@@ -78,7 +79,7 @@
    NSArray          *zonesLines;
    char             *s;
 
-   names = [NSMutableArray array];
+   names       = [NSMutableArray array];
 
    s           = mulle_get_timezone_zone_tab_file();
    filename    = [NSString stringWithCString:s];
@@ -179,6 +180,57 @@
 }
 
 
+- (NSTimeInterval) _timeIntervalSince1970ForTM:(struct tm *) tm
+{
+   extern long        mulle_get_timeinterval_for_tm( void *, struct tz_tm *);
+   struct tz_tm       tmp;
+   NSTimeInterval     interval;
+   
+   tmp.tm_sec  = tm->tm_sec;
+   tmp.tm_min  = tm->tm_min;
+   tmp.tm_hour = tm->tm_hour;
+   tmp.tm_mday = tm->tm_mday;
+   tmp.tm_mon  = tm->tm_mon;
+   tmp.tm_year = tm->tm_year;
+
+   tmp.tm_zone  = NULL;
+   tmp.tm_isdst = tm->tm_isdst;
+   tmp.tm_wday  = 0;
+   tmp.tm_yday  = 0;
+   
+   interval = (NSTimeInterval) mulle_get_timeinterval_for_tm( [_data bytes], &tmp);
+   if( interval == -1)
+      MulleObjCThrowCInvalidArgumentException( "time can not be converted");
+   
+   tm->tm_sec  = tmp.tm_sec;
+   tm->tm_min  = tmp.tm_min;
+   tm->tm_hour = tmp.tm_hour;
+   tm->tm_mday = tmp.tm_mday;
+   tm->tm_mon  = tmp.tm_mon;
+   tm->tm_year = tmp.tm_year;
+
+   tm->tm_zone  = tmp.tm_zone;
+   tm->tm_isdst = tmp.tm_isdst;
+   tm->tm_wday  = tmp.tm_wday;
+   tm->tm_yday  = tmp.tm_yday;
+   
+   return( interval);
+}
+
+
+- (NSInteger) _secondsFromGMTForTimeIntervalSince1970:(NSTimeInterval) interval
+{
+   extern long   mulle_get_gmt_offset_for_time_interval( void *, time_t);
+   long          offset;
+   
+   if( ! _data)
+      return( 0);
+   
+   offset  = mulle_get_gmt_offset_for_time_interval( [_data bytes], (time_t) interval);
+   return( offset);
+}
+
+
 - (NSInteger) secondsFromGMTForDate:(NSDate *) aDate
 {
    extern long      mulle_get_gmt_offset_for_time_interval( void *, time_t);
@@ -209,16 +261,17 @@
    NSTimeInterval   seconds;
    int              flag;
 
+
    seconds = [aDate timeIntervalSince1970]; // standard unix
    flag    = mulle_get_daylight_saving_flag_for_time_interval( [_data bytes], (time_t) seconds);
    return( flag ? YES : NO);
 }
 
 
-+ (id) timeZoneForSecondsFromGMT:(NSInteger) seconds;
++ (instancetype) timeZoneForSecondsFromGMT:(NSInteger) seconds;
 {
    if( ! seconds)
-      return( [self timeZoneWithAbbreviation:@"GMT"]);
+      return( [self _GMTTimeZone]);
 
    abort();
    return( nil);

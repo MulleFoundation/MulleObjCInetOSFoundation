@@ -11,8 +11,8 @@
 
 @interface NSDictionary( OSBase)
 
-+ (id) dictionaryWithContentsOfFile:(NSString *) path;
-- (id) initWithContentsOfFile:(NSString *) path;
++ (instancetype) dictionaryWithContentsOfFile:(NSString *) path;
+- (instancetype) initWithContentsOfFile:(NSString *) path;
 - (BOOL) writeToFile:(NSString *) path
           atomically:(BOOL) flag;
 

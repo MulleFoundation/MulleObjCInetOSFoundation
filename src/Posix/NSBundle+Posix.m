@@ -30,7 +30,7 @@
 {
    NSString  *exePath;
    char      *c_path;
-   
+
    exePath  = [self executablePath];
    c_path   = [exePath fileSystemRepresentation];
    if( ! c_path)
@@ -38,17 +38,17 @@
       errno = EINVAL;
       return( NO);
    }
-   
+
    [self willLoad];
-   
+
    // check to see if alreay loaded
    // RTLD_LAZY | RTLD_GLOBAL crashed for me
    _handle = dlopen( c_path, RTLD_LAZY);
    if( ! _handle)
       return( NO);
-   
+
    [self didLoad];
-   
+
    return( YES);
 }
 
@@ -61,7 +61,7 @@
          MulleObjCThrowInternalInconsistencyException( @"dlclose: %s", dlerror());
       _handle = NULL;
    }
-   
+
    return( NO);
 }
 

@@ -8,11 +8,11 @@
 // define, that make things POSIXly
 #define _XOPEN_SOURCE 700
 
-#import "MulleObjCPosixDateFormatter.h"
+#import "_NSPosixDateFormatter.h"
 
 // other files in this library
 #import "NSDate+OSBasePrivate.h"
-#import "NSError+Posix.h"
+#import "MulleObjCPOSIXError.h"
 #import "NSLocale+Posix.h"
 #import "NSLocale+PosixPrivate.h"
 #import "NSLog.h"
@@ -25,15 +25,23 @@
 #include <xlocale.h>
 
 
-@implementation MulleObjCPosixDateFormatter
+@interface NSObject (Private)
 
-+ (SEL *) classDependencies
+- (BOOL) __isNSCalendarDate;
+
+@end
+
+
+@implementation _NSPosixDateFormatter
+
++ (struct _mulle_objc_dependency *) dependencies
 {
-   static SEL   dependencies[] =
+   static struct _mulle_objc_dependency   dependencies[] =
    {
-      @selector( NSConstantString),
-      0
+      { @selector( NSConstantString), 0 },
+      { 0, 0 }
    };
+
    return( dependencies);
 }
 
@@ -88,25 +96,91 @@
 #pragma mark conversions
 
 
++ (id) _dateWithCStringFormat:(char *) c_format
+                       locale:(NSLocale *) locale
+                     timeZone:(NSTimeZone *) timeZone
+                    isLenient:(BOOL) lenient
+               cStringPointer:(char **) c_str_p
+{
+   NSDate           *date;
+   int              rval;
+   struct tm        tm;
+   NSCalendarDate   *calendarDate;
+
+   rval = mulle_posix_tm_from_string_with_format( &tm,
+                                                 c_str_p,
+                                                 c_format,
+                                                 [locale xlocale],
+                                                 lenient);
+   if( rval < 0)
+      return( nil);
+
+   calendarDate = [[NSCalendarDate alloc] _initWithTM:&tm
+                                             timeZone:timeZone];
+   if( [self generateCalendarDates])
+      return( [calendarDate autorelease]);
+
+   date = [NSDate dateWithTimeIntervalSince1970:[calendarDate timeIntervalSince1970]];
+   [calendarDate release];
+
+   return( date);
+}
+
+
+- (size_t) _printDate:(NSDate *) date
+               buffer:(char *) buf
+               length:(size_t) len
+        cStringFormat:(char *) c_format
+               locale:(NSLocale *) locale
+             timeZone:(NSTimeZone *) timeZone
+{
+   struct tm   tm;
+
+   mulle_posix_tm_with_timeintervalsince1970( &tm,
+                                             [date timeIntervalSince1970],
+                                             (unsigned int) [timeZone secondsFromGMTForDate:date]);
+   return( [self _printTM:&tm
+                   buffer:buf
+                   length:len
+            cStringFormat:c_format
+                   locale:locale]);
+}
+
+
 //
 // a NSDate is a GMT date, it should be rendered as GMT alas
 // the user may specify a timeZone...
 //
 - (NSString *) stringFromDate:(NSDate *) date
 {
-   NSString   *s;
-   size_t     len;
-   char       *buf;
+   NSString     *s;
+   size_t       len;
+   char         *buf;
+   NSTimeZone   *timeZone;
+   NSLocale     *locale;
 
+   timeZone = [self timeZone];
+   if( ! timeZone && [date __isNSCalendarDate])
+      timeZone = [(NSCalendarDate *) date timeZone];
+
+   locale = [self locale];
+
+   NSLog( @"Using tz %@", [timeZone abbreviation]);
+   NSLog( @"Using locale %@", [locale localeIdentifier]);
+
+   //
+   // TODO: use alloca or somesuch instead of buf ?
+   //
    buf = NULL;
    for(;;)
    {
       buf = mulle_allocator_realloc( NULL, buf, _buflen);
-      len = [date _getAsCString:buf
-                         length:_buflen
-                  cStringFormat:_cformat
-                         locale:[self locale]
-                       timeZone:[self timeZone]];
+      len = [self _printDate:date
+                      buffer:buf
+                      length:_buflen
+               cStringFormat:_cformat
+                      locale:locale
+                    timeZone:timeZone];
       if( len)
       {
           s = [NSString stringWithCString:buf

@@ -18,14 +18,14 @@
 
 @implementation NSFileManager (Linux)
 
-+ (SEL *) categoryDependencies
++ (struct _mulle_objc_dependency *) dependencies
 {
-   static SEL   dependencies[] =
+   static struct _mulle_objc_dependency   dependencies[] =
    {
-      @selector( Posix),
-      0
+      { @selector( MulleObjCLoader), @selector( Posix) },
+      { 0, 0 }
    };
-   
+
    return( dependencies);
 }
 

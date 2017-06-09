@@ -50,7 +50,7 @@ static inline void   posix_mode_done( struct posix_mode *ctxt)
 {
    if( ctxt->_handles != ctxt->_handle_space)
       mulle_free( ctxt->_handles);
-   
+
    ctxt->_handles   = NULL;
    ctxt->_s_handles = 0;
 }
@@ -88,7 +88,7 @@ static int   compare_fds( const void *a_p, const void *b_p)
 {
    int   a;
    int   b;
-   
+
    a = *(int *) a_p;
    b = *(int *) b_p;
    return( a - b);
@@ -119,9 +119,9 @@ static inline int   posix_mode_find_handle( struct posix_mode *ctxt, int fd)
 {
    int    *fd_p;
    int    *fd_sentinel;
-   
+
    assert( fd >= 0);
-   
+
    fd_p        = ctxt->_handles;
    fd_sentinel = &fd_p[ ctxt->_n_handles];
    while( fd_p < fd_sentinel)
@@ -137,11 +137,11 @@ static inline int   posix_mode_find_handle( struct posix_mode *ctxt, int fd)
 static inline void   posix_mode_remove_handle( struct posix_mode *ctxt, int fd)
 {
    int  i;
-   
+
    i = posix_mode_find_handle( ctxt, fd);
    if( i == -1)
       return;
-   
+
    ctxt->_handles[ i] = INT_MAX;
    --ctxt->_n_handles;
 
@@ -155,9 +155,9 @@ static inline void   posix_mode_set_fdset_handles( struct posix_mode *ctxt,
    int  *p;
    int  *sentinel;
    int  fd;
-   
+
    assert( ctxt);
-   
+
    p        = ctxt->_handles;
    sentinel = &p[ ctxt->_n_handles];
    while( p < sentinel)
@@ -173,7 +173,7 @@ static inline void   posix_mode_set_fdset_handles( struct posix_mode *ctxt,
 static struct posix_mode  *getOrCreatePosixMode( NSRunLoop *self, NSString *mode)
 {
    struct posix_mode   *ctxt;
-   
+
    ctxt = (struct posix_mode *) NSMapGet( self->_modeTable, mode);
    if( ! ctxt)
    {
@@ -199,9 +199,9 @@ static struct posix_mode  *getOrCreatePosixMode( NSRunLoop *self, NSString *mode
    int                     rval;
    NSObject< _NSFileDescriptor>  *fileHandle;
    struct posix_mode       *ctxt;
-   
+
    ctxt = getOrCreatePosixMode( self, mode);
-   
+
    posix_mode_set_fdset_handles( ctxt, &ctxt->_readSet);
    max = posix_mode_get_maxhandle( ctxt);
 
@@ -219,14 +219,14 @@ static struct posix_mode  *getOrCreatePosixMode( NSRunLoop *self, NSString *mode
          continue;
       break;
    }
-   
+
    // timeout
    i   = 0;
    max = rval;
-   
+
    // superflous reentrance check
    NSParameterAssert( [_readyHandles count] == 0);
-   
+
    fd_p        = ctxt->_handles;
    fd_sentinel = &fd_p[ max];
    while( fd_p < fd_sentinel)
@@ -235,15 +235,15 @@ static struct posix_mode  *getOrCreatePosixMode( NSRunLoop *self, NSString *mode
       if( FD_ISSET( fd, &ctxt->_readSet))
       {
          FD_CLR( fd, &ctxt->_readSet);
-         
+
          fileHandle = NSMapGet( _fileHandleTable, (void *) fd);
          [_readyHandles addObject:fileHandle];
       }
    }
-   
+
    for( fileHandle in _readyHandles)
       [fileHandle _notifyWithRunLoop:self];
-   
+
    [_readyHandles removeAllObjects];
 }
 

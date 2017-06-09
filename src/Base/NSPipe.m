@@ -34,7 +34,7 @@
 }
 
 
-+ (id) pipe
++ (instancetype) pipe
 {
    return( [[[self alloc] init] autorelease]);
 }

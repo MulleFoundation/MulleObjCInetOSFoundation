@@ -15,7 +15,6 @@
 
 // other files in this library
 #import "NSString+OSBase.h"
-#import "NSString+PathHandling.h"
 #import "NSLog.h"
 
 // other libraries of MulleObjCPosixFoundation
@@ -41,7 +40,7 @@
 #pragma mark URL
 
 
-+ (id) dataWithContentsOfURL:(NSURL *) url
++ (instancetype) dataWithContentsOfURL:(NSURL *) url
 {
    if( [url isFileURL])
    {
@@ -51,7 +50,7 @@
 }
 
 
-- (id) initWithContentsOfURL:(NSURL *) url
+- (instancetype) initWithContentsOfURL:(NSURL *) url
 {
    if( [url isFileURL])
       return( [self initWithContentsOfFile:[url path]]);

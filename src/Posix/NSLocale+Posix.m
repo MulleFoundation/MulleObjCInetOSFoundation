@@ -182,7 +182,7 @@ de_DE.plist
 }
 
 
-- (id) initWithLocaleIdentifier:(NSString *) name
+- (instancetype) initWithLocaleIdentifier:(NSString *) name
 {
    locale_t       xlocale;
    NSDictionary   *auxInfo;

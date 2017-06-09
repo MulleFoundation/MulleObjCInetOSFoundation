@@ -13,7 +13,7 @@
  */
 #import "MulleObjCOSFoundationParents.h"
 
-// 
+//
 void   NSLog( NSString *format, ...);
 void   NSLogv( NSString *format, va_list args);
 

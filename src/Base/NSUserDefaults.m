@@ -11,9 +11,6 @@
  *  $Id$
  *
  */
-// define, that make things POSIXly
-#define _XOPEN_SOURCE 700
-
 #import "NSUserDefaults.h"
 
 
@@ -31,7 +28,7 @@ static NSString   *NSApplicationDomain  = @"NSApplicationDomain";
 }
 
 
-- (id) init
+- (instancetype) init
 {
    _domains    = [NSMutableDictionary new];
    _searchList = [[NSMutableArray alloc] initWithObjects:NSApplicationDomain, nil];

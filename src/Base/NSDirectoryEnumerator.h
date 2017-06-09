@@ -39,20 +39,20 @@
 @end
 
 
-enum _MulleObjcIsDirectoryState
+enum _MulleObjCIsDirectoryState
 {
-   _MulleObjcIsMaybeADirectory = -1,
-   _MulleObjcIsNotADirectory   = 0,
-   _MulleObjcIsADirectory      = 1
+   _MulleObjCIsMaybeADirectory = -1,
+   _MulleObjCIsNotADirectory   = 0,
+   _MulleObjCIsADirectory      = 1
 };
 
 
 @interface NSDirectoryEnumerator( Future)
 
-- (id) initWithFileManager:(NSFileManager *) manager
+- (instancetype) initWithFileManager:(NSFileManager *) manager
                   rootPath:(NSString *) root
              inheritedPath:(NSString *) inherited;
-- (NSString *) _nextEntry:(enum _MulleObjcIsDirectoryState *) is_dir;
+- (NSString *) _nextEntry:(enum _MulleObjCIsDirectoryState *) is_dir;
 - (void) _close;
 
 @end

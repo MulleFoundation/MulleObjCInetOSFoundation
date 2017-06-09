@@ -31,7 +31,7 @@
 @implementation NSDirectoryEnumerator
 
 
-- (id) initWithFileManager:(NSFileManager *) manager
+- (instancetype) initWithFileManager:(NSFileManager *) manager
                  directory:(NSString *) path
 {
    return( [self initWithFileManager:manager
@@ -92,9 +92,9 @@
    NSString         *filename;
    NSString         *s;
    id               obj;
-   enum _MulleObjcIsDirectoryState   state;
+   enum _MulleObjCIsDirectoryState   state;
    BOOL             is_dir2;
-   
+
    if( ! _dir)
       return( nil);
 
@@ -139,18 +139,18 @@ retry_file:
 
    switch( state)
    {
-   case _MulleObjcIsMaybeADirectory :  // unknow
+   case _MulleObjCIsMaybeADirectory :  // unknow
       if( ! [_manager fileExistsAtPath:_currentObjectRelativePath
                            isDirectory:&is_dir2])
          goto retry_file; // gone now ?
       if( is_dir2)
          goto retry_file;
       break;
-      
-   case _MulleObjcIsADirectory :
+
+   case _MulleObjCIsADirectory :
       goto retry_file;
    }
-   
+
    _currentEnumerationRelativePath_ = _currentObjectRelativePath;
    return( _currentEnumerationRelativePath_);
 }

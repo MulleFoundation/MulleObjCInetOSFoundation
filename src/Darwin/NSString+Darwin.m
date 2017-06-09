@@ -24,14 +24,14 @@
 
 @implementation NSString( Darwin)
 
-+ (SEL *) categoryDependencies
++ (struct _mulle_objc_dependency *) dependencies
 {
-   static SEL   dependencies[] =
+   static struct _mulle_objc_dependency   dependencies[] =
    {
-      @selector( OSBase),  // there is no Posix or BSD
-      0
+      { @selector( MulleObjCLoader), @selector( BSD) },
+      { 0, 0 }
    };
-   
+
    return( dependencies);
 }
 

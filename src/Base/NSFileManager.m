@@ -57,10 +57,10 @@ NSString   *NSFileTypeUnknown          = @"NSFileTypeUnknown";
 
 @interface NSDirectoryEnumerator ( NSFileManager)
 
-- (id) initWithFileManager:(NSFileManager *) manager
+- (instancetype) initWithFileManager:(NSFileManager *) manager
                   rootPath:(NSString *) root
              inheritedPath:(NSString *) inherited;
-- (id) initWithFileManager:(NSFileManager *) manager
+- (instancetype) initWithFileManager:(NSFileManager *) manager
                  directory:(NSString *) path;
 
 @end
@@ -95,11 +95,11 @@ NSString   *NSFileTypeUnknown          = @"NSFileTypeUnknown";
 {
    BOOL      flag;
    NSError   *error;
-   
+
    if( ! [contents writeToFile:path
                       atomically:NO])
       return( NO);
-   
+
    flag = [self setAttributes:attributes
                  ofItemAtPath:path
                         error:&error];

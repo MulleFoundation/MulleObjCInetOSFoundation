@@ -14,7 +14,7 @@
 #import "NSPathUtilities.h"
 
 // other files in this library
-#import "NSPathUtilities+Private.h"
+#import "NSPathUtilities+OSBasePrivate.h"
 #import "NSString+OSBase.h"
 
 // std-c and dependencies

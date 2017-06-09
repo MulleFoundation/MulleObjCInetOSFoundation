@@ -75,7 +75,7 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
 }
 
 
-- (id) init
+- (instancetype) init
 {
    abort();
    return( nil);
@@ -91,7 +91,7 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
    BOOL                flag;
 
    self = [self init];  // be done by subcategory
-   
+
    pool = [NSAutoreleasePool new];
 
    fullPath = [fullPath stringByStandardizingPath];
@@ -152,7 +152,7 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
 //
 // stage it, so that we can intercept it
 //
-- (id) initWithPath:(NSString *) fullPath
+- (instancetype) initWithPath:(NSString *) fullPath
 {
    return( [self _initWithPath:fullPath
                 executablePath:nil]);
@@ -249,7 +249,7 @@ static BOOL   haveDiscovered;
    rover = [bundleInfo keyEnumerator];
    while( path = [rover nextObject])
       if( flag ^ ! [[path pathExtension] isEqualToString:@"framework"])
-         [array addObject:[bundleInfo valueForKey:path]];
+         [array addObject:[bundleInfo objectForKey:path]];
    return( array);
 }
 

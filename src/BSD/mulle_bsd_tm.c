@@ -40,19 +40,19 @@ int   mulle_bsd_tm_is_invalid( struct tm *tm)
 }
 
 
-unsigned int   mulle_bsd_tm_augment( struct tm *tm, struct tm *now, int *has_tz)
+unsigned int   mulle_bsd_tm_augment( struct tm *tm, struct tm *now, enum mulle_bsd_tm_status *has_tz)
 {
    unsigned int  n;
 
    n = mulle_posix_tm_augment( tm, now);
 
-   *has_tz = 0;
+   *has_tz = mulle_bsd_tm_no_tz;
 
    if( tm->tm_gmtoff == LONG_MIN && tm->tm_zone == (char *) &tm)
    {
       ++n;
       tm->tm_gmtoff = now->tm_gmtoff;
-      *has_tz       = 1;
+      *has_tz       = mulle_bsd_tm_with_tz;
    }
 
    return( n);
@@ -60,17 +60,17 @@ unsigned int   mulle_bsd_tm_augment( struct tm *tm, struct tm *now, int *has_tz)
 
 
 
-int   mulle_bsd_tm_from_string_with_format( struct tm *tm,
-                                            char **c_str_p,
-                                            char *c_format,
-                                            locale_t locale,
-                                            int is_lenient)
+enum mulle_bsd_tm_status   mulle_bsd_tm_from_string_with_format( struct tm *tm,
+                                                                 char **c_str_p,
+                                                                 char *c_format,
+                                                                 locale_t locale,
+                                                                 int is_lenient)
 {
-   char             *c_str;
-   struct tm        now;
-   time_t           nowtimeval;
-   unsigned int     n;
-   int              has_tz;
+   char                       *c_str;
+   struct tm                  now;
+   time_t                     nowtimeval;
+   unsigned int               n;
+   enum mulle_bsd_tm_status   has_tz;
 
    // set it all to int min, that way we can deduce how much
    // strptime was able to parse for "leniency"
@@ -80,13 +80,10 @@ int   mulle_bsd_tm_from_string_with_format( struct tm *tm,
    c_str     = *c_str_p;
    *c_str_p  = strptime_l( c_str, c_format, tm, locale);
 
-   if( ! *c_str_p)
-   {
-      if( ! is_lenient)
-         return( -1);
-   }
+   if( ! *c_str_p && ! is_lenient)
+      return( mulle_bsd_tm_error);
 
-   has_tz = 0;
+   has_tz = mulle_bsd_tm_no_tz;
    if( mulle_bsd_tm_is_invalid( tm))
    {
       // augment formatter with current time (or only when parsing failed ?)
@@ -97,7 +94,7 @@ int   mulle_bsd_tm_from_string_with_format( struct tm *tm,
 
       // absolutely no conversion and we failed parsing, strange
       if( ! n && ! *c_str_p)
-         return( -1);
+         return( mulle_bsd_tm_error);
    }
 
    return( has_tz);

@@ -19,7 +19,7 @@ NSString   *NSDefaultRunLoopMode = @"NSDefaultRunLoopMode";
 
 @implementation NSRunLoop
 
-- (id) init
+- (instancetype) init
 {
    self = [super init];
    if( self)
@@ -44,7 +44,7 @@ NSString   *NSDefaultRunLoopMode = @"NSDefaultRunLoopMode";
    if( _fileHandleTable)
       NSFreeMapTable( _fileHandleTable);
    [_readyHandles release];
-   
+
    [super dealloc];
 }
 
@@ -54,24 +54,24 @@ NSString   *NSDefaultRunLoopMode = @"NSDefaultRunLoopMode";
    NSThread              *thread;
    NSMutableDictionary   *threadDictionary;
    NSRunLoop             *runLoop;
-   
+
    thread           = [NSThread currentThread];
    threadDictionary = [thread threadDictionary];
-   
+
    NSCParameterAssert( threadDictionary);
-   
+
    runLoop          = [threadDictionary objectForKey:@"NSRunLoop"];
    if( runLoop)
       return( runLoop);
-   
+
    runLoop = [NSRunLoop new];
-   
+
    NSParameterAssert( runLoop);
-   
+
    [threadDictionary setObject:runLoop
                         forKey:@"NSRunLoop"];
    [runLoop release];
-   
+
    return( runLoop);
 }
 
@@ -82,7 +82,7 @@ NSString   *NSDefaultRunLoopMode = @"NSDefaultRunLoopMode";
    if( _currentMode)
       [NSException raise:NSInternalInconsistencyException
                   format:@"NSRunLoop is not re-entrant"];
-   
+
    _currentMode = mode;
    [self _acceptInputForMode:mode
                   beforeDate:date];
@@ -94,7 +94,7 @@ NSString   *NSDefaultRunLoopMode = @"NSDefaultRunLoopMode";
 {
    [self acceptInputForMode:mode
                   beforeDate:nil];
-   
+
    // should check for next timer here later
    return( nil);
 }
@@ -109,7 +109,7 @@ NSString   *NSDefaultRunLoopMode = @"NSDefaultRunLoopMode";
 - (void) runUntilDate:(NSDate *) date
 {
    NSTimeInterval   until;
-   
+
    NSParameterAssert( [date isKindOfClass:[NSDate class]]);
 
    until = [date timeIntervalSinceReferenceDate];

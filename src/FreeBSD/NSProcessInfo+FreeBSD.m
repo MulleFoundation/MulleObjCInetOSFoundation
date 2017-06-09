@@ -17,8 +17,8 @@
 // other files in this library
 
 // other libraries of MulleObjCPosixFoundation
-#import "NSArray+PosixPrivate.h"
-#import "NSDictionary+PosixPrivate.h"
+#import "NSArray+OSBasePrivate.h"
+#import "NSDictionary+OSBasePrivate.h"
 
 // std-c and dependencies
 #include <sys/types.h>
@@ -27,14 +27,14 @@
 
 @implementation NSProcessInfo( FreeBSD)
 
-+ (SEL *) categoryDependencies
++ (struct _mulle_objc_dependency *) dependencies
 {
-   static SEL   dependencies[] =
+   static struct _mulle_objc_dependency   dependencies[] =
    {
-      @selector( BSD),
-      0
+      { @selector( MulleObjCLoader), @selector( BSD) },
+      { 0, 0 }
    };
-   
+
    return( dependencies);
 }
 

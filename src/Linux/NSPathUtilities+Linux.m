@@ -12,7 +12,7 @@
 // other files in this library
 
 // other libraries of MulleObjCPosixFoundation
-#import "NSPathUtilities+PosixPrivate.h"
+#import "NSPathUtilities+OSBasePrivate.h"
 
 
 // just like FreeBSD not much thought invested
@@ -131,16 +131,25 @@ static _NSPathUtilityVectorTable   _LinuxTable =
 };
 
 
-@implementation _MulleObjCOSLoader (Linux)
+@implementation MulleObjCLoader (Linux)
 
-+ (SEL *) categoryDependencies
++ (struct _mulle_objc_dependency *) dependencies
 {
-   static SEL   dependencies[] =
+   static struct _mulle_objc_dependency   dependencies[] =
    {
-      @selector( Posix),
-      0
+      { @selector( MulleObjCLoader), @selector( Posix) },
+
+      { @selector( _NSGMTTimeZone), @selector( Linux) },
+      { @selector( NSBundle), @selector( Linux) },
+      { @selector( NSCalendarDate), @selector( Linux) },
+      { @selector( NSDateFormatter), @selector( Linux) },
+      { @selector( NSFileManager), @selector( Linux) },
+      { @selector( NSProcessInfo), @selector( Linux) },
+      { @selector( NSString), @selector( Linux) },
+      { @selector( NSTask), @selector( Linux) },
+      { 0, 0 }
    };
-   
+
    return( dependencies);
 }
 

@@ -21,20 +21,20 @@
 static id    NSInitPipe( NSPipe *self)
 {
    int   fds[ 2];
-   
+
    if( pipe( fds))
       MulleObjCThrowErrnoException( @"pipe creation");
-   
+
    self->_read  = [[NSFileHandle alloc] initWithFileDescriptor:fds[ 0]
                                                 closeOnDealloc:YES];
    self->_write = [[NSFileHandle alloc] initWithFileDescriptor:fds[ 1]
                                                 closeOnDealloc:YES];
-   
+
    return( self);
 }
 
 
-- (id) init
+- (instancetype) init
 {
    return( NSInitPipe( self));
 }

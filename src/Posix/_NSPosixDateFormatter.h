@@ -13,7 +13,7 @@
 // which is pretty much the 10.0 way
 // need to add natural language support later on
 //
-@interface MulleObjCPosixDateFormatter : NSDateFormatter
+@interface _NSPosixDateFormatter : NSDateFormatter
 
 
 - (BOOL) getObjectValue:(id *) obj
@@ -21,7 +21,18 @@
                   range:(NSRange *) rangep
                   error:(NSError **) error;
 
-- (NSString *) stringFromDate:(NSDate *) date;
-- (NSDate *) dateFromString:(NSString *) s;
+- (NSString *) stringFromDate:(id) date;
+- (id) dateFromString:(NSString *) s;
+
+@end
+
+
+@interface NSDateFormatter( PosixFuture)
+
+- (size_t) _printTM:(struct tm *) tm
+             buffer:(char *) buf
+             length:(size_t) len
+      cStringFormat:(char *) c_format
+             locale:(NSLocale *) locale;
 
 @end

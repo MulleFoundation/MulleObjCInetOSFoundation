@@ -12,7 +12,8 @@
  *
  */
 #import "MulleObjCPosixFoundation.h"
-#import "NSPathUtilities+Private.h"
+
+#import "NSPathUtilities+OSBasePrivate.h"
 
 // other files in this library
 
@@ -134,16 +135,22 @@ static _NSPathUtilityVectorTable   _FreeBSDTable =
 
 
 
-@implementation _MulleObjCOSLoader( FreeBSD)
+@implementation MulleObjCLoader( FreeBSD)
 
-+ (SEL *) categoryDependencies
++ (struct _mulle_objc_dependency *) dependencies
 {
-   static SEL   dependencies[] =
+   static struct _mulle_objc_dependency   dependencies[] =
    {
-      @selector( BSD),
-      0
+      { @selector( MulleObjCLoader), @selector( BSD) },
+
+      { @selector( NSBundle), @selector( FreeBSD) },
+      { @selector( NSFileManager), @selector( FreeBSD) },
+      { @selector( NSProcessInfo), @selector( FreeBSD) },
+      { @selector( NSString), @selector( FreeBSD) },
+      { @selector( NSTask), @selector( FreeBSD) },
+      { 0, 0 }
    };
-   
+
    return( dependencies);
 }
 

@@ -15,6 +15,9 @@
 
 #import "MulleObjCPosixFoundation.h"
 
+#import "NSArray+OSBasePrivate.h"
+#import "NSDictionary+OSBasePrivate.h"
+
 // other files in this library
 
 // std-c and dependencies
@@ -24,14 +27,14 @@
 
 @implementation NSProcessInfo( Darwin)
 
-+ (SEL *) categoryDependencies
++ (struct _mulle_objc_dependency *) dependencies
 {
-   static SEL   dependencies[] =
+   static struct _mulle_objc_dependency   dependencies[] =
    {
-      @selector( Posix),
-      0
+      { @selector( MulleObjCLoader), @selector( BSD) },
+      { 0, 0 }
    };
-   
+
    return( dependencies);
 }
 

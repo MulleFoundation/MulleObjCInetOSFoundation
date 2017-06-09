@@ -24,17 +24,17 @@
    void  (*_closer)( int);
 }
 
-+ (id) fileHandleForReadingAtPath:(NSString *) path;
-+ (id) fileHandleForWritingAtPath:(NSString *) path;
-+ (id) fileHandleForUpdatingAtPath:(NSString *) path;
++ (instancetype) fileHandleForReadingAtPath:(NSString *) path;
++ (instancetype) fileHandleForWritingAtPath:(NSString *) path;
++ (instancetype) fileHandleForUpdatingAtPath:(NSString *) path;
 
-+ (id) fileHandleWithStandardError;
-+ (id) fileHandleWithStandardInput;
-+ (id) fileHandleWithStandardOutput;
-+ (id) fileHandleWithNullDevice;
++ (instancetype) fileHandleWithStandardError;
++ (instancetype) fileHandleWithStandardInput;
++ (instancetype) fileHandleWithStandardOutput;
++ (instancetype) fileHandleWithNullDevice;
 
-- (id) initWithFileDescriptor:(int) fd;
-- (id) initWithFileDescriptor:(int) fd
+- (instancetype) initWithFileDescriptor:(int) fd;
+- (instancetype) initWithFileDescriptor:(int) fd
                closeOnDealloc:(BOOL) flag;
 
 - (NSData *) availableData;
@@ -76,15 +76,15 @@ enum _MulleObjCSeekMode
    _MulleObjCSeekEnd = 2
 };
 
-   
-   
+
+
 @interface NSFileHandle( Subclass)
 
-+ (id) fileHandleWithStandardInput;
-+ (id) fileHandleWithStandardOutput;
-+ (id) fileHandleWithStandardError;
++ (instancetype) fileHandleWithStandardInput;
++ (instancetype) fileHandleWithStandardOutput;
++ (instancetype) fileHandleWithStandardError;
 
-- (id) initWithFileDescriptor:(int) fd
+- (instancetype) initWithFileDescriptor:(int) fd
                closeOnDealloc:(BOOL) flag;
 - (void) closeFile;
 - (void) synchronizeFile;
@@ -92,7 +92,7 @@ enum _MulleObjCSeekMode
 
 // low level stuff
 
-+ (id) _fileHandleWithPath:(NSString *) path
++ (instancetype) _fileHandleWithPath:(NSString *) path
                       mode:(enum _MulleObjCOpenMode) mode;
 
 - (size_t) _readBytes:(void *) buf
@@ -101,8 +101,8 @@ enum _MulleObjCSeekMode
 - (size_t) _writeBytes:(void *) buf
                 length:(size_t) len;
 
-- (off_t) _seek:(off_t) offset
-           mode:(enum _MulleObjCSeekMode) mode;
+- (unsigned long long) _seek:(unsigned long long) offset
+                        mode:(enum _MulleObjCSeekMode) mode;
 
 @end
 

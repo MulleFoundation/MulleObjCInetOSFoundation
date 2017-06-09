@@ -34,7 +34,7 @@
 - (BOOL) getFileSystemRepresentation:(char *) buf
                            maxLength:(NSUInteger) max;
 
-+ (id) stringWithContentsOfFile:(NSString *) path;
++ (instancetype) stringWithContentsOfFile:(NSString *) path;
 
 #pragma mark -
 #pragma mark mulle additions
@@ -46,7 +46,7 @@
 
 @interface NSString( OSBaseFuture)
 
-- (id) initWithContentsOfFile:(NSString *) path;
+- (instancetype) initWithContentsOfFile:(NSString *) path;
 - (BOOL) writeToFile:(NSString *) path
           atomically:(BOOL) flag;
 

@@ -1,5 +1,5 @@
 //
-//  NSPathUtilities+Private.h
+//  NSPathUtilities+OSBasePrivate.h
 //  MulleObjCOSFoundation
 //
 //  Created by Nat! on 27.03.17.

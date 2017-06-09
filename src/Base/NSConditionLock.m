@@ -22,7 +22,7 @@
 
 @implementation NSConditionLock
 
-- (id) initWithCondition:(NSInteger) condition
+- (instancetype) initWithCondition:(NSInteger) condition
 {
    _lock             = [NSLock new];
    _currentCondition = condition;
@@ -89,7 +89,7 @@
 
       if( _currentCondition == condition)
          return( YES);
-      
+
       [_lock unlock];
       mulle_thread_yield();
    }

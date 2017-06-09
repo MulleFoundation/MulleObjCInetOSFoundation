@@ -28,3 +28,6 @@
 #  endif
 # endif
 #endif
+
+#import "MulleObjCLoader+MulleObjCOSFoundation.h"
+

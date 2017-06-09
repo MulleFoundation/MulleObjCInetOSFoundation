@@ -8,7 +8,7 @@
 // define, that make things POSIXly
 #define _XOPEN_SOURCE 700
 
-#import "NSError+Posix.h"
+#import "MulleObjCPOSIXError.h"
 
 // other files in this library
 

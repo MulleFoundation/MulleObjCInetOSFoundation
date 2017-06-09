@@ -16,7 +16,7 @@
 
 @interface NSArray( PosixPrivate)
 
-+ (NSArray *) _newWithArgc:(int) argc
-                      argv:(char **) argv;
++ (instancetype) _newWithArgc:(int) argc
+                         argv:(char **) argv;
 
 @end

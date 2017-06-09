@@ -4,6 +4,8 @@
 *.dSYM/
 *.exe
 *.old
+*.bak
+*~.*
 
 /.bootstrap.auto
 /.bootstrap.local
@@ -18,6 +20,7 @@ build/
 include/
 lib/
 tmp/
+project.xcworkspace/
 xcuserdata/
 tests/@noleak/noleak
 tests/CString/cstring
@@ -26,3 +29,15 @@ tests/NSProcessInfo/arguments
 tests/NSProcessInfo/environment
 tests/NSProcessInfo/exepath
 tests/Paths/extension
+build-xcode.d/
+bin/tap-info.sh
+tap-info.sh
+tests/0_noleak/noleak
+tests/Formatter/NSDate/dateformatter
+tests/NSCalendarDate/compatible
+tests/NSCalendarDate/compatible.osx
+tests/NSCalendarDate/file
+tests/NSCalendarDate/natural
+tests/NSCalendarDate/natural.osx
+tests/NSDate/simple
+tests/NSDate/simple.osx

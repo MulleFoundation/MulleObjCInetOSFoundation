@@ -22,7 +22,7 @@
 
 @implementation NSDictionary( OSBasePrivate)
 
-+ (NSDictionary *) _newWithEnvironment:(char **) env
++ (instancetype) _newWithEnvironment:(char **) env
 {
    NSMutableDictionary   *dictionary;
    NSString              *key;

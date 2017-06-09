@@ -20,13 +20,13 @@
 
 #pragma mark - open
 
-+ (id) _fileHandleWithPath:(NSString *) path
++ (instancetype) _fileHandleWithPath:(NSString *) path
                       mode:(enum _MulleObjCOpenMode) mode
 {
    char   *s;
    int    fd;
    int    posixMode;
-   
+
    // compiler should eliminate this
    switch( mode)
    {
@@ -52,26 +52,26 @@ static id  NSInitFileHandleAndClose( NSFileHandle *self, int fd)
 }
 
 
-- (id) initWithFileDescriptor:(int) fd
+- (instancetype) initWithFileDescriptor:(int) fd
                closeOnDealloc:(BOOL) flag
 {
    return( NSInitFileHandleAndClose( self, fd));
 }
 
 
-+ (id) fileHandleWithStandardInput
++ (instancetype) fileHandleWithStandardInput
 {
    return( NSAutoreleaseObject( NSInitFileHandleAndClose( NSAllocateObject( self, 0, NULL), 0)));
 }
 
 
-+ (id) fileHandleWithStandardOutput
++ (instancetype) fileHandleWithStandardOutput
 {
    return( NSAutoreleaseObject( NSInitFileHandleAndClose( NSAllocateObject( self, 0, NULL), 1)));
 }
 
 
-+ (id) fileHandleWithStandardError
++ (instancetype) fileHandleWithStandardError
 {
    return( NSAutoreleaseObject( NSInitFileHandleAndClose( NSAllocateObject( self, 0, NULL), 2)));
 }
@@ -83,7 +83,7 @@ static id  NSInitFileHandleAndClose( NSFileHandle *self, int fd)
                 length:(size_t) len
 {
    ssize_t  result;
-   
+
 retry:
    result = read( (int) _fd, buf, len);
    if( result == -1)
@@ -111,7 +111,7 @@ retry:
 
    NSParameterAssert( buf || ! len);
    NSParameterAssert( len != (size_t) -1);
-   
+
 retry:
    result = write( (int) _fd, buf, len);
    if( result == -1)
@@ -133,8 +133,8 @@ retry:
 #pragma mark - write
 #pragma mark - seek
 
-- (off_t) _seek:(off_t) offset
-           mode:(enum _MulleObjCSeekMode) mode
+- (unsigned long long) _seek:(unsigned long long) offset
+                        mode:(enum _MulleObjCSeekMode) mode
 {
    off_t   result;
    int     posixMode;
@@ -146,11 +146,11 @@ retry:
    case _MulleObjCSeekSet:  posixMode = SEEK_SET; break;
    case _MulleObjCSeekEnd:  posixMode = SEEK_END; break;
    }
-   
+
    result = lseek( (int) _fd, offset, posixMode);
    if( result == (off_t) -1)
       mulle_objc_throw_errno_exception( "lseek");
-   return( result);
+   return( (unsigned long long) result);
 }
 
 

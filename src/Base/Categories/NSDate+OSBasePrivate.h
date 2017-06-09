@@ -11,16 +11,23 @@
 
 @interface NSDate( OSBasePrivateFuture)
 
-+ (NSDate *) _dateWithCStringFormat:(char *) c_format
-                             locale:(NSLocale *) locale
-                           timeZone:(NSTimeZone *) timeZone
-                          isLenient:(BOOL) lenient
-                     cStringPointer:(char **) c_str_p;
++ (instancetype) _dateWithCStringFormat:(char *) c_format
+                                 locale:(NSLocale *) locale
+                               timeZone:(NSTimeZone *) timeZone
+                              isLenient:(BOOL) lenient
+                         cStringPointer:(char **) c_str_p;
 
-- (size_t) _getAsCString:(char *) buf
-                  length:(size_t) len
-           cStringFormat:(char *) c_format
-                  locale:(NSLocale *) locale
-                timeZone:(NSTimeZone *) timeZon;
++ (id) _dateWithCStringFormat:(char *) c_format
+                       locale:(NSLocale *) locale
+                     timeZone:(NSTimeZone *) timeZone
+                    isLenient:(BOOL) lenient
+               cStringPointer:(char **) c_str_p;
+
+- (size_t) _printDate:(NSDate *) date
+               buffer:(char *) buf
+               length:(size_t) len
+        cStringFormat:(char *) c_format
+               locale:(NSLocale *) locale
+             timeZone:(NSTimeZone *) timeZone;
 
 @end

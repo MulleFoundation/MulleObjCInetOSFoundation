@@ -16,8 +16,7 @@
 #import "MulleObjCPosixFoundation.h"
 
 // other files in this library
-#import "_MulleObjCOSLoader.h"
-#import "NSPathUtilities+Private.h"
+#import "NSPathUtilities+OSBasePrivate.h"
 
 // other libraries of MulleObjCPosixFoundation
 
@@ -226,16 +225,22 @@ static _NSPathUtilityVectorTable   _DarwinTable =
 };
 
 
-@implementation _MulleObjCOSLoader( Darwin)
+@implementation MulleObjCLoader( Darwin)
 
-+ (SEL *) categoryDependencies
++ (struct _mulle_objc_dependency *) dependencies
 {
-   static SEL   dependencies[] =
+   static struct _mulle_objc_dependency   dependencies[] =
    {
-      @selector( Posix),
-      0
+      { @selector( MulleObjCLoader), @selector( BSD) },
+
+      { @selector( NSBundle), @selector( Darwin) },
+      { @selector( NSFileManager), @selector( Darwin) },
+      { @selector( NSProcessInfo), @selector( Darwin) },
+      { @selector( NSString), @selector( Darwin) },
+      { @selector( NSTask), @selector( Darwin) },
+      { 0, 0 }
    };
-   
+
    return( dependencies);
 }
 

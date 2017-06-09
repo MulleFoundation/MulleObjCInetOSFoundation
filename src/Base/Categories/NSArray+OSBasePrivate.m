@@ -22,8 +22,8 @@
 
 @implementation NSArray( OSBasePrivate)
 
-+ (NSArray *) _newWithArgc:(int) argc
-                      argv:(char **) argv
++ (instancetype) _newWithArgc:(int) argc
+                         argv:(char **) argv
 {
    int        i;
    char      *s;
