@@ -133,6 +133,8 @@
 		419534A81E9682B0003127E4 /* NSTask+Posix.m in Sources */ = {isa = PBXBuildFile; fileRef = 419534A61E9682B0003127E4 /* NSTask+Posix.m */; };
 		419534AA1E969875003127E4 /* NSDate+PosixPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 419534A91E969875003127E4 /* NSDate+PosixPrivate.h */; };
 		41BFA5261D05842D0072D27D /* NSTask+Darwin.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BFA5251D05842D0072D27D /* NSTask+Darwin.m */; };
+		41C800031EFD630F00D9341D /* NSTimeZone+Linux.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C800021EFD630F00D9341D /* NSTimeZone+Linux.m */; };
+		41C800071EFD634C00D9341D /* NSTimeZone+BSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C800051EFD634C00D9341D /* NSTimeZone+BSD.m */; };
 		41CE12191EC4792700691FF2 /* MulleObjCLoader+OSBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 41CE12171EC4792700691FF2 /* MulleObjCLoader+OSBase.m */; };
 		41CE121D1EC47A2700691FF2 /* MulleObjCLoader+MulleObjCOSFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 41CE121B1EC47A2700691FF2 /* MulleObjCLoader+MulleObjCOSFoundation.m */; };
 		41D7A7411E89243300E63C12 /* NSFileHandle+Posix.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D7A73F1E89243300E63C12 /* NSFileHandle+Posix.m */; };
@@ -326,6 +328,8 @@
 		41BC56ED1ECA3A62003283DB /* NSTimeZone+PosixPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSTimeZone+PosixPrivate.h"; sourceTree = "<group>"; };
 		41BFA5251D05842D0072D27D /* NSTask+Darwin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTask+Darwin.m"; sourceTree = "<group>"; };
 		41BFA5281D05844D0072D27D /* NSTask+BSD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTask+BSD.m"; sourceTree = "<group>"; };
+		41C800021EFD630F00D9341D /* NSTimeZone+Linux.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimeZone+Linux.m"; sourceTree = "<group>"; };
+		41C800051EFD634C00D9341D /* NSTimeZone+BSD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimeZone+BSD.m"; sourceTree = "<group>"; };
 		41CE12171EC4792700691FF2 /* MulleObjCLoader+OSBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MulleObjCLoader+OSBase.m"; sourceTree = "<group>"; };
 		41CE121B1EC47A2700691FF2 /* MulleObjCLoader+MulleObjCOSFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MulleObjCLoader+MulleObjCOSFoundation.m"; sourceTree = "<group>"; };
 		41D115251CED0C2600264476 /* RELEASENOTES.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = RELEASENOTES.md; sourceTree = "<group>"; };
@@ -485,6 +489,7 @@
 				4120953A1D21BB2D00E50D1E /* NSProcessInfo+Linux.m */,
 				412095381D21BACA00E50D1E /* NSString+Linux.m */,
 				418BCC3B1D23FFC100447F73 /* NSTask+Linux.m */,
+				41C800021EFD630F00D9341D /* NSTimeZone+Linux.m */,
 			);
 			path = Linux;
 			sourceTree = "<group>";
@@ -759,6 +764,7 @@
 				413A20491D04A20600CF7746 /* NSLocale+BSD.m */,
 				4107BCAC1D05C2B2008C9CAC /* NSProcessInfo+BSD.m */,
 				41BFA5281D05844D0072D27D /* NSTask+BSD.m */,
+				41C800051EFD634C00D9341D /* NSTimeZone+BSD.m */,
 				414CE92F1E896B6700B90F96 /* MulleObjCLoader+BSD.m */,
 				41641C2C1D0468C900DBE1CE /* mulle_bsd_tm.h */,
 				41641C2B1D0468C900DBE1CE /* mulle_bsd_tm.c */,
@@ -1092,6 +1098,7 @@
 				4139945F1E8D3CC800A85C2C /* NSCalendarDate+BSD.m in Sources */,
 				4139945E1E8D3CC800A85C2C /* NSDateFormatter+BSD.m in Sources */,
 				413994601E8D3CC800A85C2C /* NSLocale+BSD.m in Sources */,
+				41C800071EFD634C00D9341D /* NSTimeZone+BSD.m in Sources */,
 				413994611E8D3CC800A85C2C /* NSProcessInfo+BSD.m in Sources */,
 				413994621E8D3CC800A85C2C /* NSTask+BSD.m in Sources */,
 				413994631E8D3CC800A85C2C /* MulleObjCLoader+BSD.m in Sources */,
@@ -1106,6 +1113,7 @@
 			files = (
 				418BCC391D23FF3C00447F73 /* NSBundle+Linux.m in Sources */,
 				412902681D03248E00D055B1 /* NSCalendarDate+Linux.m in Sources */,
+				41C800031EFD630F00D9341D /* NSTimeZone+Linux.m in Sources */,
 				41641C251D043A9100DBE1CE /* NSDateFormatter+Linux.m in Sources */,
 				418BCC411D240D9E00447F73 /* NSFileManager+Linux.m in Sources */,
 				41413C8A1EC8DF3100389C87 /* _NSGMTTimeZone+Linux.m in Sources */,

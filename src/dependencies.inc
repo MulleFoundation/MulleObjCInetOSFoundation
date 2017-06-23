@@ -47,6 +47,7 @@
       { @selector( NSTask), @selector( Posix) },      // b04725e7,1ac23aba
       { @selector( NSTask), @selector( System) },      // b04725e7,8bce35aa
       { @selector( NSTask), MULLE_OBJC_NO_CATEGORYID },      // b04725e7,00000000
+      { @selector( NSTimeZone), @selector( BSD) },      // 4bf7bd11,4c4a4c98
       { @selector( NSTimeZone), @selector( Posix) },      // 4bf7bd11,1ac23aba
       { @selector( NSURL), @selector( OSBase) },      // b15f7adb,ec55440c
       { @selector( NSUserDefaults), @selector( Conveniences) },      // 0944b917,7fd11f11

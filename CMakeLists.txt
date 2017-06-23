@@ -5,7 +5,7 @@ cmake_minimum_required (VERSION 3.0)
 #
 set( CMAKE_OSX_SYSROOT macosx)
 
-project (MulleObjCOSFoundation)
+project( MulleObjCOSFoundation)
 
 
 set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}

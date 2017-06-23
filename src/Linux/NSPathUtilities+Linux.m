@@ -147,6 +147,7 @@ static _NSPathUtilityVectorTable   _LinuxTable =
       { @selector( NSProcessInfo), @selector( Linux) },
       { @selector( NSString), @selector( Linux) },
       { @selector( NSTask), @selector( Linux) },
+      { @selector( NSTimeZone), @selector( Linux) },
       { 0, 0 }
    };
 

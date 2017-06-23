@@ -27,6 +27,7 @@
       { @selector( NSLocale), @selector( BSD) },
       { @selector( NSProcessInfo), @selector( BSD) },
       { @selector( NSTask), @selector( BSD) },
+      { @selector( NSTimeZone), @selector( BSD) },
       { 0, 0 }
    };
 
