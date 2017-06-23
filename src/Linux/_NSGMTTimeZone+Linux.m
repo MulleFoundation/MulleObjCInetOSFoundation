@@ -6,10 +6,11 @@
 //  Copyright © 2017 Mulle kybernetiK. All rights reserved.
 //
 
-#import "_NSGMTTimeZone+Linux.h"
+#import "MulleObjCOSBaseFoundation.h"
 
-#import <MulleObjCStandardFoundation/Private/_NSGMTTimeZone.h>
+#import <MulleObjCStandardFoundation/private/_NSGMTTimeZone.h>
 
+#include <time.h>
 
 @implementation _NSGMTTimeZone (Linux)
 

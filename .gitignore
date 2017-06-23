@@ -41,3 +41,5 @@ tests/NSCalendarDate/natural
 tests/NSCalendarDate/natural.osx
 tests/NSDate/simple
 tests/NSDate/simple.osx
+/.bootstrap.repos
+/stashes

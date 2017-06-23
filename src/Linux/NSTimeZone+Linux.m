@@ -15,8 +15,6 @@
 #import "NSTimeZone+PosixPrivate.h"
 
 
-#import "NSTimeZone+Linux.h"
-
 @implementation NSTimeZone (Linux)
 
 - (NSTimeInterval) _timeIntervalSince1970ForTM:(struct tm *) tm

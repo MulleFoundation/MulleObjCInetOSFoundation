@@ -41,7 +41,7 @@
       cStringFormat:(char *) c_format
              locale:(NSLocale *) locale
 {
-   locale_t   xlocale;
+   locale_t   old_locale;
    
    old_locale = uselocale( [locale xlocale]);
    {
