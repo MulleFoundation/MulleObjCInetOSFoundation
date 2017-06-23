@@ -28,7 +28,7 @@
 		412095391D21BACA00E50D1E /* NSString+Linux.m in Sources */ = {isa = PBXBuildFile; fileRef = 412095381D21BACA00E50D1E /* NSString+Linux.m */; };
 		4120953B1D21BB2D00E50D1E /* NSProcessInfo+Linux.m in Sources */ = {isa = PBXBuildFile; fileRef = 4120953A1D21BB2D00E50D1E /* NSProcessInfo+Linux.m */; };
 		412902681D03248E00D055B1 /* NSCalendarDate+Linux.m in Sources */ = {isa = PBXBuildFile; fileRef = 412902671D03248E00D055B1 /* NSCalendarDate+Linux.m */; };
-		4136AEEF1EF95911000CACDA /* MulleObjCLoader+MulleObjCOSFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4136AEEE1EF95911000CACDA /* MulleObjCLoader+MulleObjCOSFoundation.h */; };
+		4136AEEF1EF95911000CACDA /* MulleObjCLoader+MulleObjCOSFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4136AEEE1EF95911000CACDA /* MulleObjCLoader+MulleObjCOSFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		413994501E8D3C6200A85C2C /* NSBundle+FreeBSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 41EC16651CBFD98A00676349 /* NSBundle+FreeBSD.m */; };
 		413994511E8D3C6200A85C2C /* NSFileManager+FreeBSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 418BCC3E1D240D1400447F73 /* NSFileManager+FreeBSD.m */; };
 		413994521E8D3C6200A85C2C /* NSPathUtilities+FreeBSD.m in Sources */ = {isa = PBXBuildFile; fileRef = 41EC16661CBFD98A00676349 /* NSPathUtilities+FreeBSD.m */; };
@@ -779,8 +779,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4136AEEF1EF95911000CACDA /* MulleObjCLoader+MulleObjCOSFoundation.h in Headers */,
 				4158A7851D05D9D6009697C0 /* MulleObjCOSFoundation.h in Headers */,
+				4136AEEF1EF95911000CACDA /* MulleObjCLoader+MulleObjCOSFoundation.h in Headers */,
 				417E7ABA1E8D650A005772E5 /* MulleObjCOSFoundationParents.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

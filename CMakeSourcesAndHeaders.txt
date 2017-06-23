@@ -1,4 +1,4 @@
-# Generated on 2017-6-23 17:07:13 by version 0.6.4 of mulle-xcode-to-cmake
+# Generated on 2017-6-23 18:38:10 by version 0.6.4 of mulle-xcode-to-cmake
 # Command line:
 #    mulle-xcode-to-cmake -i -t MulleObjCOSFoundation -t MulleObjCOSFoundationStandalone -t MulleObjCOSBaseFoundation -t MulleObjCPosixFoundation -t MulleObjCBSDFoundation -t MulleObjCLinuxFoundation -t MulleObjCFreeBSDFoundation -t MulleObjCDarwinFoundation -w src/Linux/NSPathUtilities+Linux.m -w src/FreeBSD/NSPathUtilities+FreeBSD.m -w src/Darwin/NSPathUtilities+Darwin.m -w src/MulleObjCLoader+OS.m -w src/Base/MulleObjCLoader+OSBase.m -w src/Posix/MulleObjCLoader+Posix.m -w src/BSD/MulleObjCLoader+BSD.m sexport MulleObjCOSFoundation.xcodeproj
 
@@ -14,12 +14,12 @@ src/MulleObjCOSFoundation.m
 )
 
 set( MULLE_OBJC_OS_FOUNDATION_PUBLIC_HEADERS
+src/MulleObjCLoader+MulleObjCOSFoundation.h
 src/MulleObjCOSFoundation.h
 src/MulleObjCOSFoundationParents.h
 )
 
 set( MULLE_OBJC_OS_FOUNDATION_PROJECT_HEADERS
-src/MulleObjCLoader+MulleObjCOSFoundation.h
 )
 
 set( MULLE_OBJC_OS_FOUNDATION_PRIVATE_HEADERS
