@@ -29,6 +29,12 @@
 }
 
 
+// use string subclass that keeps components separate
++ (instancetype) pathWithComponents:(NSArray *) components
+{
+   return( [components componentsJoinedByString:NSFilePathComponentSeparator]);
+}
+
 ///
 // This method can make the following changes in the provided string:
 //

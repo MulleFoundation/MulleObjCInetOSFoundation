@@ -16,6 +16,8 @@
 
 @interface NSString( OSBase)
 
++ (instancetype) pathWithComponents:(NSArray *) components;
+
 - (BOOL) isAbsolutePath;
 - (NSString *) lastPathComponent;
 - (NSString *) pathExtension;

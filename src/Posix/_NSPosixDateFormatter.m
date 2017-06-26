@@ -96,10 +96,7 @@
 #pragma mark conversions
 
 
-+ (id) _dateWithCStringFormat:(char *) c_format
-                       locale:(NSLocale *) locale
-                     timeZone:(NSTimeZone *) timeZone
-                    isLenient:(BOOL) lenient
+- (id) _dateWithCStringFormat:(char *) c_format
                cStringPointer:(char **) c_str_p
 {
    NSDate           *date;
@@ -110,13 +107,13 @@
    rval = mulle_posix_tm_from_string_with_format( &tm,
                                                  c_str_p,
                                                  c_format,
-                                                 [locale xlocale],
-                                                 lenient);
+                                                 [[self locale] xlocale],
+                                                 [self isLenient]);
    if( rval < 0)
       return( nil);
 
    calendarDate = [[NSCalendarDate alloc] _initWithTM:&tm
-                                             timeZone:timeZone];
+                                             timeZone:[self timeZone]];
    if( [self generateCalendarDates])
       return( [calendarDate autorelease]);
 
@@ -199,11 +196,8 @@
    NSDate   *date;
 
    c_str = [s cString];
-   date  = [_dateClass _dateWithCStringFormat:_cformat
-                                       locale:[self locale]
-                                     timeZone:[self timeZone]
-                                    isLenient:[self isLenient]
-                               cStringPointer:&c_str];
+   date  = [self _dateWithCStringFormat:_cformat
+                         cStringPointer:&c_str];
    return( date);
 }
 
@@ -219,11 +213,8 @@
 
    c_begin = [string cString];
    c_end   = c_begin;
-   date    = [_dateClass _dateWithCStringFormat:_cformat
-                                         locale:[self locale]
-                                       timeZone:[self timeZone]
-                                      isLenient:[self isLenient]
-                                 cStringPointer:&c_end];
+   date    = [self _dateWithCStringFormat:_cformat
+                           cStringPointer:&c_end];
    if( ! date)
    {
       errno = EINVAL; // whatever

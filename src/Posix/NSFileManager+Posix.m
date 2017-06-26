@@ -218,7 +218,7 @@
    for( i = 0; i < n; i++)
    {
       [subComponents addObject:[components objectAtIndex:i]];
-      subpath = [subComponents pathWithComponents:subComponents];
+      subpath = [NSString pathWithComponents:subComponents];
 
       switch( [self _createDirectoryAtPath:subpath
                                 attributes:attributes])

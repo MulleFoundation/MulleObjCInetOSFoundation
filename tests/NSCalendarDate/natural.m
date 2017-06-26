@@ -35,7 +35,8 @@ int   main( int argc, const char * argv[])
    char              **p;
 
 #ifdef __MULLE_OBJC__
-   mulle_objc_check_runtime();
+   if( mulle_objc_check_universe() != mulle_objc_universe_is_ok)
+      return( 1);
 #endif
    // noon 2000
    today = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:12 * 60 * 60] autorelease];

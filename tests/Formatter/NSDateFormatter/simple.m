@@ -20,7 +20,8 @@ int   main( int argc, const char * argv[])
    NSDate            *date;
 
 #ifdef __MULLE_OBJC__
-   mulle_objc_check_runtime();
+   if( mulle_objc_check_universe() != mulle_objc_universe_is_ok)
+      return( 1);
 #endif
 
    formatter = [[[NSDateFormatter alloc] initWithDateFormat:@"%Y-%m-%dT%H:%M:%SZ"
