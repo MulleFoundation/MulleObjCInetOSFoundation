@@ -14,6 +14,11 @@ Fork      |  Build Status | Release Version
 [Community](https://github.com/mulle-objc/MulleObjCOSFoundation/tree/release) | [![Build Status](https://travis-ci.org/mulle-objc/MulleObjCOSFoundation.svg)](https://travis-ci.org/mulle-objc/MulleObjCOSFoundation) | ![Community tag](https://img.shields.io/github/tag/mulle-objc/MulleObjCOSFoundation.svg) [![Build Status](https://travis-ci.org/mulle-objc/MulleObjCOSFoundation.svg?branch=release)](https://travis-ci.org/mulle-objc/MulleObjCOSFoundation) -->
 
 
+The combination of all OSes into one library is historic and makes things more
+difficult now, expect  MulleObjCOSFoundation to be split into multiple
+libraries in the future.
+
+
 ## Install
 
 See [mulle-foundation-developer](//github.com/mulle-nat/mulle-foundation-developer) for
