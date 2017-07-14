@@ -6,11 +6,10 @@
 //  Copyright © 2017 Mulle kybernetiK. All rights reserved.
 //
 
-#import "MulleObjCLoader+MulleObjCOSFoundation.h"
+#import <MulleObjC/MulleObjC.h>
 
 
 @implementation MulleObjCLoader( MulleObjCOSFoundation)
-
 
 + (struct _mulle_objc_dependency *) dependencies
 {

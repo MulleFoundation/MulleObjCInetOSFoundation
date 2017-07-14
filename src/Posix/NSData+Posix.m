@@ -11,6 +11,8 @@
 #import "MulleObjCOSBaseFoundation.h"
 
 // other libraries of MulleObjCPosixFoundation
+#import "NSPageAllocation.h"
+#import "NSPageAllocation+Private.h"
 
 // std-c and dependencies
 #include <fcntl.h>
@@ -19,6 +21,14 @@
 
 
 @implementation NSData( Posix)
+
+
+// could be anywhere
++ (void) load
+{
+   _MulleObjCSetPageSize( sysconf(_SC_PAGESIZE));
+}
+
 
 - (instancetype) initWithContentsOfFile:(NSString *) path
 {

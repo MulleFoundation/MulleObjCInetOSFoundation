@@ -20,7 +20,7 @@
 {
    static struct _mulle_objc_dependency   dependencies[] =
    {
-      { @selector( MulleObjCLoader), @selector( BSD) },
+      { @selector( MulleObjCLoader), @selector( MulleObjCBSDFoundation) },
       { 0, 0 }
    };
 

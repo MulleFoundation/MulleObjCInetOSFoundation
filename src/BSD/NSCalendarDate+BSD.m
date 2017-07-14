@@ -19,7 +19,7 @@
 {
    static struct _mulle_objc_dependency   dependencies[] =
    {
-      { @selector( MulleObjCLoader), @selector( Posix) },
+      { @selector( MulleObjCLoader), @selector( MulleObjCPosixFoundation) },
       { 0, 0 }
    };
 

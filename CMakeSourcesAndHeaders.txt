@@ -1,6 +1,6 @@
 # Generated on 2017-6-23 18:38:10 by version 0.6.4 of mulle-xcode-to-cmake
 # Command line:
-#    mulle-xcode-to-cmake -i -t MulleObjCOSFoundation -t MulleObjCOSFoundationStandalone -t MulleObjCOSBaseFoundation -t MulleObjCPosixFoundation -t MulleObjCBSDFoundation -t MulleObjCLinuxFoundation -t MulleObjCFreeBSDFoundation -t MulleObjCDarwinFoundation -w src/Linux/NSPathUtilities+Linux.m -w src/FreeBSD/NSPathUtilities+FreeBSD.m -w src/Darwin/NSPathUtilities+Darwin.m -w src/MulleObjCLoader+OS.m -w src/Base/MulleObjCLoader+OSBase.m -w src/Posix/MulleObjCLoader+Posix.m -w src/BSD/MulleObjCLoader+BSD.m sexport MulleObjCOSFoundation.xcodeproj
+#    mulle-xcode-to-cmake -i -t MulleObjCOSFoundation -t MulleObjCOSFoundationStandalone -t MulleObjCOSBaseFoundation -t MulleObjCPosixFoundation -t MulleObjCBSDFoundation -t MulleObjCLinuxFoundation -t MulleObjCFreeBSDFoundation -t MulleObjCDarwinFoundation -w src/Linux/NSPathUtilities+Linux.m -w src/FreeBSD/NSPathUtilities+FreeBSD.m -w src/Darwin/MulleObjCLoader+MulleObjCDarwinFoundation.m.m -w src/MulleObjCLoader+MulleObjCOSFoundation.m -w src/Base/MulleObjCLoader+MulleObjCOSBaseFoundation.m -w src/Posix/MulleObjCLoader+MulleObjCPosixFoundation.m -w src/BSD/MulleObjCLoader+MulleObjCBSDFoundation.m sexport MulleObjCOSFoundation.xcodeproj
 
 
 
@@ -14,7 +14,6 @@ src/MulleObjCOSFoundation.m
 )
 
 set( MULLE_OBJC_OS_FOUNDATION_PUBLIC_HEADERS
-src/MulleObjCLoader+MulleObjCOSFoundation.h
 src/MulleObjCOSFoundation.h
 src/MulleObjCOSFoundationParents.h
 )
@@ -74,7 +73,7 @@ src/Base/NSProcessInfo.m
 src/Base/NSRunLoop.m
 src/Base/NSTask.m
 src/Base/NSUserDefaults.m
-src/Base/MulleObjCLoader+OSBase.m
+src/Base/MulleObjCLoader+MulleObjCOSBaseFoundation.m
 )
 
 set( MULLE_OBJC_OSBASE_FOUNDATION_PUBLIC_HEADERS
@@ -101,7 +100,6 @@ src/Base/NSProcessInfo.h
 src/Base/NSRunLoop.h
 src/Base/NSTask.h
 src/Base/NSUserDefaults.h
-src/Posix/_NSPosixDateFormatter.h
 )
 
 set( MULLE_OBJC_OSBASE_FOUNDATION_PROJECT_HEADERS
@@ -145,7 +143,7 @@ src/Posix/NSTask+Posix.m
 src/Posix/NSTimeZone+Posix.m
 src/Posix/Timezone/localtime.c
 src/Posix/_NSPosixDateFormatter.m
-src/Posix/MulleObjCLoader+Posix.m
+src/Posix/MulleObjCLoader+MulleObjCPosixFoundation.m
 )
 
 set( MULLE_OBJC_POSIX_FOUNDATION_PUBLIC_HEADERS
@@ -183,7 +181,7 @@ src/BSD/NSTask+BSD.m
 src/BSD/NSTimeZone+BSD.m
 src/BSD/_NSGMTTimeZone+BSD.m
 src/BSD/mulle_bsd_tm.c
-src/BSD/MulleObjCLoader+BSD.m
+src/BSD/MulleObjCLoader+MulleObjCBSDFoundation.m
 )
 
 set( MULLE_OBJC_BSD_FOUNDATION_PUBLIC_HEADERS
@@ -213,6 +211,7 @@ src/Linux/NSTask+Linux.m
 src/Linux/NSTimeZone+Linux.m
 src/Linux/_NSGMTTimeZone+Linux.m
 src/Linux/NSPathUtilities+Linux.m
+src/Linux/MulleObjCLoader+MulleObjCLinuxFoundation.m
 )
 
 
@@ -227,6 +226,7 @@ src/FreeBSD/NSProcessInfo+FreeBSD.m
 src/FreeBSD/NSString+FreeBSD.m
 src/FreeBSD/NSTask+FreeBSD.m
 src/FreeBSD/NSPathUtilities+FreeBSD.m
+src/FreeBSD/MulleObjCLoader+MulleObjCFreeBSDFoundation.m
 )
 
 set( MULLE_OBJC_FREE_BSD_FOUNDATION_PUBLIC_HEADERS
@@ -250,6 +250,7 @@ src/Darwin/NSProcessInfo+Darwin.m
 src/Darwin/NSString+Darwin.m
 src/Darwin/NSTask+Darwin.m
 src/Darwin/NSPathUtilities+Darwin.m
+src/Darwin/MulleObjCLoader+MulleObjCDarwinFoundation.m
 )
 
 ##

@@ -5,7 +5,7 @@
 //  Created by Nat! on 27.03.17.
 //  Copyright © 2017 Mulle kybernetiK. All rights reserved.
 //
-#import "MulleObjCPosixFoundation.h"
+#import <MulleObjC/MulleObjC.h>
 
 // other files in this library
 
@@ -13,13 +13,13 @@
 
 
 
-@implementation MulleObjCLoader( BSD)
+@implementation MulleObjCLoader( MulleObjCBSDFoundation)
 
 + (struct _mulle_objc_dependency *) dependencies
 {
    static struct _mulle_objc_dependency   dependencies[] =
    {
-      { @selector( MulleObjCLoader), @selector( OSBase) },
+      { @selector( MulleObjCLoader), @selector( MulleObjCOSBaseFoundation) },
 
       { @selector( _NSGMTTimeZone), @selector( BSD) },
       { @selector( NSCalendarDate), @selector( BSD) },

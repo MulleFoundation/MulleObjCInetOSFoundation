@@ -135,22 +135,16 @@ static _NSPathUtilityVectorTable   _FreeBSDTable =
 
 
 
-@implementation MulleObjCLoader( FreeBSD)
+@implementation _NSPathUtilityVectorTable_Loader( Darwin)
 
 + (struct _mulle_objc_dependency *) dependencies
 {
    static struct _mulle_objc_dependency   dependencies[] =
    {
-      { @selector( MulleObjCLoader), @selector( BSD) },
-
-      { @selector( NSBundle), @selector( FreeBSD) },
-      { @selector( NSFileManager), @selector( FreeBSD) },
-      { @selector( NSProcessInfo), @selector( FreeBSD) },
-      { @selector( NSString), @selector( FreeBSD) },
-      { @selector( NSTask), @selector( FreeBSD) },
+      { @selector( MulleObjCLoader), @selector( MulleObjCBSDFoundation) },
       { 0, 0 }
    };
-
+   
    return( dependencies);
 }
 

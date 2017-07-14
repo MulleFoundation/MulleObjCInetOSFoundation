@@ -29,5 +29,4 @@
 # endif
 #endif
 
-#import "MulleObjCLoader+MulleObjCOSFoundation.h"
 

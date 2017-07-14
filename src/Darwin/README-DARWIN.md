@@ -2,8 +2,6 @@
 
 These are "mixin" categories, that don't expose their own header.
 
-
-# The loader is in NSPathUtilities
-
+# Status
 
 Darwin -> BSD -> Posix -> OSBase

@@ -53,4 +53,6 @@
       { @selector( NSUserDefaults), @selector( Conveniences) },      // 0944b917,7fd11f11
       { @selector( NSUserDefaults), MULLE_OBJC_NO_CATEGORYID },      // 0944b917,00000000
       { @selector( _NSGMTTimeZone), @selector( BSD) },      // 50cec3ce,4c4a4c98
+      { @selector( _NSPathUtilityVectorTable_Loader), @selector( Darwin) },      // 9806676b,5729b300
+      { @selector( _NSPathUtilityVectorTable_Loader), MULLE_OBJC_NO_CATEGORYID },      // 9806676b,00000000
       { @selector( _NSPosixDateFormatter), MULLE_OBJC_NO_CATEGORYID },      // 963fbdc8,00000000

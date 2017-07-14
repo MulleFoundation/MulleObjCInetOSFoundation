@@ -6,26 +6,17 @@
 //  Copyright © 2017 Mulle kybernetiK. All rights reserved.
 //
 // define, that make things POSIXly
-#define _XOPEN_SOURCE 700
 
-#import "MulleObjCOSBaseFoundation.h"
-
-#import "NSPageAllocation.h"
-#import "NSPageAllocation+Private.h"
-
-// other files in this library
-
-// std-c and dependencies
-#include <unistd.h>
+#import <MulleObjC/MulleObjC.h>
 
 
-@implementation MulleObjCLoader( Posix)
+@implementation MulleObjCLoader( MulleObjCPosixFoundation)
 
 + (struct _mulle_objc_dependency *) dependencies
 {
    static struct _mulle_objc_dependency   dependencies[] =
    {
-      { @selector( MulleObjCLoader), @selector( OSBase) },
+      { @selector( MulleObjCLoader), @selector( MulleObjCOSBaseFoundation) },
 
       { @selector( _NSPosixDateFormatter), 0 },
       { @selector( NSCondition), 0 },
@@ -45,12 +36,5 @@
 
    return( dependencies);
 }
-
-
-+ (void) load
-{
-   _MulleObjCSetPageSize( sysconf(_SC_PAGESIZE));
-}
-
 
 @end

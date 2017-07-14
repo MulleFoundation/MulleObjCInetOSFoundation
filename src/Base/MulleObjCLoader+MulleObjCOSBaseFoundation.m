@@ -9,7 +9,7 @@
 #import "MulleObjCOSFoundationParents.h"
 
 
-@implementation MulleObjCLoader( OSBase)
+@implementation MulleObjCLoader( MulleObjCOSBaseFoundation)
 
 + (struct _mulle_objc_dependency *) dependencies
 {

@@ -225,22 +225,16 @@ static _NSPathUtilityVectorTable   _DarwinTable =
 };
 
 
-@implementation MulleObjCLoader( Darwin)
+@implementation _NSPathUtilityVectorTable_Loader( Darwin)
 
 + (struct _mulle_objc_dependency *) dependencies
 {
    static struct _mulle_objc_dependency   dependencies[] =
    {
-      { @selector( MulleObjCLoader), @selector( BSD) },
-
-      { @selector( NSBundle), @selector( Darwin) },
-      { @selector( NSFileManager), @selector( Darwin) },
-      { @selector( NSProcessInfo), @selector( Darwin) },
-      { @selector( NSString), @selector( Darwin) },
-      { @selector( NSTask), @selector( Darwin) },
+      { @selector( MulleObjCLoader), @selector( MulleObjCBSDFoundation) },
       { 0, 0 }
    };
-
+   
    return( dependencies);
 }
 
@@ -251,3 +245,5 @@ static _NSPathUtilityVectorTable   _DarwinTable =
 }
 
 @end
+
+
