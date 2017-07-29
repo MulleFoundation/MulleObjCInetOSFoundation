@@ -15,21 +15,11 @@
 {
    static struct _mulle_objc_dependency   dependencies[] =
    {
-      { @selector( MulleObjCLoader), @selector( MulleObjCPosixFoundation) },
-      
-      { @selector( _NSGMTTimeZone), @selector( Linux) },
-      { @selector( NSBundle), @selector( Linux) },
-      { @selector( NSCalendarDate), @selector( Linux) },
-      { @selector( NSDateFormatter), @selector( Linux) },
-      { @selector( NSFileManager), @selector( Linux) },
-      { @selector( NSProcessInfo), @selector( Linux) },
-      { @selector( NSString), @selector( Linux) },
-      { @selector( NSTask), @selector( Linux) },
-      { @selector( NSTimeZone), @selector( Linux) },
-      { @selector( _NSPathUtilityVectorTable_Loader), @selector( Linux) },
-      { 0, 0 }
+#include "dependencies.inc"
+
+      { MULLE_OBJC_NO_CLASSID, MULLE_OBJC_NO_CATEGORYID }
    };
-   
+
    return( dependencies);
 }
 

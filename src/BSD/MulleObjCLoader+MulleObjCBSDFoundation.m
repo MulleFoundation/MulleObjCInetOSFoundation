@@ -19,16 +19,9 @@
 {
    static struct _mulle_objc_dependency   dependencies[] =
    {
-      { @selector( MulleObjCLoader), @selector( MulleObjCOSBaseFoundation) },
+#include "dependencies.inc"
 
-      { @selector( _NSGMTTimeZone), @selector( BSD) },
-      { @selector( NSCalendarDate), @selector( BSD) },
-      { @selector( NSDateFormatter), @selector( BSD) },
-      { @selector( NSLocale), @selector( BSD) },
-      { @selector( NSProcessInfo), @selector( BSD) },
-      { @selector( NSTask), @selector( BSD) },
-      { @selector( NSTimeZone), @selector( BSD) },
-      { 0, 0 }
+      { MULLE_OBJC_NO_CLASSID, MULLE_OBJC_NO_CATEGORYID }
    };
 
    return( dependencies);

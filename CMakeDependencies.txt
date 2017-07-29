@@ -1,19 +1,176 @@
-include( ${DEPENDENCIES_DIR}/include/MulleObjCInetFoundation/CMakeDependencies.txt)
+if( NOT __MULLE_OBJC_OS_FOUNDATION_CMAKE_DEPENDENCIES_TXT__)
+   set( __MULLE_OBJC_OS_FOUNDATION_CMAKE_DEPENDENCIES_TXT__ ON)
 
-if( NOT MULLE_OBJC_INET_FOUNDATION_LIBRARY)
-   find_library( MULLE_OBJC_INET_FOUNDATION_LIBRARY NAMES MulleObjCInetFoundation)
-   message(STATUS "MULLE_OBJC_INET_FOUNDATION_LIBRARY is ${MULLE_OBJC_INET_FOUNDATION_LIBRARY}")
-   set( OBJC_DEPENDENCY_LIBRARIES
-${MULLE_OBJC_INET_FOUNDATION_LIBRARY}
-${OBJC_DEPENDENCY_LIBRARIES}
-CACHE INTERNAL "need to cache this"
-)
-   set( OBJC_DEPENDENCY_NAMES
-MulleObjCInetFoundation
-${OBJC_DEPENDENCY_NAMES}
-CACHE INTERNAL "need to cache this too"
-)
+   include( ${DEPENDENCIES_DIR}/include/MulleObjCStandardFoundation/CMakeDependencies.txt)
+   include( ${DEPENDENCIES_DIR}/include/MulleObjCInetFoundation/CMakeDependencies.txt)
+
+   if( CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+      set( CMAKE_PLATFORM_FOUND true)
+
+      set( HAVE_OSBASE ON)
+      set( HAVE_POSIX ON)
+      set( HAVE_BSD ON)
+      set( HAVE_DARWIN ON)
+   endif()
+
+
+   if( CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
+      set( CMAKE_PLATFORM_FOUND true)
+
+      set( HAVE_OSBASE ON)
+      set( HAVE_POSIX ON)
+      set( HAVE_BSD ON)
+      set( HAVE_FREEBSD ON)
+   endif()
+
+
+   if( CMAKE_SYSTEM_NAME STREQUAL "Linux")
+      set( CMAKE_PLATFORM_FOUND true)
+
+      set( HAVE_OSBASE ON)
+      set( HAVE_POSIX ON)
+      set( HAVE_LINUX ON)
+   endif()
+
+
+   if( NOT CMAKE_PLATFORM_FOUND)
+      message( STATUS "No support for ${CMAKE_SYSTEM_NAME}")
+   else()
+      message( STATUS "Building for platform ${CMAKE_SYSTEM_NAME}")
+   endif()
+
+   if( HAVE_OSBASE)
+      if( NOT MULLE_OBJC_OSBASE_FOUNDATION_LIBRARY)
+         find_library( MULLE_OBJC_OSBASE_FOUNDATION_LIBRARY NAMES MulleObjCOSBaseFoundation)
+         message(STATUS "MULLE_OBJC_OSBASE_FOUNDATION_LIBRARY is ${MULLE_OBJC_OSBASE_FOUNDATION_LIBRARY}")
+         if( MULLE_OBJC_OSBASE_FOUNDATION_LIBRARY)
+            set( OBJC_DEPENDENCY_LIBRARIES
+               ${MULLE_OBJC_OSBASE_FOUNDATION_LIBRARY}
+               ${OBJC_DEPENDENCY_LIBRARIES}
+               CACHE INTERNAL "need to cache this"
+            )
+            set( OBJC_DEPENDENCY_NAMES
+               MulleObjCOSBaseFoundation
+               ${OBJC_DEPENDENCY_NAMES}
+               CACHE INTERNAL "need to cache this too"
+            )
+         endif()
+      endif()
+   endif()
+
+   if( HAVE_POSIX)
+      if( NOT MULLE_OBJC_POSIX_FOUNDATION_LIBRARY)
+         find_library( MULLE_OBJC_POSIX_FOUNDATION_LIBRARY NAMES MulleObjCPosixFoundation)
+         message(STATUS "MULLE_OBJC_POSIX_FOUNDATION_LIBRARY is ${MULLE_OBJC_POSIX_FOUNDATION_LIBRARY}")
+         if( MULLE_OBJC_POSIX_FOUNDATION_LIBRARY)
+            set( OBJC_DEPENDENCY_LIBRARIES
+               ${MULLE_OBJC_POSIX_FOUNDATION_LIBRARY}
+               ${OBJC_DEPENDENCY_LIBRARIES}
+               CACHE INTERNAL "need to cache this"
+            )
+            set( OBJC_DEPENDENCY_NAMES
+               MulleObjCPosixFoundation
+               ${OBJC_DEPENDENCY_NAMES}
+               CACHE INTERNAL "need to cache this too"
+            )
+         endif()
+      endif()
+   endif()
+
+   if( HAVE_BSD)
+      if( NOT MULLE_OBJC_BSD_FOUNDATION_LIBRARY)
+         find_library( MULLE_OBJC_BSD_FOUNDATION_LIBRARY NAMES MulleObjCBSDFoundation)
+         message( STATUS "MULLE_OBJC_BSD_FOUNDATION_LIBRARY is ${MULLE_OBJC_BSD_FOUNDATION_LIBRARY}")
+         if( MULLE_OBJC_BSD_FOUNDATION_LIBRARY)
+            set( OBJC_DEPENDENCY_LIBRARIES
+               ${MULLE_OBJC_BSD_FOUNDATION_LIBRARY}
+               ${OBJC_DEPENDENCY_LIBRARIES}
+               CACHE INTERNAL "need to cache this"
+            )
+            set( OBJC_DEPENDENCY_NAMES
+               MulleObjCBSDFoundation
+               ${OBJC_DEPENDENCY_NAMES}
+               CACHE INTERNAL "need to cache this too"
+            )
+         endif()
+      endif()
+   endif()
+
+   if( HAVE_FREEBSD)
+      if( NOT MULLE_OBJC_FREEBSD_FOUNDATION_LIBRARY)
+         find_library( MULLE_OBJC_FREEBSD_FOUNDATION_LIBRARY NAMES MulleObjCFreeBSDFoundation)
+         message( STATUS "MULLE_OBJC_FREEBSD_FOUNDATION_LIBRARY is ${MULLE_OBJC_FREEBSD_FOUNDATION_LIBRARY}")
+         if( MULLE_OBJC_FREEBSD_FOUNDATION_LIBRARY)
+            set( OBJC_DEPENDENCY_LIBRARIES
+               ${MULLE_OBJC_FREEBSD_FOUNDATION_LIBRARY}
+               ${OBJC_DEPENDENCY_LIBRARIES}
+               CACHE INTERNAL "need to cache this"
+            )
+            set( OBJC_DEPENDENCY_NAMES
+               MulleObjCFreeBSDFoundation
+               ${OBJC_DEPENDENCY_NAMES}
+               CACHE INTERNAL "need to cache this too"
+            )
+         endif()
+      endif()
+   endif()
+
+   if( HAVE_DARWIN)
+      if( NOT MULLE_OBJC_DARWIN_FOUNDATION_LIBRARY)
+         find_library( MULLE_OBJC_DARWIN_FOUNDATION_LIBRARY NAMES MulleObjCDarwinFoundation)
+         message( STATUS "MULLE_OBJC_DARWIN_FOUNDATION_LIBRARY is ${MULLE_OBJC_DARWIN_FOUNDATION_LIBRARY}")
+         if( MULLE_OBJC_DARWIN_FOUNDATION_LIBRARY)
+            set( OBJC_DEPENDENCY_LIBRARIES
+               ${MULLE_OBJC_DARWIN_FOUNDATION_LIBRARY}
+               ${OBJC_DEPENDENCY_LIBRARIES}
+               CACHE INTERNAL "need to cache this"
+            )
+            set( OBJC_DEPENDENCY_NAMES
+               MulleObjCDarwinFoundation
+               ${OBJC_DEPENDENCY_NAMES}
+               CACHE INTERNAL "need to cache this too"
+            )
+         endif()
+      endif()
+   endif()
+
+   if( HAVE_LINUX)
+      if( NOT MULLE_OBJC_LINUX_FOUNDATION_LIBRARY)
+         find_library( MULLE_OBJC_LINUX_FOUNDATION_LIBRARY NAMES MulleObjCLinuxFoundation)
+         message( STATUS "MULLE_OBJC_LINUX_FOUNDATION_LIBRARY is ${MULLE_OBJC_LINUX_FOUNDATION_LIBRARY}")
+         if( MULLE_OBJC_LINUX_FOUNDATION_LIBRARY)
+            set( OBJC_DEPENDENCY_LIBRARIES
+               ${MULLE_OBJC_LINUX_FOUNDATION_LIBRARY}
+               ${OBJC_DEPENDENCY_LIBRARIES}
+               CACHE INTERNAL "need to cache this"
+            )
+            set( OBJC_DEPENDENCY_NAMES
+               MulleObjCLinuxFoundation
+               ${OBJC_DEPENDENCY_NAMES}
+               CACHE INTERNAL "need to cache this too"
+            )
+         endif()
+      endif()
+   endif()
+
+
+   if( NOT MULLE_OBJC_OS_FOUNDATION_LIBRARY)
+      find_library( MULLE_OBJC_OS_FOUNDATION_LIBRARY NAMES MulleObjCOSFoundation)
+      message(STATUS "MULLE_OBJC_OS_FOUNDATION_LIBRARY is ${MULLE_OBJC_OS_FOUNDATION_LIBRARY}")
+      if( MULLE_OBJC_OS_FOUNDATION_LIBRARY)
+         set( OBJC_DEPENDENCY_LIBRARIES
+            ${MULLE_OBJC_OS_FOUNDATION_LIBRARY}
+            ${OBJC_DEPENDENCY_LIBRARIES}
+            CACHE INTERNAL "need to cache this"
+         )
+         set( OBJC_DEPENDENCY_NAMES
+            MulleObjCInetFoundation
+            ${OBJC_DEPENDENCY_NAMES}
+            CACHE INTERNAL "need to cache this too"
+         )
+      endif()
+   endif()
+
+   message( STATUS "# Included \"MulleObjCOSFoundation\" CMakeDependencies.txt")
+
 endif()
-
-
-message( STATUS "# Included \"MulleObjCOSFoundation\" CMakeDependencies.txt")

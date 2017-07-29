@@ -253,17 +253,3 @@ src/Darwin/NSPathUtilities+Darwin.m
 src/Darwin/MulleObjCLoader+MulleObjCDarwinFoundation.m
 )
 
-##
-## Include directories for headers
-##
-
-include_directories( 
-src
-src/BSD
-src/Base
-src/Base/Categories
-src/Base/Functions
-src/Posix
-src/Posix/Functions
-src/Posix/Timezone
-)

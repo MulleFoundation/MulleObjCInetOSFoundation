@@ -15,16 +15,11 @@
 {
    static struct _mulle_objc_dependency   dependencies[] =
    {
-      { @selector( MulleObjCLoader), @selector( MulleObjCBSDFoundation) },
-      
-      { @selector( NSBundle), @selector( FreeBSD) },
-      { @selector( NSFileManager), @selector( FreeBSD) },
-      { @selector( NSProcessInfo), @selector( FreeBSD) },
-      { @selector( NSString), @selector( FreeBSD) },
-      { @selector( NSTask), @selector( FreeBSD) },
-      { 0, 0 }
+#include "dependencies.inc"
+
+      { MULLE_OBJC_NO_CLASSID, MULLE_OBJC_NO_CATEGORYID }
    };
-   
+
    return( dependencies);
 }
 

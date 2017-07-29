@@ -16,22 +16,9 @@
 {
    static struct _mulle_objc_dependency   dependencies[] =
    {
-      { @selector( MulleObjCLoader), @selector( MulleObjCOSBaseFoundation) },
+#include "dependencies.inc"
 
-      { @selector( _NSPosixDateFormatter), 0 },
-      { @selector( NSCondition), 0 },
-      { @selector( NSBundle), @selector( Posix) },
-      { @selector( NSCalendarDate), @selector( Posix) },
-      { @selector( NSData), @selector( Posix) },
-      { @selector( NSDirectoryEnumerator), @selector( Posix) },
-      { @selector( NSFileManager), @selector( Posix) },
-      { @selector( NSLocale), @selector( Posix) },
-      { @selector( NSPipe), @selector( Posix) },
-      { @selector( NSProcessInfo), @selector( Posix) },
-      { @selector( NSRunLoop), @selector( Posix) },
-      { @selector( NSTimeZone), @selector( Posix) },
-      { @selector( NSTask), @selector( Posix) },
-      { 0, 0 }
+      { MULLE_OBJC_NO_CLASSID, MULLE_OBJC_NO_CATEGORYID }
    };
 
    return( dependencies);

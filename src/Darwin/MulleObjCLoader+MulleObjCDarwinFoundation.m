@@ -15,17 +15,11 @@
 {
    static struct _mulle_objc_dependency   dependencies[] =
    {
-      { @selector( MulleObjCLoader), @selector( MulleObjCBSDFoundation) },
-      
-      { @selector( NSBundle), @selector( Darwin) },
-      { @selector( NSFileManager), @selector( Darwin) },
-      { @selector( NSProcessInfo), @selector( Darwin) },
-      { @selector( NSString), @selector( Darwin) },
-      { @selector( NSTask), @selector( Darwin) },
-      { @selector( _NSPathUtilityVectorTable_Loader), @selector( Darwin) },
-      { 0, 0 }
+#include "dependencies.inc"
+
+      { MULLE_OBJC_NO_CLASSID, MULLE_OBJC_NO_CATEGORYID }
    };
-   
+
    return( dependencies);
 }
 
