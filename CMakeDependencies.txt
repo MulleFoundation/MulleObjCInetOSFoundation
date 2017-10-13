@@ -1,7 +1,8 @@
 if( NOT __MULLE_OBJC_OS_FOUNDATION_CMAKE_DEPENDENCIES_TXT__)
    set( __MULLE_OBJC_OS_FOUNDATION_CMAKE_DEPENDENCIES_TXT__ ON)
 
-   include( ${DEPENDENCIES_DIR}/include/MulleObjCStandardFoundation/CMakeDependencies.txt)
+   message( STATUS "# Include \"MulleObjCOSFoundation\" CMakeDependencies.txt")
+
    include( ${DEPENDENCIES_DIR}/include/MulleObjCInetFoundation/CMakeDependencies.txt)
 
    if( CMAKE_SYSTEM_NAME STREQUAL "Darwin")
@@ -171,6 +172,8 @@ if( NOT __MULLE_OBJC_OS_FOUNDATION_CMAKE_DEPENDENCIES_TXT__)
       endif()
    endif()
 
-   message( STATUS "# Included \"MulleObjCOSFoundation\" CMakeDependencies.txt")
+   if( MSVC)
+      set( MULLE_OBJC_OS_FOUNDATION_DEFINITIONS ${MULLE_OBJC_INET_FOUNDATION_DEFINITIONS})
+   endif()
 
 endif()

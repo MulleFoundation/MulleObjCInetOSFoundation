@@ -3,9 +3,8 @@ cmake_minimum_required (VERSION 3.0)
 # probably better to remove it, and specify as
 # cmake -DCMAKE_OSX_SYSROOT=macosx ..
 #
-set( CMAKE_OSX_SYSROOT macosx)
-
 project( MulleObjCOSFoundation C)
+
 
 set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
 ${CMAKE_SOURCE_DIR}/mulle-configuration/cmake)
@@ -92,6 +91,7 @@ if( HAVE_OSBASE)
    )
 
   install( FILES src/Base/dependencies.inc DESTINATION "include/MulleObjCOSBaseFoundation")
+  install( TARGETS MulleObjCOSBaseFoundation DESTINATION "lib")
 
 endif()
 
@@ -145,6 +145,7 @@ if( HAVE_POSIX)
    )
 
   install( FILES src/Posix/dependencies.inc DESTINATION "include/MulleObjCPosixFoundation")
+  install( TARGETS MulleObjCPosixFoundation DESTINATION "lib")
 
 endif()
 
@@ -197,6 +198,7 @@ if( HAVE_BSD)
    )
 
   install( FILES src/BSD/dependencies.inc DESTINATION "include/MulleObjCBSDFoundation")
+  install( TARGETS MulleObjCBSDFoundation DESTINATION "lib")
 
 endif( HAVE_BSD)
 
@@ -249,6 +251,7 @@ if( HAVE_FREEBSD)
    )
 
   install( FILES src/FreeBSD/dependencies.inc DESTINATION "include/MulleObjCFreeBSDFoundation")
+  install( TARGETS MulleObjCFreeBSDFoundation DESTINATION "lib")
 
 endif()
 
@@ -301,6 +304,7 @@ if( HAVE_DARWIN)
    )
 
   install( FILES src/Darwin/dependencies.inc DESTINATION "include/MulleObjCDarwinFoundation")
+  install( TARGETS MulleObjCDarwinFoundation DESTINATION "lib")
 
 endif()
 
@@ -349,6 +353,7 @@ if( HAVE_LINUX)
    )
 
   install( FILES src/Linux/dependencies.inc DESTINATION "include/MulleObjCLinuxFoundation")
+  install( TARGETS MulleObjCLinuxFoundation DESTINATION "lib")
 
 endif()
 
@@ -398,51 +403,39 @@ set( STATIC_LIBRARIES $<TARGET_FILE:MulleObjCOSFoundation>
 )
 
 
-#
-# Standalone for debugging
-#
-add_library( MulleObjCOSFoundationStandalone SHARED
-${MULLE_OBJC_OS_FOUNDATION_STANDALONE_SOURCES}
-)
-
-add_dependencies( MulleObjCOSFoundationStandalone MulleObjCOSFoundation)
-
-set( ALL_INSTALL_TARGETS MulleObjCOSFoundationStandalone
-   ${ALL_INSTALL_TARGETS}
-)
-
-# prepend force-all for OS X, other use BEGIN_ALL_LOAD
-set( TARGET_ALL_LOAD_LIBRARIES
-${OBJC_DEPENDENCY_LIBRARIES}
-${C_DEPENDENCY_LIBRARIES} # sic!
-${STATIC_LIBRARIES}
-)
-
-if( FORCE_LOAD)
-   set( TMP)
-   foreach( library ${TARGET_ALL_LOAD_LIBRARIES})
-      list( APPEND TMP "${FORCE_LOAD} ${library}")
-   endforeach( library)
-   set( TARGET_ALL_LOAD_LIBRARIES ${TMP})
-endif()
-
-
-target_link_libraries( MulleObjCOSFoundationStandalone
-${BEGIN_ALL_LOAD}
-${TARGET_ALL_LOAD_LIBRARIES}
-${END_ALL_LOAD}
-${OS_SPECIFIC_LIBRARIES}
-)
-
-#message( STATUS "TARGET_ALL_LOAD_LIBRARIES is ${TARGET_ALL_LOAD_LIBRARIES}")
-
-
 set( PUBLIC_HEADERS
 ${PUBLIC_HEADERS}
 "CMakeDependencies.txt"
 "src/dependencies.inc"
 )
 
-install( TARGETS ${ALL_INSTALL_TARGETS} DESTINATION "lib")
+
+set( OBJC_LIBRARY_NAME "MulleObjCOSFoundation")
+
+include( DependenciesIncObjC)
+
+
+#
+# produce a standalone dll/dylib/so for testing mainly
+# though testing could go static at some point in time
+# (shared is more frugal though)
+#
+set( STANDALONE_BASE_NAME "${OBJC_LIBRARY_NAME}")
+set( STANDALONE_NAME "${OBJC_LIBRARY_NAME}Standalone")
+set( STANDALONE_SOURCES ${MULLE_OBJC_OS_FOUNDATION_STANDALONE_SOURCES})
+set( STANDALONE_DEFINITIONS ${MULLE_OBJC_OS_FOUNDATION_DEFINITIONS})
+set( STANDALONE_ALL_LOAD_LIBRARIES
+    $<TARGET_FILE:${STANDALONE_BASE_NAME}>
+    ${OBJC_DEPENDENCY_LIBRARIES}
+    ${OBJC_STARTUP_LIBRARY}
+    ${C_DEPENDENCY_LIBRARIES}
+    ${STATIC_LIBRARIES}
+)
+
+include( Standalone)
+
+install( TARGETS MulleObjCOSFoundation MulleObjCOSFoundationStandalone DESTINATION "lib")
 install( FILES ${PUBLIC_HEADERS} DESTINATION "include/MulleObjCOSFoundation")
 install( FILES ${PRIVATE_HEADERS} DESTINATION "include/MulleObjCOSFoundation/private")
+
+include( MulleTest)

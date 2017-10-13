@@ -24,22 +24,12 @@ set( MULLE_OBJC_OS_FOUNDATION_PROJECT_HEADERS
 set( MULLE_OBJC_OS_FOUNDATION_PRIVATE_HEADERS
 )
 
-
 ##
 ## MulleObjCOSFoundationStandalone Files
 ##
 
 set( MULLE_OBJC_OS_FOUNDATION_STANDALONE_SOURCES
 src/MulleObjCOSFoundationStandalone.m
-)
-
-set( MULLE_OBJC_OS_FOUNDATION_STANDALONE_PUBLIC_HEADERS
-)
-
-set( MULLE_OBJC_OS_FOUNDATION_STANDALONE_PROJECT_HEADERS
-)
-
-set( MULLE_OBJC_OS_FOUNDATION_STANDALONE_PRIVATE_HEADERS
 )
 
 
@@ -252,4 +242,5 @@ src/Darwin/NSTask+Darwin.m
 src/Darwin/NSPathUtilities+Darwin.m
 src/Darwin/MulleObjCLoader+MulleObjCDarwinFoundation.m
 )
+
 

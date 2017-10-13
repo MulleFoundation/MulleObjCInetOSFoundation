@@ -8,7 +8,7 @@
 
 #import "MulleObjCOSFoundationParents.h"
 
-#define MULLE_OBJC_OS_FOUNDATION_VERSION   MULLE_OBJC_FOUNDATION_VERSION
+#define MULLE_OBJC_OS_FOUNDATION_VERSION   MULLE_OBJC_INET_FOUNDATION_VERSION
 
 // used this article: http://nadeausoftware.com/articles/2012/01/c_c_tip_how_use_compiler_predefined_macros_detect_operating_system
 //

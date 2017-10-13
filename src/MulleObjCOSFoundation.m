@@ -11,4 +11,4 @@
 
 
 // feed linker
-uint32_t   MulleObjCOSFoundationVersion = MULLE_OBJC_FOUNDATION_VERSION;
+uint32_t   MulleObjCOSFoundationVersion = MULLE_OBJC_OS_FOUNDATION_VERSION;

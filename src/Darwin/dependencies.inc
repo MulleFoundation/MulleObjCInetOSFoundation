@@ -1,7 +1,7 @@
-      { @selector( MulleObjCLoader), @selector( MulleObjCBSDFoundation) },      // 58bd58d3;MulleObjCLoader;578a7a2a;MulleObjCBSDFoundation
-      { @selector( NSBundle), @selector( Darwin) },      // 301a6dd8;NSBundle;5729b300;Darwin
-      { @selector( NSFileManager), @selector( Darwin) },      // be98ed67;NSFileManager;5729b300;Darwin
-      { @selector( NSProcessInfo), @selector( Darwin) },      // f87f34cf;NSProcessInfo;5729b300;Darwin
-      { @selector( NSString), @selector( Darwin) },      // 85e3fa43;NSString;5729b300;Darwin
-      { @selector( NSTask), @selector( Darwin) },      // b04725e7;NSTask;5729b300;Darwin
-      { @selector( _NSPathUtilityVectorTable_Loader), @selector( Darwin) },      // 9806676b;_NSPathUtilityVectorTable_Loader;5729b300;Darwin
+      { @selector( MulleObjCLoader), @selector( MulleObjCBSDFoundation) },      // 47a9beb6;MulleObjCLoader;205c6909;MulleObjCBSDFoundation
+      { @selector( NSBundle), @selector( Darwin) },      // c2f95c66;NSBundle;6d352c2f;Darwin
+      { @selector( NSFileManager), @selector( Darwin) },      // 56d57ffc;NSFileManager;6d352c2f;Darwin
+      { @selector( NSProcessInfo), @selector( Darwin) },      // 208b1df5;NSProcessInfo;6d352c2f;Darwin
+      { @selector( NSString), @selector( Darwin) },      // 1994a171;NSString;6d352c2f;Darwin
+      { @selector( NSTask), @selector( Darwin) },      // 90ec29ba;NSTask;6d352c2f;Darwin
+      { @selector( _NSPathUtilityVectorTable_Loader), @selector( Darwin) },      // ad89cd30;_NSPathUtilityVectorTable_Loader;6d352c2f;Darwin

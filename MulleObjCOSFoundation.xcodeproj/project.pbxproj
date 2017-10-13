@@ -757,7 +757,7 @@
 				41F96D011CB28E7F009499A9 /* StaticLibraryOSX.xcconfig */,
 				41F96D021CB28E7F009499A9 /* ToolOSX.xcconfig */,
 			);
-			path = "mulle-configuration";
+			path = "mulle-configuration/xcode";
 			sourceTree = "<group>";
 		};
 		41FA9F661D0438B7004D8E61 /* BSD */ = {
