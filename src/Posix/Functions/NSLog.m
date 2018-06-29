@@ -13,13 +13,12 @@
  */
 #define _XOPEN_SOURCE 700
 
-#import "MulleObjCOSBaseFoundation.h"
+#import "dependencies.h"
 
 // other files in this library
 
 // std-c and dependencies
 #include <syslog.h>
-#include <mulle_vararg/mulle_vararg.h>
 
 
 // TODO: vectorize NSLog like PathUtilities

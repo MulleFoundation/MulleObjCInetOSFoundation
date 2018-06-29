@@ -9,13 +9,10 @@
 // define, that make things POSIXly
 #define _XOPEN_SOURCE 700
 
-#import "NSDirectoryEnumerator.h"
+#include "dependencies.h"
 
 // other files in this library
-#import "NSString+CString.h"
-#import "NSString+OSBase.h"
-#import "NSFileManager.h"
-#import "NSFileManager+Private.h"
+#import <MulleObjCOSBaseFoundation/private/NSFileManager-Private.h>
 
 // other libraries of MulleObjCPosixFoundation
 

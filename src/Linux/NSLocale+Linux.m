@@ -7,16 +7,15 @@
 //
 #define _GNU_SOURCE
 
-#import "MulleObjCPosixFoundation.h"
+#import "dependencies.h"
 
 // other files in this library
 
 // other libraries of MulleObjCPosixFoundation
-#import <NSLocale+PosixPrivate.h>
+#import <MulleObjCPosixFoundation/private/NSLocale+Posix-Private.h>
 
 // std-c and dependencies
 #include <locale.h>
-#include <xlocale.h>
 #include <langinfo.h>
 
 

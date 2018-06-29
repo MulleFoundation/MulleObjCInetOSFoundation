@@ -6,7 +6,7 @@
 //  Copyright © 2017 Mulle kybernetiK. All rights reserved.
 //
 
-#import "MulleObjCOSFoundationParents.h"
+#import "dependencies.h"
 
 
 //

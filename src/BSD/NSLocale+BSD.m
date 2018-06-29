@@ -6,10 +6,10 @@
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
 
-#import "MulleObjCPosixFoundation.h"
+#import "dependencies.h"
 
 // other files in this library
-#import "NSLocale+PosixPrivate.h"
+#import <MulleObjCPosixFoundation/private/NSLocale+Posix-Private.h>
 
 // std-c and dependencies
 #include <langinfo.h>

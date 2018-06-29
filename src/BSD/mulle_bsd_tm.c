@@ -11,7 +11,7 @@
 // other files in this library
 
 // other libraries of MulleObjCPosixFoundation
-#include "mulle_posix_tm.h"
+#include <MulleObjCPosixFoundation/private/mulle_posix_tm-private.h>
 
 // std-c and dependencies
 #include <limits.h>

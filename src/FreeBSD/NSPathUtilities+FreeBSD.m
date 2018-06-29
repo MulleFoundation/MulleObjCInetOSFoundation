@@ -11,9 +11,9 @@
  *  $Id$
  *
  */
-#import "MulleObjCPosixFoundation.h"
+#import "dependencies.h"
 
-#import "NSPathUtilities+OSBasePrivate.h"
+#import <MulleObjCOSBaseFoundation/private/NSPathUtilities+OSBase-Private.h>
 
 // other files in this library
 
@@ -144,7 +144,7 @@ static _NSPathUtilityVectorTable   _FreeBSDTable =
       { @selector( MulleObjCLoader), @selector( MulleObjCBSDFoundation) },
       { 0, 0 }
    };
-   
+
    return( dependencies);
 }
 

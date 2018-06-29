@@ -17,11 +17,10 @@
 #import "NSLocale+Posix.h"
 
 // other files in this library
-#import "NSLocale+PosixPrivate.h"
+#import "NSLocale+Posix-Private.h"
 
 // std-c and dependencies
 #include <locale.h>
-#include <xlocale.h>
 #include <langinfo.h>
 
 

@@ -11,7 +11,7 @@
  *  $Id$
  *
  */
-#import "MulleObjCOSFoundationParents.h"
+#import "dependencies.h"
 
 //
 void   NSLog( NSString *format, ...);

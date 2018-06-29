@@ -6,10 +6,10 @@
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
 
-#import "MulleObjCOSFoundationParents.h"
+#import "dependencies.h"
 
 
-@interface NSArray (OSBase)
+@interface NSArray( OSBase)
 
 + (instancetype) arrayWithContentsOfFile:(NSString *) path;
 - (instancetype) initWithContentsOfFile:(NSString *) path;

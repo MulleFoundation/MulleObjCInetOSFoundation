@@ -5,7 +5,7 @@
 //  Created by Nat! on 13.05.17.
 //  Copyright © 2017 Mulle kybernetiK. All rights reserved.
 //
-#import "MulleObjCOSFoundationParents.h"
+#import "dependencies.h"
 
 #import "NSUserDefaults.h"
 

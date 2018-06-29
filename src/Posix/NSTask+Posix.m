@@ -8,13 +8,14 @@
 
 #define _XOPEN_SOURCE 700
 
-#import "MulleObjCOSBaseFoundation.h"
+#import "dependencies.h"
 
-#import "NSTask+Private.h"
+#import <MulleObjCOSBaseFoundation/private/NSTask-Private.h>
 
 // other libraries of MulleObjCPosixFoundation
 
 // std-c and dependencies
+#include <sys/types.h>
 #include <unistd.h>
 
 

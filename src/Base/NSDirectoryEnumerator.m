@@ -17,8 +17,8 @@
 #import "NSDirectoryEnumerator.h"
 
 // other files in this library
-#import "NSFileManager+Private.h"
 #import "NSFileManager.h"
+#import "NSFileManager-Private.h"
 #import "NSString+OSBase.h"
 
 // other libraries of MulleObjCPosixFoundation

@@ -7,13 +7,12 @@
 //
 #define _GNU_SOURCE
 
-#import "MulleObjCPosixFoundation.h"
+#import "dependencies.h"
 
 // other files in this library
 
 // other libraries of MulleObjCPosixFoundation
-#include "mulle_posix_tm.h"
-#import "NSLocale+PosixPrivate.h"
+#import <MulleObjCPosixFoundation/private/NSLocale+Posix-Private.h>
 
 // std-c and dependencies
 #include <time.h>
@@ -42,13 +41,13 @@
              locale:(NSLocale *) locale
 {
    locale_t   old_locale;
-   
+
    old_locale = uselocale( [locale xlocale]);
    {
-      len = strftime( buf, len, c_format, &tm);
+      len = strftime( buf, len, c_format, tm);
    }
    uselocale( old_locale);
-   
+
    return( len);
 }
 

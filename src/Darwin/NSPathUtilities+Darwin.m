@@ -13,10 +13,10 @@
  */
 #define _DARWIN_C_SOURCE
 
-#import "MulleObjCPosixFoundation.h"
+#import "dependencies.h"
 
 // other files in this library
-#import "NSPathUtilities+OSBasePrivate.h"
+#import <MulleObjCOSBaseFoundation/private/NSPathUtilities+OSBase-Private.h>
 
 // other libraries of MulleObjCPosixFoundation
 
@@ -234,7 +234,7 @@ static _NSPathUtilityVectorTable   _DarwinTable =
       { @selector( MulleObjCLoader), @selector( MulleObjCBSDFoundation) },
       { 0, 0 }
    };
-   
+
    return( dependencies);
 }
 

@@ -6,12 +6,12 @@
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
 
-#import "MulleObjCPosixFoundation.h"
+#import "dependencies.h"
 
 // other files in this library
 
 // other libraries of MulleObjCPosixFoundation
-#import "NSTask+Private.h"
+#import <MulleObjCOSBaseFoundation/private/NSTask-Private.h>
 
 // std-c and dependencies
 #include <signal.h>

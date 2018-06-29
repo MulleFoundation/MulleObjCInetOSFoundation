@@ -8,13 +8,13 @@
 // define, that make things POSIXly
 #define _XOPEN_SOURCE 700
 
-#import "MulleObjCOSBaseFoundation.h"
+#import "dependencies.h"
 
 // other files in this library
 #include "private.h"
 
 // std-c and dependencies
-#import <MulleObjCStandardFoundation/private/_NSGMTTimeZone.h>
+#import <MulleObjCStandardFoundation/private/_NSGMTTimeZone-Private.h>
 
 
 
@@ -184,10 +184,10 @@
 {
    extern long   mulle_get_gmt_offset_for_time_interval( void *, time_t);
    long          offset;
-   
+
    if( ! _data)
       return( 0);
-   
+
    offset  = mulle_get_gmt_offset_for_time_interval( [_data bytes], (time_t) interval);
    return( offset);
 }

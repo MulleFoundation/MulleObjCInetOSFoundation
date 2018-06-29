@@ -7,12 +7,12 @@
 //
 #define _GNU_SOURCE
 
-#import "MulleObjCPosixFoundation.h"
+#import "dependencies.h"
 
 // other files in this library
 
 // other libraries of MulleObjCPosixFoundation
-#import "NSPathUtilities+OSBasePrivate.h"
+#import <MulleObjCOSBaseFoundation/private/NSPathUtilities+OSBase-Private.h>
 
 
 // just like FreeBSD not much thought invested
@@ -140,7 +140,7 @@ static _NSPathUtilityVectorTable   _LinuxTable =
       { @selector( MulleObjCLoader), @selector( MulleObjCPosixFoundation) },
       { 0, 0 }
    };
-   
+
    return( dependencies);
 }
 

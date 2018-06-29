@@ -11,7 +11,7 @@
  *  $Id$
  *
  */
-#import "MulleObjCOSBaseFoundation.h"
+#import "dependencies.h"
 
 
 @interface NSLocale ( PosixFuture)

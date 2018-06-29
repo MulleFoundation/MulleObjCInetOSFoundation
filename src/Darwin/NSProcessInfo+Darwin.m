@@ -13,10 +13,10 @@
  */
 #define _DARWIN_C_SOURCE
 
-#import "MulleObjCPosixFoundation.h"
+#import "dependencies.h"
 
-#import "NSArray+OSBasePrivate.h"
-#import "NSDictionary+OSBasePrivate.h"
+#import <MulleObjCOSBaseFoundation/private/NSArray+OSBase-Private.h>
+#import <MulleObjCOSBaseFoundation/private/NSDictionary+OSBase-Private.h>
 
 // other files in this library
 

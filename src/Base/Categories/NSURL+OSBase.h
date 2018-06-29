@@ -6,7 +6,7 @@
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
 
-#import "MulleObjCOSFoundationParents.h"
+#import "dependencies.h"
 
 
 @interface NSURL( OSBase)

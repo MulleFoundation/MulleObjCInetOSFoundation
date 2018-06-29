@@ -11,18 +11,16 @@
 #import "_NSPosixDateFormatter.h"
 
 // other files in this library
-#import "NSDate+OSBasePrivate.h"
+#import <MulleObjCOSBaseFoundation/private/NSDate+OSBase-Private.h>
 #import "MulleObjCPOSIXError.h"
 #import "NSLocale+Posix.h"
-#import "NSLocale+PosixPrivate.h"
-#import "NSLog.h"
+#import "NSLocale+Posix-Private.h"
 
 // other libraries of MulleObjCPosixFoundation
-#include "mulle_posix_tm.h"
+#include "mulle_posix_tm-private.h"
 
 // std-c and dependencies
 #include <time.h>
-#include <xlocale.h>
 
 
 @interface NSObject (Private)

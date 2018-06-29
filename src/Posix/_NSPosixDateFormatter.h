@@ -6,7 +6,7 @@
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
 
-#import "MulleObjCOSBaseFoundation.h"
+#import "dependencies.h"
 
 //
 // this formatter uses xlocale and strftime, strptime

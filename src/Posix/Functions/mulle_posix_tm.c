@@ -6,16 +6,19 @@
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
 #define _XOPEN_SOURCE 700
+#define _DARWIN_C_SOURCE   // darwin: for timegm
 
-#include "mulle_posix_tm.h"
-
-// other files in this library
+#if defined( __APPLE__)   // argh! ugliness, because we are C and can't include
+# include <xlocale.h>     // dependencies.h
+#endif
 
 // std-c and dependencies
-#include <xlocale.h>
 #include <locale.h>
 #include <limits.h>
 #include <time.h>
+
+// private stuff
+#include "mulle_posix_tm-private.h"
 
 
 void  mulle_posix_tm_invalidate( struct tm *tm)

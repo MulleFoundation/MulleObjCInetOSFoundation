@@ -2,7 +2,7 @@
 #import "NSFileHandle+NSRunLoop.h"
 
 #import "NSRunLoop.h"
-#import "NSRunLoop+Private.h"
+#import "NSRunLoop-Private.h"
 
 
 NSString  *NSFile​Handle​Notification​Data​Item      = @"data";

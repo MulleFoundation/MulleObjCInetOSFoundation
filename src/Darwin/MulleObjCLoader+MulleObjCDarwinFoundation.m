@@ -6,7 +6,7 @@
 //  Copyright © 2017 Mulle kybernetiK. All rights reserved.
 //
 
-#import <MulleObjC/MulleObjC.h>
+#import "dependencies.h"
 
 
 @implementation MulleObjCLoader( MulleObjCDarwinFoundation)

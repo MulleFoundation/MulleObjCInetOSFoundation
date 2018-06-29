@@ -6,15 +6,15 @@
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
 
-#import "MulleObjCPosixFoundation.h"
+#import "dependencies.h"
 
 // other files in this library
 #include "mulle_bsd_tm.h"
 
 // other libraries of MulleObjCPosixFoundation
-#import "NSDate+OSBasePrivate.h"
-#import "NSLocale+PosixPrivate.h"
-#include "mulle_posix_tm.h"
+#import <MulleObjCOSBaseFoundation/private/NSDate+OSBase-Private.h>
+#import <MulleObjCPosixFoundation/private/NSLocale+Posix-Private.h>
+#include <MulleObjCPosixFoundation/private/mulle_posix_tm-private.h>
 
 // std-c and dependencies
 #include <time.h>
@@ -42,7 +42,7 @@
              locale:(NSLocale *) locale
 {
    locale_t    xlocale;
-   
+
    xlocale  = [locale xlocale];
    if( xlocale)
       len = strftime_l( buf, len, c_format, tm, xlocale);

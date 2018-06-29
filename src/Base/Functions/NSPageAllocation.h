@@ -11,7 +11,7 @@
  *  $Id$
  *
  */
-#import "MulleObjCOSFoundationParents.h"
+#import "dependencies.h"
 
 
 void   *NSAllocateMemoryPages( NSUInteger size);

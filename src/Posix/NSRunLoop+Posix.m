@@ -8,11 +8,11 @@
 
 #define _XOPEN_SOURCE 700
 
-#import "MulleObjCOSBaseFoundation.h"
+#import "dependencies.h"
 
 // other files in this library
-#import "NSRunLoop+Private.h"
-#import "NSDate+PosixPrivate.h"
+#import <MulleObjCOSBaseFoundation/private/NSRunLoop-Private.h>
+#import "NSDate+Posix-Private.h"
 
 // std-c and dependencies
 #include <unistd.h>
@@ -20,7 +20,6 @@
 
 
 #include <sys/select.h>
-#include <mulle_allocator/mulle_allocator.h>
 
 
 // storage for select flag sets, and the file handles that are

@@ -16,7 +16,7 @@
 #include "NSPageAllocation.h"
 
 // other files in this library
-#include "NSPageAllocation+Private.h"
+#include "NSPageAllocation-Private.h"
 
 // std-c and dependencies
 #include <unistd.h>

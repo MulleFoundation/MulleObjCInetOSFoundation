@@ -11,7 +11,7 @@
  *  $Id$
  *
  */
-#import "MulleObjCLocalizationFoundationParentIncludes.h"
+#import "dependencies.h"
 
 
 @interface NSCalendarDate( _Localization)

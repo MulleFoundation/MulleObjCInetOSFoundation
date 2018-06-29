@@ -23,7 +23,7 @@
 #import "NSProcessInfo.h"
 #import "NSString+CString.h"
 #import "NSString+OSBase.h"
-#import "NSTask+Private.h"
+#import "NSTask-Private.h"
 
 // other libraries of MulleObjCPosixFoundation
 

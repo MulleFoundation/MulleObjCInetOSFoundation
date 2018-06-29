@@ -15,8 +15,9 @@
 
 // eek eeek eek, should be OSX rather than Darwin
 
-#import "MulleObjCPosixFoundation.h"
-#import "NSBundle+Private.h"
+#import "dependencies.h"
+
+#import <MulleObjCOSBaseFoundation/private/NSBundle-Private.h>
 
 // other files in this library
 

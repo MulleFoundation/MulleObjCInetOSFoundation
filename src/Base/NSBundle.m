@@ -15,7 +15,7 @@
 #define _XOPEN_SOURCE 700
 
 #import "NSBundle.h"
-#import "NSBundle+Private.h"
+#import "NSBundle-Private.h"
 
 // other files in this library
 #import "NSDirectoryEnumerator.h"

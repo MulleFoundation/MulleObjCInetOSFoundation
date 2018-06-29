@@ -8,11 +8,10 @@
 // define, that make things POSIXly
 #define _XOPEN_SOURCE 700
 
-#import "MulleObjCOSBaseFoundation.h"
+#import "dependencies.h"
 
-// other libraries of MulleObjCPosixFoundation
-#import "NSPageAllocation.h"
-#import "NSPageAllocation+Private.h"
+
+#import <MulleObjCOSBaseFoundation/private/NSPageAllocation-Private.h>
 
 // std-c and dependencies
 #include <fcntl.h>

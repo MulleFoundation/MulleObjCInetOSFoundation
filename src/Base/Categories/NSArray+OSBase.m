@@ -14,7 +14,7 @@
 // std-c and dependencies
 
 
-@interface NSObject (Private)
+@interface NSObject( Private)
 
 - (BOOL) __isNSArray;
 - (BOOL) __isNSMutableArray;

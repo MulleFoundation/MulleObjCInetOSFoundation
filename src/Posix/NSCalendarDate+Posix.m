@@ -5,16 +5,18 @@
 //  Created by Nat! on 27.03.17.
 //  Copyright © 2017 Mulle kybernetiK. All rights reserved.
 //
-#define _XOPEN_SOURCE 700
+#define _XOPEN_SOURCE 700  // linux: for various stuff
+#define _DARWIN_C_SOURCE   // darwin: for timegm
 
-#import "MulleObjCOSBaseFoundation.h"
-
-// other libraries of MulleObjCPosixFoundation
-#include "NSCalendarDate+PosixPrivate.h"
-#include "NSTimeZone+PosixPrivate.h"
-#include "mulle_posix_tm.h"
+#import "dependencies.h"
 
 // std-c and dependencies
+#include <time.h>
+
+// private stuff
+#include "NSCalendarDate+Posix-Private.h"
+#include "NSTimeZone+Posix-Private.h"
+#include "mulle_posix_tm-private.h"
 
 
 struct mulle_mini_tm  mulle_mini_tm_with_tm( struct tm *src)
@@ -78,7 +80,7 @@ static void  set_mini_tm( NSCalendarDate *self, NSTimeInterval interval, int tzO
 {
    _timeZone = [[NSTimeZone defaultTimeZone] retain];
    assert( _timeZone);
-   
+
    set_mini_tm( self, timeInterval, (int) [_timeZone secondsFromGMT]);
 
    return( self);
@@ -149,7 +151,7 @@ static void  set_mini_tm( NSCalendarDate *self, NSTimeInterval interval, int tzO
 {
    struct tm   tmp;
    time_t      value;
-   
+
    mulle_tm_with_mini_tm( &tmp, self->_tm.values);
    value = timegm( &tmp);
    value -= [_timeZone _secondsFromGMTForTimeIntervalSince1970:value];

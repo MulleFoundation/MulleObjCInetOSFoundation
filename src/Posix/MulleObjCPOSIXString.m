@@ -14,7 +14,7 @@
 // define, that make things POSIXly
 #define _XOPEN_SOURCE 700
 
-#import "MulleObjCOSBaseFoundation.h"
+#import "dependencies.h"
 
 // other files in this library
 

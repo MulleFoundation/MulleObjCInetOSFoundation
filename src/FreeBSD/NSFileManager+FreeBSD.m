@@ -6,7 +6,7 @@
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
 
-#import "MulleObjCPosixFoundation.h"
+#import "dependencies.h"
 
 
 // other files in this library

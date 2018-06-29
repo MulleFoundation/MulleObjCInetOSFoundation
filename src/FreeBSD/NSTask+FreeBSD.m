@@ -11,7 +11,7 @@
  *  $Id$
  *
  */
-#import "MulleObjCPosixFoundation.h"
+#import "dependencies.h"
 
 // other files in this library
 

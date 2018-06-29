@@ -6,7 +6,7 @@
 //  Copyright © 2016 Mulle kybernetiK. All rights reserved.
 //
 
-#import "MulleObjCOSFoundationParents.h"
+#import "dependencies.h"
 
 #define MULLE_OBJC_OS_FOUNDATION_VERSION   MULLE_OBJC_INET_FOUNDATION_VERSION
 
@@ -16,7 +16,7 @@
 // BSD, OS X, Linux
 #if defined( __unix__) || (defined(__APPLE__) && defined(__MACH__))
 //# include <sys/param.h>  // get BSD
-# import "MulleObjCPosixFoundation.h" // assume Posix if unix
+# import "dependencies.h" // assume Posix if unix
 #endif
 
 // things simplify, becaus we don't even have these headers (yet)

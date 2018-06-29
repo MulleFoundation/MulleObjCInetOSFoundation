@@ -8,9 +8,9 @@
 // define, that make things POSIXly
 #define _XOPEN_SOURCE 700
 
-#import "MulleObjCOSBaseFoundation.h"
+#import "dependencies.h"
 
-#import "NSFileManager+Private.h"
+#import <MulleObjCOSBaseFoundation/private/NSFileManager-Private.h>
 #import "MulleObjCPOSIXError.h"
 
 // std-c and dependencies

@@ -1,1 +1,0 @@
-${MULLE_FOUNDATION_REPOSITORIES:-https://github.com/mulle-nat}/MulleObjCInetFoundation;;${MULLE_OBJC_INET_FOUNDATION_BRANCH:-release} 
