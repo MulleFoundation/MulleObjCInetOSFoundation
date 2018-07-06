@@ -5,10 +5,13 @@
 //  Created by Nat! on 27.03.17.
 //  Copyright © 2017 Mulle kybernetiK. All rights reserved.
 //
+
+// TODO: move stuff to Linux/Darwin
+
 #define _XOPEN_SOURCE 700  // linux: for various stuff
 #define _DARWIN_C_SOURCE   // darwin: for timegm
 
-#import "dependencies.h"
+#import "import-private.h"
 
 // std-c and dependencies
 #include <time.h>

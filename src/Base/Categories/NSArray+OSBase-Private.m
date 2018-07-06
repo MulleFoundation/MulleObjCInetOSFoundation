@@ -11,7 +11,7 @@
  *  $Id$
  *
  */
-#import "dependencies.h"
+#import "import-private.h"
 
 // define, that make things POSIXly
 #import "NSArray+OSBase-Private.h"

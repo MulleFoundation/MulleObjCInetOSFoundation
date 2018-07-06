@@ -26,3 +26,7 @@ NSTask+Posix.m
 NSTimeZone+Posix.m
 Timezone/localtime.c
 )
+
+set( STAGE2_SOURCES
+MulleObjCLoader+MulleObjCPosixFoundation.m
+)

@@ -19,7 +19,6 @@ Categories/NSTask+System.m
 Categories/NSURL+OSBase.m
 Functions/NSPageAllocation.m
 Functions/NSPathUtilities.m
-MulleObjCLoader+MulleObjCOSBaseFoundation.m
 NSBundle.m
 NSConditionLock.m
 NSDirectoryEnumerator.m
@@ -31,4 +30,8 @@ NSProcessInfo.m
 NSRunLoop.m
 NSTask.m
 NSUserDefaults.m
+)
+
+set( STAGE2_SOURCES
+MulleObjCLoader+MulleObjCOSBaseFoundation.m
 )

@@ -11,7 +11,7 @@
  *  $Id$
  *
  */
-#import "dependencies.h"
+#import "import.h"
 
 
 @interface NSCalendarDate( _Localization)

@@ -8,7 +8,7 @@
 #define MULLE_OBJC_OS_FOUNDATION_VERSION   ((0 << 20) | (13 << 8) | 0)
 
 
-#import "dependencies.h"
+#import "import.h"
 
 
 // BSD, OS X, Linux
@@ -27,4 +27,13 @@
 # endif
 #endif
 
+#import "MulleObjCLoader+MulleObjCOSFoundation.h"
 
+
+#if MULLE_OBJC_STANDARD_FOUNDATION_VERSION < ((0 << 20) | (13 << 8) | 0)
+# error "MulleObjCStandardFoundation is too old"
+#endif
+
+#if MULLE_OBJC_INET_FOUNDATION_VERSION < ((0 << 20) | (13 << 8) | 0)
+# error "MulleObjCInetFoundation is too old"
+#endif

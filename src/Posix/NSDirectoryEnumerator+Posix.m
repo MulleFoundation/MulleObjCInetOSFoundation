@@ -9,7 +9,7 @@
 // define, that make things POSIXly
 #define _XOPEN_SOURCE 700
 
-#include "dependencies.h"
+#import "import-private.h"
 
 // other files in this library
 #import <MulleObjCOSBaseFoundation/private/NSFileManager-Private.h>

@@ -11,7 +11,7 @@
  *  $Id$
  *
  */
-#import "dependencies.h"
+#import "import-private.h"
 
 #import "NSDictionary+OSBase-Private.h"
 

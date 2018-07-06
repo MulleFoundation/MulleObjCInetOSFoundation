@@ -5,11 +5,14 @@ if( MULLE_TRACE_INCLUDE)
 endif()
 
 set( SOURCES
-MulleObjCLoader+MulleObjCFreeBSDFoundation.m
 NSBundle+FreeBSD.m
 NSFileManager+FreeBSD.m
 NSPathUtilities+FreeBSD.m
 NSProcessInfo+FreeBSD.m
 NSString+FreeBSD.m
 NSTask+FreeBSD.m
+)
+
+set( STAGE2_SOURCES
+MulleObjCLoader+MulleObjCFreeBSDFoundation.m
 )

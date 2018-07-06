@@ -22,4 +22,4 @@ before_install:
 
 script:
    - mulle-sde -v craft -V
-   - mulle-env -c "mulle-test -v --project-dialect objc"
+   - mulle-sde run mulle-test -v

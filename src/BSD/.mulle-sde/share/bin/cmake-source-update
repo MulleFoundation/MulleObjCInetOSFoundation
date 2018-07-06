@@ -145,7 +145,7 @@ create_headers_file()
       ;;
 
       "NONE")
-         text_hdr2="# Header generation disabled by MULLE_SDE_CMAKE_HEADERS_FILE=NONE"
+         text_hdr="# Header generation disabled by MULLE_SDE_CMAKE_HEADERS_FILE=NONE"
          MULLE_SDE_CMAKE_HEADERS_FILE=""
       ;;
 
@@ -206,7 +206,7 @@ create_sources_file()
       ;;
 
       "NONE")
-         text_hdr2="# Source generation disabled by MULLE_SDE_CMAKE_SOURCES_FILE=NONE"
+         text_src="# Source generation disabled by MULLE_SDE_CMAKE_SOURCES_FILE=NONE"
          MULLE_SDE_CMAKE_SOURCES_FILE=""
       ;;
 

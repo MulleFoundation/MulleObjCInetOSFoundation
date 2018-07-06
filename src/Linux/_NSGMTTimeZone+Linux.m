@@ -8,7 +8,7 @@
 #define _BSD_SOURCE
 #define _DEFAULT_SOURCE
 
-#import "dependencies.h"
+#import "import-private.h"
 
 #import <MulleObjCStandardFoundation/private/_NSGMTTimeZone-Private.h>
 

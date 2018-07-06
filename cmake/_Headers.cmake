@@ -8,10 +8,15 @@ set( INCLUDE_DIRS
 src
 ) 
 
+set( PRIVATE_HEADERS
+src/import-private.h
+src/include-private.h
+)
+
 set( PUBLIC_HEADERS
+src/MulleObjCLoader+MulleObjCOSFoundation.h
 src/MulleObjCOSFoundation.h
-src/_MulleObjCOSFoundation.h
-src/dependencies.h
-src/dependencies.inc
+src/import.h
+src/include.h
 ) 
 

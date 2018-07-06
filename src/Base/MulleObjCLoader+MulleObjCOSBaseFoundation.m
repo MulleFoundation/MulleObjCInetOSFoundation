@@ -6,7 +6,7 @@
 //  Copyright © 2017 Mulle kybernetiK. All rights reserved.
 //
 
-#import "dependencies.h"
+#import "import-private.h"
 
 
 @implementation MulleObjCLoader( MulleObjCOSBaseFoundation)
@@ -15,7 +15,7 @@
 {
    static struct _mulle_objc_dependency   dependencies[] =
    {
-#include "dependencies.inc"
+#include "objc-loader.inc"
 
       { MULLE_OBJC_NO_CLASSID, MULLE_OBJC_NO_CATEGORYID }
    };

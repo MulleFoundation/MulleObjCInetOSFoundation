@@ -15,7 +15,7 @@
 
 // eek eeek eek, should be OSX rather than Darwin
 
-#import "dependencies.h"
+#import "import-private.h"
 
 #import <MulleObjCOSBaseFoundation/private/NSBundle-Private.h>
 

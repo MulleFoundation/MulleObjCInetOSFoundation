@@ -8,11 +8,6 @@
 #ifndef mulle_posix_h__
 #define mulle_posix_h__
 
-// user must define _XOPEN_SOURCE in linux
-
-#include <time.h>
-#include <locale.h>
-
 // time the old enemy, what it is it ?
 //
 // https://en.wikipedia.org/wiki/Planck_time
@@ -49,6 +44,7 @@
 //
 // NSDate contains a NSTimeInterval. It's not per se UTC!
 
+// TODO: I am tempted to make locale_t a  mulle_locale_t which is an void *
 int   mulle_posix_tm_from_string_with_format( struct tm *tm,
                                               char **c_str_p,
                                               char *c_format,

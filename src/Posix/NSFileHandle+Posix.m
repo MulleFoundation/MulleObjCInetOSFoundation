@@ -8,7 +8,7 @@
 // define, that make things POSIXly
 #define _XOPEN_SOURCE 700
 
-#import "dependencies.h"
+#import "import-private.h"
 
 // std-c and dependencies
 #include <fcntl.h>

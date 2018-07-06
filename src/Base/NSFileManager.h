@@ -11,7 +11,7 @@
  *  $Id$
  *
  */
-#import "dependencies.h"
+#import "import.h"
 
 
 @class NSDirectoryEnumerator;

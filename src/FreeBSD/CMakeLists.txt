@@ -46,19 +46,58 @@ set( PROJECT_FILES
 
 include( PreLibrary OPTIONAL)
 
-add_library( "MulleObjCFreeBSDFoundation"
+# ##################################
+# Mainly of interest for Objective-C
+# ##################################
+# Libraries are built in two stages:
+#
+# In the first step the PROJECT_FILES are compiled.
+# In the second step STAGE2_SOURCES are added.
+# This allows PostLibrary to run an analysis step over PROJECT_FILES and
+# generate files to be included by STAGE2_SOURCES. If there are no
+# STAGE2_SOURCES then this is just a more verbose way of doing it.
+# OBJC_LOADER_INC is the generated analysis step.
+#
+#
+add_library( "_1_MulleObjCFreeBSDFoundation" OBJECT
    ${PROJECT_FILES}
 )
 
-# useful for mulle-c, but can be commented out
-set_property( TARGET MulleObjCFreeBSDFoundation PROPERTY CXX_STANDARD 11)
+set( ALL_OBJECT_FILES
+   $<TARGET_OBJECTS:_1_MulleObjCFreeBSDFoundation>
+)
 
+set_property( TARGET "_1_MulleObjCFreeBSDFoundation" PROPERTY CXX_STANDARD 11)
+
+if( STAGE2_SOURCES)
+   add_library( "_2_MulleObjCFreeBSDFoundation" OBJECT
+      ${STAGE2_SOURCES}
+      ${STAGE2_HEADERS}
+   )
+   set( ALL_OBJECT_FILES
+      ${ALL_OBJECT_FILES}
+      $<TARGET_OBJECTS:_2_MulleObjCFreeBSDFoundation>
+   )
+   set_property( TARGET "_2_MulleObjCFreeBSDFoundation" PROPERTY CXX_STANDARD 11)
+else()
+   if( STAGE2_HEADERS)
+      message( FATAL_ERROR "No STAGE2_SOURCES found but STAGE2_HEADERS exist")
+   endif()
+endif()
+
+
+add_library( "MulleObjCFreeBSDFoundation"
+   ${ALL_OBJECT_FILES}
+)
+
+
+include( Library OPTIONAL)
 
 set( INSTALL_LIBRARY_TARGETS
    "MulleObjCFreeBSDFoundation"
+   ${INSTALL_LIBRARY_TARGETS}
 )
 
-include( PostLibrary OPTIONAL)
 
 #
 # defined by cmake -DBUILD_SHARED_LIBS=ON
@@ -76,6 +115,9 @@ if( BUILD_SHARED_LIBS)
       ${SHARED_LIBRARY_LIST}
    )
 endif()
+
+
+include( PostLibrary OPTIONAL)
 
 
 ### Install

@@ -5,11 +5,14 @@ if( MULLE_TRACE_INCLUDE)
 endif()
 
 set( SOURCES
-MulleObjCLoader+MulleObjCDarwinFoundation.m
 NSBundle+Darwin.m
 NSFileManager+Darwin.m
 NSPathUtilities+Darwin.m
 NSProcessInfo+Darwin.m
 NSString+Darwin.m
 NSTask+Darwin.m
+)
+
+set( STAGE2_SOURCES
+MulleObjCLoader+MulleObjCDarwinFoundation.m
 )

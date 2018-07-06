@@ -1,4 +1,4 @@
-cmake_minimum_required( VERSION 3.0)
+cmake_minimum_required( VERSION 3.1)
 
 project( MulleObjCPosixFoundation C)
 
@@ -46,16 +46,56 @@ set( PROJECT_FILES
 
 include( PreLibrary OPTIONAL)
 
-add_library( "MulleObjCPosixFoundation"
+# ##################################
+# Mainly of interest for Objective-C
+# ##################################
+# Libraries are built in two stages:
+#
+# In the first step the PROJECT_FILES are compiled.
+# In the second step STAGE2_SOURCES are added.
+# This allows PostLibrary to run an analysis step over PROJECT_FILES and
+# generate files to be included by STAGE2_SOURCES. If there are no
+# STAGE2_SOURCES then this is just a more verbose way of doing it.
+# OBJC_LOADER_INC is the generated analysis step.
+#
+#
+add_library( "_1_MulleObjCPosixFoundation" OBJECT
    ${PROJECT_FILES}
 )
 
+set( ALL_OBJECT_FILES
+   $<TARGET_OBJECTS:_1_MulleObjCPosixFoundation>
+)
+
+set_property( TARGET "_1_MulleObjCPosixFoundation" PROPERTY CXX_STANDARD 11)
+
+if( STAGE2_SOURCES)
+   add_library( "_2_MulleObjCPosixFoundation" OBJECT
+      ${STAGE2_SOURCES}
+      ${STAGE2_HEADERS}
+   )
+   set( ALL_OBJECT_FILES
+      ${ALL_OBJECT_FILES}
+      $<TARGET_OBJECTS:_2_MulleObjCPosixFoundation>
+   )
+   set_property( TARGET "_2_MulleObjCPosixFoundation" PROPERTY CXX_STANDARD 11)
+else()
+   if( STAGE2_HEADERS)
+      message( FATAL_ERROR "No STAGE2_SOURCES found but STAGE2_HEADERS exist")
+   endif()
+endif()
+
+
+add_library( "MulleObjCPosixFoundation"
+   ${ALL_OBJECT_FILES}
+)
+
+include( Library OPTIONAL)
 
 set( INSTALL_LIBRARY_TARGETS
    "MulleObjCPosixFoundation"
+   ${INSTALL_LIBRARY_TARGETS}
 )
-
-include( PostLibrary OPTIONAL)
 
 #
 # defined by cmake -DBUILD_SHARED_LIBS=ON
@@ -73,6 +113,9 @@ if( BUILD_SHARED_LIBS)
       ${SHARED_LIBRARY_LIST}
    )
 endif()
+
+
+include( PostLibrary OPTIONAL)
 
 
 ### Install

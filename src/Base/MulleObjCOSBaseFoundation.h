@@ -5,7 +5,7 @@
 //  Created by Nat! on 27.03.17.
 //  Copyright © 2017 Mulle kybernetiK. All rights reserved.
 //
-#import "dependencies.h"
+#import "import.h"
 
 #define MULLE_OBJC_OS_BASE_FOUNDATION_VERSION   MULLE_OBJC_FOUNDATION_VERSION
 

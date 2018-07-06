@@ -20,6 +20,8 @@ NSFileManager-Private.h
 NSPathUtilities+OSBase-Private.h
 NSRunLoop-Private.h
 NSTask-Private.h
+import-private.h
+include-private.h
 )
 
 set( PUBLIC_HEADERS
@@ -47,8 +49,7 @@ NSProcessInfo.h
 NSRunLoop.h
 NSTask.h
 NSUserDefaults.h
-dependencies.h
-dependencies.inc
-osbase-dependencies.inc
+import.h
+include.h
 ) 
 

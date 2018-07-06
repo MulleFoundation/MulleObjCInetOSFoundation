@@ -17,3 +17,7 @@ NSString+Linux.m
 NSTask+Linux.m
 NSTimeZone+Linux.m
 )
+
+set( STAGE2_SOURCES
+MulleObjCLoader+MulleObjCLinuxFoundation.m
+)

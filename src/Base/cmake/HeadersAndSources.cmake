@@ -11,10 +11,17 @@ include( _Sources)
 # === MULLE-SDE END ===
 #
 
-# add ignored header back in
+# add ignored headers back in
 set( PUBLIC_HEADERS
-"./_MulleObjCOSBaseFoundation-dependencies.h"
+"./_MulleObjCOSBaseFoundation-import.h"
+"./_MulleObjCOSBaseFoundation-include.h"
 ${PUBLIC_HEADERS}
+)
+
+set( PRIVATE_HEADERS
+"./_MulleObjCOSBaseFoundation-import-private.h"
+"./_MulleObjCOSBaseFoundation-include-private.h"
+${PRIVATE_HEADERS}
 )
 
 #

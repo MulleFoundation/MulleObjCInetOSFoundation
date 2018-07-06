@@ -51,11 +51,12 @@ add_library( "Locale"
 )
 
 
+include( Library OPTIONAL)
+
 set( INSTALL_LIBRARY_TARGETS
    "Locale"
+   ${INSTALL_LIBRARY_TARGETS}
 )
-
-include( PostLibrary OPTIONAL)
 
 #
 # defined by cmake -DBUILD_SHARED_LIBS=ON
@@ -73,6 +74,8 @@ if( BUILD_SHARED_LIBS)
       ${SHARED_LIBRARY_LIST}
    )
 endif()
+
+include( PostLibrary OPTIONAL)
 
 
 ### Install

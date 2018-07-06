@@ -6,7 +6,13 @@ endif()
 
  
 
+set( PRIVATE_HEADERS
+import-private.h
+include-private.h
+)
+
 set( PUBLIC_HEADERS
-dependencies.h
+import.h
+include.h
 ) 
 

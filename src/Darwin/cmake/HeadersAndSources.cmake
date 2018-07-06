@@ -11,10 +11,17 @@ include( _Sources)
 # === MULLE-SDE END ===
 #
 
-# add ignored header back in
+# add ignored headers back in
 set( PUBLIC_HEADERS
-"./_MulleObjCDarwinFoundation-dependencies.h"
+"./_MulleObjCDarwinFoundation-import.h"
+"./_MulleObjCDarwinFoundation-include.h"
 ${PUBLIC_HEADERS}
+)
+
+set( PRIVATE_HEADERS
+"./_MulleObjCDarwinFoundation-import-private.h"
+"./_MulleObjCDarwinFoundation-include-private.h"
+${PRIVATE_HEADERS}
 )
 
 #

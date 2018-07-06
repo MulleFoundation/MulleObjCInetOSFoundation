@@ -37,6 +37,19 @@ if( NOT MULLE_OBJC_OSBASE_FOUNDATION_LIBRARY)
             break()
          endif()
       endforeach()
+
+      # search for objc-loader.inc in include directory
+      foreach( _TMP_MULLE_OBJC_OSBASE_FOUNDATION_NAME in MulleObjCOSBaseFoundation)
+         set( _TMP_MULLE_OBJC_OSBASE_FOUNDATION_FILE "${_TMP_MULLE_OBJC_OSBASE_FOUNDATION_ROOT}/include/${_TMP_MULLE_OBJC_OSBASE_FOUNDATION_NAME}/objc-loader.inc")
+         if( EXISTS "${_TMP_MULLE_OBJC_OSBASE_FOUNDATION_FILE}")
+            set( INHERITED_OBJC_LOADERS
+               ${INHERITED_OBJC_LOADERS}
+               ${_TMP_MULLE_OBJC_OSBASE_FOUNDATION_FILE}
+               CACHE INTERNAL "need to cache this"
+            )
+            break()
+         endif()
+      endforeach()
    else()
       message( FATAL_ERROR "MULLE_OBJC_OSBASE_FOUNDATION_LIBRARY was not found")
    endif()
@@ -71,6 +84,19 @@ if( NOT MULLE_OBJC_POSIX_FOUNDATION_LIBRARY)
             set( INHERITED_DEFINITIONS
                ${INHERITED_DEFINITIONS}
                ${MULLE_OBJC_POSIX_FOUNDATION_DEFINITIONS}
+               CACHE INTERNAL "need to cache this"
+            )
+            break()
+         endif()
+      endforeach()
+
+      # search for objc-loader.inc in include directory
+      foreach( _TMP_MULLE_OBJC_POSIX_FOUNDATION_NAME in MulleObjCPosixFoundation)
+         set( _TMP_MULLE_OBJC_POSIX_FOUNDATION_FILE "${_TMP_MULLE_OBJC_POSIX_FOUNDATION_ROOT}/include/${_TMP_MULLE_OBJC_POSIX_FOUNDATION_NAME}/objc-loader.inc")
+         if( EXISTS "${_TMP_MULLE_OBJC_POSIX_FOUNDATION_FILE}")
+            set( INHERITED_OBJC_LOADERS
+               ${INHERITED_OBJC_LOADERS}
+               ${_TMP_MULLE_OBJC_POSIX_FOUNDATION_FILE}
                CACHE INTERNAL "need to cache this"
             )
             break()
@@ -111,6 +137,19 @@ if( NOT ${CMAKE_SYSTEM_NAME} MATCHES "Linux")
                set( INHERITED_DEFINITIONS
                   ${INHERITED_DEFINITIONS}
                   ${MULLE_OBJC_BSDFOUNDATION_DEFINITIONS}
+                  CACHE INTERNAL "need to cache this"
+               )
+               break()
+            endif()
+         endforeach()
+   
+         # search for objc-loader.inc in include directory
+         foreach( _TMP_MULLE_OBJC_BSDFOUNDATION_NAME in MulleObjCBSDFoundation)
+            set( _TMP_MULLE_OBJC_BSDFOUNDATION_FILE "${_TMP_MULLE_OBJC_BSDFOUNDATION_ROOT}/include/${_TMP_MULLE_OBJC_BSDFOUNDATION_NAME}/objc-loader.inc")
+            if( EXISTS "${_TMP_MULLE_OBJC_BSDFOUNDATION_FILE}")
+               set( INHERITED_OBJC_LOADERS
+                  ${INHERITED_OBJC_LOADERS}
+                  ${_TMP_MULLE_OBJC_BSDFOUNDATION_FILE}
                   CACHE INTERNAL "need to cache this"
                )
                break()
@@ -157,6 +196,19 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Freebsd")
                break()
             endif()
          endforeach()
+   
+         # search for objc-loader.inc in include directory
+         foreach( _TMP_MULLE_OBJC_FREEB_SDFOUNDATION_NAME in MulleObjCFreeBSDFoundation)
+            set( _TMP_MULLE_OBJC_FREEB_SDFOUNDATION_FILE "${_TMP_MULLE_OBJC_FREEB_SDFOUNDATION_ROOT}/include/${_TMP_MULLE_OBJC_FREEB_SDFOUNDATION_NAME}/objc-loader.inc")
+            if( EXISTS "${_TMP_MULLE_OBJC_FREEB_SDFOUNDATION_FILE}")
+               set( INHERITED_OBJC_LOADERS
+                  ${INHERITED_OBJC_LOADERS}
+                  ${_TMP_MULLE_OBJC_FREEB_SDFOUNDATION_FILE}
+                  CACHE INTERNAL "need to cache this"
+               )
+               break()
+            endif()
+         endforeach()
       else()
          message( FATAL_ERROR "MULLE_OBJC_FREEB_SDFOUNDATION_LIBRARY was not found")
       endif()
@@ -198,6 +250,19 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
                break()
             endif()
          endforeach()
+   
+         # search for objc-loader.inc in include directory
+         foreach( _TMP_MULLE_OBJC_DARWIN_FOUNDATION_NAME in MulleObjCDarwinFoundation)
+            set( _TMP_MULLE_OBJC_DARWIN_FOUNDATION_FILE "${_TMP_MULLE_OBJC_DARWIN_FOUNDATION_ROOT}/include/${_TMP_MULLE_OBJC_DARWIN_FOUNDATION_NAME}/objc-loader.inc")
+            if( EXISTS "${_TMP_MULLE_OBJC_DARWIN_FOUNDATION_FILE}")
+               set( INHERITED_OBJC_LOADERS
+                  ${INHERITED_OBJC_LOADERS}
+                  ${_TMP_MULLE_OBJC_DARWIN_FOUNDATION_FILE}
+                  CACHE INTERNAL "need to cache this"
+               )
+               break()
+            endif()
+         endforeach()
       else()
          message( FATAL_ERROR "MULLE_OBJC_DARWIN_FOUNDATION_LIBRARY was not found")
       endif()
@@ -234,6 +299,19 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux")
                set( INHERITED_DEFINITIONS
                   ${INHERITED_DEFINITIONS}
                   ${MULLE_OBJC_LINUX_FOUNDATION_DEFINITIONS}
+                  CACHE INTERNAL "need to cache this"
+               )
+               break()
+            endif()
+         endforeach()
+   
+         # search for objc-loader.inc in include directory
+         foreach( _TMP_MULLE_OBJC_LINUX_FOUNDATION_NAME in MulleObjCLinuxFoundation)
+            set( _TMP_MULLE_OBJC_LINUX_FOUNDATION_FILE "${_TMP_MULLE_OBJC_LINUX_FOUNDATION_ROOT}/include/${_TMP_MULLE_OBJC_LINUX_FOUNDATION_NAME}/objc-loader.inc")
+            if( EXISTS "${_TMP_MULLE_OBJC_LINUX_FOUNDATION_FILE}")
+               set( INHERITED_OBJC_LOADERS
+                  ${INHERITED_OBJC_LOADERS}
+                  ${_TMP_MULLE_OBJC_LINUX_FOUNDATION_FILE}
                   CACHE INTERNAL "need to cache this"
                )
                break()

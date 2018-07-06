@@ -5,7 +5,7 @@
 //  Created by Nat! on 14.05.17.
 //  Copyright © 2017 Mulle kybernetiK. All rights reserved.
 //
-#import "dependencies.h"
+#import "import-private.h"
 
 #import <MulleObjCStandardFoundation/private/_NSGMTTimeZone-Private.h>
 

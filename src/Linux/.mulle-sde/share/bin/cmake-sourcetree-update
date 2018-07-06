@@ -179,6 +179,9 @@ _emit_cmake_find_library()
       ;;
    esac
 
+#
+# this is getting unwieldy, should probably use a function
+#
    cat <<EOF
 ${indent}if( NOT ${identifier}_LIBRARY)
 ${indent}   find_library( ${identifier}_LIBRARY NAMES ${libraries})
@@ -213,6 +216,35 @@ ${indent}            )
 ${indent}            break()
 ${indent}         endif()
 ${indent}      endforeach()
+EOF
+
+   #
+   # for objective-c we find objc-loader.inc in the public include files
+   #
+   case ",${marks}," in
+      *,no-all-load,*)
+      ;;
+
+      *)
+         cat <<EOF
+${indent}
+${indent}      # search for objc-loader.inc in include directory
+${indent}      foreach( _TMP_${identifier}_NAME in ${aliases})
+${indent}         set( _TMP_${identifier}_FILE "\${_TMP_${identifier}_ROOT}/include/\${_TMP_${identifier}_NAME}/objc-loader.inc")
+${indent}         if( EXISTS "\${_TMP_${identifier}_FILE}")
+${indent}            set( INHERITED_OBJC_LOADERS
+${indent}               \${INHERITED_OBJC_LOADERS}
+${indent}               \${_TMP_${identifier}_FILE}
+${indent}               CACHE INTERNAL "need to cache this"
+${indent}            )
+${indent}            break()
+${indent}         endif()
+${indent}      endforeach()
+EOF
+      ;;
+   esac
+
+   cat <<EOF
 ${indent}   else()
 ${indent}      message( ${failstatus} "${failstring}")
 ${indent}   endif()

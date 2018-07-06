@@ -37,6 +37,19 @@ if( NOT MULLE_OBJC_INET_FOUNDATION_LIBRARY)
             break()
          endif()
       endforeach()
+
+      # search for objc-loader.inc in include directory
+      foreach( _TMP_MULLE_OBJC_INET_FOUNDATION_NAME in MulleObjCInetFoundation)
+         set( _TMP_MULLE_OBJC_INET_FOUNDATION_FILE "${_TMP_MULLE_OBJC_INET_FOUNDATION_ROOT}/include/${_TMP_MULLE_OBJC_INET_FOUNDATION_NAME}/objc-loader.inc")
+         if( EXISTS "${_TMP_MULLE_OBJC_INET_FOUNDATION_FILE}")
+            set( INHERITED_OBJC_LOADERS
+               ${INHERITED_OBJC_LOADERS}
+               ${_TMP_MULLE_OBJC_INET_FOUNDATION_FILE}
+               CACHE INTERNAL "need to cache this"
+            )
+            break()
+         endif()
+      endforeach()
    else()
       message( FATAL_ERROR "MULLE_OBJC_INET_FOUNDATION_LIBRARY was not found")
    endif()

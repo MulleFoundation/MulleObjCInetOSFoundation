@@ -7,7 +7,7 @@
 //
 #define _XOPEN_SOURCE 700
 
-#import "dependencies.h"
+#import "import-private.h"
 
 // other libraries of MulleObjCPosixFoundation
 

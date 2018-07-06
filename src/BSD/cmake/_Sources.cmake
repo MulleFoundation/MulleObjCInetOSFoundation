@@ -14,3 +14,7 @@ NSTask+BSD.m
 NSTimeZone+BSD.m
 mulle_bsd_tm.c
 )
+
+set( STAGE2_SOURCES
+MulleObjCLoader+MulleObjCBSDFoundation.m
+)

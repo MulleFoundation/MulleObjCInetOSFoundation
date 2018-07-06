@@ -8,7 +8,7 @@
 
 #define _XOPEN_SOURCE 700
 
-#import "dependencies.h"
+#import "import-private.h"
 
 #import <MulleObjCOSBaseFoundation/private/NSTask-Private.h>
 

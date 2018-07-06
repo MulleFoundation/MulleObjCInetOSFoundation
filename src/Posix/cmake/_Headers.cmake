@@ -17,6 +17,8 @@ NSDate+Posix-Private.h
 NSLocale+Posix-Private.h
 NSTimeZone+Posix-Private.h
 Timezone/private.h
+import-private.h
+include-private.h
 )
 
 set( PUBLIC_HEADERS
@@ -26,6 +28,8 @@ NSCondition.h
 NSLocale+Posix.h
 _NSPosixDateFormatter.h
 Timezone/tzfile.h
-dependencies.h
+dependencies.inc
+import.h
+include.h
 ) 
 

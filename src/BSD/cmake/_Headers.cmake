@@ -6,9 +6,14 @@ endif()
 
  
 
+set( PRIVATE_HEADERS
+import-private.h
+include-private.h
+)
+
 set( PUBLIC_HEADERS
-dependencies.h
-dependencies.inc
+import.h
+include.h
 mulle_bsd_tm.h
 ) 
 

@@ -8,14 +8,12 @@
 #define _XOPEN_SOURCE 700
 #define _DARWIN_C_SOURCE   // darwin: for timegm
 
-#if defined( __APPLE__)   // argh! ugliness, because we are C and can't include
-# include <xlocale.h>     // dependencies.h
-#endif
+#include "include-private.h"
 
 // std-c and dependencies
-#include <locale.h>
 #include <limits.h>
 #include <time.h>
+#include <locale.h>
 
 // private stuff
 #include "mulle_posix_tm-private.h"

@@ -1,0 +1,11 @@
+      { @selector( NSBundle), @selector( Linux) },      // c2f95c66;NSBundle;4f302bd9;Linux
+      { @selector( NSCalendarDate), @selector( Linux) },      // b8742fcb;NSCalendarDate;4f302bd9;Linux
+      { @selector( NSDateFormatter), @selector( Linux) },      // 6d2cd542;NSDateFormatter;4f302bd9;Linux
+      { @selector( NSFileManager), @selector( Linux) },      // 56d57ffc;NSFileManager;4f302bd9;Linux
+      { @selector( NSLocale), @selector( Linux) },      // 22b7d78c;NSLocale;4f302bd9;Linux
+      { @selector( NSProcessInfo), @selector( Linux) },      // 208b1df5;NSProcessInfo;4f302bd9;Linux
+      { @selector( NSString), @selector( Linux) },      // 1994a171;NSString;4f302bd9;Linux
+      { @selector( NSTask), @selector( Linux) },      // 90ec29ba;NSTask;4f302bd9;Linux
+      { @selector( NSTimeZone), @selector( Linux) },      // 190d1ade;NSTimeZone;4f302bd9;Linux
+      { @selector( _NSGMTTimeZone), @selector( Linux) },      // 60527041;_NSGMTTimeZone;4f302bd9;Linux
+      { @selector( _NSPathUtilityVectorTable_Loader), @selector( Linux) },      // ad89cd30;_NSPathUtilityVectorTable_Loader;4f302bd9;Linux

@@ -13,7 +13,7 @@
  */
 #define _DARWIN_C_SOURCE
 
-#import "dependencies.h"
+#import "import-private.h"
 
 // other files in this library
 #import <MulleObjCOSBaseFoundation/private/NSPathUtilities+OSBase-Private.h>
