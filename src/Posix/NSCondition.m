@@ -14,6 +14,8 @@
 // define, that make things POSIXly
 #define _XOPEN_SOURCE 700
 
+#import "import-private.h"
+
 #import "NSCondition.h"
 
 // other files in this library

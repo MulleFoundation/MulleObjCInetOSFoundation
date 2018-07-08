@@ -17,4 +17,8 @@
 
 /* You can add some more include statements here */
 
+#if defined( __APPLE__)
+# include <xlocale.h>
+#endif
+
 #endif
