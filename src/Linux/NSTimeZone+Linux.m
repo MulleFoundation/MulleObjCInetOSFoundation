@@ -15,7 +15,7 @@
 #import <MulleObjCPosixFoundation/private/NSTimeZone+Posix-Private.h>
 
 
-@implementation NSTimeZone (Linux)
+@implementation NSTimeZone( Linux)
 
 - (NSTimeInterval) _timeIntervalSince1970ForTM:(struct tm *) tm
 {

@@ -162,8 +162,8 @@
 
    locale = [self locale];
 
-   NSLog( @"Using tz %@", [timeZone abbreviation]);
-   NSLog( @"Using locale %@", [locale localeIdentifier]);
+   // NSLog( @"Using tz %@", [timeZone abbreviation]);
+   // NSLog( @"Using locale %@", [locale localeIdentifier]);
 
    //
    // TODO: use alloca or somesuch instead of buf ?

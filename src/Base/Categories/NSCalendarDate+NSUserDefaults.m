@@ -456,6 +456,9 @@ enum date_kind
    struct _mulle_date_offset   relative;
    struct mulle_mini_tm        tm;
    
+   if( ! locale)
+      locale = [NSLocale systemLocale];
+
    //
    // get string into components, only care about a-z and 0-9
    //
@@ -708,6 +711,7 @@ enum date_kind
                                          locale:locale
                                   referenceDate:nil]);
 }
+
 @end
 
 

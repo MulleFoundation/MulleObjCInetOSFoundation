@@ -21,13 +21,25 @@ if( NOT MULLE_OBJC_INET_FOUNDATION_LIBRARY)
       get_filename_component( _TMP_MULLE_OBJC_INET_FOUNDATION_ROOT "${_TMP_MULLE_OBJC_INET_FOUNDATION_ROOT}" DIRECTORY)
 
       # search for DependenciesAndLibraries.cmake to include
-      foreach( _TMP_MULLE_OBJC_INET_FOUNDATION_NAME in MulleObjCInetFoundation)
+      foreach( _TMP_MULLE_OBJC_INET_FOUNDATION_NAME "MulleObjCInetFoundation")
          set( _TMP_MULLE_OBJC_INET_FOUNDATION_DIR "${_TMP_MULLE_OBJC_INET_FOUNDATION_ROOT}/include/${_TMP_MULLE_OBJC_INET_FOUNDATION_NAME}/cmake")
          # use explicit path to avoid "surprises"
+         message( STATUS "_TMP_MULLE_OBJC_INET_FOUNDATION_DIR is ${_TMP_MULLE_OBJC_INET_FOUNDATION_DIR}")
          if( EXISTS "${_TMP_MULLE_OBJC_INET_FOUNDATION_DIR}/DependenciesAndLibraries.cmake")
             unset( MULLE_OBJC_INET_FOUNDATION_DEFINITIONS)
             list( INSERT CMAKE_MODULE_PATH 0 "${_TMP_MULLE_OBJC_INET_FOUNDATION_DIR}")
+            # we only want top level INHERIT_OBJC_LOADERS, so disable them
+            if( NOT NO_INHERIT_OBJC_LOADERS)
+               set( NO_INHERIT_OBJC_LOADERS OFF)
+            endif()
+            list( APPEND _TMP_INHERIT_OBJC_LOADERS ${NO_INHERIT_OBJC_LOADERS})
+            set( NO_INHERIT_OBJC_LOADERS ON)
+            #
             include( "${_TMP_MULLE_OBJC_INET_FOUNDATION_DIR}/DependenciesAndLibraries.cmake")
+            #
+            list( GET _TMP_INHERIT_OBJC_LOADERS -1 NO_INHERIT_OBJC_LOADERS)
+            list( REMOVE_AT _TMP_INHERIT_OBJC_LOADERS -1)
+            #
             list( REMOVE_ITEM CMAKE_MODULE_PATH "${_TMP_MULLE_OBJC_INET_FOUNDATION_DIR}")
             set( INHERITED_DEFINITIONS
                ${INHERITED_DEFINITIONS}
@@ -35,21 +47,26 @@ if( NOT MULLE_OBJC_INET_FOUNDATION_LIBRARY)
                CACHE INTERNAL "need to cache this"
             )
             break()
+         else()
+            message( STATUS "${_TMP_MULLE_OBJC_INET_FOUNDATION_DIR}/DependenciesAndLibraries.cmake not found")
          endif()
       endforeach()
 
       # search for objc-loader.inc in include directory
-      foreach( _TMP_MULLE_OBJC_INET_FOUNDATION_NAME in MulleObjCInetFoundation)
-         set( _TMP_MULLE_OBJC_INET_FOUNDATION_FILE "${_TMP_MULLE_OBJC_INET_FOUNDATION_ROOT}/include/${_TMP_MULLE_OBJC_INET_FOUNDATION_NAME}/objc-loader.inc")
-         if( EXISTS "${_TMP_MULLE_OBJC_INET_FOUNDATION_FILE}")
-            set( INHERITED_OBJC_LOADERS
-               ${INHERITED_OBJC_LOADERS}
-               ${_TMP_MULLE_OBJC_INET_FOUNDATION_FILE}
-               CACHE INTERNAL "need to cache this"
-            )
-            break()
-         endif()
-      endforeach()
+      # this can be turned  off (see above)
+      if( NOT NO_INHERIT_OBJC_LOADERS)
+         foreach( _TMP_MULLE_OBJC_INET_FOUNDATION_NAME "MulleObjCInetFoundation")
+            set( _TMP_MULLE_OBJC_INET_FOUNDATION_FILE "${_TMP_MULLE_OBJC_INET_FOUNDATION_ROOT}/include/${_TMP_MULLE_OBJC_INET_FOUNDATION_NAME}/objc-loader.inc")
+            if( EXISTS "${_TMP_MULLE_OBJC_INET_FOUNDATION_FILE}")
+               set( INHERITED_OBJC_LOADERS
+                  ${INHERITED_OBJC_LOADERS}
+                  ${_TMP_MULLE_OBJC_INET_FOUNDATION_FILE}
+                  CACHE INTERNAL "need to cache this"
+               )
+               break()
+            endif()
+         endforeach()
+      endif()
    else()
       message( FATAL_ERROR "MULLE_OBJC_INET_FOUNDATION_LIBRARY was not found")
    endif()

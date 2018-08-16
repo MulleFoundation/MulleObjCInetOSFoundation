@@ -1,3 +1,4 @@
+      { @selector( MulleObjCLoader), @selector( MulleObjCOSBaseFoundation) },      // 47a9beb6;MulleObjCLoader;bc81d222;MulleObjCOSBaseFoundation
       { @selector( NSBundle), @selector( Posix) },      // c2f95c66;NSBundle;ae1faa81;Posix
       { @selector( NSCalendarDate), @selector( Posix) },      // b8742fcb;NSCalendarDate;ae1faa81;Posix
       { @selector( NSCondition), MULLE_OBJC_NO_CATEGORYID },      // 0397143e;NSCondition;;

@@ -38,6 +38,9 @@ int   main( int argc, const char * argv[])
    if( mulle_objc_check_universe() != mulle_objc_universe_is_ok)
       return( 1);
 #endif
+
+   [NSTimeZone setDefaultTimeZone:[NSTimeZone _GMTTimeZone]];
+   
    // noon 2000
    today = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:12 * 60 * 60] autorelease];
 

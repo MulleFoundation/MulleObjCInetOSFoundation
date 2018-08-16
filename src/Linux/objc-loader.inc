@@ -1,3 +1,4 @@
+      { @selector( MulleObjCLoader), @selector( MulleObjCPosixFoundation) },      // 47a9beb6;MulleObjCLoader;66ba74e2;MulleObjCPosixFoundation
       { @selector( NSBundle), @selector( Linux) },      // c2f95c66;NSBundle;4f302bd9;Linux
       { @selector( NSCalendarDate), @selector( Linux) },      // b8742fcb;NSCalendarDate;4f302bd9;Linux
       { @selector( NSDateFormatter), @selector( Linux) },      // 6d2cd542;NSDateFormatter;4f302bd9;Linux
