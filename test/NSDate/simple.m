@@ -30,7 +30,7 @@ int   main( int argc, const char * argv[])
    NSTimeInterval    distantFuture;
 
 #ifdef __MULLE_OBJC__
-   if( mulle_objc_check_universe() != mulle_objc_universe_is_ok)
+   if( mulle_objc_global_check_universe( __MULLE_OBJC_UNIVERSENAME__) != mulle_objc_universe_is_ok)
       return( 1);
 #endif
    date     = [NSDate date];

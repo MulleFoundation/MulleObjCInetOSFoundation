@@ -176,7 +176,7 @@ static NSData   *readDataOfLength( NSFileHandle *self, NSUInteger length, BOOL f
       readten = [self _readBytes:buf
                           length:len];
       if( readten == (size_t) -1)
-         mulle_objc_throw_errno_exception( "read failed");
+         MulleObjCThrowErrnoException( @"read failed");
       len -= readten;
       buf  = &buf[ readten];
 

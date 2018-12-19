@@ -47,12 +47,8 @@ static NSBundle  *get_or_register_bundle( NSBundle *bundle, NSString *path)
 
    other = [_bundleDictionary objectForKey:path];
    if( other)
-   {
-#if DEBUG
-      _NSPrintForDebugger( other); // höh ?
-#endif
       return( other);
-   }
+
    if( bundle)
    {
       if( ! _bundleDictionary)

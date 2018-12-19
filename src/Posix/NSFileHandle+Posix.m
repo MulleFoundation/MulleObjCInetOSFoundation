@@ -95,7 +95,7 @@ retry:
       case EAGAIN :
          return( 0);
       default :
-            mulle_objc_throw_errno_exception( "read");
+         MulleObjCThrowErrnoException( @"read");
       }
    }
    return( result);
@@ -123,7 +123,7 @@ retry:
       case EAGAIN :
          return( 0);
       default :
-         mulle_objc_throw_errno_exception( "read");
+         MulleObjCThrowErrnoException( @"read");
       }
    }
    return( (size_t) result);
@@ -149,7 +149,7 @@ retry:
 
    result = lseek( (int) _fd, offset, posixMode);
    if( result == (off_t) -1)
-      mulle_objc_throw_errno_exception( "lseek");
+      MulleObjCThrowErrnoException( @"lseek");
    return( (unsigned long long) result);
 }
 

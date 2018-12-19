@@ -36,7 +36,7 @@
 
    interval = (NSTimeInterval) mulle_get_timeinterval_for_tm( [_data bytes], &tmp);
    if( interval == -1)
-      MulleObjCThrowCInvalidArgumentException( "time can not be converted");
+      MulleObjCThrowInvalidArgumentException( @"time can not be converted");
 
    tm->tm_sec  = tmp.tm_sec;
    tm->tm_min  = tmp.tm_min;

@@ -34,3 +34,21 @@ export PROJECT_DIALECT="objc"
 export PROJECT_EXTENSIONS="m:aam"
 
 
+#
+#
+#
+export PROJECT_IDENTIFIER="Locale"
+
+
+#
+#
+#
+export PROJECT_DOWNCASE_IDENTIFIER="locale"
+
+
+#
+#
+#
+export PROJECT_UPCASE_IDENTIFIER="LOCALE"
+
+

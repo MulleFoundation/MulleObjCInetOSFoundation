@@ -56,16 +56,14 @@
       else
          c_key_len = strlen( c_key);
 
-      if( ! c_value)
-      {
-         c_value = "YES";
-         c_value_len = 3;
-      }
-
       key = [[NSString alloc] initWithCString:c_key
                                        length:c_key_len];
-      value = [[NSString alloc] initWithCString:c_value
-                                         length:c_value_len];
+      if( c_value)
+         value = [[NSString alloc] initWithCString:c_value
+                                            length:c_value_len];
+      else
+         value = [@"" retain];
+
       [dictionary setObject:value
                      forKey:key];
       [key release];

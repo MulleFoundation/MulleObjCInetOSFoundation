@@ -35,6 +35,7 @@
    NSData                            *data;
    id                                plist;
    NSPropertyListMutabilityOptions   options;
+   id                                old;
 
    options = NSPropertyListImmutable;
    if( [self __isNSMutableArray])
@@ -45,11 +46,14 @@
                                             mutabilityOption:options
                                                       format:NULL
                                             errorDescription:NULL];
-  [self release];
-
+   old = self;
+   // memo: do not call class methods hereafter
    if( ! [plist __isNSArray])
-      return( nil);
-   return( [plist retain]);
+      self = nil;
+   else
+      self = [plist retain];
+   [old release];
+   return( self);
 }
 
 

@@ -21,9 +21,10 @@ int   main( int argc, const char * argv[])
    NSEnumerator    *rover;
    NSString        *cString;
    NSString        *key;
-   int             i;
    char            *env_s;
    char            *key_s;
+   id              value;
+   unsigned int    i;
 
    environment = [[NSProcessInfo processInfo] environment];
    if( ! [environment count])
@@ -32,16 +33,23 @@ int   main( int argc, const char * argv[])
       return( -1);
    }
 
+   i = 0;
    rover = [environment keyEnumerator];
    while( key = [rover nextObject])
    {
       key_s   = [key cString];
       env_s   = getenv( key_s);
       cString = [NSString stringWithCString:env_s];
-      if( ! [[environment objectForKey:key] isEqualToString:cString])
-      {
-          printf( "%d failed\n", i);
-      }
+      value   = [environment objectForKey:key];
+      if( ! value)
+         printf( "#%u: environment key %s value missing\n", i, key_s);
+
+      if( ! [value isEqualToString:cString])
+         printf( "#%u: environment key %s value \'%s\' != \"%s\"\n",
+                        i,
+                        key_s, env_s ? env_s : "",
+                        [value cString] ? [value cString] : "");
+      ++i;
    }
 
    return( 0);

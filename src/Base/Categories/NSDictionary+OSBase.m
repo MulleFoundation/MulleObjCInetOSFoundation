@@ -34,23 +34,31 @@
 - (instancetype) initWithContentsOfFile:(NSString *) path
 {
    NSData                            *data;
-   id                                plist;
    NSPropertyListMutabilityOptions   options;
+   id                                old;
 
    options = NSPropertyListImmutable;
    if( [self __isNSMutableDictionary])
       options = NSPropertyListMutableContainers;
 
-   data  = [NSData dataWithContentsOfFile:path];
-   plist = [NSPropertyListSerialization propertyListFromData:data
-                                            mutabilityOption:options
-                                                      format:NULL
-                                            errorDescription:NULL];
-  [self release];
+   @autoreleasepool
+   {
+      data = [NSData dataWithContentsOfFile:path];
+      old  = self;
+      self = [NSPropertyListSerialization propertyListFromData:data
+                                              mutabilityOption:options
+                                                        format:NULL
+                                              errorDescription:NULL];
+      [old release];
+      [self retain];
+   }
 
-   if( ! [plist __isNSDictionary])
+   if( ! [self __isNSDictionary])
+   {
+      [self release];
       return( nil);
-   return( [plist retain]);
+   }
+   return( self);
 }
 
 
@@ -59,12 +67,17 @@
 {
    NSString  *error;
    NSData    *data;
+   BOOL      rval;
 
-   data = [NSPropertyListSerialization dataFromPropertyList:self
-                                                     format:NSPropertyListOpenStepFormat
-                                           errorDescription:&error];
-   return( [data writeToFile:path
-                  atomically:flag]);
+   @autoreleasepool
+   {
+      data = [NSPropertyListSerialization dataFromPropertyList:self
+                                                        format:NSPropertyListOpenStepFormat
+                                              errorDescription:&error];
+      rval = [data writeToFile:path
+                    atomically:flag];
+   }
+   return( rval);
 }
 
 @end

@@ -29,51 +29,54 @@
 #   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #   POSSIBILITY OF SUCH DAMAGE.
 #
-
-[ "${TRACE}" = "YES" ] && set -x && : "$0" "$@"
+[ "${TRACE}" = 'YES' -o "${C_SOURCETREE_UPDATE_TRACE}" = 'YES' ] && set -x && : "$0" "$@"
 
 
 usage()
 {
    cat <<EOF >&2
 Usage:
-   c-sourcetree-update <action> <filename> <category>
+   c-sourcetree-update [flags]
 
-   This produces the _dependencies.h or some similiarly named file.
+   Produces the _<project>-include.h files and related headers.
+
+Flags:
+      --stdout :  Emit to stdout instead
 
 EOF
    exit 1
 }
 
 
-#
-# this is bullshit right now, just in the process of building it up
-#
-uname_to_cpp()
+r_uname_to_cpp()
 {
-   log_entry "uname_to_cmake" "$@"
+   log_entry "r_uname_to_cpp" "$@"
 
-   local uname="$1"
+   local uname="$1"  # the part after only-os or no
 
    case "${uname}" in
-      darwin)
-         echo "__APPLE__"
+      'darwin')
+         RVAL="__APPLE__"
       ;;
 
-      "")
-         fail "uname is empty"
+      'freebsd')
+         RVAL="BSD4_3"  # guess
+      ;;
+
+      'mingw'*)
+         RVAL="_WIN32"
       ;;
 
       *)
-         echo "__`tr 'a-z' 'A-Z' <<< "${uname}"`__"
+         RVAL="__${uname}__"
       ;;
    esac
 }
 
 
-osexclude_to_cpp_if()
+r_osexclude_to_cpp_if()
 {
-   log_entry "osexclude_to_cpp_if" "$@"
+   log_entry "r_osexclude_to_cpp_if" "$@"
 
    local marks="$1"
 
@@ -90,13 +93,15 @@ osexclude_to_cpp_if()
 
       case "${osexclude}" in
          only-os-*)
-            cppvar="`uname_to_cpp "${osexclude:8}"`"
-            onlys="`concat "${onlys}" "defined( ${cppvar})" " || " `"
+				r_uname_to_cpp "${osexclude:8}"
+            r_concat "${onlys}" "defined( ${RVAL})" " || "
+            onlys="${RVAL}"
          ;;
 
          no-os-*)
-            cppvar="`uname_to_cpp "${osexclude:6}"`"
-            excludes="`concat "${excludes}" "! defined( ${cppvar})" " && "`"
+				r_uname_to_cpp "${osexclude:6}"
+            r_concat "${excludes}" "! defined( ${RVAL})" " && "
+            excludes="${RVAL}"
          ;;
       esac
    done
@@ -104,14 +109,17 @@ osexclude_to_cpp_if()
 
    if [ ! -z "${onlys}" ]
    then
-      echo "# if ${onlys}"
+      RVAL="# if ${onlys}"
       return
    fi
 
    if [ ! -z "${excludes}" ]
    then
-      echo "# if ${excludes}"
+      RVAL="# if ${excludes}"
+      return
    fi
+
+   RVAL=""
 }
 
 
@@ -122,37 +130,33 @@ _emit_c_include()
    local address="$1"
    local header="$2"
    local marks="$3"
-   local aliases="$4"
 
    local indent
    local ifstatement
    local include
    local mark
+   local RVAL
 
    #
    # so objc can reuse this, make a provision for import with --objc flag
    # but allow #include if the mark no-objc is set
    #
    include="include"
-   if [ "${OPTION_OBJC}" = "YES" ]
+   if [ "${OPTION_IMPORT}" = 'YES' ]
    then
       include="import"
 
-      set -o noglob ; IFS=","
-      for mark in ${marks}
-      do
-         if [ "${mark}" = "no-objc" ]
-         then
+      case ",${marks}," in
+         *,no-import,*)
             include="include"
-            break
-         fi
-      done
-      IFS="${DEFAULT_IFS}" ; set o noglob
+         ;;
+      esac
    fi
 
    if [ ! -z "${marks}" ]
    then
-      ifstatement="`osexclude_to_cpp_if "${marks}" `"
+   	r_osexclude_to_cpp_if "${marks}"
+      ifstatement="${RVAL}"
    fi
 
    if [ ! -z "${ifstatement}" ]
@@ -161,7 +165,21 @@ _emit_c_include()
       indent=" "
    fi
 
-   echo "# ${indent}include <${header}>   // ${address}"
+   # TODO: remove support __has_include for C ? Not all C compilers have
+   #       __has_include
+   case ",${marks}," in
+      *,no-require,*)
+         echo "# if __has_include(<${header}>)"
+         echo "#  ${indent}${include} <${header}>   // ${address}"
+         echo "# endif"
+      ;;
+
+      *)
+         echo "# ${indent}${include} <${header}>   // ${address}"
+      ;;
+   esac
+
+
    if [ ! -z "${ifstatement}" ]
    then
       echo "# endif"
@@ -177,8 +195,9 @@ emit_c_include_library()
 
    local address="$1"
    local marks="$2"
-   local aliases="$3"
-   local header="$4"
+   local header="$3"
+
+   local RVAL
 
    #
    # the default for libraries is old style <name.h> not <name/name.h>
@@ -187,11 +206,12 @@ emit_c_include_library()
    then
       local name
 
-      name="`fast_basename "${address}"`"
+      r_fast_basename "${address}"
+      name="${RVAL}"
       header="${name}.h"
    fi
 
-   _emit_c_include "${address}" "${header}" "${marks}" "${aliases}"
+   _emit_c_include "${address}" "${header}" "${marks}"
 
 }
 
@@ -202,9 +222,9 @@ emit_c_include_dependency()
 
    local address="$1"
    local marks="$2"
-   local aliases="$3"
-   local header="$4"
+   local header="$3"
 
+   local RVAL
    #
    # the default for dependencies is <name/name.h>
    #
@@ -212,11 +232,12 @@ emit_c_include_dependency()
    then
       local name
 
-      name="`fast_basename "${address}"`"
+      r_fast_basename "${address}"
+      name="${RVAL}"
       header="${name}/${name}.h"
    fi
 
-   _emit_c_include "${address}" "${header}" "${marks}" "${aliases}"
+   _emit_c_include "${address}" "${header}" "${marks}"
 }
 
 
@@ -224,14 +245,20 @@ emit_c_header()
 {
    log_entry "emit_c_header" "$@"
 
+   local marks="$1"
+
+   local filter_marks
+
+   r_comma_concat "header" "${marks}"
+   filter_marks="${RVAL}"
+
    # since the order of the headers is important and needs to be in treeorder
    # we use mulle-sourcetree directly
    local headers
 
    headers="`exekutor mulle-sourcetree list \
-                                       --format "%a;%m;%i={aliases,,-------};\
-%i={include,,-------}\\n" \
-                                       --marks header \
+                                       --format "%a;%m;%i={include,,-------}\\n" \
+                                       --marks "${filter_marks}" \
                                        --output-raw \
                                        --no-output-header`" || return 1
 
@@ -247,20 +274,19 @@ emit_c_header()
       local marks
       local include
 
-      IFS=";" read address marks aliases include <<< "${header}"
+      IFS=";" read address marks include <<< "${header}"
 
       if [ -z "${address}" ]
       then
          continue
       fi
 
-      log_verbose "Emit statements for ${C_MAGENTA}${C_BOLD}${address}"
+      log_verbose "Emit cmake statements for ${C_MAGENTA}${C_BOLD}${address}"
 
       case ",${marks}," in
          *,no-dependency,*)
             emit_c_include_library "${address}" \
                                    "${marks}" \
-                                   "${aliases}" \
                                    "${include}" \
                                    "$@"
          ;;
@@ -268,7 +294,6 @@ emit_c_header()
          *)
             emit_c_include_dependency "${address}" \
                                       "${marks}" \
-                                      "${aliases}" \
                                       "${include}" \
                                       "$@"
          ;;
@@ -279,29 +304,300 @@ emit_c_header()
 }
 
 
+c_include()
+{
+   log_entry "c_include" "$@"
+
+   local projectname="$1"
+   local projectidentifier="$2"
+
+   local text_h
+
+   case "${MULLE_SDE_INCLUDE_FILENAME}" in
+      DISABLE*)
+         return
+      ;;
+
+      NONE)
+         text_h="/* Contents suppressed by MULLE_SDE_INCLUDE_FILENAME NONE.
+* Use
+*   mulle-sde environment --global set MULLE_SDE_INCLUDE_FILENAME DISABLE
+* to not generate this file.
+*/"
+      ;;
+
+      "")
+         MULLE_SDE_INCLUDE_FILENAME="${PROJECT_SOURCE_DIR}/_${projectname}-include.h"
+      ;;
+   esac
+
+   if [ -z "${text_h}" ]
+   then
+      local marks
+
+      case "${PROJECT_DIALECT}" in
+         'objc')
+            marks="no-import,public"
+         ;;
+
+         *)
+            marks="public"
+         ;;
+      esac
+
+      text_h="`emit_c_header "${marks}"`" || exit 1
+
+      if [ -z "${text_h}" ]
+      then
+         text_h="/* no headers */"
+      fi
+
+      text_h="/*
+*   This file will be regenerated by \`mulle-sde update|monitor\`.
+* Edits will be lost.
+* Suppress this file with MULLE_SDE_INCLUDE_FILENAME NONE|DISABLE.
+*/
+
+#ifndef _${projectidentifier}_include_h__
+#define _${projectidentifier}_include_h__
+
+${text_h}
+
+#endif"
+   fi
+
+   if [ "${MULLE_SDE_INCLUDE_FILENAME}" = "-" ]
+   then
+      log_info "-include.h"
+      rexekutor echo "${text_h}"
+   else
+      log_verbose "Writing ${C_RESET_BOLD}${MULLE_SDE_INCLUDE_FILENAME}"
+      redirect_exekutor "${MULLE_SDE_INCLUDE_FILENAME}" echo "${text_h}"
+   fi
+}
+
+
+objc_import()
+{
+   log_entry "objc_import" "$@"
+
+   local projectname="$1"
+   local projectidentifier="$2"
+
+   local text_h
+
+   case "${MULLE_SDE_IMPORT_FILENAME}" in
+      DISABLE*)
+         return
+      ;;
+
+      NONE)
+         text_h="/* Contents suppressed by MULLE_SDE_IMPORT_FILENAME NONE.
+* Use
+*   mulle-sde environment --global set MULLE_SDE_IMPORT_FILENAME DISABLE
+* to not generate this file.
+*/"
+      ;;
+
+      "")
+         MULLE_SDE_IMPORT_FILENAME="${PROJECT_SOURCE_DIR}/_${projectname}-import.h"
+      ;;
+   esac
+
+   if [ -z "${text_h}" ]
+   then
+      text_h="`emit_c_header "import,public"`" || exit 1
+
+      if [ -z "${text_h}" ]
+      then
+         text_h="/* no headers */"
+      fi
+
+
+      text_h="/*
+* This file will be regenerated by \`mulle-sde update|monitor\`.
+* Edits will be lost.
+* Suppress this file with MULLE_SDE_IMPORT_FILENAME NONE|DISABLE.
+*/
+
+#ifndef _${projectidentifier}_import_h__
+#define _${projectidentifier}_import_h__
+
+${text_h}
+
+#endif"
+   fi
+
+   if [ "${MULLE_SDE_IMPORT_FILENAME}" = "-" ]
+   then
+      log_info "-import.h"
+      rexekutor echo "${text_h}"
+   else
+      log_verbose "Writing ${C_RESET_BOLD}${MULLE_SDE_IMPORT_FILENAME}"
+      redirect_exekutor "${MULLE_SDE_IMPORT_FILENAME}" echo "${text_h}"
+   fi
+}
+
+
+c_include_private()
+{
+   log_entry "c_include_private" "$@"
+
+   local projectname="$1"
+   local projectidentifier="$2"
+
+   local text_h
+
+   case "${MULLE_SDE_INCLUDE_PRIVATE_FILENAME}" in
+      DISABLE*)
+         return
+      ;;
+
+      NONE)
+         text_h="/* Contents suppressed by MULLE_SDE_INCLUDE_PRIVATE_FILENAME NONE.
+* Use
+*   mulle-sde environment --global set MULLE_SDE_INCLUDE_PRIVATE_FILENAME DISABLE
+* to not generate this file.
+*/"
+      ;;
+
+      "")
+         MULLE_SDE_INCLUDE_PRIVATE_FILENAME="${PROJECT_SOURCE_DIR}/_${projectname}-include-private.h"
+      ;;
+   esac
+
+   if [ -z "${text_h}" ]
+   then
+      local marks
+
+      case "${PROJECT_DIALECT}" in
+         'objc')
+            marks="no-import,no-public"
+         ;;
+
+         *)
+            marks="no-public"
+         ;;
+      esac
+
+      text_h="`emit_c_header "${marks}"`" || exit 1
+
+      if [ -z "${text_h}" ]
+      then
+         text_h="/* no headers */"
+      fi
+
+      text_h="/*
+   This file will be regenerated by \`mulle-sde update|monitor\`.
+   Edits will be lost.
+   Suppress this file with MULLE_SDE_INCLUDE_PRIVATE_FILENAME NONE|DISABLE.
+*/
+
+#ifndef _${projectidentifier}_include_private_h__
+#define _${projectidentifier}_include_private_h__
+
+${text_h}
+
+#endif"
+   fi
+
+   if [ "${MULLE_SDE_INCLUDE_PRIVATE_FILENAME}" = "-" ]
+   then
+      log_info "-include-private.h"
+      rexekutor echo "${text_h}"
+   else
+      log_verbose "Writing ${C_RESET_BOLD}${MULLE_SDE_INCLUDE_PRIVATE_FILENAME}"
+      redirect_exekutor "${MULLE_SDE_INCLUDE_PRIVATE_FILENAME}" echo "${text_h}"
+   fi
+}
+
+
+objc_import_private()
+{
+   log_entry "objc_import_private" "$@"
+
+   local projectname="$1"
+   local projectidentifier="$2"
+
+   local text_h
+
+   case "${MULLE_SDE_IMPORT_PRIVATE_FILENAME}" in
+      DISABLE*)
+         return
+      ;;
+
+      NONE)
+         text_h="/* Contents suppressed by MULLE_SDE_IMPORT_PRIVATE_FILENAME NONE.
+* Use
+*   mulle-sde environment --global set MULLE_SDE_IMPORT_PRIVATE_FILENAME DISABLE
+* to not generate this file.
+*/"
+      ;;
+
+
+      "")
+         MULLE_SDE_IMPORT_PRIVATE_FILENAME="${PROJECT_SOURCE_DIR}/_${projectname}-import-private.h"
+      ;;
+   esac
+
+   if [ -z "${text_h}" ]
+   then
+      text_h="`emit_c_header "import,no-public"`" || exit 1
+
+      if [ -z "${text_h}" ]
+      then
+         text_h="/* no headers */"
+      fi
+
+
+      text_h="/*
+* This file will be regenerated by \`mulle-sde update|monitor\`.
+* Edits will be lost.
+* Suppress this file with MULLE_SDE_IMPORT_PRIVATE_FILENAME NONE|DISABLE.
+*/
+
+#ifndef _${projectidentifier}_import_private_h__
+#define _${projectidentifier}_import_private_h__
+
+${text_h}
+
+#endif"
+   fi
+
+   if [ "${MULLE_SDE_IMPORT_PRIVATE_FILENAME}" = "-" ]
+   then
+      log_info "-import-private.h"
+      rexekutor echo "${text_h}"
+   else
+      log_verbose "Writing ${C_RESET_BOLD}${MULLE_SDE_IMPORT_PRIVATE_FILENAME}"
+      redirect_exekutor "${MULLE_SDE_IMPORT_PRIVATE_FILENAME}" echo "${text_h}"
+   fi
+}
+
+
 main()
 {
    log_entry "main" "$@"
 
    # technical flags
    local MULLE_TRACE
-   local MULLE_FLAG_DONT_DEFER="NO"
-   local MULLE_FLAG_EXEKUTOR_DRY_RUN="NO"
-   local MULLE_FLAG_FOLLOW_SYMLINKS="YES"
-   local MULLE_FLAG_LOG_CACHE="NO"
-   local MULLE_FLAG_LOG_DEBUG="NO"
-   local MULLE_FLAG_LOG_EXEKUTOR="NO"
-   local MULLE_FLAG_LOG_FLUFF="NO"
-   local MULLE_FLAG_LOG_MERGE="NO"
-   local MULLE_FLAG_LOG_SCRIPTS="NO"
-   local MULLE_FLAG_LOG_SETTINGS="NO"
-   local MULLE_FLAG_LOG_VERBOSE="NO"
-   local MULLE_TRACE_PATHS_FLIP_X="NO"
-   local MULLE_TRACE_POSTPONE="NO"
-   local MULLE_TRACE_RESOLVER_FLIP_X="NO"
-   local MULLE_TRACE_SETTINGS_FLIP_X="NO"
+   local MULLE_FLAG_DONT_DEFER='NO'
+   local MULLE_FLAG_EXEKUTOR_DRY_RUN='NO'
+   local MULLE_FLAG_FOLLOW_SYMLINKS='YES'
+   local MULLE_FLAG_LOG_CACHE='NO'
+   local MULLE_FLAG_LOG_DEBUG='NO'
+   local MULLE_FLAG_LOG_EXEKUTOR='NO'
+   local MULLE_FLAG_LOG_FLUFF='NO'
+   local MULLE_FLAG_LOG_MERGE='NO'
+   local MULLE_FLAG_LOG_SCRIPTS='NO'
+   local MULLE_FLAG_LOG_SETTINGS='NO'
+   local MULLE_FLAG_LOG_VERBOSE='NO'
+   local MULLE_TRACE_PATHS_FLIP_X='NO'
+   local MULLE_TRACE_POSTPONE='NO'
+   local MULLE_TRACE_RESOLVER_FLIP_X='NO'
+   local MULLE_TRACE_SETTINGS_FLIP_X='NO'
 
-   local OPTION_OBJC_HEURISTIC="NO"
+   local OPTION_IMPORT="DEFAULT"
 
    while [ $# -ne 0 ]
    do
@@ -316,12 +612,51 @@ main()
             usage
          ;;
 
-         --objc)
-            OPTION_OBJC="YES"
+         --import)
+            OPTION_IMPORT='YES'
+         ;;
+
+         --no-import)
+            OPTION_IMPORT='NO'
+         ;;
+
+         -p|--project-name)
+            [ "$#" -eq 1 ] && usage "Missing argument to \"$1\""
+            shift
+
+            PROJECT_NAME="$1"
+         ;;
+
+         -t|--project-type)
+            [ "$#" -eq 1 ] && usage "Missing argument to \"$1\""
+            shift
+
+            PROJECT_TYPE="$1"
+         ;;
+
+         --project-source-dir)
+            [ "$#" -eq 1 ] && usage "Missing argument to \"$1\""
+            shift
+
+            PROJECT_SOURCE_DIR="$1"
+         ;;
+
+         --project-dialect)
+            [ "$#" -eq 1 ] && usage "Missing argument to \"$1\""
+            shift
+
+            PROJECT_DIALECT="$1"
+         ;;
+
+         --stdout)
+            MULLE_SDE_INCLUDE_FILENAME="-"
+            MULLE_SDE_INCLUDE_PRIVATE_FILENAME="-"
+            MULLE_SDE_IMPORT_FILENAME="-"
+            MULLE_SDE_IMPORT_PRIVATE_FILENAME="-"
          ;;
 
          -*)
-            log_error "unknown option \"$1\""
+            log_error "Unknown option \"$1\""
             usage
          ;;
 
@@ -335,57 +670,46 @@ main()
 
    options_setup_trace "${MULLE_TRACE}"
 
+   [ -z "${MULLE_VIRTUAL_ROOT}" ] && fail "Must run inside the mulle-sde environment"
 
-   local projectname
-
-   projectname="${PROJECT_NAME}"
-   if [ -z "${projectname}" ]
+   if [ -z "${MULLE_CASE_SH}" ]
    then
-      projectname="`fast_basename "${PWD}"`" # could be nicer
+      # shellcheck source=mulle-case.sh
+      . "${MULLE_BASHFUNCTIONS_LIBEXEC_DIR}/mulle-case.sh" || return 1
    fi
 
-   if [ "${MULLE_SDE_DEPENDENCIES_HEADER_FILE}" = "NONE" ]
+   local RVAL
+
+   if [ -z "${PROJECT_NAME}" ]
    then
-      return
+   	r_fast_basename "${PWD}"
+      PROJECT_NAME="${RVAL}" # could be nicer
    fi
+
+   local PROJECT_IDENTIFIER
+   local PROJECT_DOWNCASE_IDENTIFIER
+
+   r_tweaked_de_camel_case "${PROJECT_NAME}"
+   PROJECT_IDENTIFIER="${RVAL}"
+   PROJECT_IDENTIFIER="`printf "%s" "${PROJECT_IDENTIFIER}" | tr -c 'a-zA-Z0-9' '_'`"
+   PROJECT_DOWNCASE_IDENTIFIER="`tr 'A-Z' 'a-z' <<< "${PROJECT_IDENTIFIER}"`"
 
    [ -z "${PROJECT_SOURCE_DIR}" ] && internal_fail "PROJECT_SOURCE_DIR not set"
+   [ -z "${PROJECT_DIALECT}" ] && log_warning "PROJECT_DIALECT not set"
 
-   if [ -z "${MULLE_SDE_DEPENDENCIES_HEADER_FILE}" ]
+   c_include "${PROJECT_NAME}" "${PROJECT_DOWNCASE_IDENTIFIER}" || exit 1
+   c_include_private "${PROJECT_NAME}" "${PROJECT_DOWNCASE_IDENTIFIER}" || exit 1
+
+   if [ "${PROJECT_DIALECT}" = "objc" ]
    then
-      MULLE_SDE_DEPENDENCIES_HEADER_FILE="${PROJECT_SOURCE_DIR}/_${projectname}-dependencies.h"
+      if [ "${OPTION_IMPORT}" = "DEFAULT" ]
+      then
+         OPTION_IMPORT='YES'
+      fi
+
+      objc_import "${PROJECT_NAME}" "${PROJECT_DOWNCASE_IDENTIFIER}" || exit 1
+      objc_import_private "${PROJECT_NAME}" "${PROJECT_DOWNCASE_IDENTIFIER}" || exit 1
    fi
-
-   local text_h
-   local text_dep
-
-   text_h="`emit_c_header`"     || exit 1
-
-   if [ -z "${text_h}" ]
-   then
-      text_h="/* no headers */"
-   fi
-
-   local projectidentifier
-
-   projectidentifier="`tr 'A-Z-' 'a-z_' <<< "${projectname}" `"
-
-   text_h="/*
-   This file will be regenerated by \`mulle-sde update|monitor\`.
-   Edits will be lost.
-*/
-
-#ifndef _${projectidentifier}__dependencies_h__
-#define _${projectidentifier}__dependencies_h__
-
-${text_h}
-
-#endif"
-
-   log_fluff "Create header file (${PWD})"
-
-   log_verbose "Writing ${C_RESET_BOLD}${MULLE_SDE_DEPENDENCIES_HEADER_FILE}"
-   redirect_exekutor "${MULLE_SDE_DEPENDENCIES_HEADER_FILE}" echo "${text_h}"
 }
 
 

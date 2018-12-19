@@ -27,7 +27,7 @@
 + (instancetype) dateWithNaturalLanguageString:(NSString *) s
 {
    NSDictionary   *dictionary;
-   
+
    dictionary = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
    return( [self dateWithNaturalLanguageString:s
                                         locale:dictionary]);
@@ -100,7 +100,7 @@ static NSString   *weekdays[ 7];
 + (void) load
 {
    unsigned int   i;
-  
+
    i = 0;
    substitutions[ i++] = NSEarlierTimeDesignationsKey;
    substitutions[ i++] = NSLaterTimeDesignationsKey;
@@ -109,9 +109,9 @@ static NSString   *weekdays[ 7];
    substitutions[ i++] = NSPriorDayDesignationsKey;
    substitutions[ i++] = NSThisDayDesignationsKey;
    substitutions[ i++] = 0;
-   
+
    assert( i == 7);
-   
+
    i = 0;
    months[ i++] = NSJanuaryString;
    months[ i++] = NSFebruaryString;
@@ -127,7 +127,7 @@ static NSString   *weekdays[ 7];
    months[ i++] = NSDecemberString;
 
    assert( i == 12);
-   
+
    i = 0;
    weekdays[ i++] = NSSundayString;
    weekdays[ i++] = NSMondayString;
@@ -145,7 +145,7 @@ static NSUInteger   find_word( NSMutableArray *components,
 {
    NSUInteger   i;
    NSString     *component;
-   
+
    i = 0;
    for( component in components)
    {
@@ -164,7 +164,7 @@ static void   substitute_word( NSMutableArray *components,
 {
    NSUInteger   i;
    NSString     *component;
-   
+
    i = 0;
    for( component in components)
    {
@@ -180,13 +180,13 @@ static void   substitute_word( NSMutableArray *components,
 static void  substitute_months( NSMutableArray *components, NSArray *words)
 {
    unsigned int   i;
-   
+
    if( ! words)
       return;
-   
+
    if( [words count] != 12)
-      MulleObjCThrowCInvalidArgumentException( "weekday names must contain 12 and only 12 strings");
-   
+      MulleObjCThrowInvalidArgumentException( @"weekday names must contain 12 and only 12 strings");
+
    for( i = 0; i < 12; i++)
       substitute_word( components, [words :i], months[ i]);
 }
@@ -195,13 +195,13 @@ static void  substitute_months( NSMutableArray *components, NSArray *words)
 static void  substitute_weekdays( NSMutableArray *components, NSArray *words)
 {
    unsigned int  i;
-   
+
    if( ! words)
       return;
-   
+
    if( [words count] != 7)
-      MulleObjCThrowCInvalidArgumentException( "weekday names must contain seven and only seven strings");
-   
+      MulleObjCThrowInvalidArgumentException( @"weekday names must contain seven and only seven strings");
+
    for( i = 0; i < 7; i++)
       substitute_word( components, [words :i], weekdays[ i]);
 }
@@ -213,8 +213,8 @@ static void  substitute_ampm( NSMutableArray *components, NSArray *words)
       return;
 
    if( [words count] != 2)
-      MulleObjCThrowCInvalidArgumentException( "AM/PM designation must contain two and only two strings");
-   
+      MulleObjCThrowInvalidArgumentException( @"AM/PM designation must contain two and only two strings");
+
    substitute_word( components, [words :0], NSAMString);
    substitute_word( components, [words :1], NSPMString);
 }
@@ -224,10 +224,10 @@ static void  substitute_yearmonthweek( NSMutableArray *components, NSArray *word
 {
    if( ! words)
       return;
-   
+
    if( [words count] != 3)
-      MulleObjCThrowCInvalidArgumentException( "year/month/week designation must contain three and only three strings");
-   
+      MulleObjCThrowInvalidArgumentException( @"year/month/week designation must contain three and only three strings");
+
    substitute_word( components, [words :0], NSYearString);
    substitute_word( components, [words :1], NSMonthString);
    substitute_word( components, [words :2], NSWeekString);
@@ -237,13 +237,13 @@ static void  substitute_yearmonthweek( NSMutableArray *components, NSArray *word
 static void   substitute_hours_with_houroffsets( NSMutableArray *components, NSArray *words)
 {
    NSUInteger   i, n;
-   
+
    if( ! words)
       return;
-   
+
    n = [words count];
    if( n < 2)
-      MulleObjCThrowCInvalidArgumentException( "hours designation must contain at least two entries");
+      MulleObjCThrowInvalidArgumentException( @"hours designation must contain at least two entries");
 
    for( i = 1; i < n; i++)
       if( find_word( components, [words :i]))
@@ -254,7 +254,7 @@ static void   substitute_hours_with_houroffsets( NSMutableArray *components, NSA
 static int   index_of_month( NSString *key)
 {
    int   i;
-   
+
    for( i = 0; i < 12; i++)
       if( key == months[ i])
          return( i);
@@ -265,7 +265,7 @@ static int   index_of_month( NSString *key)
 static int   index_of_weekday( NSString *key)
 {
    int   i;
-   
+
    for( i = 0; i < 12; i++)
       if( key == weekdays[ i])
          return( i);
@@ -313,7 +313,7 @@ struct _mulle_date_offset
    int   weekday_offset;  // 0-6 (Sunday = 0)
    int   day_offset;
    int   hour_offset;
-   
+
    int   named_month_offset;
    int   named_weekday_offset;
    int   named_hour_offset;
@@ -336,20 +336,20 @@ struct context
 {
    NSCalendarDate   *date;
    struct context   ctx;
-   
+
    if( ! offsets->bits)
       return( self);
 
    memset( &ctx, 0, sizeof( ctx));
-   
+
    // get absoute andn next year happening first
    date = self;
-   
+
    ctx.year_diff  = offsets->year_offset;
    ctx.month_diff = offsets->month_offset;
    ctx.day_diff   = offsets->day_offset;
    ctx.hour_diff  = offsets->hour_offset;
-   
+
    //
    // get current weekday
    // dial to previous or next
@@ -369,7 +369,7 @@ struct context
          ctx.abs_month   = offsets->named_month_offset;
       }
    }
-   
+
    if( offsets->flags.named_weekday)
    {
       assert( ! offsets->flags.day);
@@ -455,7 +455,7 @@ enum date_kind
    int                         multiplier;
    struct _mulle_date_offset   relative;
    struct mulle_mini_tm        tm;
-   
+
    if( ! locale)
       locale = [NSLocale systemLocale];
 
@@ -475,7 +475,7 @@ enum date_kind
       words = [locale objectForKey:*p];
       if( ! words)
          continue;
-      
+
       for( word in words)
          substitute_word( components, word, *p);
    }
@@ -518,7 +518,7 @@ enum date_kind
    // NSShortDateFormatStringKey, NSShortTimeDateFormatStringKey,
    // NSTimeDateFormatStringKey NSTimeFormatStringKey
    //
-   
+
    // let's assume that the starting date is "now"
    strcpy( buf, "MDYHms");
    s_ordering = [[locale objectForKey:NSDateTimeOrderingKey] UTF8String];
@@ -529,12 +529,12 @@ enum date_kind
          len = 4;
       memcpy( buf, s_ordering, len);
    }
-   
+
    memset( &relative, 0, sizeof( relative));
    if( ! now)
       now = [NSCalendarDate calendarDate];
    tm  = [now _miniTM];
-   
+
    multiplier = 0;
    kind       = is_unknown;
 
@@ -544,7 +544,7 @@ enum date_kind
       len = [word length];
       if( ! len)
          continue;
-      
+
       //
       // the earlier / later has to come first, because
       // I don't know where to apply it otherwise
@@ -558,7 +558,7 @@ enum date_kind
             multiplier = -1;
             continue;
          }
-         
+
          if( word == NSLaterTimeDesignationsKey)
          {
             kind = is_relative;
@@ -566,7 +566,7 @@ enum date_kind
             continue;
          }
          break;
-         
+
       case is_relative :
          if( word == NSYearString)
          {
@@ -641,7 +641,7 @@ enum date_kind
          s_ordering = strchr( buf, 'D') + 1;
          continue;
       }
-      
+
       // hour designations, just take them as they are
       if( [word __isNSNumber])
       {
@@ -675,13 +675,13 @@ enum date_kind
             tm.second = value;
             break;
          }
-         
+
          // done ?
          if( ! *++s_ordering)
             break;
          kind = is_absolute;
       }
-      
+
       if( word == NSPMString)
       {
          if( tm.hour && tm.hour <= 12)
@@ -698,7 +698,7 @@ enum date_kind
    date = now;
    if( kind == is_absolute)
       date = [[[NSCalendarDate alloc] _initWithMiniTM:tm] autorelease];
-   
+
    date = [date _calendarDateWithDateOffsets:&relative];
    return( date);
 }
