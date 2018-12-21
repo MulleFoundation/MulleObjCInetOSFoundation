@@ -6,10 +6,11 @@
 //  Copyright © 2017 Mulle kybernetiK. All rights reserved.
 //
 
-// TODO: move stuff to Linux/Darwin
+// TODO: move stuff to Linux/Darwin because of timegm
 
 #define _XOPEN_SOURCE 700  // linux: for various stuff
 #define _DARWIN_C_SOURCE   // darwin: for timegm
+#define _USE_MISC          // linux: for timegm
 
 #import "import-private.h"
 

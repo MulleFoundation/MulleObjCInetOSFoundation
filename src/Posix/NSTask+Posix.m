@@ -54,7 +54,8 @@ static void   do_the_dup( int fd, id handle)
 {
    pid_t   pid;
 
-   if( ! (pid = vfork()))
+   // don't use vfork anymore (might do it on BSDs though)
+   if( ! (pid = fork()))
    {
       char         **envp;
       char         *path;

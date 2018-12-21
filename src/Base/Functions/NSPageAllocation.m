@@ -64,7 +64,7 @@ void   *NSAllocateMemoryPages( NSUInteger size)
 
    // make sure memory is page aligned ...
    p = mulle_malloc( size);
-   assert( ! (uintptr_t) p & (NSPageSize() - 1));
+   assert( ! ((uintptr_t) p & (NSPageSize() - 1)));
    return( p);
 }
 

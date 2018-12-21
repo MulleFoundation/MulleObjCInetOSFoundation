@@ -2,6 +2,9 @@ cmake_minimum_required( VERSION 3.1)
 
 project( MulleObjCOSFoundation C)
 
+# we don't produce any Loader, the subprojects do that
+
+set( CREATE_OBJC_LOADER_INC OFF)
 
 ### mulle-sde environment
 

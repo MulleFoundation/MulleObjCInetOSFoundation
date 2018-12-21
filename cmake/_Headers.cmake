@@ -15,7 +15,6 @@ src/include-private.h
 )
 
 set( PUBLIC_HEADERS
-src/MulleObjCLoader+MulleObjCOSFoundation.h
 src/MulleObjCOSFoundation.h
 src/import.h
 src/include.h

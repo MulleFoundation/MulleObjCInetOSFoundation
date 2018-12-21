@@ -235,7 +235,7 @@ static struct posix_mode  *getOrCreatePosixMode( NSRunLoop *self, NSString *mode
       {
          FD_CLR( fd, &ctxt->_readSet);
 
-         fileHandle = NSMapGet( _fileHandleTable, (void *) fd);
+         fileHandle = NSMapGet( _fileHandleTable, (void *) (intptr_t) fd);
          [_readyHandles addObject:fileHandle];
       }
    }

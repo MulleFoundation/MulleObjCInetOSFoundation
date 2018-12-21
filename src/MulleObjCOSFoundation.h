@@ -27,9 +27,6 @@
 # endif
 #endif
 
-#import "MulleObjCLoader+MulleObjCOSFoundation.h"
-
-
 #if MULLE_OBJC_STANDARD_FOUNDATION_VERSION < ((0 << 20) | (14 << 8) | 0)
 # error "MulleObjCStandardFoundation is too old"
 #endif

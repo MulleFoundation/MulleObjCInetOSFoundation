@@ -695,9 +695,13 @@ enum date_kind
    // we can combine relative date with time
    // otherwise, if we have
 
+   //
+   // TODO: check that timezone nil is correct
+   //
    date = now;
    if( kind == is_absolute)
-      date = [[[NSCalendarDate alloc] _initWithMiniTM:tm] autorelease];
+      date = [[[NSCalendarDate alloc] _initWithMiniTM:tm
+                                             timezone:nil] autorelease];
 
    date = [date _calendarDateWithDateOffsets:&relative];
    return( date);

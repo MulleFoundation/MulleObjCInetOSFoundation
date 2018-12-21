@@ -46,7 +46,7 @@
 
 static id  NSInitFileHandleAndClose( NSFileHandle *self, int fd)
 {
-   self->_fd     = (void *) fd;
+   self->_fd     = (void *) (intptr_t) fd;
    self->_closer = (void *) close;
    return( self);
 }
