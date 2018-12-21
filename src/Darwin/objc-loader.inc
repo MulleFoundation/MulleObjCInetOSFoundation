@@ -1,4 +1,3 @@
-      { @selector( MulleObjCLoader), @selector( MulleObjCBSDFoundation) },      // 47a9beb6;MulleObjCLoader;205c6909;MulleObjCBSDFoundation
       { @selector( NSBundle), @selector( Darwin) },      // c2f95c66;NSBundle;6d352c2f;Darwin
       { @selector( NSDateFormatter), @selector( Darwin) },      // 6d2cd542;NSDateFormatter;6d352c2f;Darwin
       { @selector( NSFileManager), @selector( Darwin) },      // 56d57ffc;NSFileManager;6d352c2f;Darwin
