@@ -35,6 +35,6 @@ if( NOT __FINAL_OUTPUT_C_CMAKE__)
    message( STATUS "CMAKE_SHARED_LINKER_FLAGS is ${CMAKE_SHARED_LINKER_FLAGS}")
    message( STATUS "CMAKE_STATIC_LINKER_FLAGS is ${CMAKE_STATIC_LINKER_FLAGS}")
 
-   include( FinalOutputCAux OPTIONAL)
+   include( FinalOutputAuxC OPTIONAL)
 
 endif()

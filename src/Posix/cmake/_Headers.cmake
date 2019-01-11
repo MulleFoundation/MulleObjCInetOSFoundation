@@ -9,7 +9,7 @@ set( INCLUDE_DIRS
 .
 Functions
 Timezone
-) 
+)
 
 set( PRIVATE_HEADERS
 Functions/mulle_posix_tm-private.h
@@ -32,5 +32,5 @@ Timezone/tzfile.h
 dependencies.inc
 import.h
 include.h
-) 
+)
 

@@ -115,6 +115,6 @@ if( NOT __OPTIMIZED_LINK_OBJC_CMAKE__)
       add_dependencies( ${LIBRARY_NAME} "_${LIBRARY_NAME}_optimized_libraries")
    endif()
 
-   include( OptimizedLinkObjCAux OPTIONAL)
+   include( OptimizedLinkAuxObjC OPTIONAL)
 
 endif()

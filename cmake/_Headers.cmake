@@ -7,16 +7,22 @@ endif()
 
 set( INCLUDE_DIRS
 src
-) 
+)
 
 set( PRIVATE_HEADERS
+src/_MulleObjCOSFoundation-import-private.h
+src/_MulleObjCOSFoundation-include-private.h
 src/import-private.h
 src/include-private.h
 )
 
 set( PUBLIC_HEADERS
+src/MulleObjCLoader+MulleObjCOSFoundation.h
 src/MulleObjCOSFoundation.h
+src/_MulleObjCOSFoundation-import.h
+src/_MulleObjCOSFoundation-include.h
 src/import.h
 src/include.h
-) 
+src/objc-loader.inc
+)
 

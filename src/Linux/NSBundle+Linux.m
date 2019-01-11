@@ -62,7 +62,7 @@ static int  collect_filesystem_libraries( struct dl_phdr_info *info, size_t size
    if( info->dlpi_name[ 0] != '/')
       return( 0);
 
-   path = [[NSFileManager defaultManager] stringWithFileSystemRepresentation:info->dlpi_name
+   path = [[NSFileManager defaultManager] stringWithFileSystemRepresentation:(char *) info->dlpi_name
                                                                       length:len];
    [array addObject:path];
 

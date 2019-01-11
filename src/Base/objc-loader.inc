@@ -1,3 +1,4 @@
+      { @selector( MulleObjCLoader), @selector( MulleObjCInetFoundation) },      // 47a9beb6;MulleObjCLoader;088ec1b3;MulleObjCInetFoundation
       { @selector( NSArchiver), @selector( OSBase) },      // 2a2e712f;NSArchiver;b8ece9a7;OSBase
       { @selector( NSArray), @selector( OSBase_Private) },      // 233490fe;NSArray;7cf4cba6;OSBase_Private
       { @selector( NSArray), @selector( Posix) },      // 233490fe;NSArray;ae1faa81;Posix

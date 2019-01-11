@@ -1,24 +1,34 @@
 # MulleObjCOSFoundation
 
-This is a [mulle-sde](https://mulle-sde.github.io/) project.
+💻 Platform-dependent classes and categories like NSTask, NSPipe
 
-It has it's own virtual environment, that will be automatically setup for you
-once you enter it with:
+These classes build on **MulleObjCStandardFoundation** and provide OS-specific
+functionality. It also adds categories on NSString to deal with the native
+C String encoding
 
-```
-mulle-sde MulleObjCOSFoundation
-```
+It builds differently on each platform.
 
-Now you can let **mulle-sde** fetch the required dependencies and build the
-project for you:
+Build Status | Release Version
+-------------|-----------------------------------
+[![Build Status](https://travis-ci.org/MulleFoundation/MulleObjCOSFoundation.svg?branch=release)](https://travis-ci.org/MulleFoundation/MulleObjCOSFoundation) | ![Mulle kybernetiK tag](https://img.shields.io/github/tag/MulleFoundation/MulleObjCOSFoundation.svg) [![Build Status](https://travis-ci.org/MulleFoundation/MulleObjCOSFoundation.svg?branch=release)](https://travis-ci.org/MulleFoundation/MulleObjCOSFoundation)
 
-```
-mulle-sde craft
-```
+> Note: a few tests fail because of missing implementations.
 
-## MEMO: WARUM KOMMEN DIE ÄNDERUNGEN NICHT AN
+## Install
 
-Warum das überhaupt funktioniert. mulle-test kann ja nur mulle-craft
-aufrufen und weiss nix von den subprojects. Die sind aber wie "dependencies"
-und werden dann dazugelinkt. Aber Änderungen kriegt man mit mulle-test clean
-nicht rein, man muss mulle-sde craft machen.
+See [foundation-developer](//github.com//foundation-developer) for
+installation instructions.
+
+
+## Author
+
+[Nat!](//www.mulle-kybernetik.com/weblog) for
+[Mulle kybernetiK](//www.mulle-kybernetik.com) and
+[Codeon GmbH](//www.codeon.de)
+
+
+#### MEMO: WARUM KOMMEN DIE ÄNDERUNGEN NICHT AN
+
+mulle-test kann nur mulle-craft aufrufen und weiss nix von den subprojects.
+Die sind aber wie "dependencies" und werden dann dazugelinkt. Änderungen kriegt
+man mit mulle-test clean nicht rein, man muss mulle-sde craft machen.

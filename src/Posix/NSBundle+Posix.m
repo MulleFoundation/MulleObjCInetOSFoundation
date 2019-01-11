@@ -26,7 +26,7 @@
 
 @implementation NSBundle (Posix)
 
-- (BOOL) load
+- (BOOL) loadBundle
 {
    NSString  *exePath;
    char      *c_path;
@@ -53,7 +53,7 @@
 }
 
 
-- (BOOL) unload
+- (BOOL) unloadBundle
 {
    if( _handle)
    {

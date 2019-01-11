@@ -9,7 +9,7 @@ set( INCLUDE_DIRS
 .
 Categories
 Functions
-) 
+)
 
 set( PRIVATE_HEADERS
 Categories/NSArray+OSBase-Private.h
@@ -52,5 +52,5 @@ NSTask.h
 NSUserDefaults.h
 import.h
 include.h
-) 
+)
 

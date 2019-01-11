@@ -9,6 +9,10 @@ set( SOURCES
 src/MulleObjCOSFoundation.m
 )
 
+set( STAGE2_SOURCES
+src/MulleObjCLoader+MulleObjCOSFoundation.m
+)
+
 set( STANDALONE_SOURCES
 src/MulleObjCOSFoundation-standalone.m
 )

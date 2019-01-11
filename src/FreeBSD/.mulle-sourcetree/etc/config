@@ -1,2 +1,0 @@
-MulleObjCBSDFoundation;none;no-build,no-cmakeadd,no-delete,no-dependency,no-fs,no-header,no-update;177494EC-0C34-428F-9A7B-3A80E9CC49BB;MulleObjCBSDFoundation;;;;
-MulleObjCPosixFoundation;none;no-build,no-cmakeinherit,no-delete,no-dependency,no-fs,no-link,no-update;CD92463B-34CB-4BF3-8AB9-75CC87531529;MulleObjCPosixFoundation;;;;include=MulleObjCPosixFoundation/MulleObjCPosixFoundation.h

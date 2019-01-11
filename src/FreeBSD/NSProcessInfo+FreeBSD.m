@@ -209,12 +209,9 @@ static int   _NSGetExecutablePath( char **path)
       return( -1);
 
    buf = mulle_malloc( size);
-   if( ! buf)
-      return( -1);
-
    if( sysctl( mib, 3, buf, &size, NULL, 0) == -1)
    {
-      mulle_allocator_free( NULL, buf);
+      mulle_free( buf);
       return( -1);
    }
 
@@ -232,7 +229,7 @@ static void   unlazyExecutablePath( NSProcessInfo *self)
       MulleObjCThrowInternalInconsistencyException( @"can't get executable path from sysctl (%d)", errno);
 
    self->_executablePath = [[NSString alloc] initWithCString:path];
-   mulle_allocator_free( NULL, path);
+   mulle_free( path);
 }
 
 

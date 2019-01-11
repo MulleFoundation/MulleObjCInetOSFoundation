@@ -424,15 +424,13 @@ static void   unlazyExecutablePath( NSProcessInfo *self)
    size = 0;
    _NSGetExecutablePath( NULL, &size);
 
-   buf = mulle_malloc( size);
-   if( ! buf)
-      MulleObjCThrowAllocationException( size);
-
+   buf  = mulle_malloc( size);
    rval = _NSGetExecutablePath( buf, &size);
    if( rval)
       MulleObjCThrowInternalInconsistencyException( @"can't get executable path from _NSGetExecutablePath (%d,%d)", rval, errno);
 
    self->_executablePath = [[NSString alloc] initWithCString:buf];
+   mulle_free( buf);
 }
 
 

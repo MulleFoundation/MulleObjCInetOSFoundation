@@ -16,6 +16,6 @@ if( NOT __EXECUTABLE_OBJC_CMAKE__)
       PROPERTIES LINKER_LANGUAGE C
    )
 
-   include( ExecutableObjCAux OPTIONAL)
+   include( ExecutableAuxObjC OPTIONAL)
 
 endif()

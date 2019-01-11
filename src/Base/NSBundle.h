@@ -94,8 +94,9 @@
 // OS Specific stuff stuff we need to implement
 @interface NSBundle ( OSSpecific)
 
-- (BOOL) load;
-- (BOOL) unload;
+// rename from load because of the wrong type
+- (BOOL) loadBundle;
+- (BOOL) unloadBundle;
 
 + (NSArray *) _allImagePaths;
 - (NSDictionary *) infoDictionary;

@@ -137,9 +137,6 @@ static void  linux_argc_argv_set_arguments( struct argc_argv  *info,
    assert( argc && ! p[ -1]);
 
    info->argv = mulle_calloc( argc, sizeof( char *));
-   if( ! info->argv)
-      MulleObjCThrowAllocationException( argc * sizeof( char *));
-
    info->argc = argc;
 
    q          = info->argv;
