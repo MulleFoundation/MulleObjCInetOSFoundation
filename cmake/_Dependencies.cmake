@@ -7,7 +7,7 @@ endif()
 
 # sourcetree: MULLE_OBJC_OS_BASE_FOUNDATION;no-delete,no-share,no-update;MulleObjCOSBaseFoundation
 if( NOT MULLE_OBJC_OS_BASE_FOUNDATION_LIBRARY)
-   find_library( MULLE_OBJC_OS_BASE_FOUNDATION_LIBRARY NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCOSBaseFoundation${CMAKE_STATIC_LIBRARY_SUFFIX} MulleObjCOSBaseFoundation)
+   find_library( MULLE_OBJC_OS_BASE_FOUNDATION_LIBRARY NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCOSBaseFoundation${CMAKE_STATIC_LIBRARY_SUFFIX} MulleObjCOSBaseFoundation NO_CMAKE_SYSTEM_PATH)
    message( STATUS "MULLE_OBJC_OS_BASE_FOUNDATION_LIBRARY is ${MULLE_OBJC_OS_BASE_FOUNDATION_LIBRARY}")
    #
    # the order looks ascending, but due to the way this file is read
@@ -88,7 +88,7 @@ endif()
 
 # sourcetree: MULLE_OBJC_POSIX_FOUNDATION;no-delete,no-share,no-update;MulleObjCPosixFoundation
 if( NOT MULLE_OBJC_POSIX_FOUNDATION_LIBRARY)
-   find_library( MULLE_OBJC_POSIX_FOUNDATION_LIBRARY NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCPosixFoundation${CMAKE_STATIC_LIBRARY_SUFFIX} MulleObjCPosixFoundation)
+   find_library( MULLE_OBJC_POSIX_FOUNDATION_LIBRARY NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCPosixFoundation${CMAKE_STATIC_LIBRARY_SUFFIX} MulleObjCPosixFoundation NO_CMAKE_SYSTEM_PATH)
    message( STATUS "MULLE_OBJC_POSIX_FOUNDATION_LIBRARY is ${MULLE_OBJC_POSIX_FOUNDATION_LIBRARY}")
    #
    # the order looks ascending, but due to the way this file is read
@@ -167,10 +167,10 @@ if( NOT MULLE_OBJC_POSIX_FOUNDATION_LIBRARY)
 endif()
 
 
-# sourcetree: MULLE_OBJC_BSD_FOUNDATION;no-delete,no-header,no-os-linux,no-share,no-update;MulleObjCBSDFoundation
-if( NOT ${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+# sourcetree: MULLE_OBJC_BSD_FOUNDATION;no-delete,no-header,no-os-android,no-os-linux,no-share,no-update;MulleObjCBSDFoundation
+if( NOT (${CMAKE_SYSTEM_NAME} MATCHES "Android" OR ${CMAKE_SYSTEM_NAME} MATCHES "Linux"))
    if( NOT MULLE_OBJC_BSD_FOUNDATION_LIBRARY)
-      find_library( MULLE_OBJC_BSD_FOUNDATION_LIBRARY NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCBSDFoundation${CMAKE_STATIC_LIBRARY_SUFFIX} MulleObjCBSDFoundation)
+      find_library( MULLE_OBJC_BSD_FOUNDATION_LIBRARY NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCBSDFoundation${CMAKE_STATIC_LIBRARY_SUFFIX} MulleObjCBSDFoundation NO_CMAKE_SYSTEM_PATH)
       message( STATUS "MULLE_OBJC_BSD_FOUNDATION_LIBRARY is ${MULLE_OBJC_BSD_FOUNDATION_LIBRARY}")
       #
       # the order looks ascending, but due to the way this file is read
@@ -253,7 +253,7 @@ endif()
 # sourcetree: MULLE_OBJC_FREE_BSD_FOUNDATION;no-delete,no-header,no-share,no-update,only-os-freebsd;MulleObjCFreeBSDFoundation
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Freebsd")
    if( NOT MULLE_OBJC_FREE_BSD_FOUNDATION_LIBRARY)
-      find_library( MULLE_OBJC_FREE_BSD_FOUNDATION_LIBRARY NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCFreeBSDFoundation${CMAKE_STATIC_LIBRARY_SUFFIX} MulleObjCFreeBSDFoundation)
+      find_library( MULLE_OBJC_FREE_BSD_FOUNDATION_LIBRARY NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCFreeBSDFoundation${CMAKE_STATIC_LIBRARY_SUFFIX} MulleObjCFreeBSDFoundation NO_CMAKE_SYSTEM_PATH)
       message( STATUS "MULLE_OBJC_FREE_BSD_FOUNDATION_LIBRARY is ${MULLE_OBJC_FREE_BSD_FOUNDATION_LIBRARY}")
       #
       # the order looks ascending, but due to the way this file is read
@@ -336,7 +336,7 @@ endif()
 # sourcetree: MULLE_OBJC_DARWIN_FOUNDATION;no-delete,no-header,no-share,no-update,only-os-darwin;MulleObjCDarwinFoundation
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
    if( NOT MULLE_OBJC_DARWIN_FOUNDATION_LIBRARY)
-      find_library( MULLE_OBJC_DARWIN_FOUNDATION_LIBRARY NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCDarwinFoundation${CMAKE_STATIC_LIBRARY_SUFFIX} MulleObjCDarwinFoundation)
+      find_library( MULLE_OBJC_DARWIN_FOUNDATION_LIBRARY NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCDarwinFoundation${CMAKE_STATIC_LIBRARY_SUFFIX} MulleObjCDarwinFoundation NO_CMAKE_SYSTEM_PATH)
       message( STATUS "MULLE_OBJC_DARWIN_FOUNDATION_LIBRARY is ${MULLE_OBJC_DARWIN_FOUNDATION_LIBRARY}")
       #
       # the order looks ascending, but due to the way this file is read
@@ -416,10 +416,10 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 endif()
 
 
-# sourcetree: MULLE_OBJC_LINUX_FOUNDATION;no-delete,no-header,no-share,no-update,only-os-linux;MulleObjCLinuxFoundation
-if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+# sourcetree: MULLE_OBJC_LINUX_FOUNDATION;no-delete,no-header,no-share,no-update,only-os-android,only-os-linux;MulleObjCLinuxFoundation
+if( ${CMAKE_SYSTEM_NAME} MATCHES "Android" OR ${CMAKE_SYSTEM_NAME} MATCHES "Linux")
    if( NOT MULLE_OBJC_LINUX_FOUNDATION_LIBRARY)
-      find_library( MULLE_OBJC_LINUX_FOUNDATION_LIBRARY NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCLinuxFoundation${CMAKE_STATIC_LIBRARY_SUFFIX} MulleObjCLinuxFoundation)
+      find_library( MULLE_OBJC_LINUX_FOUNDATION_LIBRARY NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCLinuxFoundation${CMAKE_STATIC_LIBRARY_SUFFIX} MulleObjCLinuxFoundation NO_CMAKE_SYSTEM_PATH)
       message( STATUS "MULLE_OBJC_LINUX_FOUNDATION_LIBRARY is ${MULLE_OBJC_LINUX_FOUNDATION_LIBRARY}")
       #
       # the order looks ascending, but due to the way this file is read
