@@ -7,6 +7,7 @@
 //
 #import "NSFileHandle.h"
 
+
 @class NSRunLoop;
 
 
@@ -17,5 +18,5 @@
 @end
 
 
-extern NSString  *NSFile​Handle​Notification​Data​Item;
+extern NSString  *NSFileHandleNotificationDataItem;
 extern NSString  *NSFileHandleReadCompletionNotification;

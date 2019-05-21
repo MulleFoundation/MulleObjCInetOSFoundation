@@ -38,10 +38,6 @@ enum
 
 + (NSProcessInfo *) processInfo;
 
-- (NSString *) globallyUniqueString;  // needs NSHost should be moved
-- (int) processIdentifier;
-
-
 @end
 
 
@@ -59,5 +55,8 @@ enum
 
 - (NSString *) processName;
 - (void) setProcessName:(NSString *) name;
+
+- (NSString *) globallyUniqueString;  // needs NSHost should be moved
+- (int) processIdentifier;
 
 @end

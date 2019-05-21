@@ -23,7 +23,15 @@
 
 // std-c and dependencies
 #include <dlfcn.h>
-#include <mach-o/dyld.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>#include <mach-o/dyld.h>
+#include <mach-o/loader.h>
+#include <mach-o/swap.h>
+#include <mach-o/fat.h>
+
+#pragma clang diagnostic ignored "-Wparentheses"
 
 
 @implementation NSBundle( Darwin)
@@ -73,16 +81,46 @@
 //}
 
 
-
-+ (NSArray *) _allImagePaths
+- (NSString *) _executablePath
 {
-   NSMutableArray  *array;
-   uint32_t         i;
-   char             *s;
-   NSString         *path;
-   NSFileManager    *fileManager;
+   NSString        *path;
+   NSString        *contents;
+   NSString        *exe;
+   NSFileManager   *manager;
 
-   array = [NSMutableArray array];
+   manager = [NSFileManager defaultManager];
+
+   exe      = executableFilename( self);
+   contents = contentsPath( self);
+
+   path = [contents stringByAppendingPathComponent:[NSBundle _OSIdentifier]];
+   path = [path stringByAppendingPathComponent:exe];
+
+   if( [manager isExecutableFileAtPath:path])
+      return( path);
+
+   path = [contents stringByAppendingPathComponent:exe];
+   if( [manager isExecutableFileAtPath:path])
+      return( path);
+   return( nil);  // or what ??
+}
+
+
++ (NSData *) _allSharedLibraries
+{
+   char                             *s;
+   NSFileManager                    *fileManager;
+   NSMutableData                    *data;
+   NSString                         *path;
+   struct _MulleObjCSharedLibrary   libInfo;
+   struct mach_header               *header;
+   uint8_t                          *imageHeaderPtr; 
+   unsigned long                    i;
+   struct segment_command_64        *segment64;
+   struct segment_command           *segment;
+   struct load_command              *cmd;
+
+   data = [NSMutableData data];
 
    fileManager = [NSFileManager defaultManager];
    for( i = 0; s = (char *) _dyld_get_image_name( i); i++)
@@ -90,13 +128,51 @@
       if( ! strlen( s) || s[ 0] != '/')
          continue;
 
-      path = [fileManager stringWithFileSystemRepresentation:s
-                                                      length:strlen( s)];
+      header        = _dyld_get_image_header( i);
+      libInfo.start = (NSUInteger) header;
+      libInfo.end   = libInfo.start;
+      if( header->magic == MH_MAGIC_64)
+      {
+         ncmd = ((struct mach_header_64 *) header)->ncmds;
+         cmd  = &((uint8_t *) header)[ sizeof( struct mach_header_64)];
+      }
+      else
+      {
+         ncmd = header->ncmds;
+         cmd  = &((uint8_t *) header)[ sizeof( struct mach_header)];
+      }
 
-      [array addObject:path];
+      for( i = 0; i < ncmds; i++) 
+      {
+         switch( cmd->cmd)
+         {
+         default :
+            continue;
+
+         case LC_SEGMENT_64 : 
+            segment64   = p;
+            segment_end = segment64->vmaddr + segment64->vmsize;
+            break;
+
+         case LC_SEGMENT : 
+            segment     = p;
+            segment_end = segment->vmaddr + segment->vmsize;
+            break;
+         }
+
+         if( segment_end > libInfo.end)
+            libInfo.end = segment_end;
+
+         cmd = &((uint8_t *) cmd)[ cmd->cmdsize];
+      }
+
+      libInfo.path = [fileManager stringWithFileSystemRepresentation:s
+                                                             length:strlen( s)];
+      [data appendBytes:&libInfo
+                 length:sizeof( libInfo)];
    }
 
-   return( array);
+   return( data);
 }
 
 
@@ -128,6 +204,12 @@ static BOOL  isCurrentOS( NSString *s)
 static BOOL  hasFrameworkExtension( NSString *s)
 {
    return( [[s pathExtension] isEqualToString:@"framework"]);
+}
+
+
++ (BOOL) isBundleFilesystemExtension:(NSString *) extension
+{
+   return( [extension isEqualToString:@"dylib"] || [extension isEqualToString:@"bundle"]);
 }
 
 
@@ -197,12 +279,6 @@ static BOOL  hasFrameworkExtension( NSString *s)
 
 
 - (Class) principalClass
-{
-   abort();
-}
-
-
-+ (NSBundle *) bundleForClass:(Class) aClass
 {
    abort();
 }

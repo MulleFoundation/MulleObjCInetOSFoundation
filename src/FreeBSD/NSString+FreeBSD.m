@@ -44,7 +44,7 @@
 
 - (NSUInteger) cStringLength
 {
-   return( [self _UTF8StringLength]);
+   return( [self mulleUTF8StringLength]);
 }
 
 

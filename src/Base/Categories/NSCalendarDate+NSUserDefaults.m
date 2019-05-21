@@ -9,9 +9,10 @@
 #import "NSCalendarDate+NSUserDefaults.h"
 
 
+
 @interface NSCalendarDate( Private)
 
-- (struct mulle_mini_tm) _miniTM;
+- (struct mulle_mini_tm) mulleMiniTM;
 
 @end
 
@@ -96,6 +97,20 @@ static NSString  *NSDecemberString  = @"dec";
 static NSString   *substitutions[ 7 + 1];
 static NSString   *months[ 12];
 static NSString   *weekdays[ 7];
+
+
++ (struct _mulle_objc_dependency *) dependencies
+{
+
+   static struct _mulle_objc_dependency   dependencies[] =
+   {
+      { @selector( NSConstantString), MULLE_OBJC_NO_CATEGORYID },
+      { MULLE_OBJC_NO_CLASSID, MULLE_OBJC_NO_CATEGORYID }
+   };
+
+   return( dependencies);
+}
+
 
 + (void) load
 {
@@ -533,7 +548,7 @@ enum date_kind
    memset( &relative, 0, sizeof( relative));
    if( ! now)
       now = [NSCalendarDate calendarDate];
-   tm  = [now _miniTM];
+   tm  = [now mulleMiniTM];
 
    multiplier = 0;
    kind       = is_unknown;
@@ -551,6 +566,9 @@ enum date_kind
       //
       switch( kind)
       {
+      default :  // annoying compiler
+         break;
+
       case is_unknown :
          if( word == NSEarlierTimeDesignationsKey)
          {
@@ -700,14 +718,14 @@ enum date_kind
    //
    date = now;
    if( kind == is_absolute)
-      date = [[[NSCalendarDate alloc] _initWithMiniTM:tm
-                                             timezone:nil] autorelease];
+      date = [[[NSCalendarDate alloc] mulleInitWithMiniTM:tm
+                                             timeZone:nil] autorelease];
 
    date = [date _calendarDateWithDateOffsets:&relative];
    return( date);
 }
 
-
+/*
 + (instancetype) dateWithNaturalLanguageString:(NSString *) s
                                         locale:(id) locale
 {
@@ -715,6 +733,7 @@ enum date_kind
                                          locale:locale
                                   referenceDate:nil]);
 }
+*/
 
 @end
 

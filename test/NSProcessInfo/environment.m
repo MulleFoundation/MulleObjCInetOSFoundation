@@ -18,7 +18,6 @@
 int   main( int argc, const char * argv[])
 {
    NSDictionary    *environment;
-   NSEnumerator    *rover;
    NSString        *cString;
    NSString        *key;
    char            *env_s;
@@ -34,8 +33,7 @@ int   main( int argc, const char * argv[])
    }
 
    i = 0;
-   rover = [environment keyEnumerator];
-   while( key = [rover nextObject])
+   for( key in environment)
    {
       key_s   = [key cString];
       env_s   = getenv( key_s);

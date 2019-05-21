@@ -29,16 +29,22 @@ typedef NSUInteger   NSSearchPathDomainMask;
 enum {
    NSApplicationDirectory = 1,
    NSAdminApplicationDirectory,
-   NSDeveloperDirectory,
-   NSDeveloperApplicationDirectory,
-   NSLibraryDirectory,
-   NSUserDirectory,
    NSApplicationSupportDirectory,
+   NSCachesDirectory,
+   NSDesktopDirectory,
+   NSDeveloperApplicationDirectory,
+   NSDeveloperDirectory,
    NSDocumentationDirectory,
    NSDocumentDirectory,
-   NSDesktopDirectory,
+   NSLibraryDirectory,
+   NSMoviesDirectory,
+   NSMusicDirectory,
+   NSPicturesDirectory,
+   NSSharedPublicDirectory,
+   NSTrashDirectory,
+   NSUserDirectory,
    NSAllApplicationsDirectory,
-   NSAllLibrariesDirectory
+   NSAllLibrariesDirectory,
 };
 typedef NSUInteger NSSearchPathDirectory;
 

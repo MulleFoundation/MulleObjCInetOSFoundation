@@ -52,7 +52,7 @@ struct argc_argv
 
 static size_t   get_file_size( char *file)
 {
-   char      buf[ 0x1000];
+   char      buf[ 0x200];
    ssize_t   bytes;
    size_t    total;
    int       fd;
@@ -66,7 +66,7 @@ static size_t   get_file_size( char *file)
    {
       bytes = read( fd, buf, sizeof( buf));
       if( ! bytes)
-	 break;
+	      break;
       if( bytes == -1)
       {
          total = -1;
@@ -209,7 +209,8 @@ static void   unlazyExecutablePath( NSProcessInfo *self)
    if( len == (size_t) -1)
       MulleObjCThrowInternalInconsistencyException( @"can't get executable path from /proc/self/exe (%d)", errno);
 
-   self->_executablePath = [[NSString alloc] initWithCString:buf];
+   self->_executablePath = [[NSString alloc] initWithCString:buf
+                                                      length:len];
 }
 
 
@@ -221,8 +222,7 @@ static void   unlazyExecutablePath( NSProcessInfo *self)
 }
 
 
-#pragma mark -
-#pragma mark Host and OS
+#pragma mark - Host and OS
 
 - (NSString *) hostName
 {
@@ -239,6 +239,27 @@ static void   unlazyExecutablePath( NSProcessInfo *self)
 - (NSUInteger) operatingSystem
 {
    return( NSLinuxOperatingSystem);
+}
+
+
+#pragma mark - processName
+
+// GETPROGNAME(3bsd)
+// we just return the name of the executable
+- (NSString *) processName
+{
+   NSString   *s;
+
+   s = [self _executablePath];
+   s = [s lastPathComponent];
+   return( s);
+}
+
+
+- (void) setProcessName:(NSString *) name
+{
+   // we aren't doing this on Linux as setprogname is not native and we 
+   // want to avoid linking against bsd-compat
 }
 
 @end

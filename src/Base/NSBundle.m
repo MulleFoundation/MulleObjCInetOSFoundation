@@ -38,22 +38,35 @@ NSString   *NSBundleDidLoadNotification = @"NSBundleDidLoadNotification";
 @implementation NSBundle
 
 // TODO: put it in the class vars
-static NSMutableDictionary  *_bundleDictionary;
+static NSMutableDictionary  *registeredBundleInfo;
+
+
++ (void) unload
+{
+   [registeredBundleInfo release];
+}
+
+
++ (NSUInteger) _getOwnedObjects:(id *) objects
+                         length:(NSUInteger) length
+{
+   return( MulleObjCCopyObjects( objects, length, 1, registeredBundleInfo));
+}
 
 
 static NSBundle  *get_or_register_bundle( NSBundle *bundle, NSString *path)
 {
    NSBundle   *other;
 
-   other = [_bundleDictionary objectForKey:path];
+   other = [registeredBundleInfo objectForKey:path];
    if( other)
       return( other);
 
    if( bundle)
    {
-      if( ! _bundleDictionary)
-         _bundleDictionary = [NSMutableDictionary new];
-      [_bundleDictionary setObject:bundle
+      if( ! registeredBundleInfo)
+         registeredBundleInfo = [[NSMutableDictionary dictionary] retain];
+      [registeredBundleInfo setObject:bundle
                             forKey:path];
 #if DEBUG
       NSLog( @"Added Bundle %p for path \"%@\"", bundle, path);
@@ -71,30 +84,28 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
 }
 
 
-- (instancetype) init
-{
-   abort();
-   return( nil);
-}
-
-
-- (id) __initWithPath:(NSString *) fullPath
-       executablePath:(NSString *) executablePath
+- (id) __mulleInitWithPath:(NSString *) fullPath
+    sharedLibraryInfo:(struct _MulleObjCSharedLibrary *) libInfo
 {
    NSAutoreleasePool   *pool;
    NSFileManager       *manager;
    BOOL                isDir;
    BOOL                flag;
 
-   self = [self init];  // be done by subcategory
+   self     = [self init];  // should be done by subcategory
 
-   pool = [NSAutoreleasePool new];
+   pool     = [NSAutoreleasePool new];
 
    fullPath = [fullPath stringByStandardizingPath];
    fullPath = [fullPath stringByResolvingSymlinksInPath];
    _path    = [fullPath copy];
 
-   _executablePath = [executablePath copy];
+   if( libInfo)
+   {
+      _executablePath = [libInfo->path copy];
+      _startAddress   = libInfo->start;
+      _endAddress     = libInfo->end;
+   }
 
    manager = [NSFileManager defaultManager];
    flag    = [manager fileExistsAtPath:fullPath
@@ -105,9 +116,12 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
    //
    // bundles must be directories, except we allow a special extension
    // bundlefs
+
    //
-   if( flag && ! isDir && ! [[self class] isBundleFilesystemExtension:[_path pathExtension]])
-      flag = NO;
+   // But that doesn't work for the mainbundle...
+   //
+   //if( flag && ! isDir && ! [[self class] isBundleFilesystemExtension:[_path pathExtension]])
+   //   flag = NO;
 
    if( ! flag)
    {
@@ -119,8 +133,8 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
 }
 
 
-- (id) _initWithPath:(NSString *) fullPath
-      executablePath:(NSString *) executablePath
+- (id) _mulleInitWithPath:(NSString *) fullPath
+        sharedLibraryInfo:(struct _MulleObjCSharedLibrary *) libInfo
 {
    NSBundle   *bundle;
 
@@ -136,8 +150,8 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
       return( bundle);
    }
 
-   self = [self __initWithPath:fullPath
-                executablePath:executablePath];
+   self = [self __mulleInitWithPath:fullPath
+             sharedLibraryInfo:libInfo];
    if( ! self)
       return( self);
 
@@ -150,14 +164,14 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
 //
 - (instancetype) initWithPath:(NSString *) fullPath
 {
-   return( [self _initWithPath:fullPath
-                executablePath:nil]);
+   return( [self _mulleInitWithPath:fullPath
+                  sharedLibraryInfo:NULL]);
 }
 
 
 - (void) finalize
 {
-   [self unload];
+   [self unloadBundle];
 
    [super finalize];
 }
@@ -174,16 +188,17 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
 
 + (NSBundle *) mainBundle
 {
-   NSBundle   *bundle;
-   NSString   *executablePath;
-   NSString   *path;
+   NSBundle                         *bundle;
+   NSString                         *path;
+   struct _MulleObjCSharedLibrary   libInfo;
 
-   executablePath = [[NSProcessInfo processInfo] _executablePath];
-   NSParameterAssert( [executablePath length]);
-
-   path   = [self _mainBundlePathForExecutablePath:executablePath];
-   bundle = [self _bundleWithPath:path
-                   executablePath:executablePath];
+   libInfo.path  = [[NSProcessInfo processInfo] _executablePath];
+   NSParameterAssert( [libInfo.path length]);
+   libInfo.start = 0;
+   libInfo.end   = 0;
+   path          = [self _mainBundlePathForExecutablePath:libInfo.path];
+   bundle        = [[[self alloc] _mulleInitWithPath:path
+                                   sharedLibraryInfo:&libInfo] autorelease];
    return( bundle);
 }
 
@@ -198,37 +213,46 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
 //
 static BOOL   haveDiscovered;
 
-+ (NSDictionary *) _bundleDictionary
++ (NSDictionary *) mulleRegisteredBundleInfo
 {
-   NSBundle   *bundle;
-   NSArray    *executablePaths;
-   NSString   *executablePath;
-   NSString   *path;
-   NSString   *mainExecutablePath;
-   NSBundle   *mainBundle;
+   NSBundle                        *bundle;
+   NSString                        *path;
+   NSString                        *mainExecutablePath;
+   NSBundle                        *mainBundle;
+   NSData                          *sharedLibraryInfo;
+   struct _MulleObjCSharedLibrary  *infoLibs;
+   struct _MulleObjCSharedLibrary  *sentinel;
+   NSUInteger                      nInfoLibs;
 
    if( haveDiscovered)
-      return( _bundleDictionary);
+      return( registeredBundleInfo);
 
    mainBundle         = [self mainBundle];
+   assert( mainBundle);
+
    mainExecutablePath = [mainBundle executablePath];
 
-   executablePaths = [self _allImagePaths];
-   for( executablePath in executablePaths)
+   sharedLibraryInfo = [self _allSharedLibraries];
+   infoLibs          = [sharedLibraryInfo bytes];
+   nInfoLibs         = [sharedLibraryInfo length] / sizeof( struct _MulleObjCSharedLibrary);
+
+   sentinel = &infoLibs[ nInfoLibs];
+   while( infoLibs < sentinel)
    {
-      path = [self _bundlePathForExecutablePath:executablePath];
+      path = [self _bundlePathForExecutablePath:infoLibs->path];
 
       // superflous check ?
-      if( [path isEqualToString:mainExecutablePath])
-         continue;
-
-      bundle = [[[NSBundle alloc] _initWithPath:path
-                                 executablePath:executablePath] autorelease];
-      get_or_register_bundle( bundle, [bundle bundlePath]);
+      if( ! mainExecutablePath || ! [path isEqualToString:mainExecutablePath])
+      {
+         bundle = [[[NSBundle alloc] _mulleInitWithPath:path
+                                      sharedLibraryInfo:infoLibs] autorelease];
+         get_or_register_bundle( bundle, [bundle bundlePath]);
+      }
+      infoLibs++;
    }
    haveDiscovered = YES;
 
-   return( _bundleDictionary);
+   return( registeredBundleInfo);
 }
 
 
@@ -236,14 +260,12 @@ static BOOL   haveDiscovered;
 {
    NSString         *path;
    NSMutableArray   *array;
-   NSEnumerator     *rover;
    NSDictionary     *bundleInfo;
 
-   bundleInfo = [self _bundleDictionary];
+   bundleInfo = [self mulleRegisteredBundleInfo];
 
    array = [NSMutableArray array];
-   rover = [bundleInfo keyEnumerator];
-   while( path = [rover nextObject])
+   for( path in bundleInfo)
       if( flag ^ ! [[path pathExtension] isEqualToString:@"framework"])
          [array addObject:[bundleInfo objectForKey:path]];
    return( array);
@@ -269,11 +291,9 @@ static BOOL   haveDiscovered;
 //
 + (NSBundle *) _bundleForHandle:(void *) handle
 {
-   NSEnumerator   *rover;
    NSBundle       *bundle;
 
-   rover = [[self allBundles] objectEnumerator];
-   while( bundle = [rover nextObject])
+   for( bundle in [self allBundles])
       if( bundle->_handle == handle)
          return( bundle);
    return( nil);
@@ -290,7 +310,7 @@ static BOOL   haveDiscovered;
 + (NSBundle *) _bundleWithPath:(NSString *) path
                 executablePath:(NSString *) executablePath
 {
-   return( [[[self alloc] _initWithPath:path
+   return( [[[self alloc] _mulleInitWithPath:path
                          executablePath:executablePath] autorelease]);
 }
 
@@ -302,7 +322,7 @@ static BOOL   haveDiscovered;
    NSBundle       *bundle;
    NSDictionary   *bundleInfo;
 
-   bundleInfo = [self _bundleDictionary];
+   bundleInfo = [self mulleRegisteredBundleInfo];
    rover = [bundleInfo keyEnumerator];
    while( path = [rover nextObject])
    {
@@ -359,31 +379,6 @@ static NSString   *contentsPath( NSBundle *self)
                                             isDirectory:&flag] && flag)
       return( path);
    return( s);
-}
-
-
-- (NSString *) _executablePath
-{
-   NSString        *path;
-   NSString        *contents;
-   NSString        *exe;
-   NSFileManager   *manager;
-
-   manager = [NSFileManager defaultManager];
-
-   exe      = executableFilename( self);
-   contents = contentsPath( self);
-
-   path = [contents stringByAppendingPathComponent:[NSBundle _OSIdentifier]];
-   path = [path stringByAppendingPathComponent:exe];
-
-   if( [manager isExecutableFileAtPath:path])
-      return( path);
-
-   path = [contents stringByAppendingPathComponent:exe];
-   if( [manager isExecutableFileAtPath:path])
-      return( path);
-   return( nil);  // or what ??
 }
 
 
@@ -448,7 +443,7 @@ static NSString   *contentsPath( NSBundle *self)
 
    array = [NSMutableArray array];
 
-   pool  = NSPushAutoreleasePool();
+   pool = NSPushAutoreleasePool();
    while( file = [rover nextObject])
    {
       if( [[file pathExtension] isEqualToString:extension])
@@ -480,7 +475,6 @@ static NSString   *contentsPath( NSBundle *self)
 }
 
 
-
 // just guesses
 + (NSString *)  _OSIdentifier
 {
@@ -499,6 +493,7 @@ static NSString   *contentsPath( NSBundle *self)
    return( @"???");
 }
 
+
 + (NSString *) _mainBundlePathForExecutablePath:(NSString *) executablePath
 {
    // default, overridden by Darwin
@@ -516,10 +511,51 @@ static NSString   *contentsPath( NSBundle *self)
 - (Class) classNamed:(NSString *) className
 {
    if( ! [self isLoaded])
-      [self load];
+      [self loadBundle];
 
    // THIS IS NOT CORRECT!
    return( NSClassFromString( className));
+}
+
+
+- (BOOL) mulleContainsAddress:(NSUInteger) address
+{
+   return( _startAddress >= address && _endAddress <= address);
+}
+
+
+//
+// this is fallback code in case platform has no dladdr
+//
++ (NSBundle *) bundleForClass:(Class) aClass
+{
+   NSDictionary                     *bundleInfo;
+   NSBundle                         *bundle;
+   NSUInteger                       classAddress;
+   struct _MulleObjCSharedLibrary   libInfo;
+   NSString                         *path;
+   NSString                         *bundlePath;
+
+   if( ! aClass)
+      return( nil);
+
+   classAddress = MulleObjCClassGetLoadAddress( aClass);
+   assert( classAddress);
+
+   //
+   // it would be nice to binary search the bundles
+   // but it doesn't seem worth to extract them into 
+   // an NSArray and sort them before searching here
+   // 
+   bundleInfo = [self mulleRegisteredBundleInfo];
+   for( bundlePath in bundleInfo)
+   {
+      bundle = [bundleInfo objectForKey:bundlePath];
+      if( [bundle mulleContainsAddress:classAddress])
+         return( bundle);
+   }
+   // assume all classes not in a shared library is part of a 
+   return( [NSBundle mainBundle]);
 }
 
 

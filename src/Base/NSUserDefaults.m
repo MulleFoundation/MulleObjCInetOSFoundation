@@ -14,15 +14,15 @@
 #import "NSUserDefaults.h"
 
 
-NSString   *NSGlobalDomain       = @"NSGlobalDomain";
-NSString   *NSArgumentDomain     = @"NSArgumentDomain";
-NSString   *NSRegistrationDomain = @"NSRegistrationDomain";
+NSString          *NSGlobalDomain       = @"NSGlobalDomain";
+NSString          *NSArgumentDomain     = @"NSArgumentDomain";
+NSString          *NSRegistrationDomain = @"NSRegistrationDomain";
 static NSString   *NSApplicationDomain  = @"NSApplicationDomain";
 
 
 @implementation NSUserDefaults
 
-+ (NSUserDefaults *)  standardUserDefaults
++ (NSUserDefaults *) standardUserDefaults
 {
    return( [NSUserDefaults sharedInstance]);
 }
@@ -47,13 +47,11 @@ static NSString   *NSApplicationDomain  = @"NSApplicationDomain";
 
 - (id) objectForKey:(NSString *) key
 {
-   NSEnumerator   *rover;
    NSDictionary   *domain;
    NSString       *name;
    id             value;
 
-   rover = [_searchList objectEnumerator];
-   while( name = [rover nextObject])
+   for( name in _searchList)
    {
       domain = [_domains objectForKey:name];
       value  = [domain objectForKey:key];
@@ -118,15 +116,11 @@ static NSMutableDictionary   *applicationDomain( NSUserDefaults *self)
 - (NSDictionary *) dictionaryRepresentation
 {
    NSMutableDictionary   *dict;
-
-   NSEnumerator   *rover;
-   NSDictionary   *domain;
-   NSString       *name;
+   NSDictionary          *domain;
+   NSString              *name;
 
    dict  = [NSMutableDictionary dictionary];
-
-   rover = [_searchList objectEnumerator];
-   while( name = [rover nextObject])
+   for( name in _searchList)
    {
       domain = [_domains objectForKey:name];
       [dict addEntriesFromDictionary:domain];
@@ -173,51 +167,51 @@ static id   objectValueOfSelectorForKey( NSUserDefaults *self, SEL sel, NSString
 }
 
 
-- (float) floatForKey:(NSString *) key;
+- (float) floatForKey:(NSString *) key
 {
    return( [objectValueOfSelectorForKey( self, @selector( floatValue), key) floatValue]);
 }
 
 
-- (double) doubleForKey:(NSString *) key;
+- (double) doubleForKey:(NSString *) key
 {
    return( [objectValueOfSelectorForKey( self, @selector( doubleValue), key) doubleValue]);
 }
 
 
 
-- (BOOL) boolForKey:(NSString *) key;
+- (BOOL) boolForKey:(NSString *) key
 {
    return( [objectValueOfSelectorForKey( self, @selector( boolValue), key) boolValue]);
 }
 
 
 
-- (NSString *) stringForKey:(NSString *) key;
+- (NSString *) stringForKey:(NSString *) key
 {
    return( objectValueOfClassForKey( self, [NSString class], key));
 }
 
 
-- (NSArray *) arrayForKey:(NSString *) key;
+- (NSArray *) arrayForKey:(NSString *) key
 {
    return( objectValueOfClassForKey( self, [NSArray class], key));
 }
 
 
-- (NSDictionary *) dictionaryForKey:(NSString *) key;
+- (NSDictionary *) dictionaryForKey:(NSString *) key
 {
    return( objectValueOfClassForKey( self, [NSDictionary class], key));
 }
 
 
-- (NSData *) dataForKey:(NSString *) key;
+- (NSData *) dataForKey:(NSString *) key
 {
    return( objectValueOfClassForKey( self, [NSData class], key));
 }
 
 
-- (NSArray *) stringArrayForKey:(NSString *) key;
+- (NSArray *) stringArrayForKey:(NSString *) key
 {
    NSArray        *array;
    NSEnumerator   *rover;
@@ -226,8 +220,7 @@ static id   objectValueOfSelectorForKey( NSUserDefaults *self, SEL sel, NSString
 
    cls   = [NSString class];
    array = objectValueOfClassForKey( self, [NSArray class], key);
-   rover = [array objectEnumerator];
-   while( s = [rover nextObject])
+   for( s in array)
       if( ! [s isKindOfClass:cls])
          return( nil);
    return( array);
@@ -235,7 +228,7 @@ static id   objectValueOfSelectorForKey( NSUserDefaults *self, SEL sel, NSString
 
 
 - (void) setInteger:(NSInteger)value
-             forKey:(NSString *) key;
+             forKey:(NSString *) key
 {
    [self setObject:[NSNumber numberWithDouble:value]
             forKey:key];
@@ -243,7 +236,7 @@ static id   objectValueOfSelectorForKey( NSUserDefaults *self, SEL sel, NSString
 
 
 - (void) setFloat:(float) value
-           forKey:(NSString *) key;
+           forKey:(NSString *) key
 {
    [self setObject:[NSNumber numberWithDouble:value]
             forKey:key];
@@ -251,7 +244,7 @@ static id   objectValueOfSelectorForKey( NSUserDefaults *self, SEL sel, NSString
 
 
 - (void) setDouble:(double) value
-            forKey:(NSString *) key;
+            forKey:(NSString *) key
 {
    [self setObject:[NSNumber numberWithDouble:value]
             forKey:key];

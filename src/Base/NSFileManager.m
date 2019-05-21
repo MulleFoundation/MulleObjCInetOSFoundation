@@ -17,8 +17,10 @@
 #import "NSFileManager.h"
 
 // other files in this library
-#import "NSDirectoryEnumerator.h"
 #import "NSData+OSBase.h"
+#import "NSDirectoryEnumerator.h"
+#import "NSString+OSBase.h"
+#import "NSPageAllocation.h"
 
 // other libraries of MulleObjCPosixFoundation
 
@@ -123,6 +125,67 @@ NSString   *NSFileTypeUnknown          = @"NSFileTypeUnknown";
    data2 = [NSData dataWithContentsOfFile:path2];
    return( [data1 isEqualToData:data2]);
 }
+
+
+- (BOOL) _removeDirectoryItemAtPath:(NSString *) path
+{
+   NSArray   *contents;
+   NSString  *name;
+   NSString  *itemPath;
+
+   contents = [self directoryContentsAtPath:path];
+   for( name in contents)
+   {
+      itemPath = [path stringByAppendingPathComponent:name];
+      if( ! [self removeItemAtPath:itemPath])
+      {
+         if( [_delegate respondsToSelector:@selector(fileManager:shouldProceedAfterError:removingItemAtPath:)])
+            if( ! [_delegate fileManager:self
+                shouldProceedAfterError:[NSError mulleCurrentError]
+                     removingItemAtPath:path])
+               return( NO);
+      }
+   }
+
+   return( [self _removeEmptyDirectoryItemAtPath:path]);
+}
+
+
+- (BOOL) removeItemAtPath:(NSString *) path
+{
+   BOOL   flag;
+   BOOL   isDirectory;
+
+   if( ! [self fileExistsAtPath:path
+                    isDirectory:&isDirectory])
+      return( NO);
+
+   if( [_delegate respondsToSelector:@selector(fileManager:shouldRemoveItemAtPath:)])
+      if( ! [_delegate fileManager:self
+          shouldRemoveItemAtPath:path])
+         return( NO);
+
+   if( isDirectory)
+      flag = [self _removeDirectoryItemAtPath:path];
+   else
+      flag = [self _removeFileItemAtPath:path];
+
+   return( flag);
+}
+
+
+- (BOOL) removeItemAtPath:(NSString *) path
+                    error:(NSError **) error
+{
+   if( ! [self removeItemAtPath:path] && error)
+   {
+      *error = [NSError mulleCurrentError];
+      return( NO);
+   }
+
+   return( YES);
+}
+
 
 @end
 

@@ -28,8 +28,10 @@
 #include <sys/stat.h>
 
 
-@implementation NSDirectoryEnumerator
+#pragma clang diagnostic ignored  "-Wswitch"
 
+
+@implementation NSDirectoryEnumerator
 
 - (instancetype) initWithFileManager:(NSFileManager *) manager
                  directory:(NSString *) path
@@ -59,7 +61,6 @@
 {
    return( [_manager fileAttributesAtPath:_rootPath
                              traverseLink:YES]);
-
 }
 
 

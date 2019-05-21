@@ -9,6 +9,9 @@
 #import "import.h"
 
 
+//TODO : rename to CStringCharacters where its not known to 
+//       be \0 terminated
+
 @interface NSString( CString)
 
 + (instancetype) stringWithCString:(char *) s;

@@ -22,44 +22,51 @@
 _NSPathUtilityVectorTable   *_NSPathUtilityVectors;
 
 
-static NSString   *standardizedDirectPath( NSString *s)
+static struct
 {
-   s  = [s _stringBySimplifyingPath];  // not good expands tilde!
-   s  = [s stringByResolvingSymlinksInPath];
+   NSString  *NSFullUserName;
+   NSString  *NSHomeDirectory;
+   NSString  *NSOpenStepRootDirectory;
+   NSString  *NSTemporaryDirectory;
+   NSString  *NSUserName;
+} NSPathCache;
+
+
+
+static NSString   *standardizedPath( NSString *s)
+{
+   s  = [s _stringBySimplifyingPath];
    return( s);
-}
-
-
-static NSString   *copyCanonicalPath( NSString *s)
-{
-   s = standardizedDirectPath( s);
-   return( [s copy]);
 }
 
 
 NSString  *NSFullUserName( void)
 {
-   static NSString   *name;
+   NSString   *s;
 
    NSCParameterAssert( _NSPathUtilityVectors);
-   if( ! name)
-      name = [(*_NSPathUtilityVectors->NSFullUserName)() copy];
-   return( name);
+   if( NSPathCache.NSFullUserName)
+      return( NSPathCache.NSFullUserName);
+
+   s = (*_NSPathUtilityVectors->NSFullUserName)();
+   NSPathCache.NSFullUserName = [s retain];
+
+   return( NSPathCache.NSFullUserName);
 }
 
 
 NSString  *NSHomeDirectory( void)
 {
-   static NSString   *name;
-   NSString          *s;
+   NSString   *s;
 
    NSCParameterAssert( _NSPathUtilityVectors);
-   if( ! name)
-   {
-      s    = (*_NSPathUtilityVectors->NSHomeDirectory)();
-      name = copyCanonicalPath( s);
-   }
-   return( name);
+   if( NSPathCache.NSHomeDirectory)
+      return( NSPathCache.NSHomeDirectory);
+
+   s = (*_NSPathUtilityVectors->NSHomeDirectory)();
+   NSCParameterAssert( [s isEqualToString:standardizedPath( s)]);
+   NSPathCache.NSHomeDirectory = [s retain];
+   return( NSPathCache.NSHomeDirectory);
 }
 
 
@@ -71,23 +78,23 @@ NSString  *NSHomeDirectoryForUser( NSString *userName)
    NSCParameterAssert( [userName isKindOfClass:[NSString class]]);
 
    s = (*_NSPathUtilityVectors->NSHomeDirectoryForUser)( userName);
-   return( NSAutoreleaseObject( copyCanonicalPath( s)));
+   return( s);
 }
 
 
 NSString  *NSOpenStepRootDirectory( void)
 {
-   static NSString   *name;
-   NSString          *s;
+   NSString   *s;
 
    NSCParameterAssert( _NSPathUtilityVectors);
 
-   if( ! name)
-   {
-      s    = (*_NSPathUtilityVectors->NSOpenStepRootDirectory)();
-      name = copyCanonicalPath( s);
-   }
-   return( name);
+   if( NSPathCache.NSOpenStepRootDirectory)
+      return( NSPathCache.NSOpenStepRootDirectory);
+
+   s = (*_NSPathUtilityVectors->NSOpenStepRootDirectory)();
+   NSCParameterAssert( [s isEqualToString:standardizedPath( s)]);
+   NSPathCache.NSOpenStepRootDirectory = [s retain];
+   return( NSPathCache.NSOpenStepRootDirectory);
 }
 
 
@@ -98,21 +105,16 @@ NSArray   *NSSearchPathForDirectoriesInDomains( NSSearchPathDirectory directory,
    NSString         *home;
    NSMutableArray   *array;
    NSArray          *result;
-   NSEnumerator     *rover;
    NSString         *s;
 
    result = (*_NSPathUtilityVectors->_NSSearchPathForDirectoriesInDomains)( directory, domainMask);
 
-   home = expandTilde ? NSHomeDirectory() : NULL;
-
    array = [NSMutableArray array];
-   rover = [result objectEnumerator];
-   while( s = [rover nextObject])
+   for( s in result)
    {
       if( expandTilde)
-         s = [s stringByReplacingOccurrencesOfString:@"~"
-                                          withString:home];
-      s = standardizedDirectPath( s);
+         s = [s stringByExpandingTildeInPath];
+      s = standardizedPath( s);
 
       [array addObject:s];
    }
@@ -122,33 +124,61 @@ NSArray   *NSSearchPathForDirectoriesInDomains( NSSearchPathDirectory directory,
 
 NSString  *NSTemporaryDirectory( void)
 {
-   static NSString   *name;
-   NSString          *s;
+   NSString   *s;
 
    NSCParameterAssert( _NSPathUtilityVectors);
 
-   if( ! name)
-   {
-      s    = (*_NSPathUtilityVectors->NSTemporaryDirectory)();
-      name = copyCanonicalPath( s);
-   }
-   return( name);
+   if( NSPathCache.NSTemporaryDirectory)
+      return( NSPathCache.NSTemporaryDirectory);
+
+   s = (*_NSPathUtilityVectors->NSTemporaryDirectory)();
+   NSCParameterAssert( [s isEqualToString:standardizedPath( s)]);
+   NSPathCache.NSTemporaryDirectory = [s retain];
+
+   return( NSPathCache.NSTemporaryDirectory);
 }
 
 
 NSString  *NSUserName( void)
 {
-   static NSString   *name;
+   NSString   *s;
 
    NSCParameterAssert( _NSPathUtilityVectors);
 
-   if( ! name)
-      name = [(*_NSPathUtilityVectors->NSUserName)() copy];
-   return( name);
+   if( NSPathCache.NSUserName)
+      return( NSPathCache.NSUserName);
+
+   s = (*_NSPathUtilityVectors->NSUserName)();
+   NSCParameterAssert( [s isEqualToString:standardizedPath( s)]);
+   NSPathCache.NSUserName = [s retain];
+   return( NSPathCache.NSUserName);
 }
 
 
+#pragma clang diagnostic ignored "-Wobjc-root-class"
 
 @implementation _NSPathUtilityVectorTable_Loader
+
++ (NSUInteger) _getOwnedObjects:(id *) objects
+                         length:(NSUInteger) length
+{
+   return( MulleObjCCopyObjects( objects, length, 5,
+                                                NSPathCache.NSFullUserName,
+                                                NSPathCache.NSHomeDirectory,
+                                                NSPathCache.NSOpenStepRootDirectory,
+                                                NSPathCache.NSTemporaryDirectory,
+                                                NSPathCache.NSUserName));
+}
+
+
++ (void) unload
+{
+   [NSPathCache.NSFullUserName release];
+   [NSPathCache.NSHomeDirectory release];
+   [NSPathCache.NSOpenStepRootDirectory release];
+   [NSPathCache.NSTemporaryDirectory release];
+   [NSPathCache.NSUserName release];
+}
+
 @end
 

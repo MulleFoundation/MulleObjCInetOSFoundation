@@ -35,7 +35,6 @@
 
    if( chdir( c_string))
    {
-      MulleObjCPOSIXSetCurrentErrnoError( NULL);
       return( NO);
    }
 
@@ -51,7 +50,6 @@
    c_string = getcwd( buf, sizeof( buf));
    if( ! c_string)
    {
-      MulleObjCPOSIXSetCurrentErrnoError( NULL);
       return( nil);
    }
 
@@ -114,8 +112,7 @@
    {
       if( chown( s, owner, group))
       {
-         MulleObjCPOSIXSetCurrentErrnoError( error);
-         return( NO);
+            return( NO);
       }
    }
 
@@ -125,8 +122,7 @@
       mode = (mode_t) [nr unsignedIntValue];
       if( chmod( s, mode))
       {
-         MulleObjCPOSIXSetCurrentErrnoError( error);
-         return( NO);
+            return( NO);
       }
    }
 
@@ -142,8 +138,7 @@
 
       if( utimes( s, &timeval))
       {
-         MulleObjCPOSIXSetCurrentErrnoError( error);
-         return( NO);
+            return( NO);
       }
    }
 
@@ -205,8 +200,7 @@
             break;
 
       default :
-         MulleObjCPOSIXSetCurrentErrnoError( error);
-         return( NO);
+            return( NO);
    }
 
    // does not exist, create it
@@ -234,8 +228,7 @@
             break;
 
          default :
-            MulleObjCPOSIXSetCurrentErrnoError( error);
-            return( NO);
+                  return( NO);
       }
    }
 
@@ -252,11 +245,12 @@ static int    stat_at_path( NSString *path, struct stat *c_info)
 
    c_path = [path fileSystemRepresentation];
    if( ! c_path)
+   {
+      errno = EINVAL;
       return( -1);
+   }
 
    rval = stat( c_path, c_info);
-   if( rval)
-      MulleObjCPOSIXSetCurrentErrnoError( NULL);
    return( rval);
 }
 
@@ -349,6 +343,7 @@ static unsigned int    permissons_for_current_uid_gid( struct stat *c_info)
 // directory (“.”), parent directory (“..”), or resource forks (begin with “._”)
 // and does not traverse symbolic links.
 
+#pragma clang diagnostic ignored  "-Wparentheses"
 
 - (NSArray *) directoryContentsAtPath:(NSString *) path
 {
@@ -360,9 +355,12 @@ static unsigned int    permissons_for_current_uid_gid( struct stat *c_info)
 
    dir = opendir( [path fileSystemRepresentation]);
    if( ! dir)
+   {
       return( nil);
+   }
 
    array = [NSMutableArray array];
+   errno = 0;
    while( entry = readdir( dir))
    {
       s = entry->d_name;
@@ -371,12 +369,14 @@ static unsigned int    permissons_for_current_uid_gid( struct stat *c_info)
       {
          case _MulleObjCFilenameIsHidden : // spec, i think
          case _MulleObjCFilenameIsNormal : break;
-         default             : continue;
+         default                         : continue;
       }
 
       filename = [NSString stringWithCString:s];
       [array addObject:filename];
    }
+   if( errno)
+
    closedir( dir);
 
    return( array);
@@ -421,7 +421,9 @@ static BOOL  is_symlink( char *c_path)
    struct stat     c_info;
 
    if( lstat( c_path, &c_info))
+   {
       return( NO);
+   }
    return( (c_info.st_mode & S_IFMT) == S_IFLNK);
 }
 
@@ -456,7 +458,9 @@ static BOOL  is_symlink( char *c_path)
 
    c_path = [path fileSystemRepresentation];
    if( lstat( c_path, &c_info))
+   {
       return( nil);
+   }
 
    dictionary = [NSMutableDictionary dictionary];
 
@@ -552,4 +556,29 @@ static NSString   *link_contents( NSString *path)
                                       recursively:NO]);
 }
 
+- (BOOL) _removeFileItemAtPath:(NSString *) path
+{
+   char  *c_path;
+
+   // could possibly try to chmod it ?
+   c_path = [path fileSystemRepresentation];
+   if( unlink( c_path))
+   {
+      return( NO);
+   }
+   return( YES);
+}
+
+
+- (BOOL) _removeEmptyDirectoryItemAtPath:(NSString *) path
+{
+   char   *c_path;
+
+   c_path = [path fileSystemRepresentation];
+   if( rmdir( c_path))
+   {
+      return( NO);
+   }
+   return( YES);
+}
 @end

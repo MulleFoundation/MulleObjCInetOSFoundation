@@ -127,4 +127,16 @@ NSString   *NSDefaultRunLoopMode = @"NSDefaultRunLoopMode";
    [self runUntilDate:[NSDate distantFuture]];
 }
 
+
+- (void) performSelector:(SEL) sel
+                  target:(id) target
+                argument:(id) argument
+                   order:(NSUInteger) order
+                   modes:(NSArray *) modes
+{
+   [target performSelector:sel
+                withObject:argument];
+}
+
+
 @end

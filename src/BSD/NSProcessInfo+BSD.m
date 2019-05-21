@@ -38,7 +38,11 @@
 
 - (void) setProcessName:(NSString *) name
 {
-   setprogname( [name cString]);
+   char   *s;
+
+   // unavoidable leak (see setprogname man page)
+   s = mulle_allocator_strdup( &mulle_stdlib_allocator, [name cString]);
+   setprogname( s);
 }
 
 @end

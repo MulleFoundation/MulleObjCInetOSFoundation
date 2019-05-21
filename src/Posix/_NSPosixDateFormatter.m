@@ -20,6 +20,7 @@
 
 // other libraries of MulleObjCPosixFoundation
 #include "mulle_posix_tm-private.h"
+#import "NSCalendarDate+Posix-Private.h"
 
 // std-c and dependencies
 #include <time.h>
@@ -85,13 +86,6 @@
 }
 
 
-- (void) dealloc
-{
-   MulleObjCObjectDeallocateMemory( self, _cformat);
-   [super dealloc];
-}
-
-
 #pragma mark -
 #pragma mark conversions
 
@@ -114,7 +108,7 @@
 
    calendarDate = [[NSCalendarDate alloc] _initWithTM:&tm
                                              timeZone:[self timeZone]];
-   if( [self generateCalendarDates])
+   if( [self generatesCalendarDates])
       return( [calendarDate autorelease]);
 
    date = [NSDate dateWithTimeIntervalSince1970:[calendarDate timeIntervalSince1970]];
@@ -218,7 +212,6 @@
    if( ! date)
    {
       errno = EINVAL; // whatever
-      MulleObjCPOSIXSetCurrentErrnoError( error);
       return( NO);
    }
 

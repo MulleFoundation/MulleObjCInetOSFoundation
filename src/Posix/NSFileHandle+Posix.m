@@ -21,7 +21,7 @@
 #pragma mark - open
 
 + (instancetype) _fileHandleWithPath:(NSString *) path
-                      mode:(enum _MulleObjCOpenMode) mode
+                                mode:(enum _MulleObjCOpenMode) mode
 {
    char   *s;
    int    fd;
@@ -53,7 +53,7 @@ static id  NSInitFileHandleAndClose( NSFileHandle *self, int fd)
 
 
 - (instancetype) initWithFileDescriptor:(int) fd
-               closeOnDealloc:(BOOL) flag
+                         closeOnDealloc:(BOOL) flag
 {
    return( NSInitFileHandleAndClose( self, fd));
 }

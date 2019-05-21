@@ -11,6 +11,7 @@
 #define _XOPEN_SOURCE 700  // linux: for various stuff
 #define _DARWIN_C_SOURCE   // darwin: for timegm
 #define _USE_MISC          // linux: for timegm
+#define _GNUSOURCE         // linux: for timegm
 
 #import "import-private.h"
 

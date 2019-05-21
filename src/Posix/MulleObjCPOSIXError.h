@@ -10,4 +10,5 @@
 
 extern NSString   *NSPOSIXErrorDomain;
 
-void     MulleObjCPOSIXSetCurrentErrnoError( NSError **error);
+@interface MulleObjCPOSIXError : NSError
+@end

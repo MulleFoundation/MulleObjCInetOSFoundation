@@ -28,14 +28,11 @@
 + (instancetype) fileHandleForWritingAtPath:(NSString *) path;
 + (instancetype) fileHandleForUpdatingAtPath:(NSString *) path;
 
-+ (instancetype) fileHandleWithStandardError;
-+ (instancetype) fileHandleWithStandardInput;
-+ (instancetype) fileHandleWithStandardOutput;
 + (instancetype) fileHandleWithNullDevice;
 
 - (instancetype) initWithFileDescriptor:(int) fd;
 - (instancetype) initWithFileDescriptor:(int) fd
-               closeOnDealloc:(BOOL) flag;
+                         closeOnDealloc:(BOOL) flag;
 
 - (NSData *) availableData;
 - (NSData *) readDataToEndOfFile;
@@ -44,8 +41,6 @@
 - (unsigned long long) offsetInFile;
 - (void) seekToEndOfFile;
 - (void) seekToFileOffset:(unsigned long long) offset;
-- (void) closeFile;
-- (void) synchronizeFile;
 - (void) truncateFileAtOffset:(unsigned long long) offset;
 
 - (void) writeData:(NSData *) data;
@@ -85,7 +80,7 @@ enum _MulleObjCSeekMode
 + (instancetype) fileHandleWithStandardError;
 
 - (instancetype) initWithFileDescriptor:(int) fd
-               closeOnDealloc:(BOOL) flag;
+                         closeOnDealloc:(BOOL) flag;
 - (void) closeFile;
 - (void) synchronizeFile;
 
@@ -107,5 +102,7 @@ enum _MulleObjCSeekMode
 @end
 
 
-
+// is this a mulle addition ?
+@interface NSNullDeviceFileHandle : NSFileHandle
+@end
 

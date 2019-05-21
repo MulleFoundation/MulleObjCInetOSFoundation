@@ -43,14 +43,19 @@
 
 - (NSString *) _stringBySimplifyingPath;  // just removes /./ and /../
 
+- (BOOL) writeToFile:(NSString *) path
+          atomically:(BOOL) flag;
+
+- (BOOL) writeToFile:(NSString *) path
+          atomically:(BOOL) flag
+            encoding:(NSStringEncoding) encoding
+               error:(NSError **) error;
 @end
 
 
 @interface NSString( OSBaseFuture)
 
 - (instancetype) initWithContentsOfFile:(NSString *) path;
-- (BOOL) writeToFile:(NSString *) path
-          atomically:(BOOL) flag;
 
 @end
 

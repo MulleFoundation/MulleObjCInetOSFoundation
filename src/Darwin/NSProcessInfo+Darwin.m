@@ -138,10 +138,13 @@ static void  free_env( char **env)
 {
    char   **p;
 
-   if( p = env)
+   if( env)
+   {
+      p = env;
       while( *p)
          mulle_free( *p++);
-   mulle_free( env);
+      mulle_free( env);
+   }
 }
 
 
@@ -388,7 +391,8 @@ static void   unlazyArgumentsAndEnvironment( NSProcessInfo *self)
    char   **env;
    int    rval;
 
-   if( rval = _NSGetArgcArgvEnviron( &argc, (char ***) &argv, &env))
+   rval = _NSGetArgcArgvEnviron( &argc, (char ***) &argv, &env);
+   if( rval)
       MulleObjCThrowInternalInconsistencyException( @"can't get argc/argv from sysctl (%d,%d)", rval, errno);
 
    self->_arguments = [NSArray _newWithArgc:argc

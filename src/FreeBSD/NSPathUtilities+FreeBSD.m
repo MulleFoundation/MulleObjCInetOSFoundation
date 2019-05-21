@@ -27,7 +27,7 @@ static NSString   *FreeBSDHomeDirectory( void)
    s = getenv( "HOME");
    if( s)
       return( [NSString stringWithCString:s]);
-   return( @"~");
+   return( @"");
 }
 
 

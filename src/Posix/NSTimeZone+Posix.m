@@ -71,7 +71,6 @@
    extern char   *mulle_get_timezone_zone_tab_file( void);
    NSMutableArray   *names;
    NSArray          *entries;
-   NSEnumerator     *rover;
    NSString         *filename;
    NSString         *zonesString;
    NSString         *line;
@@ -87,8 +86,7 @@
 
    zonesLines  = [zonesString componentsSeparatedByString:@"\n"];
 
-   rover = [zonesLines objectEnumerator];
-   while( line = [rover nextObject])
+   for( line in zonesLines)
    {
       if( [line hasPrefix:@"#"])
          continue;

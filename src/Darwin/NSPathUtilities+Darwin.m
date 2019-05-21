@@ -127,6 +127,10 @@ static NSString  *pathForType( NSSearchPathDirectory type, NSSearchPathDomainMas
    case NSLibraryDirectory              : path = (domain == NSLocalDomainMask) ? @"" : @"Library"; break;
    case NSApplicationSupportDirectory   : path = (domain == NSLocalDomainMask) ? nil : @"Library/Application Support"; break;
    case NSUserDirectory                 : path = (domain == NSUserDomainMask) ? @"" : nil; break;
+   case NSMusicDirectory                : path = (domain == NSUserDomainMask) ? @"Music" : nil; break;
+   case NSMoviesDirectory               : path = (domain == NSUserDomainMask) ? @"Movies" : nil; break;
+   case NSPicturesDirectory             : path = (domain == NSUserDomainMask) ? @"Pictures" : nil; break;
+   case NSCachesDirectory               : path = @"Library/Caches"; break;
    case NSDocumentationDirectory        : path = @"Library/Documentation"; break;
    case NSDocumentDirectory             : path = (domain == NSUserDomainMask) ? @"Documents" : nil; break;
    case NSDesktopDirectory              : path = (domain == NSUserDomainMask) ? @"Desktop" : nil; break;

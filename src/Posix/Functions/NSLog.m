@@ -55,7 +55,7 @@ void   NSLogv( NSString *format, va_list args)
    char      *cString;
 
    s = [NSString stringWithFormat:format
-                       varargList:args];
+                       arguments:args];
    cString = [s cString];
    syslog( __NSLogPriority, "%s", cString);
    fprintf( stderr, "%s\n", cString);

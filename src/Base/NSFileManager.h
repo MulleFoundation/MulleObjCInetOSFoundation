@@ -48,16 +48,12 @@ extern NSString   *NSFileTypeUnknown;
 
 
 @interface NSFileManager : NSObject < MulleObjCSingleton>
-{
-}
+
+@property( assign) id   delegate;
 
 + (NSFileManager *) defaultManager;
 
 - (NSDirectoryEnumerator *) enumeratorAtPath:(NSString *) path;
-- (BOOL) createDirectoryAtPath:(NSString *) path
-   withIntermediateDirectories:(BOOL) createIntermediates
-                    attributes:(NSDictionary *) attributes
-                         error:(NSError **) error;
 
 // useless fluff routines
 - (BOOL) createFileAtPath:(NSString *) path
@@ -69,7 +65,11 @@ extern NSString   *NSFileTypeUnknown;
 - (BOOL) contentsEqualAtPath:(NSString *) path1
                      andPath:(NSString *) path2;
 
+- (BOOL) removeItemAtPath:(NSString *) path
+                    error:(NSError **) error;
+
 @end
+
 
 @interface NSFileManager (Future)
 
@@ -83,6 +83,11 @@ extern NSString   *NSFileTypeUnknown;
 - (BOOL) isReadableFileAtPath:(NSString *) path;
 - (BOOL) isWritableFileAtPath:(NSString *) path;
 
+- (BOOL) createDirectoryAtPath:(NSString *) path
+   withIntermediateDirectories:(BOOL) createIntermediates
+                    attributes:(NSDictionary *) attributes
+                         error:(NSError **) error;
+
 - (NSDictionary *) fileSystemAttributesAtPath:(NSString *) path;
 
 - (NSString *) pathContentOfSymbolicLinkAtPath:(NSString *) path;
@@ -91,6 +96,9 @@ extern NSString   *NSFileTypeUnknown;
 
 
 - (NSDictionary *) fileSystemAttributesAtPath:(NSString *) path;
+- (NSDictionary *) fileAttributesAtPath:(NSString *) path
+                           traverseLink:(BOOL) flag;
+
 - (NSArray *) directoryContentsAtPath:(NSString *) path;
 - (NSString *) pathContentOfSymbolicLinkAtPath:(NSString *) path;
 
@@ -105,5 +113,45 @@ extern NSString   *NSFileTypeUnknown;
 - (int) _createDirectoryAtPath:(NSString *) path
                     attributes:(NSDictionary *) attributes;
 
+- (BOOL) _removeFileItemAtPath:(NSString *) path;
+- (BOOL) _removeEmptyDirectoryItemAtPath:(NSString *) path;
+
 @end
 
+
+@interface NSFileManager( Delegate)
+
+- (BOOL)fileManager:(NSFileManager *)fileManager
+shouldRemoveItemAtPath:(NSString *)path;
+
+- (BOOL) fileManager:(NSFileManager *)fileManager
+shouldProceedAfterError:(NSError *)error
+  removingItemAtPath:(NSString *)path;
+
+- (BOOL)fileManager:(NSFileManager *)fileManager
+shouldMoveItemAtPath:(NSString *)srcPath
+             toPath:(NSString *)dstPath;
+
+- (BOOL) fileManager:(NSFileManager *)fileManager
+ shouldMoveItemAtPath:(NSString *)srcPath
+               toPath:(NSString *)dstPath;
+
+- (BOOL)fileManager:(NSFileManager *)fileManager
+shouldCopyItemAtPath:(NSString *)srcPath
+             toPath:(NSString *)dstPath;
+
+- (BOOL)fileManager:(NSFileManager *)fileManager
+shouldProceedAfterError:(NSError *)error
+  copyingItemAtPath:(NSString *)srcPath
+             toPath:(NSString *)dstPath;
+
+- (BOOL)fileManager:(NSFileManager *)fileManager
+shouldLinkItemAtPath:(NSString *)srcPath
+             toPath:(NSString *)dstPath;
+
+- (BOOL)fileManager:(NSFileManager *)fileManager
+shouldProceedAfterError:(NSError *)error
+  linkingItemAtPath:(NSString *)srcPath
+             toPath:(NSString *)dstPath;
+
+@end

@@ -30,7 +30,6 @@
 + (void) resetStandardUserDefaults;
 
 - (instancetype) init;
-- (instancetype) initWithUser:(NSString *) username;
 
 - (id) objectForKey:(NSString *) key;
 - (void) setObject:(id) value
@@ -39,26 +38,34 @@
 
 - (void) registerDefaults:(NSDictionary *) registrationDictionary;
 
-- (void) addSuiteNamed:(NSString *) suiteName;
-- (void) removeSuiteNamed:(NSString *) suiteName;
 
 - (NSDictionary *) dictionaryRepresentation;
-
-- (NSArray *) volatileDomainNames;
-- (NSDictionary *) volatileDomainForName:(NSString *) domainName;
-- (void) setVolatileDomain:(NSDictionary *) domain
-                   forName:(NSString *) domainName;
-- (void) removeVolatileDomainForName:(NSString *) domainName;
-
-- (NSArray *) persistentDomainNames;
-- (NSDictionary *) persistentDomainForName:(NSString *) domainName;
-- (void)  setPersistentDomain:(NSDictionary *)  domain
-                     forName:(NSString *) domainName;
-- (void)  removePersistentDomainForName:(NSString *)  domainName;
-
 - (BOOL) synchronize;
 
 @end
+
+
+// most of these will probably never be implemented, as they are
+// useless in a cross-platform setting
+// @interface NSUserDefaults( Todo)
+//
+// - (instancetype) initWithUser:(NSString *) username;
+// - (void) addSuiteNamed:(NSString *) suiteName;
+// - (void) removeSuiteNamed:(NSString *) suiteName;
+//
+// - (NSArray *) volatileDomainNames;
+// - (NSDictionary *) volatileDomainForName:(NSString *) domainName;
+// - (void) setVolatileDomain:(NSDictionary *) domain
+//                    forName:(NSString *) domainName;
+// - (void) removeVolatileDomainForName:(NSString *) domainName;
+//
+// - (NSArray *) persistentDomainNames;
+// - (NSDictionary *) persistentDomainForName:(NSString *) domainName;
+// - (void)  setPersistentDomain:(NSDictionary *)  domain
+//                      forName:(NSString *) domainName;
+// - (void)  removePersistentDomainForName:(NSString *)  domainName;
+//
+// @end
 
 
 @interface NSUserDefaults ( Conveniences)

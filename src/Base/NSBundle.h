@@ -24,9 +24,11 @@
    NSString       *_path;
    void           *_handle;
    NSDictionary   *_infoDictionary;
-
+   NSUInteger     _startAddress;
+   NSUInteger     _endAddress;
+   
 @private
-   NSString       *_executablePath;
+   NSString       *_executablePath;  // for "already loaded" bundles 
 }
 
 
@@ -98,7 +100,6 @@
 - (BOOL) loadBundle;
 - (BOOL) unloadBundle;
 
-+ (NSArray *) _allImagePaths;
 - (NSDictionary *) infoDictionary;
 - (Class) principalClass;
 - (NSString *) bundleIdentifier;

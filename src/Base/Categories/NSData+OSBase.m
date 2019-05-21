@@ -70,6 +70,24 @@
 }
 
 
++ (instancetype) dataWithContentsOfFile:(NSString *) path
+                                options:(NSUInteger) options
+                                  error:(NSError **) error
+{
+   NSError   *dummy;
+   NSData    *data;
+
+   if( ! error)
+      error = &dummy;
+   *error = nil;
+
+   data = [self dataWithContentsOfFile:path];
+   if( ! data)
+      *error = MulleObjCErrorGetCurrentError();
+   return( data);
+}
+
+
 + (instancetype) dataWithContentsOfURL:(NSURL *) url
                                options:(NSUInteger) options
                                  error:(NSError **) error

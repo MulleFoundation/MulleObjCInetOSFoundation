@@ -18,6 +18,8 @@
 #import <xlocale.h>
 
 
+#pragma clang diagnostic ignored "-Wparentheses"
+
 @implementation NSDateFormatter( Darwin)
 
 + (struct _mulle_objc_dependency *) dependencies

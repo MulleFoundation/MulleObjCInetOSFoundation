@@ -1,11 +1,25 @@
-
+/*
+ *  MulleFoundation - the mulle-objc class library
+ *
+ *  NSFileHandle.m is a part of MulleFoundation
+ *
+ *  Copyright (C) 2011 Nat!, Mulle kybernetiK.
+ *  All rights reserved.
+ *
+ *  Coded by Nat!
+ *
+ *  $Id$
+ *
+ */
 #import "NSFileHandle+NSRunLoop.h"
 
 #import "NSRunLoop.h"
 #import "NSRunLoop-Private.h"
 
+#import "NSPageAllocation.h"
 
-NSString  *NSFile​Handle​Notification​Data​Item      = @"data";
+
+NSString  *NSFileHandleNotificationDataItem       = @"data";
 NSString  *NSFileHandleReadCompletionNotification = @"NSFileHandleReadCompletionNotification";
 
 @interface NSFileHandle( _NSFileDescriptor)  < _NSFileDescriptor>
@@ -22,7 +36,7 @@ NSString  *NSFileHandleReadCompletionNotification = @"NSFileHandleReadCompletion
 
    data = [self availableData];
    info = [NSDictionary dictionaryWithObject:data
-                                      forKey:NSFile​Handle​Notification​Data​Item];
+                                      forKey:NSFileHandleNotificationDataItem];
    [[NSNotificationCenter defaultCenter]
     postNotificationName:NSFileHandleReadCompletionNotification
                   object:self
@@ -34,14 +48,14 @@ NSString  *NSFileHandleReadCompletionNotification = @"NSFileHandleReadCompletion
 
 @implementation NSFileHandle( NSRunLoop)
 
-- (void) read​In​Background​And​Notify
+- (void) readInBackgroundAndNotify
 {
    [[NSRunLoop currentRunLoop] _addObject:self
                                   forMode:NSDefaultRunLoopMode];
 }
 
 
-- (void) read​In​Background​And​NotifyForModes:(NSArray *) modes
+- (void) readInBackgroundAndNotifyForModes:(NSArray *) modes
 {
    [[NSRunLoop currentRunLoop] _addObject:self
                                  forModes:modes];

@@ -31,13 +31,13 @@
 
 - (instancetype) initWithContentsOfFile:(NSString *) path
 {
-   char                     *buf;
-   char                     *filename;
-   int                      fd;
-   ssize_t                  actual_len;
-   ssize_t                  len;
    struct mulle_allocator   *allocator;
    struct stat              info;
+   char                     *buf;
+   char                     *filename;
+   ssize_t                  actual_len;
+   ssize_t                  len;
+   int                      fd;
 
    filename = [path fileSystemRepresentation];
    fd = open( filename, O_RDONLY);
@@ -64,20 +64,16 @@
          if( (off_t) len == info.st_size)
          {
             allocator = MulleObjCObjectGetAllocator( self);
+            buf       = mulle_allocator_malloc( allocator, len);
+            // The system guarantees to read the number of bytes requested
+            // if the descriptor references a normal file that has that
+            // many bytes left before the end-of-file, but in no other case
 
-            buf = mulle_allocator_malloc( allocator, len);
-            if( buf)
+            actual_len = read( fd, buf, len);
+            if( actual_len != -1)
             {
-               // The system guarantees to read the number of bytes requested
-               // if the descriptor references a normal file that has that
-               // many bytes left before the end-of-file, but in no other case
-
-               actual_len = read( fd, buf, len);
-               if( actual_len != -1)
-               {
-                  if( actual_len != len)
-                     buf = mulle_allocator_realloc( allocator, buf, actual_len);
-               }
+               if( actual_len != len)
+                  buf = mulle_allocator_realloc( allocator, buf, actual_len);
             }
          }
          else
@@ -92,9 +88,9 @@
       return( nil);
    }
 
-   return( [self initWithBytesNoCopy:buf
-                              length:actual_len
-                           allocator:allocator]);
+   return( [self mulleInitWithBytesNoCopy:buf
+                                   length:actual_len
+                                allocator:allocator]);
 }
 
 
@@ -107,20 +103,21 @@
 - (BOOL) writeToFile:(NSString *) path
           atomically:(BOOL) flag
 {
-   NSString  *new_path;
-   ssize_t   len;
-   int       fd;
-   int       rval;
-   char      *c_path;
-   char      *c_new;
-   char      *c_old;
+   NSString   *new_path;
+   ssize_t    len;
+   int        fd;
+   int        rval;
+   char       *c_path;
+   char       *c_new;
+   char       *c_old;
 
+   // TODO: need to set POSIX errno domain here
    NSParameterAssert( [path length]);
 
    new_path = flag ? [path stringByAppendingString:@"~"] : path;
    c_path   = [new_path fileSystemRepresentation];
 
-   fd = open( c_path, O_WRONLY|O_CREAT|O_TRUNC, 0666 );
+   fd = open( c_path, O_WRONLY|O_CREAT|O_TRUNC, 0666);
    if( fd == -1)
       return( NO);
 
@@ -155,6 +152,20 @@
       return( NO);
    }
    return( YES);
+}
+
+
+- (BOOL) writeToFile:(NSString *) path
+          atomically:(BOOL) flag
+               error:(NSError **) p_error
+{
+   if( [self writeToFile:path
+              atomically:flag])
+      return( YES);
+
+   if( p_error)
+      *p_error = MulleObjCErrorGetCurrentError();
+   return( NO);
 }
 
 @end

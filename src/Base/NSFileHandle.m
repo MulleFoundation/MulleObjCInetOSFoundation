@@ -13,10 +13,8 @@
  */
 #import "NSFileHandle.h"
 
+#import "NSPageAllocation.h"
 
-
-@interface NSNullDeviceFileHandle : NSFileHandle
-@end
 
 
 @implementation NSNullDeviceFileHandle
@@ -81,7 +79,7 @@
 @implementation NSFileHandle
 
 
-static void   nop( void *fd)
+static void   nop( int fd)
 {
 }
 
@@ -101,7 +99,7 @@ static id  NSInitFileHandle( NSFileHandle *self, void *fd)
 
 - (instancetype) initWithFileDescriptor:(int) fd
 {
-   return( NSInitFileHandle( self, (void *) fd));
+   return( NSInitFileHandle( self, (void *) (intptr_t) fd));
 }
 
 
@@ -134,13 +132,14 @@ static id  NSInitFileHandle( NSFileHandle *self, void *fd)
 
 - (void) finalize
 {
-   (*_closer)( _fd);
+   if( _closer)
+      (*_closer)( (int) (intptr_t) _fd);
 }
 
 
 - (int) fileDescriptor
 {
-   return( (int) _fd);
+   return( (int) (intptr_t) _fd);
 }
 
 
@@ -158,59 +157,68 @@ static id  NSInitFileHandle( NSFileHandle *self, void *fd)
 
 #pragma mark - read
 
-static NSData   *readDataOfLength( NSFileHandle *self, NSUInteger length, BOOL flag)
+//
+// if the returned [data length] is < length, then EOF has been reached
+//
+static NSData   *readDataOfLength( NSFileHandle *self, 
+                                   NSUInteger length, 
+                                   BOOL untilFullOrEOF)
 {
    NSMutableData   *data;
-   size_t    len;
-   size_t    readten;
-   char      *buf;
-   char      *start;
+   size_t          len;
+   size_t          read_len;
+   char            *buf;
+   char            *start;
+
+   if( ! length)
+      return( nil);
 
    data  = [NSMutableData dataWithLength:length];
-   start = [data bytes];
+   start = [data mutableBytes];
    buf   = start;
    len   = length;
 
-   while( len)
+   do
    {
-      readten = [self _readBytes:buf
-                          length:len];
-      if( readten == (size_t) -1)
-         MulleObjCThrowErrnoException( @"read failed");
-      len -= readten;
-      buf  = &buf[ readten];
-
-      if( ! readten)
-      {
-         [data setLength:buf - start];
+      read_len = [self _readBytes:buf
+                           length:len];
+      if( ! read_len)
          break;
-      }
-   }
-   while( len && ! flag);
+      if( read_len == (size_t) -1)
+         MulleObjCThrowErrnoException( @"read failed");
 
+      len -= read_len;
+      buf  = &buf[ read_len];
+   }
+   while( untilFullOrEOF && len);
+
+   [data setLength:buf - start];
    return( data);
 }
 
 
-static NSData   *readAllData( NSFileHandle *self, BOOL flag)
+static NSData   *readAllData( NSFileHandle *self, BOOL untilFullOrEOF)
 {
    NSMutableData   *data;
    NSData          *page;
+   BOOL            eofReached;
+   NSUInteger      length;
 
-   data = [NSMutableData data];
+   length = NSPageSize();
+   data   = [NSMutableData data];
    for(;;)
    {
-      page = readDataOfLength( self, NSPageSize(), flag);
-      if( ! [page length])
-         return( data);
+      page = readDataOfLength( self, length, untilFullOrEOF);
       [data appendData:page];
+      if( [page length] < length)
+         return( data);
    }
 }
 
 
 - (NSData *) availableData
 {
-   return( readAllData( self, YES));
+   return( readAllData( self, NO));
 }
 
 
@@ -220,13 +228,13 @@ static NSData   *readAllData( NSFileHandle *self, BOOL flag)
 //
 - (NSData *) readDataToEndOfFile
 {
-   return( readAllData( self, NO));
+   return( readAllData( self, YES));
 }
 
 
 - (NSData *) readDataOfLength:(NSUInteger) length
 {
-   return( readDataOfLength( self, length, NO));
+   return( readDataOfLength( self, length, YES));
 }
 
 

@@ -21,24 +21,23 @@
 NSString   *NSPOSIXErrorDomain = @"NSPOSIXError";
 
 
-void     MulleObjCPOSIXSetCurrentErrnoError( NSError **error_p)
+@implementation MulleObjCPOSIXError : NSError
+
+
+MULLE_OBJC_DEPENDS_ON_LIBRARY( MulleObjCStandardFoundation);
+
+
++ (void) load
 {
-   NSString       *s;
-   NSError        *error;
-   NSDictionary   *info;
-
-   assert( errno);
-   s = [NSString stringWithCString:strerror( errno)];
-
-   info  = [NSDictionary dictionaryWithObject:s
-                                       forKey:NSLocalizedDescriptionKey];
-   error = [NSError errorWithDomain:NSPOSIXErrorDomain
-                               code:errno
-                           userInfo:info];
-
-   if( error_p)
-      *error_p = error;
-
-   [NSError setCurrentError:error];
+   [self mulleResetCurrentErrorClass];
 }
+
+
++ (NSString *) mulleDefaultDomain
+{
+   return( NSPOSIXErrorDomain);
+}
+
+@end
+
 

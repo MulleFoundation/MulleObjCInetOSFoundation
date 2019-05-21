@@ -28,6 +28,9 @@ typedef NSUInteger   NSDataReadingOptions;
 
 + (instancetype) dataWithContentsOfMappedFile:(NSString *) path;
 + (instancetype) dataWithContentsOfFile:(NSString *) path;
++ (instancetype) dataWithContentsOfFile:(NSString *) path
+                                options:(NSDataReadingOptions) options
+                                  error:(NSError **) error;
 
 + (instancetype) dataWithContentsOfURL:(NSURL *) url
                                options:(NSDataReadingOptions) options
@@ -45,8 +48,14 @@ typedef NSUInteger   NSDataReadingOptions;
 
 - (instancetype) initWithContentsOfFile:(NSString *) path;
 - (instancetype) initWithContentsOfMappedFile:(NSString *) path;
+
+// prefer this and query current error afterwards
 - (BOOL) writeToFile:(NSString *) path
           atomically:(BOOL) flag;
+
+- (BOOL) writeToFile:(NSString *) path
+          atomically:(BOOL) flag
+               error:(NSError **) error;
 
 @end
 

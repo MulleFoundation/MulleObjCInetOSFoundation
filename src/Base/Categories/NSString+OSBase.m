@@ -20,6 +20,8 @@
 
 // std-c and dependencies
 
+#pragma clang diagnostic ignored "-Wparentheses"
+
 
 @implementation NSString( OSBase)
 
@@ -70,64 +72,157 @@
 }
 
 
+static NSMutableArray  *arrayWithComponents( NSArray *components, NSRange range, BOOL includeFirst)
+{
+   NSMutableArray   *array;
+
+   array = [NSMutableArray array];
+   if( includeFirst && range.location != 0)
+      [array addObject:[components objectAtIndex:0]];
+   [array addObjectsFromArray:[components subarrayWithRange:range]];
+   return( array);
+}
+
+
 - (NSString *) _stringBySimplifyingPath
 {
-   NSArray         *components;
-   NSMutableArray  *result;
-   NSString        *s;
-   NSUInteger      i, n;
-   BOOL            isAbsolute;
+   enum
+   {
+      isUnknown,
+      isAbsolute,
+      isDot,
+      isDotDot
+   } pathtype;
+   NSArray      *components;
+   id           result;
+   NSString     *s;
+   NSString     *prev;
+   NSUInteger   i, n;
+   BOOL         skipping;
+   NSUInteger   len;
+   NSUInteger   start;
 
+   //
    // if this is nil, path has no @"/" anywhere
    //
    components = [self _componentsSeparatedByString:NSFilePathComponentSeparator];
    if( ! components)
       return( self);
 
-   isAbsolute = NO;
-   result     = nil;
+   pathtype = isUnknown;
+   skipping = YES;
+   result   = nil;
+   start    = 0;
 
    n = [components count];
    for( i = 0; i < n; i++)
    {
-      s = [components objectAtIndex:i];
-      if( ! [s length] || [@"." isEqualToString:s])
+      s   = [components objectAtIndex:i];
+      len = [s length];
+
+         // if path starts with '/' or '.' we can collapse '..'
+      if( ! len || [@"." isEqualToString:s])
+      {
+         if( ! i)
+            pathtype = ! len ? isAbsolute : isDot;
+
+         // skip over '//' and '/./'
+         if( skipping)
+            ++start;
+         continue;
+      }
+
+      // convert "/foo/../" to "foo"
+      // though symlinks should be resolved now
+
+      if( [@".." isEqualToString:s])
       {
          if( ! i)
          {
-            isAbsolute = YES;
+            pathtype = isDotDot;
+            ++start;    // still update this for later output
+            skipping = NO;
             continue;
          }
-         if( ! result)
-            result = [NSMutableArray arrayWithArray:components
-                                              range:NSMakeRange( 0, i)];
-         continue;
-      }
-      if( isAbsolute)
-      {
-         if( [@".." isEqualToString:s])
+
+         if( skipping && isAbsolute)
          {
-            if( ! result)
-               result = [NSMutableArray arrayWithArray:components
-                                                 range:NSMakeRange( 0, i ? i - 1 : 0)];
-            else
-               [result removeLastObject];
+            if( skipping)
+               ++start;    // collapse /.. to /
+            continue;
+         }
+
+         if( ! result)
+            result = arrayWithComponents( components, NSMakeRange( start, i - start), YES);
+
+         prev = [result lastObject];
+         if( ! [@".." isEqualToString:prev])
+         {
+            if( ! [prev length])
+               continue;
+
+            [result removeLastObject];
+            if( ! [result count])
+            {
+               result = nil;
+               start  = i;
+            }
             continue;
          }
       }
+
+      // keep adding to nil, if there was nothing to collapse
+      if( ! result && start)
+         result = arrayWithComponents( components, NSMakeRange( start, i - start), YES);
       [result addObject:s];
+      skipping = NO;
    }
 
-   if( result)
-      return( [result componentsJoinedByString:NSFilePathComponentSeparator]);
+   if( start == i)
+   {
+      switch( pathtype)
+      {
+         case isAbsolute : return( NSFilePathComponentSeparator);
+         case isDot      : return( @".");
+         case isDotDot   : return( @"..");
+         default         : break;
+      }
+   }
+   if( ! result && ! start)
+      return( self);
 
-   return( self);
+   if( ! result)
+      result = arrayWithComponents( components, NSMakeRange( start, i - start), YES);
+
+   // remove trailing '/' if any
+   len = [result count];
+   while( len)
+   {
+      s = [result lastObject];
+      if( [s length] && ! [s isEqualToString:@"."])
+         break;
+      [result removeLastObject];
+      --len;
+   }
+
+   if( ! len)
+   {
+      switch( pathtype)
+      {
+         case isAbsolute : return( NSFilePathComponentSeparator);
+         case isDot      : return( @".");
+         case isDotDot   : return( @"..");
+         default         : break;
+      }
+   }
+
+   return( [result componentsJoinedByString:NSFilePathComponentSeparator]);
 }
 
-//
-// this is not like what MacOSX does, which does much more
-//
 
+//
+// this is not what darwin will do (in a category)
+//
 - (NSString *) _stringByRemovingPrivatePrefix
 {
    return( self);
@@ -236,12 +331,14 @@
 {
    NSArray   *components;
    NSString  *s;
+   NSString  *home;
 
    components = [self _componentsSeparatedByString:@"~"];
    if( ! components)
       return( self);
 
-   s = [components componentsJoinedByString:NSHomeDirectory()];
+   home = NSHomeDirectory();
+   s    = [components componentsJoinedByString:home];
    return( s);
 }
 
@@ -255,7 +352,6 @@
    NSString          *component;
    NSString          *expanded;
    NSString          *best;
-   NSEnumerator      *rover;
    NSUInteger        len;
 
    path = [self stringByExpandingTildeInPath];
@@ -265,8 +361,7 @@
    manager    = [NSFileManager defaultManager];
    components = [self componentsSeparatedByString:NSFilePathComponentSeparator];
    s          = [NSMutableString string];
-   rover      = [components objectEnumerator];
-   while( component = [rover nextObject])
+   for( component in components)
    {
       len = [component length];
       if( ! len)
@@ -502,8 +597,24 @@ static NSRange  getPathExtensionRange( NSString *self)
    NSData  *data;
 
    data = [self dataUsingEncoding:NSUTF8StringEncoding];
+   assert( data);
    return( [data writeToFile:path
                   atomically:flag]);
 }
+
+
+- (BOOL) writeToFile:(NSString *) path
+          atomically:(BOOL) flag
+            encoding:(NSStringEncoding) encoding
+               error:(NSError **) error
+{
+   NSData  *data;
+
+   data = [self dataUsingEncoding:encoding];
+   return( [data writeToFile:path
+                  atomically:flag
+                       error:error]);
+}
+
 
 @end

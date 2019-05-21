@@ -42,7 +42,6 @@
    if( ! [path length] || ! [path canBeConvertedToEncoding:[NSString defaultCStringEncoding]])
    {
       errno = EINVAL;
-      MulleObjCPOSIXSetCurrentErrnoError( NULL);
       return( NULL);
    }
 
