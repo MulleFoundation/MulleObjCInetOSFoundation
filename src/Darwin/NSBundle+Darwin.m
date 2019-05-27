@@ -26,7 +26,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <string.h>#include <mach-o/dyld.h>
+#include <string.h>
+#include <mach-o/dyld.h>
 #include <mach-o/loader.h>
 #include <mach-o/swap.h>
 #include <mach-o/fat.h>
@@ -114,7 +115,7 @@
    NSString                         *path;
    struct _MulleObjCSharedLibrary   libInfo;
    struct mach_header               *header;
-   uint8_t                          *imageHeaderPtr; 
+   uint8_t                          *imageHeaderPtr;
    unsigned long                    i;
    struct segment_command_64        *segment64;
    struct segment_command           *segment;
@@ -142,19 +143,19 @@
          cmd  = &((uint8_t *) header)[ sizeof( struct mach_header)];
       }
 
-      for( i = 0; i < ncmds; i++) 
+      for( i = 0; i < ncmds; i++)
       {
          switch( cmd->cmd)
          {
          default :
             continue;
 
-         case LC_SEGMENT_64 : 
+         case LC_SEGMENT_64 :
             segment64   = p;
             segment_end = segment64->vmaddr + segment64->vmsize;
             break;
 
-         case LC_SEGMENT : 
+         case LC_SEGMENT :
             segment     = p;
             segment_end = segment->vmaddr + segment->vmsize;
             break;
