@@ -26,7 +26,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <string.h>#include <mach-o/dyld.h>
+#include <string.h>
+#include <mach-o/dyld.h>
 #include <mach-o/loader.h>
 #include <mach-o/swap.h>
 #include <mach-o/fat.h>
@@ -80,6 +81,55 @@
 //   return( s);
 //}
 
+static NSString   *executableFilename( NSBundle *self)
+{
+   NSString  *filename;
+
+   filename = [[self bundlePath] lastPathComponent];
+   return( [filename stringByDeletingPathExtension]);
+}
+
+
+
+static NSString   *contentsPath( NSBundle *self)
+{
+   NSFileManager   *manager;
+   NSString        *contents;
+   NSString        *path;
+   BOOL            isDir;
+
+   // now _path will have changed
+   // here on OS X a bundle is
+   manager   = [NSFileManager defaultManager];
+   path      = [self bundlePath];
+   contents  = [path stringByAppendingPathComponent:@"Contents"];
+
+   if( [manager fileExistsAtPath:contents
+                     isDirectory:&isDir] && isDir)
+   {
+      return( contents);
+   }
+   return( path);
+}
+
+
+//
+//
+- (NSString *) _resourcePath
+{
+   NSString   *path;
+   NSString   *s;
+   BOOL       flag;
+
+   s    = contentsPath( self);
+   path = [s stringByAppendingPathComponent:@"Resources"];
+   if( [[NSFileManager defaultManager] fileExistsAtPath:path
+                                            isDirectory:&flag] && flag)
+      return( path);
+
+   return( s);
+}
+
 
 - (NSString *) _executablePath
 {
@@ -106,6 +156,7 @@
 }
 
 
+// TODO: THIS IS UNTESTED AND HACKED TOGETHER!!
 + (NSData *) _allSharedLibraries
 {
    char                             *s;
@@ -114,11 +165,13 @@
    NSString                         *path;
    struct _MulleObjCSharedLibrary   libInfo;
    struct mach_header               *header;
-   uint8_t                          *imageHeaderPtr; 
+   uint8_t                          *imageHeaderPtr;
    unsigned long                    i;
    struct segment_command_64        *segment64;
    struct segment_command           *segment;
    struct load_command              *cmd;
+   int                              ncmd;
+   uintptr_t                        segment_end;
 
    data = [NSMutableData data];
 
@@ -128,34 +181,34 @@
       if( ! strlen( s) || s[ 0] != '/')
          continue;
 
-      header        = _dyld_get_image_header( i);
+      header        = (struct mach_header *) _dyld_get_image_header( i);
       libInfo.start = (NSUInteger) header;
       libInfo.end   = libInfo.start;
       if( header->magic == MH_MAGIC_64)
       {
          ncmd = ((struct mach_header_64 *) header)->ncmds;
-         cmd  = &((uint8_t *) header)[ sizeof( struct mach_header_64)];
+         cmd  = (struct load_command *) &((uint8_t *) header)[ sizeof( struct mach_header_64)];
       }
       else
       {
          ncmd = header->ncmds;
-         cmd  = &((uint8_t *) header)[ sizeof( struct mach_header)];
+         cmd  = (struct load_command *) &((uint8_t *) header)[ sizeof( struct mach_header)];
       }
 
-      for( i = 0; i < ncmds; i++) 
+      for( i = 0; i < ncmd; i++)
       {
          switch( cmd->cmd)
          {
          default :
             continue;
 
-         case LC_SEGMENT_64 : 
-            segment64   = p;
+         case LC_SEGMENT_64 :
+            segment64   = (struct segment_command_64 *) cmd;
             segment_end = segment64->vmaddr + segment64->vmsize;
             break;
 
-         case LC_SEGMENT : 
-            segment     = p;
+         case LC_SEGMENT :
+            segment     = (struct segment_command *) cmd;
             segment_end = segment->vmaddr + segment->vmsize;
             break;
          }
@@ -163,7 +216,7 @@
          if( segment_end > libInfo.end)
             libInfo.end = segment_end;
 
-         cmd = &((uint8_t *) cmd)[ cmd->cmdsize];
+         cmd = (struct load_command *)  &((uint8_t *) cmd)[ cmd->cmdsize];
       }
 
       libInfo.path = [fileManager stringWithFileSystemRepresentation:s

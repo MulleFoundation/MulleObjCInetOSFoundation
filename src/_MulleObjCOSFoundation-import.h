@@ -8,8 +8,10 @@
 #ifndef _mulle_objc_os_foundation_import_h__
 #define _mulle_objc_os_foundation_import_h__
 
+// library: remove with `mark no-header`, rename with `set include`
 # import <MulleObjCOSBaseFoundation/MulleObjCOSBaseFoundation.h>   // src/Base
 
+// library: remove with `mark no-header`, rename with `set include`
 # import <MulleObjCPosixFoundation/MulleObjCPosixFoundation.h>   // src/Posix
 
 #endif

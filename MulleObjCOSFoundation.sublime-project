@@ -18,8 +18,10 @@
             ".git",
             ".mulle-*",
             ".unison*",
+            "var",
             "addiction",
             "build",
+            "kitchen",
             "dependency",
             "stash"
          ]

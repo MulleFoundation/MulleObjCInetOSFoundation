@@ -85,7 +85,7 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
 
 
 - (id) __mulleInitWithPath:(NSString *) fullPath
-    sharedLibraryInfo:(struct _MulleObjCSharedLibrary *) libInfo
+         sharedLibraryInfo:(struct _MulleObjCSharedLibrary *) libInfo
 {
    NSAutoreleasePool   *pool;
    NSFileManager       *manager;
@@ -181,6 +181,7 @@ NSBundle  *(*NSBundleGetOrRegisterBundleWithPath)( NSBundle *bundle, NSString *p
 {
    [_path release];
    [_executablePath release];
+   [_resourcePath release];
 
    [super dealloc];
 }
@@ -334,51 +335,11 @@ static BOOL   haveDiscovered;
 }
 
 
-static NSString   *executableFilename( NSBundle *self)
-{
-   NSString  *filename;
-
-   filename = [[self bundlePath] lastPathComponent];
-   return( [filename stringByDeletingPathExtension]);
-}
-
-
-static NSString   *contentsPath( NSBundle *self)
-{
-   NSFileManager   *manager;
-   NSString        *contents;
-   NSString        *path;
-   BOOL            isDir;
-
-   // now _path will have changed
-   // here on OS X a bundle is
-   manager   = [NSFileManager defaultManager];
-   path      = [self bundlePath];
-   contents  = [path stringByAppendingPathComponent:@"Contents"];
-
-   if( [manager fileExistsAtPath:contents
-                     isDirectory:&isDir] && isDir)
-   {
-      return( contents);
-   }
-   return( path);
-}
-
-
-//
-//
 - (NSString *) resourcePath
 {
-   NSString   *path;
-   NSString   *s;
-   BOOL       flag;
-
-   s    = contentsPath( self);
-   path = [s stringByAppendingPathComponent:@"Resources"];
-   if( [[NSFileManager defaultManager] fileExistsAtPath:path
-                                            isDirectory:&flag] && flag)
-      return( path);
-   return( s);
+   if( ! _resourcePath)
+      _resourcePath = [[self _resourcePath] copy];
+   return( _resourcePath);
 }
 
 
@@ -544,9 +505,9 @@ static NSString   *contentsPath( NSBundle *self)
 
    //
    // it would be nice to binary search the bundles
-   // but it doesn't seem worth to extract them into 
+   // but it doesn't seem worth to extract them into
    // an NSArray and sort them before searching here
-   // 
+   //
    bundleInfo = [self mulleRegisteredBundleInfo];
    for( bundlePath in bundleInfo)
    {
@@ -554,7 +515,7 @@ static NSString   *contentsPath( NSBundle *self)
       if( [bundle mulleContainsAddress:classAddress])
          return( bundle);
    }
-   // assume all classes not in a shared library is part of a 
+   // assume all classes not in a shared library is part of a
    return( [NSBundle mainBundle]);
 }
 

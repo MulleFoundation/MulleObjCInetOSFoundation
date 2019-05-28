@@ -26,6 +26,19 @@
 }
 
 
+- (NSString *) _resourcePath
+{
+   NSString   *s;
+
+   s = [self executablePath];
+   s = [s stringByDeletingLastPathComponent]; // remove a.out
+   s = [s stringByDeletingLastPathComponent]; // remove bin
+   s = [s stringByAppendingPathComponent:@"share"]; // add share
+
+   return( s);
+}
+
+
 - (NSString *) _executablePath
 {
    return( _path);
@@ -61,7 +74,7 @@
       }
    }
 
-  
+
    //
    // spec demands to create a bundle for the class now
    // Does it demand we register it ? If we don't the same
@@ -71,7 +84,7 @@
    libInfo.path  = nil;
    libInfo.start = classAddress;
    libInfo.end   = classAddress;
- 
+
    path          = [NSString stringWithFormat:@"/pseudoproc/memory/%llx", classAddress];
    bundle        = [[[self alloc] _mulleInitWithPath:path
                               sharedLibraryInfo:&libInfo] autorelease];

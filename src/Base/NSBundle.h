@@ -26,9 +26,10 @@
    NSDictionary   *_infoDictionary;
    NSUInteger     _startAddress;
    NSUInteger     _endAddress;
-   
+
 @private
-   NSString       *_executablePath;  // for "already loaded" bundles 
+   NSString       *_executablePath;  // for "already loaded" bundles
+   NSString       *_resourcePath;    // for "already loaded" bundles
 }
 
 

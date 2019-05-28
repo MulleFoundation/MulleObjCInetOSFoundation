@@ -6,11 +6,11 @@
 //  Copyright © 2017 Mulle kybernetiK. All rights reserved.
 //
 
-struct _MulleObjCSharedLibrary 
+struct _MulleObjCSharedLibrary
 {
    NSString     *path;
    NSUInteger   start;
-   NSUInteger   end;   
+   NSUInteger   end;
 };
 
 
@@ -34,15 +34,16 @@ struct _MulleObjCSharedLibrary
     sharedLibraryInfo:(struct _MulleObjCSharedLibrary *) libInfo;
 
 - (NSString *) _executablePath;
+- (NSString *) _resourcePath;
 
 - (BOOL) mulleContainsAddress:(NSUInteger) address;
 + (NSDictionary *) mulleRegisteredBundleInfo;
 
 //
 // Contains struct _MulleObjCSharedLibrary
-// The number of contained structs can be determined by 
+// The number of contained structs can be determined by
 // [data length] / sizeof( struct _MulleObjCSharedLibrary)
-// the string values inside it are autoreleased. Don't retain this data 
+// the string values inside it are autoreleased. Don't retain this data
 // EVER!
 // possibly including main exe (dunno)
 + (NSData *) _allSharedLibraries;
