@@ -1,3 +1,8 @@
+### 0.15.1
+
+* fix stringByResolvingSymlinksInPath and stringByStandardizingPath
+* fix leak with GMT Timezone
+
 ## 0.15.0
 
 * fix unavoidable setProcessName leak tripping up tests

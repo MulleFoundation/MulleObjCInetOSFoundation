@@ -233,14 +233,15 @@ static NSMutableArray  *arrayWithComponents( NSArray *components, NSRange range,
 {
    NSString        *path;
 
+   path = self;
 //   path = [self stringByExpandingTildeInPath];  // already done by symlinks
-   path = [self stringByResolvingSymlinksInPath];
-   path = [self _stringBySimplifyingPath];
+   path = [path stringByResolvingSymlinksInPath];
+   path = [path _stringBySimplifyingPath];
 
    //
    // that's what MacOS does, don't know why.
    // we only do this in Darwin
-   path = [self _stringByRemovingPrivatePrefix];
+   path = [path _stringByRemovingPrivatePrefix];
 
    return( path);
 }
@@ -327,19 +328,32 @@ static NSMutableArray  *arrayWithComponents( NSArray *components, NSRange range,
 }
 
 
+//
+// this only works if ~ is in front
+// see: https://developer.apple.com/documentation/foundation/nsstring/1407716-stringbyexpandingtildeinpath?language=objc
+//
 - (NSString *) stringByExpandingTildeInPath
 {
-   NSArray   *components;
-   NSString  *s;
+   id        components;
+   NSString  *first;
    NSString  *home;
 
-   components = [self _componentsSeparatedByString:@"~"];
-   if( ! components)
+   if( ! [self hasPrefix:@"~"])
       return( self);
 
-   home = NSHomeDirectory();
-   s    = [components componentsJoinedByString:home];
-   return( s);
+   components = [self pathComponents];
+   first      = [components objectAtIndex:0];
+   if( [first length] == 1)
+      home = NSHomeDirectory();
+   else
+      home = NSHomeDirectoryForUser( [first substringFromIndex:1]);
+   if( ! home)
+      return( self);
+
+   components = [[components mutableCopy] autorelease];
+   [components replaceObjectAtIndex:0
+                         withObject:home];
+   return( [NSString pathWithComponents:components]);
 }
 
 
@@ -359,7 +373,7 @@ static NSMutableArray  *arrayWithComponents( NSArray *components, NSRange range,
       return( path);
 
    manager    = [NSFileManager defaultManager];
-   components = [self componentsSeparatedByString:NSFilePathComponentSeparator];
+   components = [path componentsSeparatedByString:NSFilePathComponentSeparator];
    s          = [NSMutableString string];
    for( component in components)
    {

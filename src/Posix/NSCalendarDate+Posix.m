@@ -72,6 +72,7 @@ static void  set_mini_tm( NSCalendarDate *self, NSTimeInterval interval, int tzO
 {
    if( ! timeZone)
       timeZone = [NSTimeZone _GMTTimeZone];  // GMT sic!
+
    _timeZone = [timeZone retain];
    assert( _timeZone);
 
