@@ -15,6 +15,7 @@
 
 // std-c and dependencies
 #include <dlfcn.h>
+#include <errno.h>
 
 
 @implementation NSBundle (Posix)
@@ -26,22 +27,42 @@
 }
 
 
-- (NSString *) _resourcePath
+- (NSString *) _posixResourcePath
 {
    NSString   *s;
+   NSString   *name;
 
-   s = [self executablePath];
+   s    = [self executablePath];
+   name = [[s lastPathComponent] stringByDeletingPathExtension];
+   if( [name hasPrefix:@"lib"] && [[self class] isBundleFilesystemExtension:[s pathExtension]])
+      name = [name substringFromIndex:3];
+
    s = [s stringByDeletingLastPathComponent]; // remove a.out
    s = [s stringByDeletingLastPathComponent]; // remove bin
    s = [s stringByAppendingPathComponent:@"share"]; // add share
+   s = [s stringByAppendingPathComponent:name];  // add name of bundle
 
    return( s);
 }
 
 
+- (NSString *) _resourcePath
+{
+   return( [self _posixResourcePath]);
+}
+
+
 - (NSString *) _executablePath
 {
-   return( _path);
+   NSFileManager   *fileManager;
+
+   if( ! _path)
+      return( _path);
+
+   fileManager = [NSFileManager defaultManager];
+   if( [fileManager isExecutableFileAtPath:_path])
+      return( _path);
+   return( nil);
 }
 
 
@@ -53,13 +74,17 @@
    struct _MulleObjCSharedLibrary   libInfo;
    NSString                         *path;
    NSString                         *bundlePath;
+   NSString                         *exePath;
    Dl_info                          info;
 
    if( ! aClass)
       return( nil);
 
    classAddress = MulleObjCClassGetLoadAddress( aClass);
-   assert( classAddress);
+   // if there is no load address, its genrated dynamicall at runtime
+   // e.g. NSZombie
+   if( ! classAddress)
+      return( [NSBundle mainBundle]);
 
    if( dladdr( (void *) classAddress, &info))
    {
@@ -69,8 +94,11 @@
       for( bundlePath in bundleInfo)
       {
          bundle = [bundleInfo objectForKey:bundlePath];
-         if( [[bundle executablePath] isEqualToString:path])
+         exePath = [bundle executablePath];
+         if( [exePath isEqualToString:path])
+         {
             return( bundle);
+         }
       }
    }
 
@@ -87,12 +115,12 @@
 
    path          = [NSString stringWithFormat:@"/pseudoproc/memory/%llx", classAddress];
    bundle        = [[[self alloc] _mulleInitWithPath:path
-                              sharedLibraryInfo:&libInfo] autorelease];
+                                   sharedLibraryInfo:&libInfo] autorelease];
    return( bundle);
 }
 
 
-- (BOOL) loadBundle
+static char   *executablePathFileSytemRepresentation( NSBundle *self)
 {
    NSString  *exePath;
    char      *c_path;
@@ -100,14 +128,25 @@
    exePath  = [self executablePath];
    c_path   = [exePath fileSystemRepresentation];
    if( ! c_path)
-   {
       errno = EINVAL;
+   return( c_path);
+}
+
+
+- (BOOL) loadBundle
+{
+   char      *c_path;
+
+   c_path = executablePathFileSytemRepresentation( self);
+   if( ! c_path)
+   {
+      dlerror(); // reset so next time it's NULL indicating errno to be used
       return( NO);
    }
 
    [self willLoad];
 
-   // check to see if alreay loaded
+   // check to see if already loaded
    // RTLD_LAZY | RTLD_GLOBAL crashed for me
    _handle = dlopen( c_path, RTLD_LAZY);
    if( ! _handle)
@@ -119,22 +158,35 @@
 }
 
 
+static char   *dlerror_or_errno( int errnocode)
+{
+   char  *s;
+
+   s = dlerror();
+   if( ! s && errnocode)
+      s = strerror( errnocode);
+   return( s ? s : "???");
+}
+
+
 - (BOOL) unloadBundle
 {
+   char  *s;
+
    if( _handle)
    {
       if( dlclose( _handle))
-         MulleObjCThrowInternalInconsistencyException( @"dlclose: %s", dlerror());
+         MulleObjCThrowInternalInconsistencyException( @"dlclose: %s", dlerror_or_errno( 0));
       _handle = NULL;
    }
-
    return( NO);
 }
 
 
 - (NSString *) _loadFailureReason
 {
-   return( [NSString stringWithCString:dlerror()]);
+   // BUG: Can the load failure be obscured by another thread using NSBundle ?
+   return( [NSString stringWithCString:dlerror_or_errno( 0)]);
 }
 
 @end

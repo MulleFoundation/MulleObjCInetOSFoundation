@@ -35,23 +35,14 @@
 
 @implementation _NSPosixDateFormatter
 
-+ (struct _mulle_objc_dependency *) dependencies
-{
-   static struct _mulle_objc_dependency   dependencies[] =
-   {
-      { @selector( NSConstantString), 0 },
-      { 0, 0 }
-   };
 
-   return( dependencies);
-}
+MULLE_OBJC_DEPENDS_ON_LIBRARY( MulleObjCStandardFoundation);
 
 
 + (void) load
 {
-   [NSDateFormatter setClassValue:self
-                           forKey:NSDateFormatter1000BehaviourClassKey];
-   [NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_0];
+   [NSDateFormatter mulleSetClass:self
+             forFormatterBehavior:NSDateFormatterBehavior10_0];
 }
 
 
@@ -93,10 +84,10 @@
 - (id) _dateWithCStringFormat:(char *) c_format
                cStringPointer:(char **) c_str_p
 {
-   NSDate           *date;
    int              rval;
-   struct tm        tm;
    NSCalendarDate   *calendarDate;
+   NSDate           *date;
+   struct tm        tm;
 
    rval = mulle_posix_tm_from_string_with_format( &tm,
                                                  c_str_p,
@@ -144,11 +135,11 @@
 //
 - (NSString *) stringFromDate:(NSDate *) date
 {
-   NSString     *s;
-   size_t       len;
    char         *buf;
-   NSTimeZone   *timeZone;
    NSLocale     *locale;
+   NSString     *s;
+   NSTimeZone   *timeZone;
+   size_t       len;
 
    timeZone = [self timeZone];
    if( ! timeZone && [date __isNSCalendarDate])

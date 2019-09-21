@@ -54,22 +54,33 @@ void   NSLogv( NSString *format, va_list args)
    NSString  *s;
    char      *cString;
 
-   s = [NSString stringWithFormat:format
-                       arguments:args];
-   cString = [s cString];
-   syslog( __NSLogPriority, "%s", cString);
-   fprintf( stderr, "%s\n", cString);
+   //
+   // the autoreleasepool is here, because we assume there are
+   // %@ arguments in the format, which will often lead to the creation of many
+   // temporary little strings (via description)
+   //
+   @autoreleasepool
+   {
+      s = [NSString stringWithFormat:format
+                           arguments:args];
+      cString = [s cString];
+      syslog( __NSLogPriority, "%s", cString);
+      fprintf( stderr, "%s\n", cString);
+   }
 }
 
 
 void   NSLogArguments( NSString *format, mulle_vararg_list args)
 {
-   NSString  *s;
-   char      *cString;
+   NSString   *s;
+   char       *cString;
 
-   s = [NSString stringWithFormat:format
-                  mulleVarargList:args];
-   cString = [s cString];
-   syslog( __NSLogPriority, "%s", cString);
-   fprintf( stderr, "%s\n", cString);
+   @autoreleasepool
+   {
+      s = [NSString stringWithFormat:format
+                     mulleVarargList:args];
+      cString = [s cString];
+      syslog( __NSLogPriority, "%s", cString);
+      fprintf( stderr, "%s\n", cString);
+   }
 }

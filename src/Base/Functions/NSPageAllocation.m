@@ -12,6 +12,7 @@
  *
  */
 #define _GNU_SOURCE  // ugliness
+#define _ISOC11_SOURCE
 
 #include "NSPageAllocation.h"
 
@@ -25,8 +26,8 @@
 # pragma mark -
 # pragma mark Allocations
 
-NSUInteger   _ns_page_size;
-NSUInteger   _ns_log_page_size;
+static NSUInteger   _ns_page_size;
+static NSUInteger   _ns_log_page_size;
 
 
 void  _MulleObjCSetPageSize( size_t pagesize)
@@ -53,25 +54,6 @@ NSUInteger   NSLogPageSize( void)
 {
    assert( _ns_log_page_size);
    return( _ns_log_page_size);
-}
-
-
-void   *NSAllocateMemoryPages( NSUInteger size)
-{
-   void   *p;
-
-   size = NSRoundUpToMultipleOfPageSize( size);
-
-   // make sure memory is page aligned ...
-   p = mulle_malloc( size);
-   assert( ! ((uintptr_t) p & (NSPageSize() - 1)));
-   return( p);
-}
-
-
-void   NSDeallocateMemoryPages( void *ptr, NSUInteger size)
-{
-   mulle_free( ptr);
 }
 
 

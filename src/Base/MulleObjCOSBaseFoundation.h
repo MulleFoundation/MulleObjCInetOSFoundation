@@ -17,6 +17,7 @@
 #import "NSPipe.h"
 #import "NSProcessInfo.h"
 #import "NSRunLoop.h"
+#import "NSTimer.h"
 #import "NSTask.h"
 #import "NSUserDefaults.h"
 
@@ -29,8 +30,10 @@
 #import "NSCalendarDate+NSUserDefaults.h"
 #import "NSData+OSBase.h"
 #import "NSDictionary+OSBase.h"
+#import "NSObject+NSRunLoop.h"
 #import "NSString+CString.h"
 #import "NSString+OSBase.h"
+#import "NSTimer+NSRunLoop.h"
 #import "NSURL+OSBase.h"
 
 #import "NSTask+System.h"  // move away

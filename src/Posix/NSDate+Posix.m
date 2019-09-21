@@ -18,18 +18,30 @@
 
 @implementation NSDate (Posix)
 
+
+NSTimeInterval   MulleDateNow( void)
+{
+   NSTimeInterval    seconds;
+   struct timeval    tv;
+
+   gettimeofday( &tv, NULL);  // is known to be UTC
+   seconds = (double) tv.tv_sec  +  (double) tv.tv_usec / 1000000.0;
+   return( seconds);
+}
+
+
 + (instancetype) date
 {
-   NSTimeInterval   seconds;
+   NSTimeInterval    seconds;
 
-   seconds = time( NULL) + NSTimeIntervalSince1970;
+   seconds = MulleDateNow();
    return( [[[self alloc] initWithTimeIntervalSinceReferenceDate:seconds] autorelease]);
 }
 
 
 + (NSTimeInterval) timeIntervalSinceReferenceDate
 {
-   return( time( NULL) - NSTimeIntervalSince1970);
+   return( MulleDateNow());
 }
 
 
@@ -41,7 +53,7 @@
    NSTimeInterval   interval;
    struct timeval   value;
 
-   now      = time( NULL) - NSTimeIntervalSince1970 ;
+   now      = MulleDateNow();
    interval = _interval - now;
    if( interval < 0)
    {
@@ -51,7 +63,7 @@
    else
    {
       value.tv_sec  = (long) interval;
-      value.tv_usec = (int) ((value.tv_sec - interval) * 1000000);
+      value.tv_usec = (int) ((interval - (NSTimeInterval) value.tv_sec) * 1000000);
    }
    return( value);
 }

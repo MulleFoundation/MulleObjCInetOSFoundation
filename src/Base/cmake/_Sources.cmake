@@ -26,10 +26,13 @@ NSDirectoryEnumerator.m
 NSFileHandle+NSRunLoop.m
 NSFileHandle.m
 NSFileManager.m
+NSObject+NSRunLoop.m
 NSPipe.m
 NSProcessInfo.m
 NSRunLoop.m
 NSTask.m
+NSTimer+NSRunLoop.m
+NSTimer.m
 NSUserDefaults.m
 )
 

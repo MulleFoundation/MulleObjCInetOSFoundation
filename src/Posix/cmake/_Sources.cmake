@@ -19,6 +19,7 @@ NSDirectoryEnumerator+Posix.m
 NSFileHandle+Posix.m
 NSFileManager+Posix.m
 NSLocale+Posix.m
+NSPageAllocation+Posix.m
 NSPipe+Posix.m
 _NSPosixDateFormatter.m
 NSProcessInfo+Posix.m

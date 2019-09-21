@@ -14,6 +14,7 @@
 #import "NSFileHandle+NSRunLoop.h"
 
 #import "NSRunLoop.h"
+#import "NSTimer.h"
 #import "NSRunLoop-Private.h"
 
 #import "NSPageAllocation.h"
@@ -22,7 +23,11 @@
 NSString  *NSFileHandleNotificationDataItem       = @"data";
 NSString  *NSFileHandleReadCompletionNotification = @"NSFileHandleReadCompletionNotification";
 
+
 @interface NSFileHandle( _NSFileDescriptor)  < _NSFileDescriptor>
+
+- (void) _notifyWithRunloop:(NSRunLoop *) runloop;
+
 @end
 
 
@@ -57,8 +62,13 @@ NSString  *NSFileHandleReadCompletionNotification = @"NSFileHandleReadCompletion
 
 - (void) readInBackgroundAndNotifyForModes:(NSArray *) modes
 {
-   [[NSRunLoop currentRunLoop] _addObject:self
-                                 forModes:modes];
+   NSRunLoop      *runloop;
+   NSRunLoopMode   modeName;
+
+   runloop = [NSRunLoop currentRunLoop];
+   for( modeName in modes)
+      [runloop _addObject:self
+                  forMode:modeName];
 }
 
 @end

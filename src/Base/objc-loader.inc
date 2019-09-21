@@ -16,6 +16,7 @@
       { @selector( NSFileManager), MULLE_OBJC_NO_CATEGORYID },      // 56d57ffc;NSFileManager;;
       { @selector( NSHost), @selector( OSBase) },      // fe455508;NSHost;b8ece9a7;OSBase
       { @selector( NSNullDeviceFileHandle), MULLE_OBJC_NO_CATEGORYID },      // 1a0784d4;NSNullDeviceFileHandle;;
+      { @selector( NSObject), @selector( NSRunLoop) },      // b3a66256;NSObject;e3bb595b;NSRunLoop
       { @selector( NSPipe), MULLE_OBJC_NO_CATEGORYID },      // 09f46823;NSPipe;;
       { @selector( NSProcessInfo), MULLE_OBJC_NO_CATEGORYID },      // 208b1df5;NSProcessInfo;;
       { @selector( NSRunLoop), MULLE_OBJC_NO_CATEGORYID },      // e3bb595b;NSRunLoop;;
@@ -23,6 +24,8 @@
       { @selector( NSString), @selector( OSBase) },      // 1994a171;NSString;b8ece9a7;OSBase
       { @selector( NSTask), @selector( System) },      // 90ec29ba;NSTask;f3184bc8;System
       { @selector( NSTask), MULLE_OBJC_NO_CATEGORYID },      // 90ec29ba;NSTask;;
+      { @selector( NSTimer), @selector( NSRunLoop) },      // 37c6e578;NSTimer;e3bb595b;NSRunLoop
+      { @selector( NSTimer), MULLE_OBJC_NO_CATEGORYID },      // 37c6e578;NSTimer;;
       { @selector( NSURL), @selector( OSBase) },      // 6b1e8f73;NSURL;b8ece9a7;OSBase
       { @selector( NSUserDefaults), @selector( Conveniences) },      // 272481b3;NSUserDefaults;1d30cd9c;Conveniences
       { @selector( NSUserDefaults), MULLE_OBJC_NO_CATEGORYID },      // 272481b3;NSUserDefaults;;

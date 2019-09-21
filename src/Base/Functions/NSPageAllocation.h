@@ -14,6 +14,7 @@
 #import "import.h"
 
 
+// These are OS specific
 void   *NSAllocateMemoryPages( NSUInteger size);
 void   NSDeallocateMemoryPages( void *ptr, NSUInteger size);
 

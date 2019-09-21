@@ -47,6 +47,17 @@ extern NSString   *NSFileTypeBlockSpecial;
 extern NSString   *NSFileTypeUnknown;
 
 
+@class NSFileManager;
+
+@protocol NSFileManagerHandler
+
+@optional
+- (void)  fileManager:(NSFileManager *) fileManager
+      willProcessPath:(NSString *) path;
+
+@end
+
+
 @interface NSFileManager : NSObject < MulleObjCSingleton>
 
 @property( assign) id   delegate;
@@ -65,9 +76,16 @@ extern NSString   *NSFileTypeUnknown;
 - (BOOL) contentsEqualAtPath:(NSString *) path1
                      andPath:(NSString *) path2;
 
-- (BOOL) removeItemAtPath:(NSString *) path
-                    error:(NSError **) error;
+- (BOOL) removeFileAtPath:(NSString *) path
+                  handler:(id) handler;
 
+
+// Apple deprecates, Mulle supports
+- (BOOL) createDirectoryAtPath:(NSString *)path
+                    attributes:(NSDictionary *)attributes;
+
+- (BOOL) createSymbolicLinkAtPath:(NSString *) path
+                      pathContent:(NSString *) otherpath;
 @end
 
 
@@ -82,6 +100,10 @@ extern NSString   *NSFileTypeUnknown;
 - (BOOL) isExecutableFileAtPath:(NSString *) path;
 - (BOOL) isReadableFileAtPath:(NSString *) path;
 - (BOOL) isWritableFileAtPath:(NSString *) path;
+
+- (BOOL) createSymbolicLinkAtPath:(NSString *) path
+              withDestinationPath:(NSString *) otherpath
+                            error:(NSError **) error;
 
 - (BOOL) createDirectoryAtPath:(NSString *) path
    withIntermediateDirectories:(BOOL) createIntermediates
@@ -115,13 +137,18 @@ extern NSString   *NSFileTypeUnknown;
 
 - (BOOL) _removeFileItemAtPath:(NSString *) path;
 - (BOOL) _removeEmptyDirectoryItemAtPath:(NSString *) path;
+- (BOOL) removeItemAtPath:(NSString *) path
+                    error:(NSError **) error;
 
 @end
 
 
-@interface NSFileManager( Delegate)
 
-- (BOOL)fileManager:(NSFileManager *)fileManager
+@protocol NSFileManagerDelegate
+
+@optional
+
+- (BOOL) fileManager:(NSFileManager *)fileManager
 shouldRemoveItemAtPath:(NSString *)path;
 
 - (BOOL) fileManager:(NSFileManager *)fileManager

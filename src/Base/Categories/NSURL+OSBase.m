@@ -13,6 +13,9 @@
 // std-c and dependencies
 
 
+NSString   *NSURLFileScheme = @"file";
+
+
 @implementation NSURL( OSBase)
 
 - (char *) fileSystemRepresentation
@@ -27,5 +30,48 @@
    return( [[self path] getFileSystemRepresentation:buf
                                           maxLength:max]);
 }
+
+
+
+//
+// We don't convenience, if path is a directory and append '/'.
+// It's not really foolproof either:
+//  touch foo/a ;  initFile... ; rm foo/a ; mkdir foo/a
+//
+- (instancetype) initFileURLWithPath:(NSString *) path
+{
+   return( [self initWithScheme:NSURLFileScheme
+                           host:nil
+                           path:path]);
+}
+
+
++ (instancetype) fileURLWithPath:(NSString *) path
+{
+   return( [[[self alloc] initFileURLWithPath:path] autorelease]);
+}
+
+
+- (instancetype) initFileURLWithPath:(NSString *) path
+                         isDirectory:(BOOL) isDirectory
+{
+   return( [self initWithScheme:NSURLFileScheme
+                           host:nil
+                           path:path]);
+}
+
+
++ (instancetype) fileURLWithPath:(NSString *) path
+                     isDirectory:(BOOL) isDirectory
+{
+   return( [[[self alloc] initFileURLWithPath:path
+                                  isDirectory:isDirectory] autorelease]);
+}
+
++ (NSURL *) fileURLWithPathComponents:(NSArray *)components
+{
+   return( [self fileURLWithPath:[NSString pathWithComponents:components]]);
+}
+
 
 @end

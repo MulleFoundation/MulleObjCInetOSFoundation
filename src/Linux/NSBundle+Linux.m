@@ -32,20 +32,8 @@
 }
 
 
-- (NSString *) localizedStringForKey:(NSString *) key
-                               value:(NSString *) value
-                               table:(NSString *) tableName
-{
-   NSParameterAssert( ! key || [key isKindOfClass:[NSString class]]);
-   NSParameterAssert( ! tableName || [tableName isKindOfClass:[NSString class]]);
-   NSParameterAssert( ! value || [value isKindOfClass:[NSString class]]);
-
-   return( key);
-}
-
-
-static int  collect_filesystem_libraries( struct dl_phdr_info *info, 
-                                          size_t size, 
+static int  collect_filesystem_libraries( struct dl_phdr_info *info,
+                                          size_t size,
                                           void *userinfo)
 {
    NSMutableData                    *data;
@@ -69,7 +57,7 @@ static int  collect_filesystem_libraries( struct dl_phdr_info *info,
    libInfo.start = info->dlpi_addr;
    libInfo.end   = libInfo.start;
    n             = info->dlpi_phnum;
-   for( i = 0; i < n; i++) 
+   for( i = 0; i < n; i++)
    {
       section_end = (uintptr_t) (libInfo.start + info->dlpi_phdr[i].p_vaddr + info->dlpi_phdr[i].p_memsz);
       if( section_end > libInfo.end)

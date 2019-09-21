@@ -16,6 +16,13 @@ if( NOT __EXECUTABLE_OBJC_CMAKE__)
       PROPERTIES LINKER_LANGUAGE C
    )
 
+   if( APPLE)
+      target_link_options( "${EXECUTABLE_NAME}"
+         PUBLIC LINKER:-exported_symbol LINKER:___register_mulle_objc_universe
+         PUBLIC LINKER:-exported_symbol LINKER:__register_mulle_objc_universe
+      )
+   endif()
+
    include( ExecutableAuxObjC OPTIONAL)
 
 endif()

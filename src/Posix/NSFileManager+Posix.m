@@ -6,6 +6,26 @@
 //  Copyright © 2017 Mulle kybernetiK. All rights reserved.
 //
 // define, that make things POSIXly
+
+/* Copyright (c) 2006-2007 Christopher J. W. Lloyd
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is furnished
+to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+
+
 #define _XOPEN_SOURCE 700
 
 #import "import-private.h"
@@ -93,8 +113,7 @@
    if( ! [attributes count])
       return( YES);
 
-   s  = [self fileSystemRepresentationWithPath:path];
-
+   s     = [self fileSystemRepresentationWithPath:path];
    owner = -1;
    group = -1;
 
@@ -122,7 +141,7 @@
       mode = (mode_t) [nr unsignedIntValue];
       if( chmod( s, mode))
       {
-            return( NO);
+         return( NO);
       }
    }
 
@@ -145,6 +164,17 @@
    return( YES);
 }
 
+
+#pragma mark - ln -s
+
+- (BOOL) createSymbolicLinkAtPath:(NSString *) path
+              withDestinationPath:(NSString *) otherpath
+                            error:(NSError **) error
+{
+   abort();  // not yet coded
+}
+
+
 #pragma mark - mkdir
 
 - (int) _createDirectoryAtPath:(NSString *) path
@@ -154,7 +184,7 @@
    char     *s;
 
    if( ! attributes)
-      mode = umask( 3777);
+      mode = 0777;
    else
       mode = (mode_t) [[attributes objectForKey:NSFilePosixPermissions] unsignedIntValue];
 
@@ -190,8 +220,10 @@
    {
       case 0 :
          if( ! attributes)
-            return( 0);
+            return( YES);
 
+         /* remove NSFilePosixPermissions since its been done already */
+         attributes = [attributes mulleDictionaryByRemovingObjectForKey:NSFilePosixPermissions];
          return( [self setAttributes:attributes
                         ofItemAtPath:path
                                error:error]);
@@ -228,12 +260,13 @@
             break;
 
          default :
-                  return( NO);
+            return( NO);
       }
    }
 
    return( YES);
 }
+
 
 
 #pragma mark - stat
@@ -310,6 +343,10 @@ static unsigned int    permissons_for_current_uid_gid( struct stat *c_info)
    struct stat   c_info;
 
    if( stat_at_path( path, &c_info))
+      return( NO);
+
+   /* directories are not considered executable or ? */
+   if( c_info.st_mode & S_IFDIR)
       return( NO);
    return( permissons_for_current_uid_gid( &c_info) & 0111 ? YES : NO);
 }
@@ -581,4 +618,234 @@ static NSString   *link_contents( NSString *path)
    }
    return( YES);
 }
+
+
+
+- (NSString *) destinationOfSymbolicLinkAtPath:(NSString *) path
+                                         error:(NSError **) error
+{
+   char      buf[ PATH_MAX + 1];  // might be too large for stack ?
+   ssize_t   length;
+
+   length = readlink( [path fileSystemRepresentation], buf, PATH_MAX);
+   if( length == -1)
+   {
+      if( error)
+         *error = [NSError errorWithDomain:NSPOSIXErrorDomain
+                                      code:errno
+                                  userInfo:nil];
+      return( nil);
+   }
+   buf[ length] = 0;
+   return( [self stringWithFileSystemRepresentation:buf
+                                             length:length + 1]);
+}
+
+
+#pragma mark - Cocotron
+
+
+#define FOUNDATION_FILE_MODE (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
+#define FOUNDATION_DIR_MODE  (S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH)
+
+
+static inline void   NSRaiseException( NSString *name,
+                                       id obj,
+                                       SEL sel,
+                                       NSString *format, ...)
+{
+   mulle_vararg_list   arguments;
+   NSString            *reason;
+
+   mulle_vararg_start( arguments, format);
+   reason = [NSString stringWithFormat:format
+                        mulleVarargList:arguments]
+
+   mulle_vararg_end( arguments);
+
+
+   [NSException raise:name
+               format:@"%@ %@: %@", obj, NSStringFromSelector( sel), reason];
+}
+
+
+/* Cocotron code */
+
+-(BOOL)_isDirectory:(NSString *)path {
+    struct stat buf;
+
+    if(lstat([path fileSystemRepresentation],&buf)<0)
+        return NO;
+
+    if (buf.st_mode & S_IFDIR && !(buf.st_mode & S_IFLNK))
+        return YES;
+
+    return NO;
+}
+
+-(BOOL)_errorHandler:handler src:(NSString *)src dest:(NSString *)dest operation:(NSString *)op {
+    if ([handler respondsToSelector:@selector(fileManager:shouldProceedAfterError:)]) {
+        NSDictionary *errorInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+            src, @"Path",
+            [NSString stringWithFormat:@"%@: %s", op, strerror(errno)], @"Error",
+            dest, @"ToPath",
+            nil];
+
+        if ([handler fileManager:self shouldProceedAfterError:errorInfo])
+            return YES;
+    }
+
+    return NO;
+}
+
+
+-(BOOL)movePath:(NSString *)src toPath:(NSString *)dest handler:handler {
+    NSError *error = nil;
+
+    if ([handler respondsToSelector:@selector(fileManager:willProcessPath:)])
+        [handler fileManager:self willProcessPath:src];
+
+    if ([self moveItemAtPath:src toPath:dest error:&error] == NO && handler != nil) {
+        [self _errorHandler:handler src:src dest:dest operation:[error description]];
+        return NO;
+    }
+
+    return YES;
+}
+
+- (BOOL)moveItemAtPath:(NSString *)srcPath toPath:(NSString *)dstPath error:(NSError **)error
+{
+
+    /*
+     It's not this easy...
+     return rename([src fileSystemRepresentation],[dest fileSystemRepresentation])?NO:YES;
+     */
+
+    BOOL isDirectory;
+
+//TODO fill error
+
+    if ([self fileExistsAtPath:srcPath isDirectory:&isDirectory] == NO)
+        return NO;
+    if ([self fileExistsAtPath:dstPath isDirectory:&isDirectory] == YES)
+        return NO;
+
+    if ([self copyPath:srcPath toPath:dstPath handler:nil] == NO) {
+        [self removeFileAtPath:dstPath handler:nil];
+        return NO;
+    }
+
+    // not much we can do if this fails
+    [self removeFileAtPath:srcPath handler:nil];
+
+    return YES;
+}
+
+-(BOOL)copyPath:(NSString *)src toPath:(NSString *)dest handler:handler {
+    NSError *error = nil;
+    if ([self copyItemAtPath:src toPath:dest error:&error] == NO && handler != nil) {
+        [self _errorHandler:handler src:src dest:dest operation:[error description]];
+        return NO;
+    }
+
+    return YES;
+}
+
+-(BOOL)copyItemAtPath:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError **)error
+{
+    BOOL isDirectory;
+
+    if(![self fileExistsAtPath:fromPath isDirectory:&isDirectory]) {
+        if (error != NULL) {
+            //TODO set error
+        }
+        return NO;
+    }
+
+    if (!isDirectory){
+        int r, w;
+        char buf[4096];
+        size_t count;
+
+        if ((w = open([toPath fileSystemRepresentation], O_WRONLY|O_CREAT, FOUNDATION_FILE_MODE)) == -1) {
+            if (error != NULL) {
+                //TODO set error
+            }
+            return NO;
+        }
+        if ((r = open([fromPath fileSystemRepresentation], O_RDONLY)) == -1) {
+            if (error != NULL) {
+                //TODO set error
+            }
+            close(w);
+            return NO;
+
+        }
+
+        while ((count = read(r, &buf, sizeof(buf))) > 0) {
+            if (count == -1)
+                break;
+
+            if (write(w, &buf, count) != count) {
+                count = -1;
+                break;
+            }
+        }
+
+        close(w);
+        close(r);
+
+        if (count == -1) {
+            if (error != NULL) {
+                //TODO set error
+            }
+            return NO;
+        }
+        else
+            return YES;
+    }
+    else {
+        NSArray *files;
+        NSInteger      i,count;
+
+        if (mkdir([toPath fileSystemRepresentation], FOUNDATION_DIR_MODE) != 0) {
+            if (error != NULL) {
+                //TODO set error
+            }
+            return NO;
+        }
+
+        //if (chdir([dest fileSystemRepresentation]) != 0)
+        //    return [self _errorHandler:handler src:src dest:dest operation:@"copyPath: chdir(subdir)"];
+
+        files = [self directoryContentsAtPath:fromPath];
+        count = [files count];
+
+        for(i=0;i<count;i++){
+            NSString *name=[files objectAtIndex:i];
+            NSString *subsrc, *subdst;
+
+            if ([name isEqualToString:@"."] || [name isEqualToString:@".."])
+                continue;
+
+            subsrc=[fromPath stringByAppendingPathComponent:name];
+            subdst=[toPath stringByAppendingPathComponent:name];
+
+            if([self copyItemAtPath:subsrc toPath:subdst error:error] == NO) {
+                if (error != NULL) {
+                    //TODO set error
+                }
+                return NO;
+            }
+        }
+
+        //if (chdir("..") != 0)
+        //    return [self _errorHandler:handler src:src dest:dest operation:@"copyPath: chdir(..)"];
+    }
+
+    return YES;
+
+}
+
+
 @end

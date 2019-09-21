@@ -159,6 +159,9 @@ NSString  *NSUserName( void)
 
 @implementation _NSPathUtilityVectorTable_Loader
 
+MULLE_OBJC_DEPENDS_ON_LIBRARY( MulleObjCStandardFoundation);
+
+
 + (NSUInteger) _getOwnedObjects:(id *) objects
                          length:(NSUInteger) length
 {

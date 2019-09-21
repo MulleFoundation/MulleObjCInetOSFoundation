@@ -11,7 +11,7 @@
 
 
 @class NSFileHandle;
-@class NSString;
+@class NSTimer;
 
 
 @protocol _NSFileDescriptor
@@ -25,10 +25,23 @@
 @interface NSRunLoop( Private)
 
 - (void) _addObject:(NSObject <_NSFileDescriptor> *) handle
-            forMode:(NSString *) mode;
+            forMode:(NSRunLoopMode) mode;
+- (void) _fireTimersOfRunLoopMode:(struct MulleRunLoopMode *) mode
+                     timeInterval:(NSTimeInterval) timeInterval;
+- (void) _removeTimer:(NSTimer *) timer;
+- (void) _removeTimersWithTarget:(id) target;
+- (void) _removeTimersWithTarget:(id) target
+                        selector:(SEL) sel
+                        argument:(id) argument;
+- (void) _sendMessagesOfRunLoopMode:(struct MulleRunLoopMode *) mode;
+- (void) _acceptInputForRunLoopMode:(struct MulleRunLoopMode *) mode
+                         beforeDate:(NSDate *) date;
 
-- (void) _addObject:(NSObject <_NSFileDescriptor> *) handle
-           forModes:(NSArray *) mode;
+- (NSTimer *) _firstTimerToFireOfRunLoopMode:(struct MulleRunLoopMode *) mode;
+
+- (struct MulleRunLoopMode *) mulleRunLoopModeForMode:(NSRunLoopMode) modeName;
+
+- (NSArray *) _modes;
 
 @end
 

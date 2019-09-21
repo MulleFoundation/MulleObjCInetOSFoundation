@@ -45,10 +45,13 @@ NSDirectoryEnumerator.h
 NSFileHandle+NSRunLoop.h
 NSFileHandle.h
 NSFileManager.h
+NSObject+NSRunLoop.h
 NSPipe.h
 NSProcessInfo.h
 NSRunLoop.h
 NSTask.h
+NSTimer+NSRunLoop.h
+NSTimer.h
 NSUserDefaults.h
 import.h
 include.h

@@ -16,6 +16,8 @@
 #import "NSPageAllocation.h"
 
 
+// https://developer.apple.com/documentation/foundation/nsfilehandleoperationexception
+NSString  *NSFileHandleOperationException = @"NSFileHandleOperationException";
 
 @implementation NSNullDeviceFileHandle
 
@@ -49,8 +51,9 @@
 }
 
 
-- (void) seekToEndOfFile
+- (unsigned long long) seekToEndOfFile
 {
+   return( 0);
 }
 
 
@@ -159,9 +162,12 @@ static id  NSInitFileHandle( NSFileHandle *self, void *fd)
 
 //
 // if the returned [data length] is < length, then EOF has been reached
+// This method raises NSFileHandleOperationException
+// if attempts to determine the file-handle type fail or if attempts
+// to read from the file or channel fail.
 //
-static NSData   *readDataOfLength( NSFileHandle *self, 
-                                   NSUInteger length, 
+static NSData   *readDataOfLength( NSFileHandle *self,
+                                   NSUInteger length,
                                    BOOL untilFullOrEOF)
 {
    NSMutableData   *data;
@@ -185,7 +191,7 @@ static NSData   *readDataOfLength( NSFileHandle *self,
       if( ! read_len)
          break;
       if( read_len == (size_t) -1)
-         MulleObjCThrowErrnoException( @"read failed");
+         _MulleObjCThrowErrnoException( NSFileHandleOperationException, @"read failed");
 
       len -= read_len;
       buf  = &buf[ read_len];
@@ -272,10 +278,10 @@ static NSData   *readAllData( NSFileHandle *self, BOOL untilFullOrEOF)
 }
 
 
-- (void) seekToEndOfFile
+- (unsigned long long) seekToEndOfFile
 {
-   [self _seek:0
-          mode:_MulleObjCSeekEnd];
+   return( [self _seek:0
+                  mode:_MulleObjCSeekEnd]);
 }
 
 

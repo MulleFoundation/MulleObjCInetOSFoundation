@@ -350,7 +350,7 @@ static NSMutableArray  *arrayWithComponents( NSArray *components, NSRange range,
    if( ! home)
       return( self);
 
-   components = [[components mutableCopy] autorelease];
+   components = [NSMutableArray arrayWithArray:components];
    [components replaceObjectAtIndex:0
                          withObject:home];
    return( [NSString pathWithComponents:components]);

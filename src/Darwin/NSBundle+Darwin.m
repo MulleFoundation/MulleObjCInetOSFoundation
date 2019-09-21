@@ -35,6 +35,13 @@
 #pragma clang diagnostic ignored "-Wparentheses"
 
 
+@interface NSBundle( Posix)
+
+- (NSString *) _posixResourcePath;
+
+@end
+
+
 @implementation NSBundle( Darwin)
 
 + (struct _mulle_objc_dependency *) dependencies
@@ -46,18 +53,6 @@
    };
 
    return( dependencies);
-}
-
-
-- (NSString *) localizedStringForKey:(NSString *) key
-                               value:(NSString *) value
-                               table:(NSString *) tableName
-{
-   NSParameterAssert( ! key || [key isKindOfClass:[NSString class]]);
-   NSParameterAssert( ! tableName || [tableName isKindOfClass:[NSString class]]);
-   NSParameterAssert( ! value || [value isKindOfClass:[NSString class]]);
-
-   return( key);
 }
 
 
@@ -80,54 +75,81 @@
 //                                                                  length:len];
 //   return( s);
 //}
-
-static NSString   *executableFilename( NSBundle *self)
-{
-   NSString  *filename;
-
-   filename = [[self bundlePath] lastPathComponent];
-   return( [filename stringByDeletingPathExtension]);
-}
-
-
-
 static NSString   *contentsPath( NSBundle *self)
 {
-   NSFileManager   *manager;
-   NSString        *contents;
-   NSString        *path;
-   BOOL            isDir;
+   NSString   *path;
 
    // now _path will have changed
    // here on OS X a bundle is
-   manager   = [NSFileManager defaultManager];
-   path      = [self bundlePath];
-   contents  = [path stringByAppendingPathComponent:@"Contents"];
+   path = [self bundlePath];
+   path = [path stringByAppendingPathComponent:@"Contents"];
+   return( path);
+}
 
-   if( [manager fileExistsAtPath:contents
-                     isDirectory:&isDir] && isDir)
-   {
-      return( contents);
-   }
+// used by Bundles/Executables
+static NSString   *contentsResourcesPath( NSBundle *self)
+{
+   NSString   *resourcesPath;
+   NSString   *path;
+
+   // now _path will have changed
+   // here on OS X a bundle is
+   path = contentsPath( self);
+   path = [path stringByAppendingPathComponent:@"Resources"];
+   return( path);
+}
+
+// used by Frameworks
+static NSString   *resourcesPath( NSBundle *self)
+{
+   NSString   *path;
+
+   // now _path will have changed
+   // here on OS X a bundle is
+   path = [self bundlePath];
+   path = [path stringByAppendingPathComponent:@"Resources"];
    return( path);
 }
 
 
 //
+// On Darwin, we have to differentiate between true bundles, frameworks
+// and "just" libraries
 //
 - (NSString *) _resourcePath
 {
-   NSString   *path;
-   NSString   *s;
-   BOOL       flag;
+   NSFileManager    *manager;
+   NSString         *path;
+   BOOL             isDir;
 
-   s    = contentsPath( self);
-   path = [s stringByAppendingPathComponent:@"Resources"];
-   if( [[NSFileManager defaultManager] fileExistsAtPath:path
-                                            isDirectory:&flag] && flag)
-      return( path);
+   manager = [NSFileManager defaultManager];
 
-   return( s);
+   //
+   // if there is no "Contents" folder, use POSIX style
+   // we allow a "late" Resources order to appear though
+   //
+   path = contentsResourcesPath( self);
+   if( [manager fileExistsAtPath:path
+                     isDirectory:&isDir])
+   {
+      if( isDir)
+         return( path);
+   }
+
+   path = resourcesPath( self);
+   if( [manager fileExistsAtPath:path
+                     isDirectory:&isDir])
+   {
+      if( isDir)
+         return( path);
+   }
+
+   // No Resources ? use POSIX if dylib
+   if( [[[self executablePath] pathExtension] isEqualToString:@"dylib"])
+      return( [self _posixResourcePath]);
+
+   // else stay in bundlePath
+   return( [self bundlePath]);
 }
 
 
@@ -138,20 +160,39 @@ static NSString   *contentsPath( NSBundle *self)
    NSString        *exe;
    NSFileManager   *manager;
 
-   manager = [NSFileManager defaultManager];
+   //
+   // this can only work on Darwin
+   //
+   exe = [[self infoDictionary] objectForKey:@"NSExecutable"];
+   if( ! exe)
+   {
+      NSString  *filename;
 
-   exe      = executableFilename( self);
+      filename = [[self bundlePath] lastPathComponent];
+      if( [[filename pathExtension] isEqualToString:@"dylib"])
+      {
+         // it's a dylib, so use as is
+         return( _path);
+      }
+
+      // otherwise assume layout struture
+      // Contents/MacOS/foobar or so
+      exe = [filename stringByDeletingPathExtension];
+   }
+
    contents = contentsPath( self);
 
    path = [contents stringByAppendingPathComponent:[NSBundle _OSIdentifier]];
    path = [path stringByAppendingPathComponent:exe];
 
+   manager = [NSFileManager defaultManager];
    if( [manager isExecutableFileAtPath:path])
       return( path);
 
    path = [contents stringByAppendingPathComponent:exe];
    if( [manager isExecutableFileAtPath:path])
       return( path);
+
    return( nil);  // or what ??
 }
 
@@ -160,24 +201,26 @@ static NSString   *contentsPath( NSBundle *self)
 + (NSData *) _allSharedLibraries
 {
    char                             *s;
+   int                              ncmd;
    NSFileManager                    *fileManager;
    NSMutableData                    *data;
    NSString                         *path;
    struct _MulleObjCSharedLibrary   libInfo;
-   struct mach_header               *header;
-   uint8_t                          *imageHeaderPtr;
-   unsigned long                    i;
-   struct segment_command_64        *segment64;
-   struct segment_command           *segment;
    struct load_command              *cmd;
-   int                              ncmd;
+   struct mach_header               *header;
+   struct segment_command           *segment;
+   struct segment_command_64        *segment64;
+   uint8_t                          *imageHeaderPtr;
    uintptr_t                        segment_end;
+   unsigned long                    i;
+   unsigned long                    j;
 
    data = [NSMutableData data];
 
    fileManager = [NSFileManager defaultManager];
    for( i = 0; s = (char *) _dyld_get_image_name( i); i++)
    {
+      assert( i < 10000); //
       if( ! strlen( s) || s[ 0] != '/')
          continue;
 
@@ -195,7 +238,7 @@ static NSString   *contentsPath( NSBundle *self)
          cmd  = (struct load_command *) &((uint8_t *) header)[ sizeof( struct mach_header)];
       }
 
-      for( i = 0; i < ncmd; i++)
+      while( --ncmd >= 0)
       {
          switch( cmd->cmd)
          {
@@ -220,7 +263,7 @@ static NSString   *contentsPath( NSBundle *self)
       }
 
       libInfo.path = [fileManager stringWithFileSystemRepresentation:s
-                                                             length:strlen( s)];
+                                                              length:strlen( s)];
       [data appendBytes:&libInfo
                  length:sizeof( libInfo)];
    }
@@ -279,6 +322,8 @@ static BOOL  hasFrameworkExtension( NSString *s)
    // i hate calling this too often, so assume this is done but alss check
    NSParameterAssert( [executablePath isEqualToString:[executablePath stringByResolvingSymlinksInPath]]);
 
+   // we can not use .. as bundlepath, because there can be multiple
+   // dylibs in one diretory, and bundlePath would conflict
    if( [[executablePath pathExtension] isEqualToString:@"dylib"])
       return( executablePath);
 
@@ -315,25 +360,47 @@ static BOOL  hasFrameworkExtension( NSString *s)
 }
 
 
-#pragma mark -
-#pragma mark Info.plist
-
-- (NSDictionary *) infoDictionary
-{
-   abort();
-   return( nil);
-}
-
-
 - (NSString *) bundleIdentifier
 {
-   abort();
+   id              value;
+   NSDictionary   *info;
+
+   info  = [self infoDictionary];
+   value = [info objectForKey:@"CFBundleIdentifier"];
+   if( value)
+      return( value);
+   return( [info objectForKey:@"NSBundleIdentifier"]);
 }
 
 
-- (Class) principalClass
+
+- (BOOL) preflightAndReturnError:(NSError **) error
 {
-   abort();
+   NSString  *exePath;
+   char      *c_path;
+
+   exePath  = [self executablePath];
+   c_path   = [exePath fileSystemRepresentation];
+   if( ! c_path)
+   {
+      dlerror(); // reset so next time it's NULL indicating errno to be used
+      return( NO);
+   }
+
+   if( dlopen_preflight( c_path))
+      return( YES);
+
+   //
+   // NSPOSIXErrorDomain is kinda wrong, it's easier NSPOSIXErrorDomain
+   // or really DLError and that has no code.
+   // TODO: _loadFailureReason should probably return an NSError
+   //
+   if( error)
+      *error = [NSError errorWithDomain:NSPOSIXErrorDomain
+                                   code:errno
+                               userInfo:@{ @"NSLocalizedDescriptionKey": [self _loadFailureReason] }];
+   return( NO);
 }
+
 
 @end

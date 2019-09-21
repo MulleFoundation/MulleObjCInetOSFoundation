@@ -14,7 +14,6 @@
 #import "import.h"
 
 
-
 //
 // there will be subclasses for Frameworks proper
 // and unix "spread" over multiple folders kinda bundles
@@ -23,9 +22,20 @@
 {
    NSString       *_path;
    void           *_handle;
-   NSDictionary   *_infoDictionary;
    NSUInteger     _startAddress;
    NSUInteger     _endAddress;
+   NSLock         *_lock;  //used for lazy resources
+
+   //
+   // localization, we cach only for a single languageCode
+   // because this is "usual"
+   //
+   NSString              *_languageCode;
+   NSMutableDictionary   *_localizedStringTables;
+   BOOL                  _isLoaded;
+
+@private
+   id             _infoDictionary;      // lazy can be NSNull
 
 @private
    NSString       *_executablePath;  // for "already loaded" bundles
@@ -51,12 +61,20 @@
 
 - (NSString *) pathForResource:(NSString *) name
                         ofType:(NSString *) extension;
-
-
+- (NSString *) pathForResource:(NSString *) name
+                        ofType:(NSString *) extension
+                   inDirectory:(NSString *) subpath;
 - (NSArray *) pathsForResourcesOfType:(NSString *) extension
                           inDirectory:(NSString *) subpath;
 
 - (Class) classNamed:(NSString *) className;
+
+- (NSString *) localizedStringForKey:(NSString *) key
+                               value:(NSString *) comment
+                               table:(NSString *) tableName;
+
+- (id) objectForInfoDictionaryKey:(NSString *) key;
+- (NSDictionary *) infoDictionary;
 
 @end
 
@@ -64,11 +82,7 @@
 // stuff we need to implement
 @interface NSBundle ( Missing)
 
-
 - (NSString *) builtInPlugInsPath;
-- (NSString *) localizedStringForKey:(NSString *) key
-                               value:(NSString *) comment
-                               table:(NSString *) tableName;
 
 + (NSString *) pathForResource:(NSString *) name
                         ofType:(NSString *) extension
@@ -77,14 +91,7 @@
 + (NSArray *) pathsForResourcesOfType:(NSString *) extension
                           inDirectory:(NSString *) bundlePath;
 
-
-- (id) objectForInfoDictionaryKey:(NSString *) key;
 - (NSString *) pathForAuxiliaryExecutable:(NSString *) executableName;
-- (NSString *) pathForResource:(NSString *) name
-                        ofType:(NSString *) extension;
-- (NSString *) pathForResource:(NSString *) name
-                        ofType:(NSString *) extension
-                   inDirectory:(NSString *)subpath;
 - (NSArray *) pathsForResourcesOfType:(NSString *) extension
                           inDirectory:(NSString *) subpath;
 - (NSString *) privateFrameworksPath;
@@ -101,9 +108,11 @@
 - (BOOL) loadBundle;
 - (BOOL) unloadBundle;
 
-- (NSDictionary *) infoDictionary;
-- (Class) principalClass;
-- (NSString *) bundleIdentifier;
+//
+// almost useless in statically linked configurations, because it will always
+// be the mainBundle. Ideas: executable collects resources from libraries
+// stores where ?
+//
 + (NSBundle *) bundleForClass:(Class) aClass;
 
 @end
@@ -129,5 +138,4 @@ NSString   *MulleObjCBundleLocalizedStringFromTable( NSBundle *bundle,
 
 #define NSLocalizedStringWithDefaultValue( key, table, bundle, value, comment) \
    MulleObjCBundleLocalizedStringFromTable( (bundle), (table), (key), (value))
-
 

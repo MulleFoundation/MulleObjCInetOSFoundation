@@ -9,10 +9,22 @@
 #import "import.h"
 
 
+extern NSString         *NSURLFileScheme;
+
+
 @interface NSURL( OSBase)
 
 - (char *) fileSystemRepresentation;
 - (BOOL) getFileSystemRepresentation:(char *) buf
                            maxLength:(NSUInteger) max;
+
+- (instancetype) initFileURLWithPath:(NSString *) path;
++ (instancetype) fileURLWithPath:(NSString *) path;
+- (instancetype) initFileURLWithPath:(NSString *) path
+                         isDirectory:(BOOL) isDirectory;
++ (instancetype) fileURLWithPath:(NSString *) path
+                     isDirectory:(BOOL) isDirectory;
+
++ (NSURL *) fileURLWithPathComponents:(NSArray *)components;
 
 @end

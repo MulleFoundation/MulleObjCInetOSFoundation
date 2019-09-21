@@ -16,6 +16,9 @@
 
 @class NSData;
 
+
+extern NSString  *NSFileHandleOperationException;
+
 // this class contains the abstract code for a NSFileHandle
 //
 @interface NSFileHandle : NSObject
@@ -39,7 +42,7 @@
 - (NSData *) readDataOfLength:(NSUInteger) length;
 
 - (unsigned long long) offsetInFile;
-- (void) seekToEndOfFile;
+- (unsigned long long) seekToEndOfFile;
 - (void) seekToFileOffset:(unsigned long long) offset;
 - (void) truncateFileAtOffset:(unsigned long long) offset;
 

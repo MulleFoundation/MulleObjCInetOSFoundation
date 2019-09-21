@@ -60,10 +60,10 @@ NSString   *NSFileTypeUnknown          = @"NSFileTypeUnknown";
 @interface NSDirectoryEnumerator ( NSFileManager)
 
 - (instancetype) initWithFileManager:(NSFileManager *) manager
-                  rootPath:(NSString *) root
-             inheritedPath:(NSString *) inherited;
+                            rootPath:(NSString *) root
+                       inheritedPath:(NSString *) inherited;
 - (instancetype) initWithFileManager:(NSFileManager *) manager
-                 directory:(NSString *) path;
+                           directory:(NSString *) path;
 
 @end
 
@@ -89,6 +89,11 @@ NSString   *NSFileTypeUnknown          = @"NSFileTypeUnknown";
                                                      directory:path] autorelease]);
 }
 
+
+- (void) dealloc
+{
+   [super dealloc];
+}
 
 // useless fluff routines
 - (BOOL) createFileAtPath:(NSString *) path
@@ -186,6 +191,36 @@ NSString   *NSFileTypeUnknown          = @"NSFileTypeUnknown";
    return( YES);
 }
 
+
+- (BOOL) removeFileAtPath:(NSString *) path
+                  handler:(id) handler
+{
+    if( [handler respondsToSelector:@selector( fileManager:willProcessPath:)])
+        [handler fileManager:self
+             willProcessPath:path];
+
+    return( [self removeItemAtPath:path
+                             error:NULL]);
+}
+
+
+- (BOOL) createDirectoryAtPath:(NSString *) path
+                    attributes:(NSDictionary *) attributes
+{
+   return( [self createDirectoryAtPath:path
+           withIntermediateDirectories:NO
+                            attributes:attributes
+                                 error:NULL]);
+}
+
+
+- (BOOL) createSymbolicLinkAtPath:(NSString *) path
+                      pathContent:(NSString *) otherpath
+{
+   return( [self createSymbolicLinkAtPath:path
+                      withDestinationPath:otherpath
+                                    error:NULL]);
+}
 
 @end
 
