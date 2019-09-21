@@ -1,1 +1,1 @@
-MulleObjCInetFoundation;tar;;173D4BBF-AB37-4479-928C-71419F703C0F;https://github.com/MulleFoundation/MulleObjCInetFoundation/archive/latest.tar.gz;;;;
+MulleObjCInetFoundation;${MULLE_OBJC_INET_FOUNDATION_NODETYPE:-tar};;173D4BBF-AB37-4479-928C-71419F703C0F;${MULLE_OBJC_INET_FOUNDATION_URL:-https://github.com/MulleFoundation/MulleObjCInetFoundation/archive/latest.tar.gz};${MULLE_OBJC_INET_FOUNDATION_BRANCH};;;
