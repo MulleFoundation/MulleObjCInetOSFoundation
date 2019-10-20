@@ -24,13 +24,6 @@ int   main( int argc, const char * argv[])
 
    // not much we can check here
    bundles = [NSBundle allFrameworks];
-#ifdef __APPLE__
-   if( ! [bundles count])
-   {
-      printf( "fail\n");
-      return( -1);
-   }
-#endif
 
    fprintf( stderr, "Informational output only (not checked):\n");
    for( bundle in bundles)

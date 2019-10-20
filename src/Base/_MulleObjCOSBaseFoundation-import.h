@@ -10,10 +10,11 @@
 #ifndef _mulle_objc_os_base_foundation_import_h__
 #define _mulle_objc_os_base_foundation_import_h__
 
-#include "_MulleObjCOSBaseFoundation-include.h"
-
 // remove with `mulle-sourcetree mark MulleObjCInetFoundation no-header`
 // rename with `mulle-sourcetree mark MulleObjCInetFoundation set include whatever.h`
 # import <MulleObjCInetFoundation/MulleObjCInetFoundation.h>   // MulleObjCInetFoundation
+
+#include "_MulleObjCOSBaseFoundation-include.h"
+
 
 #endif

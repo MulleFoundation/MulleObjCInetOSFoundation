@@ -36,8 +36,9 @@ static int  collect_filesystem_libraries( struct dl_phdr_info *info,
                                           size_t size,
                                           void *userinfo)
 {
-   NSMutableData                    *data;
    NSBundle                         *bundle;
+   NSFileManager                    *manager;
+   NSMutableData                    *data;
    size_t                           len;
    uintptr_t                        section_end;
    unsigned int                     i;
@@ -59,13 +60,16 @@ static int  collect_filesystem_libraries( struct dl_phdr_info *info,
    n             = info->dlpi_phnum;
    for( i = 0; i < n; i++)
    {
-      section_end = (uintptr_t) (libInfo.start + info->dlpi_phdr[i].p_vaddr + info->dlpi_phdr[i].p_memsz);
+      section_end = (uintptr_t) (libInfo.start +
+                                 info->dlpi_phdr[i].p_vaddr +
+                                 info->dlpi_phdr[i].p_memsz);
       if( section_end > libInfo.end)
          libInfo.end = section_end;
    }
 
-   libInfo.path = [[NSFileManager defaultManager] stringWithFileSystemRepresentation:(char *) info->dlpi_name
-                                                                              length:len];
+   manager      = [NSFileManager defaultManager];
+   libInfo.path = [manager stringWithFileSystemRepresentation:(char *) info->dlpi_name
+                                                       length:len];
    data = userinfo;
    [data appendBytes:&libInfo
               length:sizeof( libInfo)];

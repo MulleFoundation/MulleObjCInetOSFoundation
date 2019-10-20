@@ -12,7 +12,7 @@ endif()
 # Disable with: `mulle-sourcetree mark MulleObjCPosixFoundation no-link`
 #
 if( NOT MULLE_OBJC_POSIX_FOUNDATION_HEADER)
-   find_file( MULLE_OBJC_POSIX_FOUNDATION_HEADER NAMES MulleObjCPosixFoundation/MulleObjCPosixFoundation.h MulleObjCPosixFoundation.h)
+   find_file( MULLE_OBJC_POSIX_FOUNDATION_HEADER NAMES MulleObjCPosixFoundation/MulleObjCPosixFoundation.h MulleObjCPosixFoundation/MulleObjCPosixFoundation.h)
    message( STATUS "MULLE_OBJC_POSIX_FOUNDATION_HEADER is ${MULLE_OBJC_POSIX_FOUNDATION_HEADER}")
 
    #

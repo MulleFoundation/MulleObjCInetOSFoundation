@@ -12,7 +12,7 @@ endif()
 # Disable with: `mulle-sourcetree mark MulleObjCOSBaseFoundation no-link`
 #
 if( NOT MULLE_OBJC_OS_BASE_FOUNDATION_HEADER)
-   find_file( MULLE_OBJC_OS_BASE_FOUNDATION_HEADER NAMES MulleObjCOSBaseFoundation/MulleObjCOSBaseFoundation.h MulleObjCOSBaseFoundation.h)
+   find_file( MULLE_OBJC_OS_BASE_FOUNDATION_HEADER NAMES MulleObjCOSBaseFoundation/MulleObjCOSBaseFoundation.h MulleObjCOSBaseFoundation/MulleObjCOSBaseFoundation.h)
    message( STATUS "MULLE_OBJC_OS_BASE_FOUNDATION_HEADER is ${MULLE_OBJC_OS_BASE_FOUNDATION_HEADER}")
 
    #

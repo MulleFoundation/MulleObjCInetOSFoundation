@@ -10,10 +10,11 @@
 #ifndef _mulle_objc_darwin_foundation_import_h__
 #define _mulle_objc_darwin_foundation_import_h__
 
-#include "_MulleObjCDarwinFoundation-include.h"
-
 // remove with `mulle-sourcetree mark MulleObjCPosixFoundation no-header`
 // rename with `mulle-sourcetree mark MulleObjCPosixFoundation set include whatever.h`
 # import <MulleObjCPosixFoundation/MulleObjCPosixFoundation.h>   // MulleObjCPosixFoundation
+
+#include "_MulleObjCDarwinFoundation-include.h"
+
 
 #endif

@@ -763,7 +763,7 @@ static id  readDictionaryOrNull( NSBundle *self, NSString *name, NSString *type)
       dict = readDictionaryOrNull( self, @"Info", @"plist");
       [_lock lock];
       if( ! _infoDictionary)
-         _infoDictionary = dict;
+         _infoDictionary = [dict retain];
       [_lock unlock];
    }
 }

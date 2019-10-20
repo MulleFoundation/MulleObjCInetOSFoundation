@@ -1,3 +1,13 @@
+## 0.16.0
+
+* fix infinite recursion on Darwin
+* improved NSRunLoop can now do performMessages and NSTimer
+* multiple bugfixes with proper handling of nil parameters
+* added NSURLFileScheme to NSURL
+* improved NSBundle
+* added MulleDateNow() function and based NSDate on gettimeofday instead of time
+
+
 ### 0.15.1
 
 * fix stringByResolvingSymlinksInPath and stringByStandardizingPath

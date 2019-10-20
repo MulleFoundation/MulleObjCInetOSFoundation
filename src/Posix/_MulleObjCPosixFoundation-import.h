@@ -10,10 +10,11 @@
 #ifndef _mulle_objc_posix_foundation_import_h__
 #define _mulle_objc_posix_foundation_import_h__
 
-#include "_MulleObjCPosixFoundation-include.h"
-
 // remove with `mulle-sourcetree mark MulleObjCOSBaseFoundation no-header`
 // rename with `mulle-sourcetree mark MulleObjCOSBaseFoundation set include whatever.h`
 # import <MulleObjCOSBaseFoundation/MulleObjCOSBaseFoundation.h>   // MulleObjCOSBaseFoundation
+
+#include "_MulleObjCPosixFoundation-include.h"
+
 
 #endif

@@ -99,6 +99,7 @@ static NSString   *contentsResourcesPath( NSBundle *self)
    return( path);
 }
 
+
 // used by Frameworks
 static NSString   *resourcesPath( NSBundle *self)
 {
@@ -144,8 +145,14 @@ static NSString   *resourcesPath( NSBundle *self)
          return( path);
    }
 
-   // No Resources ? use POSIX if dylib
-   if( [[[self executablePath] pathExtension] isEqualToString:@"dylib"])
+   //
+   // No Resources ? use POSIX if dylib!
+   //
+   // Can only do this, if we have an _exectutablePath.
+   // If we are a regular bundle, this might not be determined so
+   // just check ivar (see _executablePath below)
+   //
+   if( [[_executablePath pathExtension] isEqualToString:@"dylib"])
       return( [self _posixResourcePath]);
 
    // else stay in bundlePath
@@ -153,6 +160,12 @@ static NSString   *resourcesPath( NSBundle *self)
 }
 
 
+//
+// there are basically two ways a bundle comes into existence:
+// we have loaded a shared library and therefore an executable path.
+// this is non-negotiable. Or we got a .bundle and we are looking in
+// it's plist for the proper executable path.
+//
 - (NSString *) _executablePath
 {
    NSString        *path;
@@ -162,8 +175,13 @@ static NSString   *resourcesPath( NSBundle *self)
 
    //
    // this can only work on Darwin
+   // First figure out, if we have a valid executable already. If we do
+   // we skip this.
    //
-   exe = [[self infoDictionary] objectForKey:@"NSExecutable"];
+   exe = nil;
+   if( ! _executablePath)
+      exe = [[self infoDictionary] objectForKey:@"NSExecutable"];
+
    if( ! exe)
    {
       NSString  *filename;

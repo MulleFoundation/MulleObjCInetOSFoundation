@@ -10,10 +10,11 @@
 #ifndef _mulle_objc_linux_foundation_import_h__
 #define _mulle_objc_linux_foundation_import_h__
 
-#include "_MulleObjCLinuxFoundation-include.h"
-
 // remove with `mulle-sourcetree mark MulleObjCPosixFoundation no-header`
 // rename with `mulle-sourcetree mark MulleObjCPosixFoundation set include whatever.h`
 # import <MulleObjCPosixFoundation/MulleObjCPosixFoundation.h>   // MulleObjCPosixFoundation
+
+#include "_MulleObjCLinuxFoundation-include.h"
+
 
 #endif
