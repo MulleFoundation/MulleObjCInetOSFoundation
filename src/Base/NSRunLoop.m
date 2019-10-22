@@ -594,7 +594,11 @@ static struct
                                            NSObjectMapValueCallBacks,
                                            32);
       _readyHandles    = [NSMutableArray new];
-      mulle_thread_mutex_init( &_lock);
+      if( mulle_thread_mutex_init( &_lock))
+      {
+         fprintf( stderr, "%s could not get a mutex\n", __FUNCTION__);
+         abort();
+      }
    }
    return( self);
 }

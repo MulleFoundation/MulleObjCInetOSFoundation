@@ -15,7 +15,7 @@ build-*.d/
 var/
 tmp/
 project.xcworkspace/
-
+*-workspace 
 xcuserdata/
 .vscode/
 

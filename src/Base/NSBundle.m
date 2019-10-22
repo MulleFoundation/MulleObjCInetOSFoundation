@@ -70,7 +70,11 @@ static inline void   SelfUnlock( void)
 
 + (void) initialize
 {
-   mulle_thread_mutex_init( &Self._lock);
+   if( mulle_thread_mutex_init( &Self._lock))
+   {
+      fprintf( stderr, "%s could not get a mutex\n", __FUNCTION__);
+      abort();
+   }
    Self._registeredBundleInfo = [NSMutableDictionary new];
 }
 
