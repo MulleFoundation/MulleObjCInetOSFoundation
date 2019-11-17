@@ -522,3 +522,90 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Android" OR ${CMAKE_SYSTEM_NAME} MATCHES "Linu
       endif()
    endif()
 endif()
+
+
+#
+# Generated from sourcetree: src/Windows;no-delete,no-share,no-update,only-os-mingw,only-os-windows;
+# Disable with: `mulle-sourcetree mark src/Windows no-link`
+#
+if( ${CMAKE_SYSTEM_NAME} MATCHES "Windows" OR ${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+   if( NOT WINDOWS_LIBRARY)
+      find_library( WINDOWS_LIBRARY NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}Windows${CMAKE_STATIC_LIBRARY_SUFFIX} Windows NO_CMAKE_SYSTEM_PATH)
+      message( STATUS "WINDOWS_LIBRARY is ${WINDOWS_LIBRARY}")
+      #
+      # The order looks ascending, but due to the way this file is read
+      # it ends up being descending, which is what we need.
+      #
+      if( WINDOWS_LIBRARY)
+         #
+         # Add to WINDOWS_LIBRARY list.
+         # Disable with: `mulle-sourcetree mark src/Windows no-cmakeadd`
+         #
+         set( ALL_LOAD_DEPENDENCY_LIBRARIES
+            ${ALL_LOAD_DEPENDENCY_LIBRARIES}
+            ${WINDOWS_LIBRARY}
+            CACHE INTERNAL "need to cache this"
+         )
+         #
+         # Inherit ObjC loader and link dependency info.
+         # Disable with: `mulle-sourcetree mark src/Windows no-cmakeinherit`
+         #
+         # // temporarily expand CMAKE_MODULE_PATH
+         get_filename_component( _TMP_WINDOWS_ROOT "${WINDOWS_LIBRARY}" DIRECTORY)
+         get_filename_component( _TMP_WINDOWS_ROOT "${_TMP_WINDOWS_ROOT}" DIRECTORY)
+         #
+         #
+         # Search for "DependenciesAndLibraries.cmake" to include.
+         # Disable with: `mulle-sourcetree mark src/Windows no-cmakedependency`
+         #
+         foreach( _TMP_WINDOWS_NAME "Windows")
+            set( _TMP_WINDOWS_DIR "${_TMP_WINDOWS_ROOT}/include/${_TMP_WINDOWS_NAME}/cmake")
+            # use explicit path to avoid "surprises"
+            if( EXISTS "${_TMP_WINDOWS_DIR}/DependenciesAndLibraries.cmake")
+               unset( WINDOWS_DEFINITIONS)
+               list( INSERT CMAKE_MODULE_PATH 0 "${_TMP_WINDOWS_DIR}")
+               # we only want top level INHERIT_OBJC_LOADERS, so disable them
+               if( NOT NO_INHERIT_OBJC_LOADERS)
+                  set( NO_INHERIT_OBJC_LOADERS OFF)
+               endif()
+               list( APPEND _TMP_INHERIT_OBJC_LOADERS ${NO_INHERIT_OBJC_LOADERS})
+               set( NO_INHERIT_OBJC_LOADERS ON)
+               #
+               include( "${_TMP_WINDOWS_DIR}/DependenciesAndLibraries.cmake")
+               #
+               list( GET _TMP_INHERIT_OBJC_LOADERS -1 NO_INHERIT_OBJC_LOADERS)
+               list( REMOVE_AT _TMP_INHERIT_OBJC_LOADERS -1)
+               #
+               list( REMOVE_ITEM CMAKE_MODULE_PATH "${_TMP_WINDOWS_DIR}")
+               set( INHERITED_DEFINITIONS
+                  ${INHERITED_DEFINITIONS}
+                  ${WINDOWS_DEFINITIONS}
+                  CACHE INTERNAL "need to cache this"
+               )
+               break()
+            else()
+               message( STATUS "${_TMP_WINDOWS_DIR}/DependenciesAndLibraries.cmake not found")
+            endif()
+         endforeach()
+         #
+         # Search for "objc-loader.inc" in include directory.
+         # Disable with: `mulle-sourcetree mark src/Windows no-cmakeloader`
+         #
+         if( NOT NO_INHERIT_OBJC_LOADERS)
+            foreach( _TMP_WINDOWS_NAME "Windows")
+               set( _TMP_WINDOWS_FILE "${_TMP_WINDOWS_ROOT}/include/${_TMP_WINDOWS_NAME}/MulleObjCLoader+${_TMP_WINDOWS_NAME}.h")
+               if( EXISTS "${_TMP_WINDOWS_FILE}")
+                  set( INHERITED_OBJC_LOADERS
+                     ${INHERITED_OBJC_LOADERS}
+                     ${_TMP_WINDOWS_FILE}
+                     CACHE INTERNAL "need to cache this"
+                  )
+                  break()
+               endif()
+            endforeach()
+         endif()
+      else()
+         message( FATAL_ERROR "WINDOWS_LIBRARY was not found")
+      endif()
+   endif()
+endif()

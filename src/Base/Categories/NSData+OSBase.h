@@ -47,7 +47,6 @@ typedef NSUInteger   NSDataReadingOptions;
 @interface NSData( OSBaseFuture)
 
 - (instancetype) initWithContentsOfFile:(NSString *) path;
-- (instancetype) initWithContentsOfMappedFile:(NSString *) path;
 
 // prefer this and query current error afterwards
 - (BOOL) writeToFile:(NSString *) path

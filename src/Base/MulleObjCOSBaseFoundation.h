@@ -10,7 +10,6 @@
 #define MULLE_OBJC_OS_BASE_FOUNDATION_VERSION   MULLE_OBJC_FOUNDATION_VERSION
 
 #import "NSBundle.h"
-#import "NSConditionLock.h"
 #import "NSDirectoryEnumerator.h"
 #import "NSFileHandle.h"
 #import "NSFileManager.h"

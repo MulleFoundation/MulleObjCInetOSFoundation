@@ -1,1 +1,2 @@
 MulleObjCInetFoundation;${MULLE_OBJC_INET_FOUNDATION_NODETYPE:-tar};;173D4BBF-AB37-4479-928C-71419F703C0F;${MULLE_OBJC_INET_FOUNDATION_URL:-https://github.com/MulleFoundation/MulleObjCInetFoundation/archive/latest.tar.gz};${MULLE_OBJC_INET_FOUNDATION_BRANCH};;;
+mulle-mmap;${MULLE_MMAP_NODETYPE:-tar};no-all-load,no-import,no-public,no-singlephase;62846519-455c-45a0-85b5-96b734f3ab96;${MULLE_MMAP_URL:-https://github.com/mulle-core/mulle-mmap/archive/${MULLE_BRANCH}.tar.gz};${MULLE_MMAP_BRANCH:-latest};;;

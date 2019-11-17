@@ -40,7 +40,7 @@ Functions/NSPageAllocation.h
 Functions/NSPathUtilities.h
 MulleObjCOSBaseFoundation.h
 NSBundle.h
-NSConditionLock.h
+NSData+MulleMemoryMapping.h
 NSDirectoryEnumerator.h
 NSFileHandle+NSRunLoop.h
 NSFileHandle.h

@@ -655,13 +655,13 @@ static NSRunLoop   *runLoopForThread( NSThread *thread)
 {
    NSRunLoop   *runLoop;
 
-   runLoop = [thread runLoop];
+   runLoop = [thread mulleRunLoop];
    if( ! runLoop && ! Self._isFinalizing)
    {
       assert( _mulle_objc_universe_is_initialized( _mulle_objc_object_get_universe( thread)));
 
       runLoop = [[NSRunLoop new] autorelease];
-      runLoop = [thread setRunLoop:runLoop];
+      runLoop = [thread mulleSetRunLoop:runLoop];
    }
    return( runLoop);
 }

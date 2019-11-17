@@ -9,7 +9,7 @@
 @interface NSTimeZone( Posix_Private)
 
 - (NSTimeInterval) _timeIntervalSince1970ForTM:(struct tm *) tm;
-- (NSInteger) _secondsFromGMTForTimeIntervalSince1970:(NSTimeInterval) interval;
+- (NSInteger) mulleSecondsFromGMTForTimeIntervalSince1970:(NSTimeInterval) interval;
 
 @end
 

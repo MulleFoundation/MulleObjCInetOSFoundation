@@ -178,7 +178,7 @@
 }
 
 
-- (NSInteger) _secondsFromGMTForTimeIntervalSince1970:(NSTimeInterval) interval
+- (NSInteger) mulleSecondsFromGMTForTimeIntervalSince1970:(NSTimeInterval) interval
 {
    extern long   mulle_get_gmt_offset_for_time_interval( void *, time_t);
    long          offset;

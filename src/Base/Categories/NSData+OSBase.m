@@ -30,12 +30,6 @@
 }
 
 
-+ (instancetype) dataWithContentsOfMappedFile:(NSString *) path
-{
-   return( [[[self alloc] initWithContentsOfMappedFile:path] autorelease]);
-}
-
-
 #pragma mark -
 #pragma mark URL
 

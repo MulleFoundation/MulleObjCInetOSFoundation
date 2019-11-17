@@ -12,6 +12,7 @@
 // other libraries of MulleObjCPosixFoundation
 
 // std-c and dependencies
+
 #include <time.h>
 #include <sys/time.h>
 
@@ -24,9 +25,9 @@ NSTimeInterval   MulleDateNow( void)
    NSTimeInterval    seconds;
    struct timeval    tv;
 
-   gettimeofday( &tv, NULL);  // is known to be UTC
+   gettimeofday( &tv, NULL);  // is known to be 1970 UTC
    seconds = (double) tv.tv_sec  +  (double) tv.tv_usec / 1000000.0;
-   return( seconds);
+   return( seconds - NSTimeIntervalSince1970);
 }
 
 

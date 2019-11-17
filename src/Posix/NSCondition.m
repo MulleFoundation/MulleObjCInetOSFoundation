@@ -23,6 +23,11 @@
 // std-c and dependencies
 
 
+//
+// this is not done using mulle_thread because I don't want to
+// do cond_wait in it. Should check c11 though and maybe
+// reconsider.
+//
 @implementation NSCondition
 
 - (instancetype) init
@@ -56,6 +61,11 @@
 
 - (void) wait
 {
+   // It is important to note that when pthread_cond_wait()
+   // and pthread_cond_timedwait() return without error, the associated
+   // predicate may still be false
+   // (associated predicate -> -[NSConditionLock condition])
+   //
    pthread_cond_wait( &self->_condition, &self->_lock);
 }
 
@@ -87,13 +97,20 @@
 {
    struct timespec    wait_time;
    NSTimeInterval     interval;
+   int                rval;
 
-   interval = [date timeIntervalSince1970];
+   interval = date ? [date timeIntervalSince1970]
+                   : ([NSDate timeIntervalSinceReferenceDate] + NSTimeIntervalSince1970);
+
    wait_time.tv_sec  = (long) interval;
    wait_time.tv_nsec = (long) ((interval - wait_time.tv_sec) * 1000000000);
-   return( pthread_cond_timedwait( &self->_condition,
-                                   &self->_lock,
-                                   &wait_time) ? NO : YES);
+   rval              = pthread_cond_timedwait( &self->_condition,
+                                               &self->_lock,
+                                               &wait_time);
+   if( rval == ETIMEDOUT)
+      return( NO);
+
+   return( YES);
 }
 
 @end

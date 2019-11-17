@@ -94,12 +94,6 @@
 }
 
 
-- (instancetype) initWithContentsOfMappedFile:(NSString *) path
-{
-   return( [self initWithContentsOfFile:path]);
-}
-
-
 - (BOOL) writeToFile:(NSString *) path
           atomically:(BOOL) flag
 {

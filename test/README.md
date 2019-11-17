@@ -1,20 +1,6 @@
-# How to run tests in Linux
+# How to clean
 
-```
-cd ..
-mulle-bootstrap clean
-mulle-bootstrap build -c Debug
-mulle-bootstrap install `pwd`
+`mulle-sde test clean` will not force a rebuild of the subprojects. For this
+you need to `mulle-sde test clean MulleObjCInetFoundation`.
 
-cd build
-cmake -DCMAKE_INSTALL_PREFIX="`pwd`/.." -DCMAKE_BUILD_TYPE=Debug ..
-make install
-cd ../tests
-./run-all-tests.sh
-```
 
-## Memo
-
-> `sudo update-alternatives --install /usr/bin/lldb-server lldb-server /usr/bin/lldb-server-3.8 100`
-> use this to fix
-> preinstalled lldb on ubuntu
