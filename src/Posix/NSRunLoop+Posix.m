@@ -250,9 +250,9 @@ static inline struct posix_mode  *
    [self _sendMessagesOfRunLoopMode:mode];
 
    // because we mix timers inbetween we have to loop to here again
-   fprintf( stderr, "preloop\n");
+   //fprintf( stderr, "preloop\n");
 loop:
-   fprintf( stderr, "loop\n");
+   //fprintf( stderr, "loop\n");
    // now fire all the timers that we have
    now  = [NSDate timeIntervalSinceReferenceDate];
    [self _fireTimersOfRunLoopMode:mode
@@ -264,16 +264,16 @@ loop:
    max = posix_mode_get_maxhandle( ctxt);
 
 // we want to wait for timers, so exiting immediately here is not a
-// good idea (except if we have no timesrs)
-
-
+// good idea (except if we have no timers)
 posix_recalc:
-   fprintf( stderr, "posix_recalc at %.3f\n", [NSDate timeIntervalSinceReferenceDate]);
-   timeout = poll_once;
+   firstTimer = nil;
+   timeout    = poll_once;
+   //fprintf( stderr, "posix_recalc at %.3f\n", [NSDate timeIntervalSinceReferenceDate]);
+
    if( date)
    {
       timeout = [date _timevalForSelect];
-      fprintf( stderr, "input timeout: %lds.%06ldus\n", (long) timeout.tv_sec, (long) timeout.tv_usec);
+      //fprintf( stderr, "input timeout: %lds.%06ldus\n", (long) timeout.tv_sec, (long) timeout.tv_usec);
 
       firstTimer = [self _firstTimerToFireOfRunLoopMode:mode];
       if( firstTimer)
@@ -282,18 +282,18 @@ posix_recalc:
          if( firetime.tv_sec < timeout.tv_sec ||
              (firetime.tv_sec == timeout.tv_sec && firetime.tv_usec < timeout.tv_usec))
          {
-            fprintf( stderr, "firetime: %lds.%06ldus\n", (long) firetime.tv_sec, (long) firetime.tv_usec);
+            //fprintf( stderr, "firetime: %lds.%06ldus\n", (long) firetime.tv_sec, (long) firetime.tv_usec);
             timeout = firetime;
          }
          else
          {
-            fprintf( stderr, "no timer of interest\n");
+            //fprintf( stderr, "no timer of interest\n");
             firstTimer = nil;    // no timer to fire while we wait
          }
       }
       else
       {
-         fprintf( stderr, "no timer at all\n");
+         //fprintf( stderr, "no timer at all\n");
          if( max < 0)      // no timer or input to serve ? then return
             return( MulleRunLoopNoTimersOrInputLeft);
       }
@@ -309,14 +309,14 @@ posix_recalc:
       // don't let timers or so run here, because we want to keep the
       // _readSet stable in case of EINTR (assumed to be very rare)
       //
-      fprintf( stderr, "timeout: %lds.%06ldus\n", (long) timeout.tv_sec, (long) timeout.tv_usec);
+      //fprintf( stderr, "timeout: %lds.%06ldus\n", (long) timeout.tv_sec, (long) timeout.tv_usec);
 
       rval = select( max + 1, &ctxt->_readSet, NULL, NULL, &timeout);
       if( rval == -1)
       {
          if( errno == EINTR)
          {
-            fprintf( stderr, "retry:  %lds.%06ldus\n", (long) timeout.tv_sec, (long) timeout.tv_usec);
+            //fprintf( stderr, "retry:  %lds.%06ldus\n", (long) timeout.tv_sec, (long) timeout.tv_usec);
 #ifdef __linux__
          // linux modifies timout, but other OS don't (supposedly)
             continue;
@@ -342,7 +342,10 @@ posix_recalc:
       //          to complete the wait for input
       //
       if( firstTimer)
+      {
+         //fprintf( stderr, "wait for timer\n");
          goto loop;
+      }
 
       return( MulleRunLoopTimeout);
    }

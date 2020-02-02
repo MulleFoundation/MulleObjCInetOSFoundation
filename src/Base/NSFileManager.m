@@ -79,7 +79,7 @@ NSString   *NSFileTypeUnknown          = @"NSFileTypeUnknown";
 //
 + (NSFileManager *) defaultManager
 {
-   return( [NSFileManager sharedInstance]);
+   return( [self sharedInstance]);
 }
 
 

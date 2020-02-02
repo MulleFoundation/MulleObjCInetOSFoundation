@@ -53,6 +53,10 @@ extern NSString  *NSFileHandleOperationException;
 - (int) _fileDescriptorForReading;
 - (int) _fileDescriptorForWriting;
 
+// mulle addition, if len == -1, it will strlen bytes!!
+- (void) mulleWriteBytes:(void *) bytes
+                  length:(NSUInteger) len;
+
 @end
 
 

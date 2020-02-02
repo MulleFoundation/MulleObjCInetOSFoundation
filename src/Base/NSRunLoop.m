@@ -250,7 +250,7 @@ static BOOL
 
    while( p < sentinel)
    {
-      MulleObjCPerformSelector( p->target, p->selector, p->argument);
+      MulleObjCObjectPerformSelector( p->target, p->selector, p->argument);
       ++p;
    }
    return( YES);
@@ -614,7 +614,7 @@ static struct
    while( NSNextMapEnumeratorPair( &rover, (void **) &modeName, (void **) &mode))
    {
       if( mode->osspecificFinalize)
-         MulleObjCPerformSelector( self, mode->osspecificFinalize, mode->osspecific);
+         MulleObjCObjectPerformSelector( self, mode->osspecificFinalize, mode->osspecific);
       MulleRunLoopModeDone( mode);
    }
    NSEndMapTableEnumeration( &rover);

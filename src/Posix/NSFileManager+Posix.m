@@ -465,9 +465,11 @@ static BOOL  is_symlink( char *c_path)
 }
 
 
-- (struct timespec) _getCTimeFromStat:(struct stat *) stat
+// use void * to get around different type encodings in signature
+- (struct timespec) _getCTimeFromStat:(void *) aStat
 {
    struct timespec   timespec;
+   struct stat       *stat = aStat;
 
    timespec.tv_sec  = stat->st_ctime;
    timespec.tv_nsec = 0;
@@ -475,9 +477,11 @@ static BOOL  is_symlink( char *c_path)
 }
 
 
-- (struct timespec) _getMTimeFromStat:(struct stat *) stat
+// use void * to get around different type encodings in signature
+- (struct timespec) _getMTimeFromStat:(void *) aStat
 {
    struct timespec   timespec;
+   struct stat       *stat = aStat;
 
    timespec.tv_sec  = stat->st_mtime;
    timespec.tv_nsec = 0;

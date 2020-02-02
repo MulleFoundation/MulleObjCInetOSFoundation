@@ -57,14 +57,20 @@
 }
 
 
-- (struct timespec) _getCTimeFromStat:(struct stat *) stat
+// use void * to get around different type encodings in signature
+- (struct timespec) _getCTimeFromStat:(void *) aStat
 {
+   struct stat   *stat = aStat;
+
    return( stat->st_ctimespec);
 }
 
 
-- (struct timespec) _getMTimeFromStat:(struct stat *) stat
+// use void * to get around different type encodings in signature
+- (struct timespec) _getMTimeFromStat:(void *) aStat
 {
+   struct stat   *stat = aStat;
+
    return( stat->st_mtimespec);
 }
 

@@ -191,7 +191,7 @@ static NSData   *readDataOfLength( NSFileHandle *self,
       if( ! read_len)
          break;
       if( read_len == (size_t) -1)
-         _MulleObjCThrowErrnoException( NSFileHandleOperationException, @"read failed");
+         MulleObjCThrowErrnoException( NSFileHandleOperationException, @"read failed");
 
       len -= read_len;
       buf  = &buf[ read_len];
@@ -248,12 +248,21 @@ static NSData   *readAllData( NSFileHandle *self, BOOL untilFullOrEOF)
 
 - (void) writeData:(NSData *) data
 {
+   [self mulleWriteBytes:[data bytes]
+                  length:[data length]];
+}
+
+
+- (void) mulleWriteBytes:(void *) bytes
+                  length:(NSUInteger) len
+{
+   char     *buf = bytes;
    size_t   len;
    size_t   written;
-   char     *buf;
 
-   len = [data length];
-   buf = [data bytes];
+   if( len == -1)
+      len = strlen( bytes);
+
    do
    {
       written = [self _writeBytes:buf

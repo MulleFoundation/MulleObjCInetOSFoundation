@@ -64,10 +64,8 @@
       else
          value = [@"" retain];
 
-      [dictionary setObject:value
-                     forKey:key];
-      [key release];
-      [value release];
+      [dictionary mulleSetRetainedObject:value
+                            forCopiedKey:key];
    }
 
    return( dictionary);

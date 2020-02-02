@@ -258,7 +258,7 @@ static void   unlazyExecutablePath( NSProcessInfo *self)
 
 - (void) setProcessName:(NSString *) name
 {
-   // we aren't doing this on Linux as setprogname is not native and we 
+   // we aren't doing this on Linux as setprogname is not native and we
    // want to avoid linking against bsd-compat
 }
 

@@ -48,10 +48,10 @@ if( CREATE_OBJC_LOADER_INC)
 
    # The preferred way:
    #
-   # _1_Windows is an object library (a collection of files).
-   # _2_Windows is the loader with OBJC_LOADER_INC.
+   # _1_MulleObjCOSWindowsFoundation is an object library (a collection of files).
+   # _2_MulleObjCOSWindowsFoundation is the loader with OBJC_LOADER_INC.
    #
-   # Produce a static library _3_Windows from _1_Windows
+   # Produce a static library _3_MulleObjCOSWindowsFoundation from _1_MulleObjCOSWindowsFoundation
    # to feed into MULLE_OBJC_LOADER_TOOL.
    #
    # The static library is, so that the commandline doesn't overflow for

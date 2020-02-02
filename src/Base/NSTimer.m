@@ -145,7 +145,7 @@
    if( self->_selector)
    {
       argument = _passUserInfo ? _userInfo : self;
-      MulleObjCPerformSelector( self->_o.target, self->_selector, argument);
+      MulleObjCObjectPerformSelector( self->_o.target, self->_selector, argument);
       return;
    }
 

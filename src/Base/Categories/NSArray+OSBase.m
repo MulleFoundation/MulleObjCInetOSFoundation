@@ -35,16 +35,18 @@
    NSData                            *data;
    id                                plist;
    NSPropertyListMutabilityOptions   options;
+   NSPropertyListFormat              format;
    id                                old;
 
    options = NSPropertyListImmutable;
    if( [self __isNSMutableArray])
       options = NSPropertyListMutableContainers;
 
-   data  = [NSData dataWithContentsOfFile:path];
-   plist = [NSPropertyListSerialization propertyListFromData:data
+   data   = [NSData dataWithContentsOfFile:path];
+   format = NSPropertyListOpenStepFormat;
+   plist  = [NSPropertyListSerialization propertyListFromData:data
                                             mutabilityOption:options
-                                                      format:NULL
+                                                      format:&format
                                             errorDescription:NULL];
    old = self;
    // memo: do not call class methods hereafter

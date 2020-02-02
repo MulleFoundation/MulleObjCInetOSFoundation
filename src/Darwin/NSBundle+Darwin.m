@@ -38,6 +38,7 @@
 @interface NSBundle( Posix)
 
 - (NSString *) _posixResourcePath;
+- (NSString *) _loadFailureReason;
 
 @end
 
