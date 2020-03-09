@@ -178,7 +178,7 @@ static inline void   posix_mode_set_fdset_handles( struct posix_mode *ctxt,
 {
    struct mulle_allocator   *allocator;
 
-   allocator = MulleObjCObjectGetAllocator( self);
+   allocator = MulleObjCInstanceGetAllocator( self);
    posix_mode_done( ctxt);
    mulle_allocator_free( allocator, ctxt);
 }
@@ -193,7 +193,7 @@ static inline struct posix_mode  *
    ctxt = (struct posix_mode *) mode->osspecific;
    if( ! ctxt)
    {
-      allocator                = MulleObjCObjectGetAllocator( self);
+      allocator                = MulleObjCInstanceGetAllocator( self);
       ctxt                     = mulle_allocator_malloc( allocator,
                                                          sizeof( struct posix_mode));
       posix_mode_init( ctxt);

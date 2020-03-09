@@ -6,11 +6,11 @@ if( MULLE_TRACE_INCLUDE)
 endif()
 
 set( SOURCES
+_MulleGMTTimeZone+Linux.m
 NSBundle+Linux.m
 NSCalendarDate+Linux.m
 NSDateFormatter+Linux.m
 NSFileManager+Linux.m
-_NSGMTTimeZone+Linux.m
 NSLocale+Linux.m
 NSPathUtilities+Linux.m
 NSProcessInfo+Linux.m

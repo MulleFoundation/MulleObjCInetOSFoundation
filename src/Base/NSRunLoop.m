@@ -847,7 +847,7 @@ static NSRunLoop   *runLoopForThread( NSThread *thread)
       {
          // don't lock during "sure thing" malloc
          mulle_thread_mutex_unlock( &_lock);
-         mode = MulleRunLoopModeCreate( MulleObjCObjectGetAllocator( self),
+         mode = MulleRunLoopModeCreate( MulleObjCInstanceGetAllocator( self),
                                         modeName);
          mulle_thread_mutex_lock( &_lock);
 
@@ -952,7 +952,7 @@ static NSRunLoop   *runLoopForThread( NSThread *thread)
    struct mulle_allocator            *allocator;
    NSInteger                         n;
 
-   allocator = MulleObjCObjectGetAllocator( self);
+   allocator = MulleObjCInstanceGetAllocator( self);
    MulleRunLoopMessageArrayInit( &torun, allocator);
 
    mulle_thread_mutex_lock( &_lock);
@@ -1002,7 +1002,7 @@ static NSRunLoop   *runLoopForThread( NSThread *thread)
          {
             // don't lock during "sure thing" malloc
             mulle_thread_mutex_unlock( &_lock);
-            mode = MulleRunLoopModeCreate( MulleObjCObjectGetAllocator( self),
+            mode = MulleRunLoopModeCreate( MulleObjCInstanceGetAllocator( self),
                                            modeName);
             mulle_thread_mutex_lock( &_lock);
 

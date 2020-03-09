@@ -14,7 +14,7 @@
 #include "private.h"
 
 // std-c and dependencies
-#import <MulleObjCStandardFoundation/private/_NSGMTTimeZone-Private.h>
+#import <MulleObjCStandardFoundation/private/_MulleGMTTimeZone-Private.h>
 
 
 
@@ -53,7 +53,7 @@
 
    s = getenv( "TZ");
    if( ! s)
-      return( [_NSGMTTimeZone sharedInstance]);
+      return( [_MulleGMTTimeZone sharedInstance]);
 
    name = [NSString stringWithCString:s];
    return( [NSTimeZone timeZoneWithName:name]);
@@ -231,7 +231,7 @@
 + (instancetype) timeZoneForSecondsFromGMT:(NSInteger) seconds;
 {
    if( ! seconds)
-      return( [self _GMTTimeZone]);
+      return( [self mulleGMTTimeZone]);
 
    abort();
    return( nil);

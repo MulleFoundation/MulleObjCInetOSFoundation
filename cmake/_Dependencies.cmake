@@ -19,7 +19,7 @@ if( NOT MULLE_OBJC_OS_BASE_FOUNDATION_LIBRARY)
    #
    if( MULLE_OBJC_OS_BASE_FOUNDATION_LIBRARY)
       #
-      # Add to MULLE_OBJC_OS_BASE_FOUNDATION_LIBRARY list.
+      # Add to MULLE_OBJC_OS_BASE_FOUNDATION_LIBRARY to ALL_LOAD_DEPENDENCY_LIBRARIES list.
       # Disable with: `mulle-sourcetree mark src/Base no-cmakeadd`
       #
       set( ALL_LOAD_DEPENDENCY_LIBRARIES
@@ -104,7 +104,7 @@ if( NOT MULLE_OBJC_POSIX_FOUNDATION_LIBRARY)
    #
    if( MULLE_OBJC_POSIX_FOUNDATION_LIBRARY)
       #
-      # Add to MULLE_OBJC_POSIX_FOUNDATION_LIBRARY list.
+      # Add to MULLE_OBJC_POSIX_FOUNDATION_LIBRARY to ALL_LOAD_DEPENDENCY_LIBRARIES list.
       # Disable with: `mulle-sourcetree mark src/Posix no-cmakeadd`
       #
       set( ALL_LOAD_DEPENDENCY_LIBRARIES
@@ -190,7 +190,7 @@ if( NOT (${CMAKE_SYSTEM_NAME} MATCHES "Android" OR ${CMAKE_SYSTEM_NAME} MATCHES 
       #
       if( MULLE_OBJC_BSD_FOUNDATION_LIBRARY)
          #
-         # Add to MULLE_OBJC_BSD_FOUNDATION_LIBRARY list.
+         # Add to MULLE_OBJC_BSD_FOUNDATION_LIBRARY to ALL_LOAD_DEPENDENCY_LIBRARIES list.
          # Disable with: `mulle-sourcetree mark src/BSD no-cmakeadd`
          #
          set( ALL_LOAD_DEPENDENCY_LIBRARIES
@@ -277,7 +277,7 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Freebsd")
       #
       if( MULLE_OBJC_FREE_BSD_FOUNDATION_LIBRARY)
          #
-         # Add to MULLE_OBJC_FREE_BSD_FOUNDATION_LIBRARY list.
+         # Add to MULLE_OBJC_FREE_BSD_FOUNDATION_LIBRARY to ALL_LOAD_DEPENDENCY_LIBRARIES list.
          # Disable with: `mulle-sourcetree mark src/FreeBSD no-cmakeadd`
          #
          set( ALL_LOAD_DEPENDENCY_LIBRARIES
@@ -364,7 +364,7 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
       #
       if( MULLE_OBJC_DARWIN_FOUNDATION_LIBRARY)
          #
-         # Add to MULLE_OBJC_DARWIN_FOUNDATION_LIBRARY list.
+         # Add to MULLE_OBJC_DARWIN_FOUNDATION_LIBRARY to ALL_LOAD_DEPENDENCY_LIBRARIES list.
          # Disable with: `mulle-sourcetree mark src/Darwin no-cmakeadd`
          #
          set( ALL_LOAD_DEPENDENCY_LIBRARIES
@@ -451,7 +451,7 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Android" OR ${CMAKE_SYSTEM_NAME} MATCHES "Linu
       #
       if( MULLE_OBJC_LINUX_FOUNDATION_LIBRARY)
          #
-         # Add to MULLE_OBJC_LINUX_FOUNDATION_LIBRARY list.
+         # Add to MULLE_OBJC_LINUX_FOUNDATION_LIBRARY to ALL_LOAD_DEPENDENCY_LIBRARIES list.
          # Disable with: `mulle-sourcetree mark src/Linux no-cmakeadd`
          #
          set( ALL_LOAD_DEPENDENCY_LIBRARIES
@@ -538,7 +538,7 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Windows" OR ${CMAKE_SYSTEM_NAME} MATCHES "Wind
       #
       if( WINDOWS_LIBRARY)
          #
-         # Add to WINDOWS_LIBRARY list.
+         # Add to WINDOWS_LIBRARY to ALL_LOAD_DEPENDENCY_LIBRARIES list.
          # Disable with: `mulle-sourcetree mark src/Windows no-cmakeadd`
          #
          set( ALL_LOAD_DEPENDENCY_LIBRARIES

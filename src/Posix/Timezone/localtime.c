@@ -2261,7 +2261,7 @@ int   mulle_get_daylight_saving_flag_for_time_interval( void *self, time_t secon
 time_t   mulle_get_timeinterval_for_tm( void *self, struct tz_tm *tm)
 {
    struct tz_context  *p;
-   
+
    p = self;
    if( ! p)
       return( -1);
@@ -2308,7 +2308,7 @@ char  *_mulle_get_zoneinfo_path()
 }
 
 
-static void   _mulle_set_zoneinfo_path( char *path)
+static void   _mulle__set_zoneinfo_path( char *path)
 {
    if( _TZDIR != TZDIR)
       free( _TZDIR);

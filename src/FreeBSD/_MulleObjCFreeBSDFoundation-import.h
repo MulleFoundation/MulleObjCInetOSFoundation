@@ -13,12 +13,11 @@
 #define _mulle_objc_free_bsd_foundation_import_h__
 
 // How to tweak the following MulleObjCPosixFoundation #import
-//    remove:        `mulle-sourcetree mark MulleObjCPosixFoundation no-header`
-//    rename:        `mulle-sourcetree mark MulleObjCPosixFoundation set include whatever.h`
-//    make private:  `mulle-sourcetree mark MulleObjCPosixFoundation no-public`
-//    make public:   `mulle-sourcetree mark MulleObjCPosixFoundation public`
-//    make optional: `mulle-sourcetree mark MulleObjCPosixFoundation no-require`
-//    remove for os: `mulle-sourcetree mark MulleObjCPosixFoundation no-os-<osname>`
+//    remove:          `mulle-sourcetree mark MulleObjCPosixFoundation no-header`
+//    rename:          `mulle-sourcetree mark MulleObjCPosixFoundation set include whatever.h`
+//    toggle public:   `mulle-sourcetree mark MulleObjCPosixFoundation [no-]public`
+//    toggle optional: `mulle-sourcetree mark MulleObjCPosixFoundation [no-]require`
+//    remove for os:   `mulle-sourcetree mark MulleObjCPosixFoundation no-os-<osname>`
 # import <MulleObjCPosixFoundation/MulleObjCPosixFoundation.h>   // MulleObjCPosixFoundation
 
 #include "_MulleObjCFreeBSDFoundation-include.h"

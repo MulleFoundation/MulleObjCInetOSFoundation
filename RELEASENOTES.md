@@ -18,7 +18,7 @@
 * fix unavoidable setProcessName leak tripping up tests
 * rename many `_methods` to mulleMethods, to distinguish between private and just not compatible
 * added some of the uncherished error:(NSError **) error method variations for compatibility
-* improved `_stringBySimplifyingPath`
+* improved `mulleStringBySimplifyingPath`
 * added some more "well known" directory names, such as NSTrashDirectonary
 * improved NSBundle, NSFileHandle, NSFileManager, NSProcessInfo, NSError
 
@@ -51,7 +51,7 @@
 
 ### 0.9.1
 
-* modernize CMakeLists.txt and CMakeDependencies.txt 
+* modernize CMakeLists.txt and CMakeDependencies.txt
 * separate OS into constituent libraries, so each library has one loader only
 * make it a cmake "C" project
 

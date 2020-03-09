@@ -19,7 +19,7 @@ if( NOT MULLE_OBJC_INET_FOUNDATION_LIBRARY)
    #
    if( MULLE_OBJC_INET_FOUNDATION_LIBRARY)
       #
-      # Add to MULLE_OBJC_INET_FOUNDATION_LIBRARY list.
+      # Add to MULLE_OBJC_INET_FOUNDATION_LIBRARY to ALL_LOAD_DEPENDENCY_LIBRARIES list.
       # Disable with: `mulle-sourcetree mark MulleObjCInetFoundation no-cmakeadd`
       #
       set( ALL_LOAD_DEPENDENCY_LIBRARIES
@@ -104,7 +104,7 @@ if( NOT MULLE_MMAP_LIBRARY)
    #
    if( MULLE_MMAP_LIBRARY)
       #
-      # Add to MULLE_MMAP_LIBRARY list.
+      # Add to MULLE_MMAP_LIBRARY to DEPENDENCY_LIBRARIES list.
       # Disable with: `mulle-sourcetree mark mulle-mmap no-cmakeadd`
       #
       set( DEPENDENCY_LIBRARIES

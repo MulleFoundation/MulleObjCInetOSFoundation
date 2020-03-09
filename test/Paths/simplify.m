@@ -17,7 +17,7 @@ static void  test( NSString *s, NSString *expect)
 {
    NSString   *result;
 
-   result = [s _stringBySimplifyingPath];
+   result = [s mulleStringBySimplifyingPath];
    if( ! [result isEqualToString:expect])
       printf( "failed with \"%s\" (Expected: \"%s\")\n",
 		          result ? [result cString] : "<NULL>",

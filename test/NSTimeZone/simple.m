@@ -20,7 +20,7 @@ int   main( int argc, const char * argv[])
    if( mulle_objc_global_check_universe( __MULLE_OBJC_UNIVERSENAME__) != mulle_objc_universe_is_ok)
       return( 1);
 #endif
-   [NSTimeZone _GMTTimeZone];
+   [NSTimeZone mulleGMTTimeZone];
 
    return( 0);
 }

@@ -1,5 +1,5 @@
 //
-//  _NSGMTTimeZone+Linux.m
+//  _MulleGMTTimeZone+Linux.m
 //  MulleObjCOSFoundation
 //
 //  Created by Nat! on 14.05.17.
@@ -10,11 +10,11 @@
 
 #import "import-private.h"
 
-#import <MulleObjCStandardFoundation/private/_NSGMTTimeZone-Private.h>
+#import <MulleObjCStandardFoundation/private/_MulleGMTTimeZone-Private.h>
 
 #include <time.h>
 
-@implementation _NSGMTTimeZone (Linux)
+@implementation _MulleGMTTimeZone (Linux)
 
 // gmtime: These functions are nonstandard GNU extensions that are also
 //         present on the BSDs.  Avoid their use.

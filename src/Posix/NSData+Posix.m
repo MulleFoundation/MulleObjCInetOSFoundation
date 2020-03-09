@@ -63,7 +63,7 @@
          len = (size_t) info.st_size;
          if( (off_t) len == info.st_size)
          {
-            allocator = MulleObjCObjectGetAllocator( self);
+            allocator = MulleObjCInstanceGetAllocator( self);
             buf       = mulle_allocator_malloc( allocator, len);
             // The system guarantees to read the number of bytes requested
             // if the descriptor references a normal file that has that

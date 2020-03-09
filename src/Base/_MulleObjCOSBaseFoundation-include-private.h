@@ -13,12 +13,11 @@
 #define _mulle_objc_os_base_foundation_include_private_h__
 
 // How to tweak the following mulle-mmap #include
-//    remove:        `mulle-sourcetree mark mulle-mmap no-header`
-//    rename:        `mulle-sourcetree mark mulle-mmap set include whatever.h`
-//    make private:  `mulle-sourcetree mark mulle-mmap no-public`
-//    make public:   `mulle-sourcetree mark mulle-mmap public`
-//    make optional: `mulle-sourcetree mark mulle-mmap no-require`
-//    remove for os: `mulle-sourcetree mark mulle-mmap no-os-<osname>`
+//    remove:          `mulle-sourcetree mark mulle-mmap no-header`
+//    rename:          `mulle-sourcetree mark mulle-mmap set include whatever.h`
+//    toggle public:   `mulle-sourcetree mark mulle-mmap [no-]public`
+//    toggle optional: `mulle-sourcetree mark mulle-mmap [no-]require`
+//    remove for os:   `mulle-sourcetree mark mulle-mmap no-os-<osname>`
 # include <mulle-mmap/mulle-mmap.h>   // mulle-mmap
 
 #endif

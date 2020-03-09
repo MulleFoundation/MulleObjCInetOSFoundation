@@ -13,30 +13,27 @@
 #define _mulle_objc_os_foundation_import_h__
 
 // How to tweak the following src/Base #import
-//    remove:        `mulle-sourcetree mark src/Base no-header`
-//    rename:        `mulle-sourcetree mark src/Base set include whatever.h`
-//    make private:  `mulle-sourcetree mark src/Base no-public`
-//    make public:   `mulle-sourcetree mark src/Base public`
-//    make optional: `mulle-sourcetree mark src/Base no-require`
-//    remove for os: `mulle-sourcetree mark src/Base no-os-<osname>`
+//    remove:          `mulle-sourcetree mark src/Base no-header`
+//    rename:          `mulle-sourcetree mark src/Base set include whatever.h`
+//    toggle public:   `mulle-sourcetree mark src/Base [no-]public`
+//    toggle optional: `mulle-sourcetree mark src/Base [no-]require`
+//    remove for os:   `mulle-sourcetree mark src/Base no-os-<osname>`
 # import <MulleObjCOSBaseFoundation/MulleObjCOSBaseFoundation.h>   // src/Base
 
 // How to tweak the following src/Posix #import
-//    remove:        `mulle-sourcetree mark src/Posix no-header`
-//    rename:        `mulle-sourcetree mark src/Posix set include whatever.h`
-//    make private:  `mulle-sourcetree mark src/Posix no-public`
-//    make public:   `mulle-sourcetree mark src/Posix public`
-//    make optional: `mulle-sourcetree mark src/Posix no-require`
-//    remove for os: `mulle-sourcetree mark src/Posix no-os-<osname>`
+//    remove:          `mulle-sourcetree mark src/Posix no-header`
+//    rename:          `mulle-sourcetree mark src/Posix set include whatever.h`
+//    toggle public:   `mulle-sourcetree mark src/Posix [no-]public`
+//    toggle optional: `mulle-sourcetree mark src/Posix [no-]require`
+//    remove for os:   `mulle-sourcetree mark src/Posix no-os-<osname>`
 # import <MulleObjCPosixFoundation/MulleObjCPosixFoundation.h>   // src/Posix
 
 // How to tweak the following src/Windows #import
-//    remove:        `mulle-sourcetree mark src/Windows no-header`
-//    rename:        `mulle-sourcetree mark src/Windows set include whatever.h`
-//    make private:  `mulle-sourcetree mark src/Windows no-public`
-//    make public:   `mulle-sourcetree mark src/Windows public`
-//    make optional: `mulle-sourcetree mark src/Windows no-require`
-//    remove for os: `mulle-sourcetree mark src/Windows no-os-<osname>`
+//    remove:          `mulle-sourcetree mark src/Windows no-header`
+//    rename:          `mulle-sourcetree mark src/Windows set include whatever.h`
+//    toggle public:   `mulle-sourcetree mark src/Windows [no-]public`
+//    toggle optional: `mulle-sourcetree mark src/Windows [no-]require`
+//    remove for os:   `mulle-sourcetree mark src/Windows no-os-<osname>`
 # if defined( _WIN32) || defined( __windows__)
 #  import <Windows/Windows.h>   // src/Windows
 # endif

@@ -13,12 +13,11 @@
 #define _mulle_objc_os_windows_foundation_import_h__
 
 // How to tweak the following MulleObjCOSBaseFoundation #import
-//    remove:        `mulle-sourcetree mark MulleObjCOSBaseFoundation no-header`
-//    rename:        `mulle-sourcetree mark MulleObjCOSBaseFoundation set include whatever.h`
-//    make private:  `mulle-sourcetree mark MulleObjCOSBaseFoundation no-public`
-//    make public:   `mulle-sourcetree mark MulleObjCOSBaseFoundation public`
-//    make optional: `mulle-sourcetree mark MulleObjCOSBaseFoundation no-require`
-//    remove for os: `mulle-sourcetree mark MulleObjCOSBaseFoundation no-os-<osname>`
+//    remove:          `mulle-sourcetree mark MulleObjCOSBaseFoundation no-header`
+//    rename:          `mulle-sourcetree mark MulleObjCOSBaseFoundation set include whatever.h`
+//    toggle public:   `mulle-sourcetree mark MulleObjCOSBaseFoundation [no-]public`
+//    toggle optional: `mulle-sourcetree mark MulleObjCOSBaseFoundation [no-]require`
+//    remove for os:   `mulle-sourcetree mark MulleObjCOSBaseFoundation no-os-<osname>`
 # import <MulleObjCOSBaseFoundation/MulleObjCOSBaseFoundation.h>   // MulleObjCOSBaseFoundation
 
 #include "_MulleObjCOSWindowsFoundation-include.h"

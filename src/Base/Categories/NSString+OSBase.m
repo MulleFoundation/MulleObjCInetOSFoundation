@@ -72,153 +72,11 @@
 }
 
 
-static NSMutableArray  *arrayWithComponents( NSArray *components, NSRange range, BOOL includeFirst)
+- (NSString *) mulleStringBySimplifyingPath
 {
-   NSMutableArray   *array;
-
-   array = [NSMutableArray array];
-   if( includeFirst && range.location != 0)
-      [array addObject:[components objectAtIndex:0]];
-   [array addObjectsFromArray:[components subarrayWithRange:range]];
-   return( array);
+   return( [self mulleStringBySimplifyingComponentsSeparatedByString:NSFilePathComponentSeparator
+                                                        simplifyDots:YES]);
 }
-
-
-- (NSString *) _stringBySimplifyingPath
-{
-   enum
-   {
-      isUnknown,
-      isAbsolute,
-      isDot,
-      isDotDot
-   } pathtype;
-   NSArray      *components;
-   id           result;
-   NSString     *s;
-   NSString     *prev;
-   NSUInteger   i, n;
-   BOOL         skipping;
-   NSUInteger   len;
-   NSUInteger   start;
-
-   //
-   // if this is nil, path has no @"/" anywhere
-   //
-   components = [self _componentsSeparatedByString:NSFilePathComponentSeparator];
-   if( ! components)
-      return( self);
-
-   pathtype = isUnknown;
-   skipping = YES;
-   result   = nil;
-   start    = 0;
-
-   n = [components count];
-   for( i = 0; i < n; i++)
-   {
-      s   = [components objectAtIndex:i];
-      len = [s length];
-
-         // if path starts with '/' or '.' we can collapse '..'
-      if( ! len || [@"." isEqualToString:s])
-      {
-         if( ! i)
-            pathtype = ! len ? isAbsolute : isDot;
-
-         // skip over '//' and '/./'
-         if( skipping)
-            ++start;
-         continue;
-      }
-
-      // convert "/foo/../" to "foo"
-      // though symlinks should be resolved now
-
-      if( [@".." isEqualToString:s])
-      {
-         if( ! i)
-         {
-            pathtype = isDotDot;
-            ++start;    // still update this for later output
-            skipping = NO;
-            continue;
-         }
-
-         if( skipping && isAbsolute)
-         {
-            if( skipping)
-               ++start;    // collapse /.. to /
-            continue;
-         }
-
-         if( ! result)
-            result = arrayWithComponents( components, NSMakeRange( start, i - start), YES);
-
-         prev = [result lastObject];
-         if( ! [@".." isEqualToString:prev])
-         {
-            if( ! [prev length])
-               continue;
-
-            [result removeLastObject];
-            if( ! [result count])
-            {
-               result = nil;
-               start  = i;
-            }
-            continue;
-         }
-      }
-
-      // keep adding to nil, if there was nothing to collapse
-      if( ! result && start)
-         result = arrayWithComponents( components, NSMakeRange( start, i - start), YES);
-      [result addObject:s];
-      skipping = NO;
-   }
-
-   if( start == i)
-   {
-      switch( pathtype)
-      {
-         case isAbsolute : return( NSFilePathComponentSeparator);
-         case isDot      : return( @".");
-         case isDotDot   : return( @"..");
-         default         : break;
-      }
-   }
-   if( ! result && ! start)
-      return( self);
-
-   if( ! result)
-      result = arrayWithComponents( components, NSMakeRange( start, i - start), YES);
-
-   // remove trailing '/' if any
-   len = [result count];
-   while( len)
-   {
-      s = [result lastObject];
-      if( [s length] && ! [s isEqualToString:@"."])
-         break;
-      [result removeLastObject];
-      --len;
-   }
-
-   if( ! len)
-   {
-      switch( pathtype)
-      {
-         case isAbsolute : return( NSFilePathComponentSeparator);
-         case isDot      : return( @".");
-         case isDotDot   : return( @"..");
-         default         : break;
-      }
-   }
-
-   return( [result componentsJoinedByString:NSFilePathComponentSeparator]);
-}
-
 
 //
 // this is not what darwin will do (in a category)
@@ -236,7 +94,7 @@ static NSMutableArray  *arrayWithComponents( NSArray *components, NSRange range,
    path = self;
 //   path = [self stringByExpandingTildeInPath];  // already done by symlinks
    path = [path stringByResolvingSymlinksInPath];
-   path = [path _stringBySimplifyingPath];
+   path = [path mulleStringBySimplifyingPath];
 
    //
    // that's what MacOS does, don't know why.

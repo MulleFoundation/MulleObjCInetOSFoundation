@@ -39,7 +39,7 @@ void   NSLog( NSString *format, ...)
 {
    va_list   args;
 
-   //NSPushAutoreleasePool();
+   //NSPushAutoreleasePool( 0);
 
    va_start( args, format );
    NSLogv( format, args);

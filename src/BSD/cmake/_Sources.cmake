@@ -6,9 +6,9 @@ if( MULLE_TRACE_INCLUDE)
 endif()
 
 set( SOURCES
+_MulleGMTTimeZone+BSD.m
 NSCalendarDate+BSD.m
 NSDateFormatter+BSD.m
-_NSGMTTimeZone+BSD.m
 NSLocale+BSD.m
 NSProcessInfo+BSD.m
 NSTask+BSD.m

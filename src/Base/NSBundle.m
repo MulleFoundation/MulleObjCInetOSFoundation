@@ -597,7 +597,7 @@ void     (*NSBundleDeregisterBundleWithPath)( NSBundle *bundle, NSString *path) 
 
    array = [NSMutableArray array];
 
-   pool = NSPushAutoreleasePool();
+   pool = NSPushAutoreleasePool( 0);
    while( file = [rover nextObject])
    {
       if( [[file pathExtension] isEqualToString:extension])

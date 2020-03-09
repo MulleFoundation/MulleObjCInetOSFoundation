@@ -41,7 +41,7 @@
 #pragma mark -
 #pragma mark mulle additions
 
-- (NSString *) _stringBySimplifyingPath;  // just removes /./ and /../
+- (NSString *) mulleStringBySimplifyingPath;  // just removes /./ and /../
 
 - (BOOL) writeToFile:(NSString *) path
           atomically:(BOOL) flag;

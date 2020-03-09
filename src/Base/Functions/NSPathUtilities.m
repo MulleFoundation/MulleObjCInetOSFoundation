@@ -35,7 +35,7 @@ static struct
 
 static NSString   *standardizedPath( NSString *s)
 {
-   s  = [s _stringBySimplifyingPath];
+   s  = [s mulleStringBySimplifyingPath];
    return( s);
 }
 

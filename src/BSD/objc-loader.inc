@@ -4,4 +4,4 @@
       { @selector( NSProcessInfo), @selector( BSD) },      // 208b1df5;NSProcessInfo;999e852d;BSD
       { @selector( NSTask), @selector( BSD) },      // 90ec29ba;NSTask;999e852d;BSD
       { @selector( NSTimeZone), @selector( BSD) },      // 190d1ade;NSTimeZone;999e852d;BSD
-      { @selector( _NSGMTTimeZone), @selector( BSD) },      // 60527041;_NSGMTTimeZone;999e852d;BSD
+      { @selector( _MulleGMTTimeZone), @selector( BSD) },      // d6f534a3;_MulleGMTTimeZone;999e852d;BSD

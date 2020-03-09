@@ -7,5 +7,5 @@
       { @selector( NSString), @selector( Linux) },      // 1994a171;NSString;4f302bd9;Linux
       { @selector( NSTask), @selector( Linux) },      // 90ec29ba;NSTask;4f302bd9;Linux
       { @selector( NSTimeZone), @selector( Linux) },      // 190d1ade;NSTimeZone;4f302bd9;Linux
-      { @selector( _NSGMTTimeZone), @selector( Linux) },      // 60527041;_NSGMTTimeZone;4f302bd9;Linux
+      { @selector( _MulleGMTTimeZone), @selector( Linux) },      // d6f534a3;_MulleGMTTimeZone;4f302bd9;Linux
       { @selector( _NSPathUtilityVectorTable_Loader), @selector( Linux) },      // ad89cd30;_NSPathUtilityVectorTable_Loader;4f302bd9;Linux

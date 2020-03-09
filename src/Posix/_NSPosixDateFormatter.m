@@ -52,28 +52,25 @@ MULLE_OBJC_DEPENDS_ON_LIBRARY( MulleObjCStandardFoundation);
 }
 
 
-- (instancetype) _initWithDateFormat:(NSString *) format
-                allowNaturalLanguage:(BOOL) flag
+- (void) setDateFormat:(NSString *) format
 {
    size_t   length;
 
-   self = [super _initWithDateFormat:format
-                allowNaturalLanguage:flag];
-   if( self)
-   {
-      length   = [format cStringLength];
-      _cformat = MulleObjCObjectAllocateNonZeroedMemory( self, length + 1);
-      [format getCString:_cformat
-               maxLength:length+1];
+   if( _cformat)
+      MulleObjCObjectDeallocateMemory( self, _cformat);
 
-      // just a heuristic
-      length *= 4;
-      if( length < 256)
-         length = 256;
+   length   = [format cStringLength];
+   _cformat = MulleObjCObjectAllocateNonZeroedMemory( self, length + 1);
+   [format getCString:_cformat
+            maxLength:length+1];
 
-      _buflen = length;
-   }
-   return( self);
+   // This an initial heuristic, later formatting will increase this
+   // if needed
+   length *= 4;
+   if( length < 256)
+      length = 256;
+
+   _buflen = length;
 }
 
 
@@ -109,6 +106,7 @@ MULLE_OBJC_DEPENDS_ON_LIBRARY( MulleObjCStandardFoundation);
 }
 
 
+// TODO: use a mulle_buffer ?
 - (size_t) _printDate:(NSDate *) date
                buffer:(char *) buf
                length:(size_t) len
