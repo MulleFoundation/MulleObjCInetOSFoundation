@@ -12,13 +12,13 @@
 #ifndef _mulle_objc_os_base_foundation_import_h__
 #define _mulle_objc_os_base_foundation_import_h__
 
-// How to tweak the following MulleObjCInetFoundation #import
-//    remove:          `mulle-sourcetree mark MulleObjCInetFoundation no-header`
-//    rename:          `mulle-sourcetree mark MulleObjCInetFoundation set include whatever.h`
-//    toggle public:   `mulle-sourcetree mark MulleObjCInetFoundation [no-]public`
-//    toggle optional: `mulle-sourcetree mark MulleObjCInetFoundation [no-]require`
-//    remove for os:   `mulle-sourcetree mark MulleObjCInetFoundation no-os-<osname>`
-# import <MulleObjCInetFoundation/MulleObjCInetFoundation.h>   // MulleObjCInetFoundation
+// How to tweak the following MulleObjCStandardFoundation #import
+//    remove:          `mulle-sourcetree mark MulleObjCStandardFoundation no-header`
+//    rename:          `mulle-sourcetree mark MulleObjCStandardFoundation set include whatever.h`
+//    toggle public:   `mulle-sourcetree mark MulleObjCStandardFoundation [no-]public`
+//    toggle optional: `mulle-sourcetree mark MulleObjCStandardFoundation [no-]require`
+//    remove for os:   `mulle-sourcetree mark MulleObjCStandardFoundation no-os-<osname>`
+# import <MulleObjCStandardFoundation/MulleObjCStandardFoundation.h>   // MulleObjCStandardFoundation
 
 #include "_MulleObjCOSBaseFoundation-include.h"
 

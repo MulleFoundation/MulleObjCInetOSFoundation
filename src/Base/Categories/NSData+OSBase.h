@@ -32,15 +32,6 @@ typedef NSUInteger   NSDataReadingOptions;
                                 options:(NSDataReadingOptions) options
                                   error:(NSError **) error;
 
-+ (instancetype) dataWithContentsOfURL:(NSURL *) url
-                               options:(NSDataReadingOptions) options
-                                 error:(NSError **) error;
-
-+ (instancetype) dataWithContentsOfURL:(NSURL *) path;
-- (instancetype) initWithContentsOfURL:(NSURL *) path;
-- (BOOL) writeToURL:(NSURL *) path
-         atomically:(BOOL) flag;
-
 @end
 
 

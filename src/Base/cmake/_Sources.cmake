@@ -13,11 +13,9 @@ Categories/NSCalendarDate+NSUserDefaults.m
 Categories/NSData+OSBase.m
 Categories/NSDictionary+OSBase-Private.m
 Categories/NSDictionary+OSBase.m
-Categories/NSHost+OSBase.m
 Categories/NSString+CString.m
 Categories/NSString+OSBase.m
 Categories/NSTask+System.m
-Categories/NSURL+OSBase.m
 Functions/NSPageAllocation.m
 Functions/NSPathUtilities.m
 NSBundle.m

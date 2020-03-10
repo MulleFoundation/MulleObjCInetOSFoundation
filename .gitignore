@@ -15,7 +15,7 @@ build-*.d/
 var/
 tmp/
 project.xcworkspace/
-*-workspace 
+*-workspace
 xcuserdata/
 .vscode/
 
@@ -56,3 +56,12 @@ tmp.*/
 /crash.c
 /cutter.sh
 test/10_generated
+
+
+src/BSD/.gitattributes
+src/Base/.gitattributes
+src/Darwin/.gitattributes
+src/FreeBSD/.gitattributes
+src/Linux/.gitattributes
+src/Posix/.gitattributes
+src/Windows/.gitattributes

@@ -30,39 +30,6 @@
 }
 
 
-#pragma mark -
-#pragma mark URL
-
-
-+ (instancetype) dataWithContentsOfURL:(NSURL *) url
-{
-   if( [url isFileURL])
-   {
-      return( [self dataWithContentsOfFile:[url path]]);
-   }
-   return( nil);
-}
-
-
-- (instancetype) initWithContentsOfURL:(NSURL *) url
-{
-   if( [url isFileURL])
-      return( [self initWithContentsOfFile:[url path]]);
-   return( nil);
-}
-
-
-- (BOOL) writeToURL:(NSURL *) url
-         atomically:(BOOL) flag
-{
-   if( [url isFileURL])
-   {
-      return( [self writeToFile:[url path]
-                     atomically:flag]);
-   }
-   return( NO);
-}
-
 
 + (instancetype) dataWithContentsOfFile:(NSString *) path
                                 options:(NSUInteger) options
@@ -81,14 +48,5 @@
    return( data);
 }
 
-
-+ (instancetype) dataWithContentsOfURL:(NSURL *) url
-                               options:(NSUInteger) options
-                                 error:(NSError **) error
-{
-   if( error)
-      *error = nil;
-   return( [self dataWithContentsOfURL:url]);
-}
 
 @end

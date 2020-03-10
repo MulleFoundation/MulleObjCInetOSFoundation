@@ -34,7 +34,6 @@ Categories/NSDictionary+OSBase.h
 Categories/NSString+CString.h
 Categories/NSString+OSBase.h
 Categories/NSTask+System.h
-Categories/NSURL+OSBase.h
 Functions/NSLog.h
 Functions/NSPageAllocation.h
 Functions/NSPathUtilities.h
