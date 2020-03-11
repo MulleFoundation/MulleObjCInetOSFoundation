@@ -1,10 +1,7 @@
 cmake_minimum_required( VERSION 3.1)
 
-project( MulleObjCOSFoundation C)
+project( MulleObjCInetOSFoundation C)
 
-# we don't produce any Loader, the subprojects do that
-
-set( CREATE_OBJC_LOADER_INC OFF)
 
 ### mulle-sde environment
 
@@ -19,9 +16,9 @@ include( Files)
 ### Library
 
 if( HEADERS_PHASE)
-   install( FILES ${INSTALL_PUBLIC_HEADERS}  DESTINATION "include/MulleObjCOSFoundation")
-   install( FILES ${INSTALL_PRIVATE_HEADERS} DESTINATION "include/MulleObjCOSFoundation/private")
-   install( FILES ${CMAKE_INCLUDES}          DESTINATION "include/MulleObjCOSFoundation/cmake")
+   install( FILES ${INSTALL_PUBLIC_HEADERS}  DESTINATION "include/${PROJECT_NAME}")
+   install( FILES ${INSTALL_PRIVATE_HEADERS} DESTINATION "include/${PROJECT_NAME}/private")
+   install( FILES ${CMAKE_INCLUDES}          DESTINATION "include/${PROJECT_NAME}/cmake")
 
    # short cut out
    if( NOT COMPILE_PHASE AND NOT LINK_PHASE)

@@ -5,7 +5,7 @@
 #
 # === MULLE-SDE START ===
 
-include( _Sources)
+include( _Sources OPTIONAL)
 
 # === MULLE-SDE END ===
 #

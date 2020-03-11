@@ -11,13 +11,14 @@ src
 
 set( PRIVATE_HEADERS
 src/import-private.h
-src/include-private.h
 )
 
 set( PUBLIC_HEADERS
-src/MulleObjCLoader+MulleObjCOSFoundation.h
-src/MulleObjCOSFoundation.h
+src/MulleObjCInetOSFoundation.h
+src/MulleObjCLoader+MulleObjCInetOSFoundation.h
+src/NSData+NSURL.h
+src/NSHost+OS.h
+src/NSURL+Filesystem.h
 src/import.h
-src/include.h
 )
 

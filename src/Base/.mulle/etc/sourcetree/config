@@ -1,2 +1,0 @@
-MulleObjCStandardFoundation;${MULLEOBJCSTANDARDFOUNDATION_NODETYPE:-tar};no-singlephase;124A239F-C320-401C-AA1A-F90A4C5A018F;${MULLEOBJCSTANDARDFOUNDATION_URL:-https://github.com/MulleFoundation/MulleObjCStandardFoundation/archive/${MULLE_TAG}.tar.gz};${MULLEOBJCSTANDARDFOUNDATION_BRANCH};${MULLEOBJCSTANDARDFOUNDATION_TAG:-latest};;
-mulle-mmap;${MULLE_MMAP_NODETYPE:-tar};no-all-load,no-import,no-public,no-singlephase;62846519-455c-45a0-85b5-96b734f3ab96;${MULLE_MMAP_URL:-https://github.com/mulle-core/mulle-mmap/archive/${MULLE_BRANCH}.tar.gz};${MULLE_MMAP_BRANCH:-latest};;;

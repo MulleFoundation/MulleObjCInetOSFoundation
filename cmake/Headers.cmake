@@ -5,7 +5,7 @@
 #
 # === MULLE-SDE START ===
 
-include( _Headers)
+include( _Headers OPTIONAL)
 
 # === MULLE-SDE END ===
 #
@@ -14,30 +14,46 @@ include( _Headers)
 
 
 # add ignored headers back in so that the generators pick them up
-set( PUBLIC_HEADERS
-"src/_MulleObjCOSFoundation-import.h"
-"src/_MulleObjCOSFoundation-include.h"
-${PUBLIC_HEADERS}
-)
+if( EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/_MulleObjCInetOSFoundation-import.h")
+   set( PUBLIC_HEADERS
+      "src/_MulleObjCInetOSFoundation-import.h"
+      ${PUBLIC_HEADERS}
+   )
+endif()
+if( EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/_MulleObjCInetOSFoundation-include.h")
+   set( PUBLIC_HEADERS
+      "src/_MulleObjCInetOSFoundation-include.h"
+      ${PUBLIC_HEADERS}
+   )
+endif()
+
 
 # keep headers to install separate to make last minute changes
 set( INSTALL_PUBLIC_HEADERS ${PUBLIC_HEADERS})
-
 
 #
 # Do not install generated private headers and include-private.h
 # which aren't valid outside of the project scope.
 #
 set( INSTALL_PRIVATE_HEADERS ${PRIVATE_HEADERS})
-list( REMOVE_ITEM INSTALL_PRIVATE_HEADERS "import-private.h")
-list( REMOVE_ITEM INSTALL_PRIVATE_HEADERS "include-private.h")
+if( INSTALL_PRIVATE_HEADERS)
+   list( REMOVE_ITEM INSTALL_PRIVATE_HEADERS "import-private.h")
+   list( REMOVE_ITEM INSTALL_PRIVATE_HEADERS "include-private.h")
+endif()
 
 # add ignored headers back in so that the generators pick them up
-set( PRIVATE_HEADERS
-"src/_MulleObjCOSFoundation-import-private.h"
-"src/_MulleObjCOSFoundation-include-private.h"
-${PRIVATE_HEADERS}
-)
+if( EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/_MulleObjCInetOSFoundation-import-private.h")
+   set( PRIVATE_HEADERS
+      "src/_MulleObjCInetOSFoundation-import-private.h"
+      ${PRIVATE_HEADERS}
+   )
+endif()
+if( EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/_MulleObjCInetOSFoundation-include-private.h")
+   set( PRIVATE_HEADERS
+      "src/_MulleObjCInetOSFoundation-include-private.h"
+      ${PRIVATE_HEADERS}
+   )
+endif()
 
 
 #

@@ -1,7 +1,0 @@
-src/Base/
-src/Posix/
-src/Darwin/
-src/BSD/
-src/FreeBSD/
-src/Linux/
-src/Locale/

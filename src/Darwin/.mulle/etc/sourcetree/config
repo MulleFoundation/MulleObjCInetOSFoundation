@@ -1,2 +1,0 @@
-MulleObjCBSDFoundation;none;no-build,no-cmakeinherit,no-delete,no-dependency,no-fs,no-header,no-link,no-update;20582CD9-8B79-4D5D-A158-0D1523CC57E7;;${MULLE_OBJC_BSD_FOUNDATION_BRANCH};;;
-MulleObjCPosixFoundation;none;no-build,no-cmakeinherit,no-delete,no-dependency,no-fs,no-link,no-update;5A785563-00EB-4007-B8D6-5C97B529ED22;;${MULLE_OBJC_POSIX_FOUNDATION_BRANCH};;;include=MulleObjCPosixFoundation/MulleObjCPosixFoundation.h

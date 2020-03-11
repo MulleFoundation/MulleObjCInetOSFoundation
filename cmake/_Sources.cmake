@@ -6,9 +6,13 @@ if( MULLE_TRACE_INCLUDE)
 endif()
 
 set( SOURCES
-src/MulleObjCOSFoundation.m
+src/MulleObjCInetOSFoundation.m
+src/MulleObjCInetOSFoundation-shlib.c
+src/NSData+NSURL.m
+src/NSHost+OS.m
+src/NSURL+Filesystem.m
 )
 
 set( STAGE2_SOURCES
-src/MulleObjCLoader+MulleObjCOSFoundation.m
+src/MulleObjCLoader+MulleObjCInetOSFoundation.m
 )
