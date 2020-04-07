@@ -1,9 +1,17 @@
-# 📠💻 MulleObjCInetOSFoundation
+# MulleObjCInetOSFoundation
 
-#### Add NSURL methods for
 
-MulleObjCInetOSFoundation contains the NSURL specific parts from
-MulleObjCOSFoundation.
+#### 📠💻 OS specific extensions to NSHost and NSURL
+
+
+**MulleObjCInetOSFoundation** contains the NSURL specific parts from
+[MulleObjCOSFoundation](../MulleObjCOSFoundation) and adds them to
+[MulleObjCInetFoundation](../../MulleWeb/MulleObjCInetFoundation).
+
+
+Build Status | Release Version
+-------------|-----------------------------------
+[![Build Status](https://travis-ci.org/MulleFoundation/MulleObjCInetOSFoundation.svg?branch=release)](https://travis-ci.org/MulleFoundation/MulleObjCInetOSFoundation) | ![Mulle kybernetiK tag](https://img.shields.io/github/tag/MulleFoundation/MulleObjCInetOSFoundation.svg) [![Build Status](https://travis-ci.org/MulleFoundation/MulleObjCInetOSFoundation.svg?branch=release)](https://travis-ci.org/MulleFoundation/MulleObjCInetOSFoundation)
 
 
 ## Build
