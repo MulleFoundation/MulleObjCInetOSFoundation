@@ -31,7 +31,7 @@ if( STANDALONE)
    endif()
 
    if( NOT STANDALONE_DEFINITIONS)
-      set( STANDALONE_DEFINITIONS ${mulle_objc_inet_os_foundation_DEFINITIONS})
+      set( STANDALONE_DEFINITIONS ${MULLE_OBJC_INET_OS_FOUNDATION_DEFINITIONS})
    endif()
 
    #
