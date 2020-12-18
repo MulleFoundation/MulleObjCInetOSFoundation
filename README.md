@@ -1,8 +1,6 @@
 # MulleObjCInetOSFoundation
 
-
 #### 📠💻 OS specific extensions to NSHost and NSURL
-
 
 **MulleObjCInetOSFoundation** contains the NSURL specific parts from
 [MulleObjCOSFoundation](../MulleObjCOSFoundation) and adds them to
