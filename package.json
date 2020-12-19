@@ -1,0 +1,17 @@
+{
+   "name" : "MulleObjCInetOSFoundation",
+   "version" : "0.18.0",
+   "description" : "📠💻 OS specific extensions to NSHost and NSURL",
+   "homepage" : "https://github.com/MulleFoundation/MulleObjCInetOSFoundation",
+   "bugs" : "https://github.com/MulleFoundation/MulleObjCInetOSFoundation/issues",
+   "keywords" : [],
+   "license" : "UNLICENSED",
+   "repository" : {
+      "type" : "git",
+      "url" : "MulleFoundation/MulleObjCInetOSFoundation"
+   },
+   "dependencies" : {
+      "MulleObjCInetFoundation" : "MulleWeb/MulleObjCInetFoundation",
+      "MulleObjCOSFoundation" : "MulleFoundation/MulleObjCOSFoundation"
+   }
+}
