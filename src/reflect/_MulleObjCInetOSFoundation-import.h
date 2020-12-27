@@ -16,29 +16,19 @@
 //    remove:             `mulle-sourcetree mark MulleObjCInetFoundation no-header`
 //    rename:             `mulle-sde dependency|library set MulleObjCInetFoundation include whatever.h`
 //    toggle #import:     `mulle-sourcetree mark MulleObjCInetFoundation [no-]import`
-//    toggle localheader: `mulle-sourcetree mark MulleObjCInetFoundation [no-]localheader`
 //    toggle public:      `mulle-sourcetree mark MulleObjCInetFoundation [no-]public`
 //    toggle optional:    `mulle-sourcetree mark MulleObjCInetFoundation [no-]require`
 //    remove for os:      `mulle-sourcetree mark MulleObjCInetFoundation no-os-<osname>`
-# if defined( __has_include) && __has_include("MulleObjCInetFoundation.h")
-#   import "MulleObjCInetFoundation.h"   // MulleObjCInetFoundation
-# else
-#   import <MulleObjCInetFoundation/MulleObjCInetFoundation.h>   // MulleObjCInetFoundation
-# endif
+# import <MulleObjCInetFoundation/MulleObjCInetFoundation.h>   // MulleObjCInetFoundation
 
 // How to tweak the following MulleObjCOSFoundation #import
 //    remove:             `mulle-sourcetree mark MulleObjCOSFoundation no-header`
 //    rename:             `mulle-sde dependency|library set MulleObjCOSFoundation include whatever.h`
 //    toggle #import:     `mulle-sourcetree mark MulleObjCOSFoundation [no-]import`
-//    toggle localheader: `mulle-sourcetree mark MulleObjCOSFoundation [no-]localheader`
 //    toggle public:      `mulle-sourcetree mark MulleObjCOSFoundation [no-]public`
 //    toggle optional:    `mulle-sourcetree mark MulleObjCOSFoundation [no-]require`
 //    remove for os:      `mulle-sourcetree mark MulleObjCOSFoundation no-os-<osname>`
-# if defined( __has_include) && __has_include("MulleObjCOSFoundation.h")
-#   import "MulleObjCOSFoundation.h"   // MulleObjCOSFoundation
-# else
-#   import <MulleObjCOSFoundation/MulleObjCOSFoundation.h>   // MulleObjCOSFoundation
-# endif
+# import <MulleObjCOSFoundation/MulleObjCOSFoundation.h>   // MulleObjCOSFoundation
 
 #ifdef __has_include
 # if __has_include( "_MulleObjCInetOSFoundation-include.h")
