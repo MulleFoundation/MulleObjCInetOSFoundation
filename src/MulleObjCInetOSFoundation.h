@@ -10,7 +10,7 @@
  *
  *  version:  major, minor, patch
  */
-#define MULLE_OBJC_INET_OS_FOUNDATION_VERSION  ((0 << 20) | (18 << 8) | 0)
+#define MULLE_OBJC_INET_OS_FOUNDATION_VERSION  ((0 << 20) | (19 << 8) | 0)
 
 
 static inline unsigned int   MulleObjCInetOSFoundation_get_version_major( void)

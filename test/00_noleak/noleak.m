@@ -1,4 +1,5 @@
 #import <MulleObjCInetOSFoundation/MulleObjCInetOSFoundation.h>
+#import <MulleObjC/NSDebug.h>
 
 
 // just don't leak anything

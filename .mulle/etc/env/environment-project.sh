@@ -7,19 +7,19 @@ export PROJECT_NAME="MulleObjCInetOSFoundation"
 #
 #
 #
-export PROJECT_IDENTIFIER="MulleObjCInetOSFoundation"
 
-
-#
-#
-#
-export PROJECT_DOWNCASE_IDENTIFIER="mulle_objc_inet_os_foundation"
 
 
 #
 #
 #
-export PROJECT_UPCASE_IDENTIFIER="MULLE_OBJC_INET_OS_FOUNDATION"
+
+
+
+#
+#
+#
+
 
 
 #
