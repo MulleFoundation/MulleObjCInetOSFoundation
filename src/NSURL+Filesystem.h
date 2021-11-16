@@ -36,7 +36,8 @@
 #import "import.h"
 
 
-extern NSString         *NSURLFileScheme;
+MULLE_OBJC_INET_OS_FOUNDATION_EXTERN_GLOBAL
+NSString         *NSURLFileScheme;
 
 
 @interface NSURL( Filesystem)

@@ -1,6 +1,8 @@
 cmake_minimum_required( VERSION 3.1)
 
 project( MulleObjCInetOSFoundation C)
+add_definitions( -DMULLE_OBJC_INET_OS_FOUNDATION_EXTERN_GLOBAL=extern)
+
 
 
 ### mulle-sde environment

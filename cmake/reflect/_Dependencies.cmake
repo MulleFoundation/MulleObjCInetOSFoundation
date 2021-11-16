@@ -14,7 +14,7 @@ endif()
 #
 # Generated from sourcetree: 699EE9F6-53EE-4D2C-B2EC-7F5047DEC6C7;MulleObjCInetFoundation;no-singlephase;
 # Disable with : `mulle-sourcetree mark MulleObjCInetFoundation no-link`
-# Disable for this platform: `mulle-sourcetree mark MulleObjCInetFoundation no-cmake-platform-linux`
+# Disable for this platform: `mulle-sourcetree mark MulleObjCInetFoundation no-cmake-platform-${MULLE_UNAME}`
 #
 if( NOT MULLE_OBJC_INET_FOUNDATION_LIBRARY)
    find_library( MULLE_OBJC_INET_FOUNDATION_LIBRARY NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCInetFoundation${CMAKE_STATIC_LIBRARY_SUFFIX} MulleObjCInetFoundation NO_CMAKE_SYSTEM_PATH NO_SYSTEM_ENVIRONMENT_PATH)
@@ -94,7 +94,7 @@ endif()
 #
 # Generated from sourcetree: FAC0484F-7450-4A14-9C8F-5AC7BB05879B;MulleObjCOSFoundation;no-singlephase;
 # Disable with : `mulle-sourcetree mark MulleObjCOSFoundation no-link`
-# Disable for this platform: `mulle-sourcetree mark MulleObjCOSFoundation no-cmake-platform-linux`
+# Disable for this platform: `mulle-sourcetree mark MulleObjCOSFoundation no-cmake-platform-${MULLE_UNAME}`
 #
 if( NOT MULLE_OBJC_OS_FOUNDATION_LIBRARY)
    find_library( MULLE_OBJC_OS_FOUNDATION_LIBRARY NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCOSFoundation${CMAKE_STATIC_LIBRARY_SUFFIX} MulleObjCOSFoundation NO_CMAKE_SYSTEM_PATH NO_SYSTEM_ENVIRONMENT_PATH)
