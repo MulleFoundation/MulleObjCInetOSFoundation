@@ -10,7 +10,7 @@
  *
  *  version:  major, minor, patch
  */
-#define MULLE_OBJC_INET_OS_FOUNDATION_VERSION  ((0 << 20) | (19 << 8) | 0)
+#define MULLE_OBJC_INET_OS_FOUNDATION_VERSION  ((0 << 20) | (20 << 8) | 0)
 
 
 static inline unsigned int   MulleObjCInetOSFoundation_get_version_major( void)
@@ -44,12 +44,10 @@ uint32_t   MulleObjCInetOSFoundation_get_version( void);
 #import "NSURL+Filesystem.h"
 
 
-#if MULLE_OBJC_INET_FOUNDATION_VERSION < ((0 << 20) | (17 << 8) | 0)
-# error "MulleObjCInetFoundation is too old"
-#endif
-
-#if MULLE_OBJC_OS_FOUNDATION_VERSION < ((0 << 20) | (17 << 8) | 0)
-# error "MulleObjCOSFoundation is too old"
+#ifdef __has_include
+# if __has_include( "_MulleObjCExpatFoundation-versioncheck.h")
+#  include "_MulleObjCExpatFoundation-versioncheck.h"
+# endif
 #endif
 
 
