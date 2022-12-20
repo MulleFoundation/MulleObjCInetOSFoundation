@@ -8,7 +8,7 @@
    "license" : "UNLICENSED",
    "repository" : {
       "type" : "git",
-      "url" : "MulleFoundation/MulleObjCInetOSFoundation"
+      "url" : "github:MulleFoundation/MulleObjCInetOSFoundation"
    },
    "dependencies" : {
       "MulleObjCInetFoundation" : "git://github.com/MulleWeb/MulleObjCInetFoundation",
