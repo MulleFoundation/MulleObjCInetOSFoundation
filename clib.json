@@ -1,0 +1,35 @@
+{
+   "name" : "MulleObjCInetOSFoundation",
+   "version" : "0.20.2",
+   "description" : "OS specific extensions to NSHost and NSURL",
+   "keywords" : [],
+   "license" : "BSD-3-Clause",
+   "repo" : "MulleFoundation/MulleObjCInetOSFoundation",
+   "src" : [
+      "src/generic/import-private.h",
+      "src/generic/import.h",
+      "src/MulleObjCInetOSFoundation-shlib.c",
+      "src/MulleObjCInetOSFoundation.h",
+      "src/MulleObjCInetOSFoundation.m",
+      "src/MulleObjCLoader+MulleObjCInetOSFoundation.h",
+      "src/MulleObjCLoader+MulleObjCInetOSFoundation.m",
+      "src/NSData+NSURL.h",
+      "src/NSData+NSURL.m",
+      "src/NSHost+OS.h",
+      "src/NSHost+OS.m",
+      "src/NSURL+Filesystem.h",
+      "src/NSURL+Filesystem.m",
+      "src/reflect/objc-loader.inc",
+      "src/reflect/_MulleObjCInetOSFoundation-export.h",
+      "src/reflect/_MulleObjCInetOSFoundation-import-private.h",
+      "src/reflect/_MulleObjCInetOSFoundation-import.h",
+      "src/reflect/_MulleObjCInetOSFoundation-include-private.h",
+      "src/reflect/_MulleObjCInetOSFoundation-include.h",
+      "src/reflect/_MulleObjCInetOSFoundation-provide.h"
+   ],
+   "dependencies" : {
+      "MulleWeb/MulleObjCInetFoundation": "*",
+      "MulleFoundation/MulleObjCOSFoundation": "*",
+      "mulle-objc/mulle-objc-list": "*"
+   }
+}

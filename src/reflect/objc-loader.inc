@@ -1,11 +1,6 @@
-      { @selector( MulleObjCLoader), @selector( MulleObjCContainerFoundation) },      // 47a9beb6;MulleObjCLoader;2132102f;MulleObjCContainerFoundation
+      { @selector( MulleObjCLoader), @selector( MulleFoundationBase) },      // 47a9beb6;MulleObjCLoader;efab19ea;MulleFoundationBase
       { @selector( MulleObjCLoader), @selector( MulleObjCInetFoundation) },      // 47a9beb6;MulleObjCLoader;088ec1b3;MulleObjCInetFoundation
-      { @selector( MulleObjCLoader), @selector( MulleObjCLockFoundation) },      // 47a9beb6;MulleObjCLoader;86a97828;MulleObjCLockFoundation
       { @selector( MulleObjCLoader), @selector( MulleObjCOSFoundation) },      // 47a9beb6;MulleObjCLoader;94ffe970;MulleObjCOSFoundation
-      { @selector( MulleObjCLoader), @selector( MulleObjCPlistFoundation) },      // 47a9beb6;MulleObjCLoader;e8aa8d92;MulleObjCPlistFoundation
-      { @selector( MulleObjCLoader), @selector( MulleObjCStandardFoundation) },      // 47a9beb6;MulleObjCLoader;ed704a42;MulleObjCStandardFoundation
-      { @selector( MulleObjCLoader), @selector( MulleObjCTimeFoundation) },      // 47a9beb6;MulleObjCLoader;cc20d48b;MulleObjCTimeFoundation
-      { @selector( MulleObjCLoader), @selector( MulleObjCValueFoundation) },      // 47a9beb6;MulleObjCLoader;535d5103;MulleObjCValueFoundation
       { @selector( NSData), @selector( NSURL) },      // 8fce7861;NSData;6b1e8f73;NSURL
       { @selector( NSHost), @selector( OS) },      // fe455508;NSHost;de4ab977;OS
       { @selector( NSURL), @selector( Filesystem) },      // 6b1e8f73;NSURL;73db5ea2;Filesystem

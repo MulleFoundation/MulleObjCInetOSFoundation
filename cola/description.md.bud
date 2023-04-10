@@ -1,0 +1,3 @@
+**MulleObjCInetOSFoundation** contains the NSURL specific parts from
+[MulleObjCOSFoundation](//github.com/MulleFoundation/MulleObjCOSFoundation) and adds them to
+[MulleObjCInetFoundation](//github.com/MulleWeb/MulleObjCInetFoundation).

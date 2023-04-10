@@ -1,0 +1,39 @@
+{
+   project =
+   {
+      description="📠💻 OS specific extensions to NSHost and NSURL";
+      domain="github";
+      name="MulleObjCInetOSFoundation";
+      user="MulleFoundation";
+      repo="MulleObjCInetOSFoundation";
+      homepage="https://github.com/MulleFoundation/MulleObjCInetOSFoundation";
+      license="BSD-3-Clause"
+   };
+   dependencies =
+   (
+      {
+         description="📠 Internet-related classes like NSHost and NSURL for mulle-objc";
+         domain="github";
+         name="MulleObjCInetFoundation";
+         repo="MulleObjCInetFoundation";
+         url="https://github.com/MulleWeb/MulleObjCInetFoundation";
+         user="MulleWeb";
+      },
+      {
+         description="💻 Platform-dependent classes and categories like NSTask, NSPipe";
+         domain="github";
+         name="MulleObjCOSFoundation";
+         repo="MulleObjCOSFoundation";
+         url="https://github.com/MulleFoundation/MulleObjCOSFoundation";
+         user="MulleFoundation";
+      },
+      {
+         description="📒 Lists mulle-objc runtime information contained in executables.";
+         domain="github";
+         name="mulle-objc-list";
+         repo="mulle-objc-list";
+         url="https://github.com/mulle-objc/mulle-objc-list";
+         user="mulle-objc";
+      }
+   )
+}
