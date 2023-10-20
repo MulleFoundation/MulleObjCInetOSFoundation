@@ -9,7 +9,14 @@
  *
  *      mulle-sde environment set MULLE_MATCH_TO_C_RUN DISABLE
  */
+#ifndef mulle_objc_inet_os_foundation_export_h__
+#define mulle_objc_inet_os_foundation_export_h__
+
+
 #import "MulleObjCLoader+MulleObjCInetOSFoundation.h"
 #import "NSData+NSURL.h"
 #import "NSHost+OS.h"
 #import "NSURL+Filesystem.h"
+
+
+#endif
