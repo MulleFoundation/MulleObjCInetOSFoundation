@@ -53,6 +53,6 @@ NSString         *NSURLFileScheme;
 + (instancetype) fileURLWithPath:(NSString *) path
                      isDirectory:(BOOL) isDirectory;
 
-+ (NSURL *) fileURLWithPathComponents:(NSArray *)components;
++ (instancetype) fileURLWithPathComponents:(NSArray *)components;
 
 @end

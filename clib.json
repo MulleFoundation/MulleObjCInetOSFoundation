@@ -1,7 +1,7 @@
 {
    "name" : "MulleObjCInetOSFoundation",
-   "version" : "0.20.3",
-   "description" : "OS specific extensions to NSHost and NSURL",
+   "version" : "0.20.4",
+   "description" : "📠💻 OS specific extensions to NSHost and NSURL",
    "keywords" : [],
    "license" : "BSD-3-Clause",
    "repo" : "MulleFoundation/MulleObjCInetOSFoundation",
@@ -19,6 +19,7 @@
       "src/NSHost+OS.m",
       "src/NSURL+Filesystem.h",
       "src/NSURL+Filesystem.m",
+      "src/reflect/objc-loader.inc",
       "src/reflect/_MulleObjCInetOSFoundation-export.h",
       "src/reflect/_MulleObjCInetOSFoundation-import-private.h",
       "src/reflect/_MulleObjCInetOSFoundation-import.h",

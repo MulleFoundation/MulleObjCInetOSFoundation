@@ -96,7 +96,8 @@ NSString   *NSURLFileScheme = @"file";
                                   isDirectory:isDirectory] autorelease]);
 }
 
-+ (NSURL *) fileURLWithPathComponents:(NSArray *)components
+
++ (instancetype) fileURLWithPathComponents:(NSArray *)components
 {
    return( [self fileURLWithPath:[NSString pathWithComponents:components]]);
 }

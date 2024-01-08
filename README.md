@@ -6,9 +6,10 @@
 [MulleObjCOSFoundation](//github.com/MulleFoundation/MulleObjCOSFoundation) and adds them to
 [MulleObjCInetFoundation](//github.com/MulleWeb/MulleObjCInetFoundation).
 
+
 | Release Version                                       | Release Notes
 |-------------------------------------------------------|--------------
-| ![Mulle kybernetiK tag](https://img.shields.io/github/tag//MulleObjCInetOSFoundation.svg?branch=release) [![Build Status](https://github.com//MulleObjCInetOSFoundation/workflows/CI/badge.svg?branch=release)](//github.com//MulleObjCInetOSFoundation/actions)| [RELEASENOTES](RELEASENOTES.md) |
+| ![Mulle kybernetiK tag](https://img.shields.io/github/tag/MulleFoundation/MulleObjCInetOSFoundation.svg?branch=release) [![Build Status](https://github.com/MulleFoundation/MulleObjCInetOSFoundation/workflows/CI/badge.svg?branch=release)](//github.com/MulleFoundation/MulleObjCInetOSFoundation/actions) | [RELEASENOTES](RELEASENOTES.md) |
 
 
 
@@ -71,6 +72,6 @@ cmake --install build --config Release
 
 ## Author
 
-[Nat!](https://mulle-kybernetik.com/weblog) for Mulle kybernetiK
+[Nat!](https://mulle-kybernetik.com/weblog) for Mulle kybernetiK  
 
 
