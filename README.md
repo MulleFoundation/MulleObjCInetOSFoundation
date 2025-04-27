@@ -7,9 +7,9 @@
 [MulleObjCInetFoundation](//github.com/MulleWeb/MulleObjCInetFoundation).
 
 
-| Release Version                                       | Release Notes
-|-------------------------------------------------------|--------------
-| ![Mulle kybernetiK tag](https://img.shields.io/github/tag/MulleFoundation/MulleObjCInetOSFoundation.svg) [![Build Status](https://github.com/MulleFoundation/MulleObjCInetOSFoundation/workflows/CI/badge.svg)](//github.com/MulleFoundation/MulleObjCInetOSFoundation/actions) | [RELEASENOTES](RELEASENOTES.md) |
+| Release Version                                       | Release Notes  | AI Documentation
+|-------------------------------------------------------|----------------|---------------
+| ![Mulle kybernetiK tag](https://img.shields.io/github/tag/MulleFoundation/MulleObjCInetOSFoundation.svg) [![Build Status](https://github.com/MulleFoundation/MulleObjCInetOSFoundation/workflows/CI/badge.svg)](//github.com/MulleFoundation/MulleObjCInetOSFoundation/actions) | [RELEASENOTES](RELEASENOTES.md) | [DeepWiki for MulleObjCInetOSFoundation](https://deepwiki.com/MulleFoundation/MulleObjCInetOSFoundation)
 
 
 

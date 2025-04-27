@@ -1,4 +1,4 @@
-cmake_minimum_required( VERSION 3.1)
+cmake_minimum_required( VERSION 3.15)
 
 project( MulleObjCInetOSFoundation VERSION 0.20.6 LANGUAGES C)
 
