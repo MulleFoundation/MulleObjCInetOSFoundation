@@ -1,4 +1,5 @@
 # MulleObjCInetOSFoundation Library Documentation for AI
+<!-- Keywords: networking, filesystem -->
 
 ## 1. Introduction & Purpose
 

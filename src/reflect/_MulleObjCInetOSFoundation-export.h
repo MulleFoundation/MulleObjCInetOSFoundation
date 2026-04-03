@@ -13,7 +13,7 @@
 #define _mulle_objc_inet_os_foundation__export_h__
 
 
-#import "MulleObjCLoader+MulleObjCInetOSFoundation.h"
+#import "MulleObjCDeps+MulleObjCInetOSFoundation.h"
 #import "NSData+NSURL.h"
 #import "NSHost+OS.h"
 #import "NSURL+Filesystem.h"

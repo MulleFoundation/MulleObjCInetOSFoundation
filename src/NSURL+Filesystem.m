@@ -83,6 +83,7 @@ NSString   *NSURLFileScheme = @"file";
 - (instancetype) initFileURLWithPath:(NSString *) path
                          isDirectory:(BOOL) isDirectory
 {
+   MULLE_C_UNUSED( isDirectory );
    return( [self initWithScheme:NSURLFileScheme
                            host:nil
                            path:path]);

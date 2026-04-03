@@ -82,6 +82,7 @@
                                options:(NSUInteger) options
                                  error:(NSError **) error
 {
+   MULLE_C_UNUSED( options );
    if( error)
       *error = nil;
    return( [self dataWithContentsOfURL:url]);

@@ -52,8 +52,8 @@ src/generic/import.h
 # contents selected with patternfile ??-header--public-headers
 #
 set( PUBLIC_HEADERS
+src/MulleObjCDeps+MulleObjCInetOSFoundation.h
 src/MulleObjCInetOSFoundation.h
-src/MulleObjCLoader+MulleObjCInetOSFoundation.h
 src/NSData+NSURL.h
 src/NSHost+OS.h
 src/NSURL+Filesystem.h
