@@ -8,6 +8,7 @@
       repo="MulleObjCInetOSFoundation";
       homepage="https://github.com/MulleFoundation/MulleObjCInetOSFoundation";
       license="BSD-3-Clause";
+      version="0.20.8";
    };
    dependencies =
    (
