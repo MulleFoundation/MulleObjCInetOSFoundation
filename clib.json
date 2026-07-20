@@ -1,6 +1,6 @@
 {
    "name" : "MulleObjCInetOSFoundation",
-   "version" : "0.20.8",
+   "version" : "0.20.9",
    "description" : "📠💻 OS specific extensions to NSHost and NSURL",
    "keywords" : [],
    "license" : "BSD-3-Clause",
