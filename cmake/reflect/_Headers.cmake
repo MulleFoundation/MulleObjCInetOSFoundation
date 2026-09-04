@@ -57,5 +57,6 @@ src/MulleObjCInetOSFoundation.h
 src/NSData+NSURL.h
 src/NSHost+OS.h
 src/NSURL+Filesystem.h
+src/reflect/_MulleObjCInetOSFoundation-versioncheck.h
 )
 
