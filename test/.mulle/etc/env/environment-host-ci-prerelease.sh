@@ -395,6 +395,24 @@ export MULLE_OBJC_CONTAINER_FOUNDATION_BRANCH="prerelease"
 
 
 #
+# mulle-stacktrace nodetype: ${MULLE__STACKTRACE_NODETYPE:-tar}
+#
+export MULLE__STACKTRACE_NODETYPE="git"
+
+
+#
+# mulle-stacktrace url: ${MULLE__STACKTRACE_URL:-https://github.com/mulle-core/mulle-stacktrace/archive/${MULLE_TAG}.tar.gz}
+#
+export MULLE__STACKTRACE_URL="https://github.com/mulle-core/mulle-stacktrace.git"
+
+
+#
+# mulle-stacktrace branch: ${MULLE__STACKTRACE_BRANCH}
+#
+export MULLE__STACKTRACE_BRANCH="prerelease"
+
+
+#
 # mulle-testallocator nodetype: ${MULLE__TESTALLOCATOR_NODETYPE:-tar}
 #
 export MULLE__TESTALLOCATOR_NODETYPE="git"
@@ -446,23 +464,5 @@ export MULLE__ATEXIT_URL="https://github.com/mulle-core/mulle-atexit.git"
 # mulle-atexit branch: ${MULLE__ATEXIT_BRANCH}
 #
 export MULLE__ATEXIT_BRANCH="prerelease"
-
-
-#
-# mulle-stacktrace nodetype: ${MULLE__STACKTRACE_NODETYPE:-tar}
-#
-export MULLE__STACKTRACE_NODETYPE="git"
-
-
-#
-# mulle-stacktrace url: ${MULLE__STACKTRACE_URL:-https://github.com/mulle-core/mulle-stacktrace/archive/${MULLE_TAG}.tar.gz}
-#
-export MULLE__STACKTRACE_URL="https://github.com/mulle-core/mulle-stacktrace.git"
-
-
-#
-# mulle-stacktrace branch: ${MULLE__STACKTRACE_BRANCH}
-#
-export MULLE__STACKTRACE_BRANCH="prerelease"
 
 

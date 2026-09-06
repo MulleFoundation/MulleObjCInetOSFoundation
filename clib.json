@@ -1,12 +1,12 @@
 {
    "name" : "MulleObjCInetOSFoundation",
-   "version" : "0.20.9",
+   "version" : "0.20.10",
    "description" : "📠💻 OS specific extensions to NSHost and NSURL",
    "keywords" : [],
    "license" : "BSD-3-Clause",
    "repo" : "MulleFoundation/MulleObjCInetOSFoundation",
    "src" : [
-      "asset/dox/TOC.md",
+      "asset/dox/api/toc/index.md",
       "src/generic/import-private.h",
       "src/generic/import.h",
       "src/MulleObjCDeps+MulleObjCInetOSFoundation.h",
